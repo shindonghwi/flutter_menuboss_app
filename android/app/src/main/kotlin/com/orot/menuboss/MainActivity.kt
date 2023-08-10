@@ -1,4 +1,4 @@
-package com.orot.menuboss.menuboss
+package com.orot.menuboss
 
 import io.flutter.embedding.android.FlutterActivity
 
