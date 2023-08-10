@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "845007593508-fdsp665ba4s33opll2g75fc9gfs21aob.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.menuboss.dev",
+            "certificate_hash": "523c544ba706646ff47d5698d5bb1cf691210c5d"
+          }
+        },
+        {
           "client_id": "845007593508-a9sh1r6srbaqjtu6t4gc05b91h6s6oq6.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +37,13 @@
             {
               "client_id": "845007593508-a9sh1r6srbaqjtu6t4gc05b91h6s6oq6.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.menuboss.dev"
+              }
             }
           ]
         }
