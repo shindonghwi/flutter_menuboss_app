@@ -4,10 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:menuboss/app/env/Environment.dart';
-import 'package:ody_flutter_app/app/env/Environment.dart';
-import 'package:ody_flutter_app/firebase/FirebaseRemoteConfigService.dart';
-
-import '../../firebase_options.dart';
+import 'package:menuboss/firebase/firebase_options.dart';
 
 main() async {
   WidgetsFlutterBinding.ensureInitialized();
