@@ -4,7 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
+import 'package:menuboss/presentation/components/button/FillButton.dart';
 import 'package:menuboss/presentation/features/detail/tv/widget/AllDayModeContent.dart';
+import 'package:menuboss/presentation/features/detail/tv/widget/ScheduleModeContent.dart';
 
 class DetailTvScreen extends HookWidget {
   const DetailTvScreen({super.key});
@@ -185,6 +187,7 @@ class _ModeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isAllDayMode ? AllDayModeContent() : SizedBox();
+    return isAllDayMode ? AllDayModeContent() : ScheduleModeContent();
   }
 }
+
