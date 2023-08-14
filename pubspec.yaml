@@ -71,10 +71,10 @@ flutter_native_splash:
   ios: true
   android_gravity: fill
   ios_content_mode: scaleAspectFill
-  image: assets/imgs/splash_light.png
-  image_dark: assets/imgs/splash_dark.png
-  color: "#FFFFFF"
-  color_dark: "#000000"
+  image: assets/imgs/splash.png
+  image_dark: assets/imgs/splash.png
+  color: "#482409"
+  color_dark: "#482409"
 
   # Android 12 이상 버전에서 적용
   android_12:
@@ -82,7 +82,7 @@ flutter_native_splash:
     ios: true
     android_gravity: fill
     ios_content_mode: scaleAspectFill
-    image: assets/imgs/splash_light.png
-    image_dark: assets/imgs/splash_dark.png
-    color: "#FFFFFF"
-    color_dark: "#000000"
+    image: assets/imgs/splash.png
+    image_dark: assets/imgs/splash.png
+    color: "#482409"
+    color_dark: "#482409"
