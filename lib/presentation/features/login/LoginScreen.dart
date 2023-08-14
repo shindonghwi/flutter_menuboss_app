@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/button/FillButton.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
@@ -86,7 +87,17 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const FillButton.round(content: Text("Log in"), isActivated: true);
+    return FillButton.round(
+      content: Text("Log in"),
+      isActivated: true,
+      onPressed: () {
+        Navigator.pushNamedAndRemoveUntil(
+          context,
+          RoutingScreen.Main.route,
+          (route) => false,
+        );
+      },
+    );
   }
 }
 

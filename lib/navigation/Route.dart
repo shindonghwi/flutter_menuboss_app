@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
 import '../presentation/features/login/LoginScreen.dart';
+import '../presentation/features/main/MainScreen.dart';
 
 enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
@@ -25,7 +26,7 @@ enum RoutingScreen {
     return {
       RoutingScreen.Splash.route: (context) => const SplashScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
-      // RoutingScreen.Main.route: (context) => const SplashScreen(),
+      RoutingScreen.Main.route: (context) => const MainScreen(),
       // RoutingScreen.AddTV.route: (context) => const SplashScreen(),
       // RoutingScreen.DetailTv.route: (context) => const SplashScreen(),
       // RoutingScreen.DetailTvSetting.route: (context) => const SplashScreen(),
@@ -41,6 +42,8 @@ enum RoutingScreen {
       return const SplashScreen();
     }else if (route == RoutingScreen.Login.route){
       return const LoginScreen();
+    }else if (route == RoutingScreen.Main.route){
+      return const MainScreen();
     }
     else{
       return const SplashScreen();
