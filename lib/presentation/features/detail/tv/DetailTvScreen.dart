@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/features/detail/tv/widget/AllDayModeContent.dart';
 
@@ -132,7 +134,12 @@ class _AppBar extends StatelessWidget {
           Row(
             children: [
               Clickable(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    nextSlideScreen(RoutingScreen.DetailTvModify.route),
+                  );
+                },
                 child: Container(
                   color: Colors.red.withOpacity(0.3),
                   padding: const EdgeInsets.all(8.0),
@@ -144,7 +151,12 @@ class _AppBar extends StatelessWidget {
                 ),
               ),
               Clickable(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    nextSlideScreen(RoutingScreen.DetailTvSetting.route),
+                  );
+                },
                 child: Container(
                   color: Colors.green.withOpacity(0.3),
                   padding: const EdgeInsets.all(8.0),

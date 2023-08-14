@@ -1,0 +1,4 @@
+enum CheckBoxSize {
+  Normal,
+  Small
+}
