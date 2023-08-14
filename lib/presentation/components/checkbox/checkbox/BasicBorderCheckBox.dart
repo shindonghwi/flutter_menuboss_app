@@ -21,7 +21,7 @@ class BasicBorderCheckBox extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Transform.scale(
-      scale: size == CheckBoxSize.Normal ? 1 : 0.78,
+      scale: size == CheckBoxSize.Normal ? 1.33 : 1,
       child: Checkbox(
         value: isChecked,
         activeColor: Colors.red,

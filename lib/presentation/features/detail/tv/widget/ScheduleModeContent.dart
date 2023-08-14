@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/FillButton.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
@@ -65,7 +67,16 @@ class ScheduleModeContent extends StatelessWidget {
                                 Flexible(
                                   flex: 1,
                                   fit: FlexFit.tight,
-                                  child: FillButton.round(content: Text("Edit"), isActivated: true),
+                                  child: FillButton.round(
+                                    content: Text("Edit"),
+                                    isActivated: true,
+                                    onPressed: () {
+                                      Navigator.push(
+                                        context,
+                                        nextSlideScreen(RoutingScreen.ScreenList.route),
+                                      );
+                                    },
+                                  ),
                                 ),
 
                                 /// Edit만 보이게 할거면 아래를 지우면 됨.

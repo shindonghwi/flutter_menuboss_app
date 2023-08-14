@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
-
 import '../presentation/features/detail/modify/DetailTvModifyScreen.dart';
 import '../presentation/features/detail/setting/DetailTvSettingScreen.dart';
 import '../presentation/features/detail/tv/DetailTvScreen.dart';
+import '../presentation/features/list/screen/TvListScreen.dart';
 import '../presentation/features/login/LoginScreen.dart';
 import '../presentation/features/main/MainScreen.dart';
+import '../presentation/features/splash/SplashScreen.dart';
 
 enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
@@ -15,7 +15,7 @@ enum RoutingScreen {
   DetailTv(route: "/detail/tv"), // 티비 상세
   DetailTvSetting(route: "/detail/tv/setting"), // 티비 상세 설정
   DetailTvModify(route: "/detail/tv/modify"), // 티비 정보 수정
-  ListScreen(route: "/list/screen"), // 스크린 리스트
+  ScreenList(route: "/list/tv_screen"), // 스크린 리스트
   Profile(route: "/my/profile"), // 프로필
   ProfilePlan(route: "/my/profile/plan"); // 프로필 플랜 정보
 
@@ -34,7 +34,7 @@ enum RoutingScreen {
       RoutingScreen.DetailTv.route: (context) => const DetailTvScreen(),
       RoutingScreen.DetailTvSetting.route: (context) => const DetailTvSettingScreen(),
       RoutingScreen.DetailTvModify.route: (context) => const DetailTvModifyScreen(),
-      // RoutingScreen.ListScreen.route: (context) => const SplashScreen(),
+      RoutingScreen.ScreenList.route: (context) =>  const TvListScreen(),
       // RoutingScreen.Profile.route: (context) => const SplashScreen(),
       // RoutingScreen.ProfilePlan.route: (context) => const SplashScreen(),
     };
@@ -53,6 +53,8 @@ enum RoutingScreen {
       return const DetailTvSettingScreen();
     } else if (route == RoutingScreen.DetailTvModify.route) {
       return const DetailTvModifyScreen();
+    } else if (route == RoutingScreen.ScreenList.route) {
+      return const TvListScreen();
     } else {
       return const SplashScreen();
     }
