@@ -36,7 +36,6 @@ class FillButton extends HookWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: getMediaQuery(context).size.width,
-      height: 52,
       child: ElevatedButton(
         onPressed: isActivated ? () => onPressed?.call() : null,
         style: ElevatedButton.styleFrom(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
+import '../presentation/features/detail/modify/DetailTvModifyScreen.dart';
+import '../presentation/features/detail/setting/DetailTvSettingScreen.dart';
+import '../presentation/features/detail/tv/DetailTvScreen.dart';
 import '../presentation/features/login/LoginScreen.dart';
 import '../presentation/features/main/MainScreen.dart';
 
@@ -28,9 +31,9 @@ enum RoutingScreen {
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
       // RoutingScreen.AddTV.route: (context) => const SplashScreen(),
-      // RoutingScreen.DetailTv.route: (context) => const SplashScreen(),
-      // RoutingScreen.DetailTvSetting.route: (context) => const SplashScreen(),
-      // RoutingScreen.DetailTvModify.route: (context) => const SplashScreen(),
+      RoutingScreen.DetailTv.route: (context) => const DetailTvScreen(),
+      RoutingScreen.DetailTvSetting.route: (context) => const DetailTvSettingScreen(),
+      RoutingScreen.DetailTvModify.route: (context) => const DetailTvModifyScreen(),
       // RoutingScreen.ListScreen.route: (context) => const SplashScreen(),
       // RoutingScreen.Profile.route: (context) => const SplashScreen(),
       // RoutingScreen.ProfilePlan.route: (context) => const SplashScreen(),
@@ -38,14 +41,19 @@ enum RoutingScreen {
   }
 
   static getScreen(String route, {dynamic parameter}) {
-    if (route == RoutingScreen.Splash.route){
+    if (route == RoutingScreen.Splash.route) {
       return const SplashScreen();
-    }else if (route == RoutingScreen.Login.route){
+    } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
-    }else if (route == RoutingScreen.Main.route){
+    } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
-    }
-    else{
+    } else if (route == RoutingScreen.DetailTv.route) {
+      return const DetailTvScreen();
+    } else if (route == RoutingScreen.DetailTvSetting.route) {
+      return const DetailTvSettingScreen();
+    } else if (route == RoutingScreen.DetailTvModify.route) {
+      return const DetailTvModifyScreen();
+    } else {
       return const SplashScreen();
     }
   }
