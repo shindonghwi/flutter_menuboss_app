@@ -3,55 +3,62 @@ import 'package:flutter/material.dart';
 
 extension StyleColor on ColorScheme{
 
-  Color get colorUIBackground => brightness == Brightness.light ? white : white;
-  Color get colorUI01 => brightness == Brightness.light ? neutral10 : neutral10;
-  Color get colorUI02 => brightness == Brightness.light ? neutral20 : neutral20;
-  Color get colorUI03 => brightness == Brightness.light ? neutral30 : neutral30;
-  Color get colorUI04 => brightness == Brightness.light ? neutral40 : neutral40;
+  Color get black => brightness == Brightness.light ? const Color(0xFF000000) : const Color(0xFF000000);
+  Color get white => brightness == Brightness.light ? const Color(0xFFFFFFFF) : const Color(0xFFFFFFFF);
 
-  Color get colorText => brightness == Brightness.light ? neutral90 : neutral90;
-  Color get colorPrimaryFocus => brightness == Brightness.light ? primary100 : primary100;
-  Color get colorPrimaryPress => brightness == Brightness.light ? primary50 : primary50;
-  Color get colorPrimaryDisable => brightness == Brightness.light ? neutral40 : neutral40;
-  Color get colorError => brightness == Brightness.light ? error80 : error80;
+  Color get colorBrown900 => brightness == Brightness.light ? const Color(0xFF0E0702) : const Color(0xFF0E0702);
+  Color get colorBrown800 => brightness == Brightness.light ? const Color(0xFF1D0E04) : const Color(0xFF1D0E04);
+  Color get colorBrown700 => brightness == Brightness.light ? const Color(0xFF2B1605) : const Color(0xFF2B1605);
+  Color get colorBrown600 => brightness == Brightness.light ? const Color(0xFF3A1D07) : const Color(0xFF3A1D07);
+  Color get colorBrown500 => brightness == Brightness.light ? const Color(0xFF482409) : const Color(0xFF482409);
+  Color get colorBrown400 => brightness == Brightness.light ? const Color(0xFF6D503A) : const Color(0xFF6D503A);
+  Color get colorBrown300 => brightness == Brightness.light ? const Color(0xFF917C6B) : const Color(0xFF917C6B);
+  Color get colorBrown200 => brightness == Brightness.light ? const Color(0xFFB6A79D) : const Color(0xFFB6A79D);
+  Color get colorBrown100 => brightness == Brightness.light ? const Color(0xFFDAD3CE) : const Color(0xFFDAD3CE);
+  Color get colorBrown50 => brightness == Brightness.light ? const Color(0xFFEDE9E6) : const Color(0xFFEDE9E6);
 
+  Color get colorOrange900 => brightness == Brightness.light ? const Color(0xFF271409) : const Color(0xFF271409);
+  Color get colorOrange800 => brightness == Brightness.light ? const Color(0xFF4D2913) : const Color(0xFF4D2913);
+  Color get colorOrange700 => brightness == Brightness.light ? const Color(0xFF743D1C) : const Color(0xFF743D1C);
+  Color get colorOrange600 => brightness == Brightness.light ? const Color(0xFF9A5226) : const Color(0xFF9A5226);
+  Color get colorOrange500 => brightness == Brightness.light ? const Color(0xFFC1662F) : const Color(0xFFC1662F);
+  Color get colorOrange400 => brightness == Brightness.light ? const Color(0xFFCD8559) : const Color(0xFFCD8559);
+  Color get colorOrange300 => brightness == Brightness.light ? const Color(0xFFDAA382) : const Color(0xFFDAA382);
+  Color get colorOrange200 => brightness == Brightness.light ? const Color(0xFFE6C2AC) : const Color(0xFFE6C2AC);
+  Color get colorOrange100 => brightness == Brightness.light ? const Color(0xFFF3E0D5) : const Color(0xFFF3E0D5);
+  Color get colorOrange50 => brightness == Brightness.light ? const Color(0xFFF9F0EA) : const Color(0xFFF9F0EA);
 
-  Color get black => brightness == Brightness.light ? Color(0xFF000000) : Color(0xFF000000);
-  Color get white => brightness == Brightness.light ? Color(0xFFFFFFFF) : Color(0xFFFFFFFF);
+  Color get colorGreen900 => brightness == Brightness.light ? const Color(0xFF00220E) : const Color(0xFF00220E);
+  Color get colorGreen800 => brightness == Brightness.light ? const Color(0xFF00441C) : const Color(0xFF00441C);
+  Color get colorGreen700 => brightness == Brightness.light ? const Color(0xFF00662B) : const Color(0xFF00662B);
+  Color get colorGreen600 => brightness == Brightness.light ? const Color(0xFF008839) : const Color(0xFF008839);
+  Color get colorGreen500 => brightness == Brightness.light ? const Color(0xFF00AA47) : const Color(0xFF00AA47);
+  Color get colorGreen400 => brightness == Brightness.light ? const Color(0xFFCD8559) : const Color(0xFFCD8559);
+  Color get colorGreen300 => brightness == Brightness.light ? const Color(0xFFDAA382) : const Color(0xFFDAA382);
+  Color get colorGreen200 => brightness == Brightness.light ? const Color(0xFFE6C2AC) : const Color(0xFFE6C2AC);
+  Color get colorGreen100 => brightness == Brightness.light ? const Color(0xFFF3E0D5) : const Color(0xFFF3E0D5);
+  Color get colorGreen50 => brightness == Brightness.light ? const Color(0xFFF9F0EA) : const Color(0xFFF9F0EA);
 
-  Color get primary100 => brightness == Brightness.light ? Color(0xFF4E87FF) : Color(0xFF4E87FF);
-  Color get primary90 => brightness == Brightness.light ? Color(0xFF4D86FF) : Color(0xFF4D86FF);
-  Color get primary80 => brightness == Brightness.light ? Color(0xFF538BFF) : Color(0xFF538BFF);
-  Color get primary70 => brightness == Brightness.light ? Color(0xFF6899FF) : Color(0xFF6899FF);
-  Color get primary60 => brightness == Brightness.light ? Color(0xFF719FFF) : Color(0xFF719FFF);
-  Color get primary50 => brightness == Brightness.light ? Color(0xFF8AAFFF) : Color(0xFF8AAFFF);
-  Color get primary40 => brightness == Brightness.light ? Color(0xFF96B8FF) : Color(0xFF96B8FF);
-  Color get primary30 => brightness == Brightness.light ? Color(0xFFB4CDFF) : Color(0xFFB4CDFF);
-  Color get primary20 => brightness == Brightness.light ? Color(0xFFCEDEFF) : Color(0xFFCEDEFF);
-  Color get primary10 => brightness == Brightness.light ? Color(0xFFE3ECFF) : Color(0xFFE3ECFF);
+  Color get colorYellow900 => brightness == Brightness.light ? const Color(0xFF30280F) : const Color(0xFF30280F);
+  Color get colorYellow800 => brightness == Brightness.light ? const Color(0xFF61501E) : const Color(0xFF61501E);
+  Color get colorYellow700 => brightness == Brightness.light ? const Color(0xFF91792E) : const Color(0xFF91792E);
+  Color get colorYellow600 => brightness == Brightness.light ? const Color(0xFFC2A13D) : const Color(0xFFC2A13D);
+  Color get colorYellow500 => brightness == Brightness.light ? const Color(0xFFF2C94C) : const Color(0xFFF2C94C);
+  Color get colorYellow400 => brightness == Brightness.light ? const Color(0xFFF5D470) : const Color(0xFFF5D470);
+  Color get colorYellow300 => brightness == Brightness.light ? const Color(0xFFF7DF94) : const Color(0xFFF7DF94);
+  Color get colorYellow200 => brightness == Brightness.light ? const Color(0xFFFAE9B7) : const Color(0xFFFAE9B7);
+  Color get colorYellow100 => brightness == Brightness.light ? const Color(0xFFFCF4DB) : const Color(0xFFFCF4DB);
+  Color get colorYellow50 => brightness == Brightness.light ? const Color(0xFFFEFAED) : const Color(0xFFFEFAED);
 
-  Color get secondary100 => brightness == Brightness.light ? Color(0xFFFF9108) : Color(0xFFFF9108);
-  Color get secondary20 => brightness == Brightness.light ? Color(0xFFFFDFB7) : Color(0xFFFFDFB7);
+  Color get colorError900 => brightness == Brightness.light ? const Color(0xFF2F1111) : const Color(0xFF2F1111);
+  Color get colorError800 => brightness == Brightness.light ? const Color(0xFF5E2323) : const Color(0xFF5E2323);
+  Color get colorError700 => brightness == Brightness.light ? const Color(0xFF8D3434) : const Color(0xFF8D3434);
+  Color get colorError600 => brightness == Brightness.light ? const Color(0xFFBC4646) : const Color(0xFFBC4646);
+  Color get colorError500 => brightness == Brightness.light ? const Color(0xFFEB5757) : const Color(0xFFEB5757);
+  Color get colorError400 => brightness == Brightness.light ? const Color(0xFFEF7979) : const Color(0xFFEF7979);
+  Color get colorError300 => brightness == Brightness.light ? const Color(0xFFF39A9A) : const Color(0xFFF39A9A);
+  Color get colorError200 => brightness == Brightness.light ? const Color(0xFFF7BCBC) : const Color(0xFFF7BCBC);
+  Color get colorError100 => brightness == Brightness.light ? const Color(0xFFFBDDDD) : const Color(0xFFFBDDDD);
+  Color get colorError50 => brightness == Brightness.light ? const Color(0xFFFDEEEE) : const Color(0xFFFDEEEE);
 
-  Color get error100 => brightness == Brightness.light ? Color(0xFFFF4242) : Color(0xFFFF4242);
-  Color get error90 => brightness == Brightness.light ? Color(0xFFFF5353) : Color(0xFFFF5353);
-  Color get error80 => brightness == Brightness.light ? Color(0xFFFF6868) : Color(0xFFFF6868);
-  Color get error70 => brightness == Brightness.light ? Color(0xFFFF7878) : Color(0xFFFF7878);
-  Color get error60 => brightness == Brightness.light ? Color(0xFFFF9494) : Color(0xFFFF9494);
-  Color get error50 => brightness == Brightness.light ? Color(0xFFFFABAB) : Color(0xFFFFABAB);
-  Color get error40 => brightness == Brightness.light ? Color(0xFFFFBCBC) : Color(0xFFFFBCBC);
-  Color get error30 => brightness == Brightness.light ? Color(0xFFFFCECE) : Color(0xFFFFCECE);
-  Color get error20 => brightness == Brightness.light ? Color(0xFFFFE1E1) : Color(0xFFFFE1E1);
-  Color get error10 => brightness == Brightness.light ? Color(0xFFFFF8F8) : Color(0xFFFFF8F8);
-
-  Color get neutral100 => brightness == Brightness.light ? Color(0xFF282828) : Color(0xFF282828);
-  Color get neutral90 => brightness == Brightness.light ? Color(0xFF474747) : Color(0xFF474747);
-  Color get neutral80 => brightness == Brightness.light ? Color(0xFF666666) : Color(0xFF666666);
-  Color get neutral70 => brightness == Brightness.light ? Color(0xFF8E8E8E) : Color(0xFF8E8E8E);
-  Color get neutral60 => brightness == Brightness.light ? Color(0xFFB7B7B7) : Color(0xFFB7B7B7);
-  Color get neutral50 => brightness == Brightness.light ? Color(0xFFD2D2D2) : Color(0xFFD2D2D2);
-  Color get neutral40 => brightness == Brightness.light ? Color(0xFFE8E8E8) : Color(0xFFE8E8E8);
-  Color get neutral30 => brightness == Brightness.light ? Color(0xFFF5F5F5) : Color(0xFFF5F5F5);
-  Color get neutral20 => brightness == Brightness.light ? Color(0xFFFBFBFB) : Color(0xFFFBFBFB);
-  Color get neutral10 => brightness == Brightness.light ? Color(0xFFFDFDFD) : Color(0xFFFDFDFD);
 }
