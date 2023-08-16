@@ -16,7 +16,7 @@ class AllDayModeContent extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Text("Basic Exposure", style: Theme.of(context).textTheme.h2sb),
+            // Text("Basic Exposure", style: Theme.of(context).textTheme.h2sb),
             SizedBox(height: 24),
             _Content(),
             Spacer(),

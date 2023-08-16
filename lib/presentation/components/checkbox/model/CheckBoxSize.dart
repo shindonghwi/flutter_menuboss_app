@@ -1,4 +1,0 @@
-enum CheckBoxSize {
-  Normal,
-  Small
-}

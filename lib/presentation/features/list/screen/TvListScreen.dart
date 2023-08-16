@@ -3,8 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
-import 'package:menuboss/presentation/components/checkbox/model/CheckBoxSize.dart';
-import 'package:menuboss/presentation/components/checkbox/model/CheckBoxType.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 class TvListScreen extends StatelessWidget {
@@ -114,8 +112,6 @@ class _Content extends HookWidget {
                       margin: const EdgeInsets.only(left: 12),
                       child: BasicBorderCheckBox(
                         isChecked: checkedIndex.value == index,
-                        size: CheckBoxSize.Normal,
-                        type: CheckBoxType.Circle,
                         onChange: (value) {
                           if (checkedIndex.value == index) {
                             checkedIndex.value = -1;

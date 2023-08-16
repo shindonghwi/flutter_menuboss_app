@@ -1,4 +1,0 @@
-enum CheckBoxType {
-  Rectangle,
-  Circle
-}

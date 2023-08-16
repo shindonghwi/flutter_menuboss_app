@@ -29,12 +29,12 @@ class MenuBossApp extends HookWidget {
             // 시스템 테마 설정 (라이트, 다크 모드)
             theme: AppTheme.lightTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
-                cursorColor: getColorScheme(context).colorPrimaryFocus,
+                cursorColor: getColorScheme(context).colorBrown50,
               ),
             ),
             darkTheme: AppTheme.darkTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
-                cursorColor: getColorScheme(context).colorPrimaryFocus,
+                cursorColor: getColorScheme(context).colorBrown50,
               ),
             ),
             themeMode: ThemeMode.system,
