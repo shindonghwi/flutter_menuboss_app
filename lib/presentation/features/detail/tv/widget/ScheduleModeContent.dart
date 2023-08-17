@@ -24,7 +24,7 @@ class ScheduleModeContent extends StatelessWidget {
         children: [
           Expanded(
             child: ListView.separated(
-              padding: const EdgeInsets.only(top: 24, bottom: 40),
+              padding: const EdgeInsets.only(top: 24, bottom: 120),
               shrinkWrap: true,
               separatorBuilder: (BuildContext context, int index) {
                 return Container(
