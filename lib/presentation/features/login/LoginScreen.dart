@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/button/FillButton.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/RegUtil.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({super.key});
@@ -13,7 +17,7 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFFFFFFF),
+      backgroundColor: getColorScheme(context).white,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
@@ -108,15 +112,25 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Align(
+    return Align(
       alignment: Alignment.centerLeft,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text("Login"),
+          Text(
+            getAppLocalizations(context).login_title,
+            style: getTextTheme(context).h1b.copyWith(
+                  color: getColorScheme(context).colorGray900,
+                ),
+          ),
           Padding(
-            padding: EdgeInsets.only(top: 4.0),
-            child: Text("Welcome! Please enter your details"),
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              getAppLocalizations(context).login_welcome,
+              style: getTextTheme(context).b1sb.copyWith(
+                    color: getColorScheme(context).colorGray700,
+                  ),
+            ),
           ),
         ],
       ),
@@ -136,14 +150,22 @@ class _InputEmail extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Email Address"),
+          Text(
+            "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
+            style: getTextTheme(context).b2sb.copyWith(
+                  color: getColorScheme(context).colorGray900,
+                ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: OutlineTextField(
               controller: useTextEditingController(),
-              hint: 'Email',
-              successMessage: "heelo success",
-              errorMessage: "heelo error",
+              hint: getAppLocalizations(context).common_email,
+              successMessage: getAppLocalizations(context).login_email_correct,
+              errorMessage: getAppLocalizations(context).login_email_invalid,
+              checkRegList: const [
+                RegCheckType.Email,
+              ],
             ),
           ),
         ],
@@ -164,14 +186,24 @@ class _InputPassword extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text("Password"),
+          Text(
+            getAppLocalizations(context).common_password,
+            style: getTextTheme(context).b2sb.copyWith(
+              color: getColorScheme(context).colorGray900,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: OutlineTextField(
               controller: useTextEditingController(),
-              hint: 'Password',
-              successMessage: "heelo success",
-              errorMessage: "heelo error",
+              hint: getAppLocalizations(context).common_password,
+              errorMessage: getAppLocalizations(context).login_pw_invalid,
+              checkRegList: const [
+                RegCheckType.PW,
+              ],
+              textInputAction: TextInputAction.done,
+              textInputType: TextInputType.visiblePassword,
+              showPwVisibleButton: true,
             ),
           ),
         ],
