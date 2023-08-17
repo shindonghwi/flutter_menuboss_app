@@ -30,11 +30,13 @@ class MenuBossApp extends HookWidget {
             theme: AppTheme.lightTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: getColorScheme(context).colorPrimary500,
+                selectionColor: getColorScheme(context).colorSecondary50,
               ),
             ),
             darkTheme: AppTheme.darkTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: getColorScheme(context).colorPrimary500,
+                selectionColor: getColorScheme(context).colorSecondary50,
               ),
             ),
             themeMode: ThemeMode.system,
