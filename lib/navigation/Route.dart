@@ -16,7 +16,7 @@ enum RoutingScreen {
   DetailTvSetting(route: "/detail/tv/setting"), // 티비 상세 설정
   DetailTvModify(route: "/detail/tv/modify"), // 티비 정보 수정
   ScreenList(route: "/list/tv_screen"), // 스크린 리스트
-  Profile(route: "/my/profile"), // 프로필
+  MyPage(route: "/my_page"), // 마이페이지
   ProfilePlan(route: "/my/profile/plan"); // 프로필 플랜 정보
 
   final String route;
