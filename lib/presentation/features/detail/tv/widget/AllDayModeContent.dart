@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/NeutralOutlineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -102,7 +104,12 @@ class _Content extends StatelessWidget {
                 ),
                 content: getAppLocalizations(context).common_edit,
                 isActivated: true,
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    nextSlideScreen(RoutingScreen.ScreenList.route),
+                  );
+                },
               ),
             ],
           ),

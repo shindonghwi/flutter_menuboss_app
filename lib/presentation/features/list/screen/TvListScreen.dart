@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
 import 'package:menuboss/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -13,55 +13,19 @@ class TvListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TopBarIconTitleText(
+        content: getAppLocalizations(context).screen_list_appbar_title,
+        rightText: getAppLocalizations(context).common_save,
+        rightIconOnPressed: () {},
+        rightTextActivated: true,
+      ),
       backgroundColor: getColorScheme(context).white,
       body: const SafeArea(
         child: Column(
           children: [
-            _AppBar(),
             _Content(),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget {
-  const _AppBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      height: 75,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Clickable(
-            onPressed: () {},
-            child: Container(
-              color: Colors.red.withOpacity(0.3),
-              padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(
-                "assets/imgs/icon_back.svg",
-                width: 24,
-                height: 24,
-              ),
-            ),
-          ),
-          const Text("Screen List"),
-          Clickable(
-            onPressed: () {},
-            child: Container(
-              color: Colors.green.withOpacity(0.3),
-              padding: const EdgeInsets.all(8.0),
-              child: const Text("Save"),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -112,7 +76,7 @@ class _Content extends HookWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Container(
-                      margin: const EdgeInsets.only(left: 12),
+                      margin: const EdgeInsets.only(left: 24),
                       child: BasicBorderCheckBox(
                         isChecked: checkedIndex.value == index,
                         onChange: (value) {
@@ -129,8 +93,8 @@ class _Content extends HookWidget {
                   ],
                 ),
               ),
-              const SizedBox(height: 8), // Add some spacing
-              Container(
+              const SizedBox(height: 16), // Add some spacing
+              SizedBox(
                 height: 150, // Set a fixed height for the image row
                 child: ListView.separated(
                   padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -140,13 +104,30 @@ class _Content extends HookWidget {
                   },
                   itemBuilder: (BuildContext context, int index) {
                     final imageUrl = item.second[index];
-                    return Container(
-                      width: 255,
-                      height: 150,
-                      color: const Color(0xFFF5F5F5),
-                      child: Image.network(
-                        imageUrl,
-                        fit: BoxFit.fill,
+                    return ClipRRect(
+                      borderRadius: const BorderRadius.all(Radius.circular(10.0)),
+                      child: Container(
+                        width: 255,
+                        height: 150,
+                        decoration: BoxDecoration(
+                          color: getColorScheme(context).colorGray100,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Image.network(
+                          imageUrl,
+                          fit: BoxFit.fill,
+                          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
+                            if (loadingProgress == null) return child;
+                            return FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: Image.asset(
+                                "assets/imgs/image_default.png",
+                                width: 96,
+                                height: 48,
+                              ),
+                            );
+                          },
+                        ),
                       ),
                     );
                   },

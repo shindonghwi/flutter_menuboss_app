@@ -20,6 +20,8 @@
         }
     },
 
+    "screen_list_appbar_title": "Screen List",
+
     "profile_appbar_title": "My page",
 
     "common_email": "Email",
@@ -29,6 +31,7 @@
     "common_do_login": "Log in",
     "common_edit": "Edit",
     "common_apply": "Apply",
+    "common_save": "Save",
     "common_mode_all_day": "All day Mode",
     "common_mode_schedule": "Schedule Mode",
 
