@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/features/main/home/HomeScreen.dart';
 import 'package:menuboss/presentation/features/main/profile/ProfileScreen.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
@@ -16,8 +17,8 @@ class MainScreen extends HookWidget {
     final currentIndex = useState(0);
 
     List<Pair> iconList = [
-      Pair('assets/imgs/icon_setting.svg', "Home"),
-      Pair('assets/imgs/icon_setting.svg', "MyPage"),
+      Pair('assets/imgs/icon_home.svg', "Home"),
+      Pair('assets/imgs/icon_profile.svg', "MyPage"),
     ];
 
     return Scaffold(
@@ -41,77 +42,89 @@ class MainScreen extends HookWidget {
   }
 }
 
-class _BottomNavigationBar extends HookConsumerWidget {
+class _BottomNavigationBar extends HookWidget {
   final ValueNotifier<int> currentIndex;
   final List<Pair> iconList;
 
   const _BottomNavigationBar({
-    super.key,
     required this.currentIndex,
     required this.iconList,
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return Stack(
-      children: [
-        Container(
-          color: Colors.white,
-          child: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(15.0),
-              topRight: Radius.circular(15.0),
-            ),
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              backgroundColor: Colors.white,
-              selectedItemColor: Colors.blue,
-              unselectedItemColor: Colors.grey,
-              currentIndex: currentIndex.value,
-              onTap: (index) => currentIndex.value = index,
-              items: iconList.map((data) {
-                return BottomNavigationBarItem(
-                  icon: Column(
-                    children: [
-                      SvgPicture.asset(
-                        data.first,
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          Colors.grey,
-                          BlendMode.srcIn,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 4,
-                      )
-                    ],
+  Widget build(BuildContext context) {
+    return Container(
+      color: getColorScheme(context).white,
+      child: SafeArea(
+        child: Stack(
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: getColorScheme(context).colorGray300,
+                    width: 0.5,
                   ),
-                  activeIcon: Column(
-                    children: [
-                      SvgPicture.asset(
-                        data.first,
-                        width: 24,
-                        height: 24,
-                        colorFilter: ColorFilter.mode(
-                          Colors.blue,
-                          BlendMode.srcIn,
-                        ),
+                ),
+              ),
+              height: 80,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(15.0),
+                  topRight: Radius.circular(15.0),
+                ),
+                child: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  backgroundColor: getColorScheme(context).white,
+                  selectedItemColor: getColorScheme(context).colorPrimary500,
+                  unselectedItemColor: getColorScheme(context).colorGray300,
+                  currentIndex: currentIndex.value,
+                  onTap: (index) => currentIndex.value = index,
+                  items: iconList.map((data) {
+                    return BottomNavigationBarItem(
+                      icon: Column(
+                        children: [
+                          SvgPicture.asset(
+                            data.first,
+                            width: 24,
+                            height: 24,
+                            colorFilter: ColorFilter.mode(
+                              getColorScheme(context).colorGray300,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          )
+                        ],
                       ),
-                      const SizedBox(
-                        height: 4,
-                      )
-                    ],
-                  ),
-                  label: data.second,
-                );
-              }).toList(),
-              selectedLabelStyle: getTextTheme(context).c1m,
-              unselectedLabelStyle: getTextTheme(context).c1m,
+                      activeIcon: Column(
+                        children: [
+                          SvgPicture.asset(
+                            data.first,
+                            width: 24,
+                            height: 24,
+                            colorFilter: ColorFilter.mode(
+                              getColorScheme(context).colorPrimary500,
+                              BlendMode.srcIn,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 4,
+                          )
+                        ],
+                      ),
+                      label: data.second,
+                    );
+                  }).toList(),
+                  selectedLabelStyle: getTextTheme(context).b2b,
+                  unselectedLabelStyle: getTextTheme(context).b2b,
+                ),
+              ),
             ),
-          ),
+          ],
         ),
-      ],
+      ),
     );
   }
 }
