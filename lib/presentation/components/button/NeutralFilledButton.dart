@@ -4,7 +4,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class FillButton extends HookWidget {
+class NeutralFilledButton extends HookWidget {
   final Widget? leftIcon;
   final String content;
   final bool isActivated;
@@ -12,7 +12,7 @@ class FillButton extends HookWidget {
   final double height;
   final double borderRadius;
 
-  const FillButton({
+  const NeutralFilledButton({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -22,17 +22,7 @@ class FillButton extends HookWidget {
     this.borderRadius = 0,
   }) : super(key: key);
 
-  const FillButton.smallRound({
-    Key? key,
-    this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 100,
-        height = 44,
-        super(key: key);
-
-  const FillButton.smallRect({
+  const NeutralFilledButton.smallRect({
     Key? key,
     this.leftIcon,
     required this.content,
@@ -40,51 +30,12 @@ class FillButton extends HookWidget {
     this.onPressed,
   })  : borderRadius = 10,
         height = 44,
-        super(key: key);
-
-  const FillButton.normalRect({
-    Key? key,
-    this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 10,
-        height = 52,
-        super(key: key);
-
-  const FillButton.largeRound({
-    Key? key,
-    this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 100,
-        height = 60,
-        super(key: key);
-
-  const FillButton.largeRect({
-    Key? key,
-    this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 10,
-        height = 60,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-
-    var textStyle = getTextTheme(context).b2sb.copyWith(color: getColorScheme(context).white);
-
-    switch(height){
-      case 52:
-        textStyle = getTextTheme(context).b1sb.copyWith(color: getColorScheme(context).white);
-        break;
-      case 60:
-        textStyle = getTextTheme(context).s2sb.copyWith(color: getColorScheme(context).white);
-        break;
-    }
+    var textColor = isActivated ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
+    var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
 
     return SizedBox(
       height: height,
@@ -92,10 +43,12 @@ class FillButton extends HookWidget {
         onPressed: isActivated ? () => onPressed?.call() : null,
         style: ElevatedButton.styleFrom(
           disabledBackgroundColor: getColorScheme(context).colorGray100,
-          backgroundColor: isActivated ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray100,
+          backgroundColor: isActivated ? getColorScheme(context).colorGray50 : getColorScheme(context).colorGray100,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
+          elevation: 0,
+          foregroundColor: getColorScheme(context).colorGray100,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

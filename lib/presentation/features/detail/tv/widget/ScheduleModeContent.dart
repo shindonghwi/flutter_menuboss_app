@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/button/FillButton.dart';
+import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 class ScheduleModeContent extends StatelessWidget {
@@ -67,7 +67,7 @@ class ScheduleModeContent extends StatelessWidget {
                                 // Flexible(
                                 //   flex: 1,
                                 //   fit: FlexFit.tight,
-                                //   child: FillButton.round(
+                                //   child: PrimaryFilledButton.round(
                                 //     content: Text("Edit"),
                                 //     isActivated: true,
                                 //     onPressed: () {
@@ -84,7 +84,7 @@ class ScheduleModeContent extends StatelessWidget {
                                 // Flexible(
                                 //   flex: 1,
                                 //   fit: FlexFit.tight,
-                                //   child: FillButton.round(content: Text("Edit"), isActivated: true),
+                                //   child: PrimaryFilledButton.round(content: Text("Edit"), isActivated: true),
                                 // ),
                               ],
                             )
@@ -124,7 +124,7 @@ class _ApplyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
-      // child: FillButton.round(
+      // child: PrimaryFilledButton.round(
       //   content: Padding(
       //     padding: EdgeInsets.symmetric(vertical: 20.0),
       //     child: Text("Apply"),

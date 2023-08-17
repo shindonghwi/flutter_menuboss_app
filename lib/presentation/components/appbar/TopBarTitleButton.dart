@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:menuboss/presentation/components/button/FillButton.dart';
+import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -45,7 +45,7 @@ class TopBarTitleButton extends HookWidget implements PreferredSizeWidget {
               alignment: Alignment.centerRight,
               child: Container(
                 margin: const EdgeInsets.only(right: 24.0),
-                child: FillButton.smallRound(
+                child: PrimaryFilledButton.smallRound(
                   content: buttonContent,
                   isActivated: true,
                   leftIcon: Container(

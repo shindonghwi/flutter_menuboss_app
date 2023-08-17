@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
-import 'package:menuboss/presentation/components/button/FillButton.dart';
+import 'package:menuboss/presentation/components/button/NeutralOutlineButton.dart';
+import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 
 class AllDayModeContent extends StatelessWidget {
   const AllDayModeContent({super.key});
@@ -10,18 +12,25 @@ class AllDayModeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Container(
-        margin: const EdgeInsets.only(top: 32, left: 24, right: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // Text("Basic Exposure", style: Theme.of(context).textTheme.h2sb),
-            SizedBox(height: 24),
-            _Content(),
-            Spacer(),
-            _ApplyButton()
-          ],
+      child: SafeArea(
+        child: Container(
+          margin: const EdgeInsets.only(top: 32, left: 24, right: 24),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                getAppLocalizations(context).schedule_time_basic,
+                style: getTextTheme(context).s2b.copyWith(
+                      color: getColorScheme(context).colorGray900,
+                    ),
+              ),
+              const SizedBox(height: 24),
+              const _Content(),
+              const Spacer(),
+              const _ApplyButton()
+            ],
+          ),
         ),
       ),
     );
@@ -43,43 +52,58 @@ class _Content extends StatelessWidget {
               width: 340,
               height: 200,
               decoration: BoxDecoration(
-                color: const Color(0xFFF5F5F5),
+                color: getColorScheme(context).colorGray100,
                 borderRadius: BorderRadius.circular(10),
               ),
-              child: SvgPicture.asset(
-                "assets/imgs/image_default.svg",
-                width: 95,
-                height: 48,
+              child: FittedBox(
                 fit: BoxFit.scaleDown,
+                child: Image.asset(
+                  "assets/imgs/image_default.png",
+                  width: 96,
+                  height: 48,
+                ),
               ),
             ),
           ],
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 12.0),
+          padding: const EdgeInsets.only(top: 16.0),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Hello"),
+                  Text(
+                    "Basic Menu Screen",
+                    style: getTextTheme(context).b1m.copyWith(
+                          color: getColorScheme(context).colorGray900,
+                        ),
+                  ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 2.0),
-                    child: Text("World"),
+                    padding: const EdgeInsets.only(top: 4.0),
+                    child: Text(
+                      "Schedule Time : 00:00 ~ 24:00",
+                      style: getTextTheme(context).c1m.copyWith(
+                            color: getColorScheme(context).colorGray500,
+                          ),
+                    ),
                   ),
                 ],
               ),
-              Clickable(
-                onPressed: () {},
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12.5),
-                  child: Text("Edit"),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(10),
+              NeutralOutlineButton.smallRect(
+                leftIcon: Padding(
+                  padding: const EdgeInsets.only(right: 8.0),
+                  child: SvgPicture.asset(
+                    "assets/imgs/icon_image.svg",
+                    width: 18,
+                    height: 18,
                   ),
                 ),
-              )
+                content: getAppLocalizations(context).common_edit,
+                isActivated: true,
+                onPressed: () {},
+              ),
             ],
           ),
         ),
@@ -96,14 +120,13 @@ class _ApplyButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
-      // child: FillButton.round(
-      //   content: Padding(
-      //     padding: const EdgeInsets.symmetric(vertical: 20.0),
-      //     child: Text("Apply"),
-      //   ),
-      //   isActivated: true,
-      // ),
+      width: double.infinity,
+      margin: const EdgeInsets.only(bottom: 24),
+      child: PrimaryFilledButton.largeRound(
+        content: getAppLocalizations(context).common_apply,
+        isActivated: true,
+        onPressed: () {},
+      ),
     );
   }
 }

@@ -13,13 +13,30 @@
     "home_tv_screen_on": "Screen on",
     "home_tv_screen_off": "Screen off",
 
+    "detail_tv_appbar_title": "TV - {id}",
+    "@detail_tv_appbar_title":{
+        "placeholders": {
+            "id": {}
+        }
+    },
+
     "profile_appbar_title": "My page",
 
     "common_email": "Email",
     "common_address": "Address",
     "common_password": "Password",
     "common_or": "or",
-    "common_do_login": "Log in"
+    "common_do_login": "Log in",
+    "common_edit": "Edit",
+    "common_apply": "Apply",
+    "common_mode_all_day": "All day Mode",
+    "common_mode_schedule": "Schedule Mode",
+
+    "schedule_time_basic": "Basic Exposure",
+    "schedule_time_morning": "Morning",
+    "schedule_time_lunch": "Lunch",
+    "schedule_time_dinner": "Dinner",
+    "schedule_time_dawn": "Dawn"
 
 
 }
