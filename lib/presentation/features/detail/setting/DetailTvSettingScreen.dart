@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:menuboss/navigation/PageMoveUtil.dart';
-import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/checkbox/switch/SwitchCheckBox.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 class DetailTvSettingScreen extends HookWidget {
@@ -13,19 +14,22 @@ class DetailTvSettingScreen extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      Pair("Show Tv Name", useState(true)),
-      Pair("Display selected TV guideline", useState(true)),
+      Pair(getAppLocalizations(context).detail_tv_setting_item_show_tv_name, useState(true)),
+      Pair(getAppLocalizations(context).detail_tv_setting_item_guideline, useState(true)),
     ];
 
     return Scaffold(
+      backgroundColor: getColorScheme(context).white,
+      appBar: TopBarIconTitleIcon(
+        content: getAppLocalizations(context).detail_tv_setting_appbar_title,
+      ),
       body: SafeArea(
         child: Column(
           children: [
-            const _AppBar(),
             Container(
               margin: const EdgeInsets.symmetric(horizontal: 24),
               child: ListView.separated(
-                padding: const EdgeInsets.only(top: 24, bottom: 60),
+                padding: const EdgeInsets.only(bottom: 60),
                 shrinkWrap: true,
                 separatorBuilder: (BuildContext context, int index) {
                   return const SizedBox(height: 0); // Adjust the height as needed
@@ -37,7 +41,12 @@ class DetailTvSettingScreen extends HookWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(item.first),
+                        Text(
+                          item.first,
+                          style: getTextTheme(context).b2sb.copyWith(
+                                color: getColorScheme(context).colorGray900,
+                              ),
+                        ),
                         Padding(
                           padding: const EdgeInsets.symmetric(vertical: 20.0),
                           child: SizedBox(
@@ -60,47 +69,6 @@ class DetailTvSettingScreen extends HookWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-class _AppBar extends StatelessWidget {
-  const _AppBar({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 16),
-      height: 75,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Clickable(
-            onPressed: () {},
-            child: Container(
-              color: Colors.red.withOpacity(0.3),
-              padding: const EdgeInsets.all(8.0),
-              child: SvgPicture.asset(
-                "assets/imgs/icon_back.svg",
-                width: 24,
-                height: 24,
-              ),
-            ),
-          ),
-          Text("TV Settings"),
-          Clickable(
-            onPressed: () {},
-            child: Container(
-              color: Colors.green.withOpacity(0.3),
-              padding: const EdgeInsets.all(8.0),
-              child: Text("Save"),
-            ),
-          ),
-        ],
       ),
     );
   }

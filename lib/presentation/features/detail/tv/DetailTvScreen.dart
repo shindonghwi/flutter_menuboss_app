@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -22,8 +24,18 @@ class DetailTvScreen extends HookWidget {
       appBar: TopBarIconTitleIcon(
         content: "Tv",
         suffixIcons: [
-          Pair("assets/imgs/icon_edit.svg", () {}),
-          Pair("assets/imgs/icon_settings.svg", () {}),
+          Pair("assets/imgs/icon_edit.svg", () {
+            Navigator.push(
+              context,
+              nextSlideScreen(RoutingScreen.DetailTvModify.route),
+            );
+          }),
+          Pair("assets/imgs/icon_settings.svg", () {
+            Navigator.push(
+              context,
+              nextSlideScreen(RoutingScreen.DetailTvSetting.route),
+            );
+          }),
         ],
       ),
       body: Column(

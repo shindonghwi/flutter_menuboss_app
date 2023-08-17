@@ -22,6 +22,12 @@
 
     "screen_list_appbar_title": "Screen List",
 
+    "detail_tv_modify_appbar_title": "Modify TV Name",
+
+    "detail_tv_setting_appbar_title": "TV Settings",
+    "detail_tv_setting_item_show_tv_name": "Show Tv Name",
+    "detail_tv_setting_item_guideline": "Display selected Tv guideline",
+
     "profile_appbar_title": "My page",
 
     "common_email": "Email",

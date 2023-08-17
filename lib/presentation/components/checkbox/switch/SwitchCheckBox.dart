@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class SwitchCheckBox extends HookWidget {
   final bool isOn;
-  Function(bool)? onChanged;
+  final Function(bool)? onChanged;
 
-  SwitchCheckBox({
+  const SwitchCheckBox({
     Key? key,
     required this.isOn,
     required this.onChanged,
@@ -25,9 +26,7 @@ class SwitchCheckBox extends HookWidget {
           width: constraints.minWidth,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: isOn
-                ? Colors.red
-                : Colors.grey,
+            color: isOn ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray300,
           ),
           child: AnimatedAlign(
             duration: duration,
@@ -38,9 +37,9 @@ class SwitchCheckBox extends HookWidget {
               child: Container(
                 width: constraints.minWidth * 0.46,
                 height: constraints.minWidth * 0.46,
-                decoration: const BoxDecoration(
+                decoration: BoxDecoration(
                   shape: BoxShape.circle,
-                  color: Colors.white,
+                  color: getColorScheme(context).white,
                 ),
               ),
             ),
