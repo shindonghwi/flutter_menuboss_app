@@ -97,13 +97,13 @@ class _ApplyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
-      child: FillButton.round(
-        content: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20.0),
-          child: Text("Apply"),
-        ),
-        isActivated: true,
-      ),
+      // child: FillButton.round(
+      //   content: Padding(
+      //     padding: const EdgeInsets.symmetric(vertical: 20.0),
+      //     child: Text("Apply"),
+      //   ),
+      //   isActivated: true,
+      // ),
     );
   }
 }

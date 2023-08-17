@@ -49,15 +49,15 @@ class _AppBar extends StatelessWidget {
               Text("Tv List"),
             ],
           ),
-          SizedBox(
-            width: 106,
-            height: 44,
-            child: FillButton.round(
-              content: const Text("Add TV"),
-              isActivated: true,
-              onPressed: () {},
-            ),
-          ),
+          // SizedBox(
+          //   width: 106,
+          //   height: 44,
+          //   child: FillButton.round(
+          //     content: const Text("Add TV"),
+          //     isActivated: true,
+          //     onPressed: () {},
+          //   ),
+          // ),
         ],
       ),
     );

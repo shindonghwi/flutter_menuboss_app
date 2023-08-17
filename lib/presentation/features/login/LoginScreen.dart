@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -11,27 +10,34 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/RegUtil.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends HookWidget {
   const LoginScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final isEmailValid = useState(false);
+    final isPwValid = useState(false);
+
     return Scaffold(
       backgroundColor: getColorScheme(context).white,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
-          child: const Column(
+          child: Column(
             children: [
-              _Title(),
-              SizedBox(height: 40),
-              _InputEmail(),
-              SizedBox(height: 16),
-              _InputPassword(),
-              SizedBox(height: 20),
-              _LoginButton(),
-              SizedBox(height: 24),
-              _SocialLoginButtons(),
+              const _Title(),
+              const SizedBox(height: 40),
+              _InputEmail(
+                onChanged: (text) => isEmailValid.value = RegUtil.checkEmail(text),
+              ),
+              const SizedBox(height: 16),
+              _InputPassword(
+                onChanged: (text) => isPwValid.value = RegUtil.checkPw(text),
+              ),
+              const SizedBox(height: 20),
+              _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
+              const SizedBox(height: 24),
+              const _SocialLoginButtons(),
             ],
           ),
         ),
@@ -50,32 +56,37 @@ class _SocialLoginButtons extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              Flexible(child: Container(height: 1, color: Colors.grey)),
+              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray500)),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: Text("or"),
+                child: Text(
+                  getAppLocalizations(context).common_or,
+                  style: getTextTheme(context).b2m.copyWith(
+                        color: getColorScheme(context).colorGray500,
+                      ),
+                ),
               ),
-              Flexible(child: Container(height: 1, color: Colors.grey)),
+              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray500)),
             ],
           ),
         ),
-        SizedBox(height: 32),
+        const SizedBox(height: 32),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Clickable(
               borderRadius: 8,
               onPressed: () {},
-              child: SvgPicture.asset("assets/imgs/icon_google.svg"),
+              child: SvgPicture.asset("assets/imgs/icon_google.svg", width: 64, height: 64),
             ),
-            SizedBox(width: 32),
+            const SizedBox(width: 32),
             Clickable(
               borderRadius: 8,
               onPressed: () {},
-              child: SvgPicture.asset("assets/imgs/icon_apple.svg"),
+              child: SvgPicture.asset("assets/imgs/icon_apple.svg", width: 64, height: 64),
             )
           ],
         ),
@@ -85,15 +96,18 @@ class _SocialLoginButtons extends StatelessWidget {
 }
 
 class _LoginButton extends StatelessWidget {
+  final bool isActivated;
+
   const _LoginButton({
     super.key,
+    required this.isActivated,
   });
 
   @override
   Widget build(BuildContext context) {
-    return FillButton.round(
-      content: Text("Log in"),
-      isActivated: true,
+    return FillButton.normalRect(
+      content: getAppLocalizations(context).common_do_login,
+      isActivated: isActivated,
       onPressed: () {
         Navigator.pushNamedAndRemoveUntil(
           context,
@@ -139,8 +153,11 @@ class _Title extends StatelessWidget {
 }
 
 class _InputEmail extends HookWidget {
+  final Function(String) onChanged;
+
   const _InputEmail({
     super.key,
+    required this.onChanged,
   });
 
   @override
@@ -166,6 +183,7 @@ class _InputEmail extends HookWidget {
               checkRegList: const [
                 RegCheckType.Email,
               ],
+              onChanged: (text) => onChanged(text),
             ),
           ),
         ],
@@ -175,8 +193,11 @@ class _InputEmail extends HookWidget {
 }
 
 class _InputPassword extends HookWidget {
+  final Function(String) onChanged;
+
   const _InputPassword({
     super.key,
+    required this.onChanged,
   });
 
   @override
@@ -189,8 +210,8 @@ class _InputPassword extends HookWidget {
           Text(
             getAppLocalizations(context).common_password,
             style: getTextTheme(context).b2sb.copyWith(
-              color: getColorScheme(context).colorGray900,
-            ),
+                  color: getColorScheme(context).colorGray900,
+                ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
@@ -204,6 +225,7 @@ class _InputPassword extends HookWidget {
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.visiblePassword,
               showPwVisibleButton: true,
+              onChanged: (text) => onChanged(text),
             ),
           ),
         ],

@@ -64,28 +64,28 @@ class ScheduleModeContent extends StatelessWidget {
                             ),
                             Row(
                               children: [
-                                Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: FillButton.round(
-                                    content: Text("Edit"),
-                                    isActivated: true,
-                                    onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        nextSlideScreen(RoutingScreen.ScreenList.route),
-                                      );
-                                    },
-                                  ),
-                                ),
+                                // Flexible(
+                                //   flex: 1,
+                                //   fit: FlexFit.tight,
+                                //   child: FillButton.round(
+                                //     content: Text("Edit"),
+                                //     isActivated: true,
+                                //     onPressed: () {
+                                //       Navigator.push(
+                                //         context,
+                                //         nextSlideScreen(RoutingScreen.ScreenList.route),
+                                //       );
+                                //     },
+                                //   ),
+                                // ),
 
                                 /// Edit만 보이게 할거면 아래를 지우면 됨.
                                 SizedBox(width: 12),
-                                Flexible(
-                                  flex: 1,
-                                  fit: FlexFit.tight,
-                                  child: FillButton.round(content: Text("Edit"), isActivated: true),
-                                ),
+                                // Flexible(
+                                //   flex: 1,
+                                //   fit: FlexFit.tight,
+                                //   child: FillButton.round(content: Text("Edit"), isActivated: true),
+                                // ),
                               ],
                             )
                           ],
@@ -124,13 +124,13 @@ class _ApplyButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
-      child: FillButton.round(
-        content: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20.0),
-          child: Text("Apply"),
-        ),
-        isActivated: true,
-      ),
+      // child: FillButton.round(
+      //   content: Padding(
+      //     padding: EdgeInsets.symmetric(vertical: 20.0),
+      //     child: Text("Apply"),
+      //   ),
+      //   isActivated: true,
+      // ),
     );
   }
 }
