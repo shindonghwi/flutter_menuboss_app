@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:menuboss/navigation/PageMoveUtil.dart';
-import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/button/NeutralOutlineButton.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 class ScheduleModeContent extends StatelessWidget {
@@ -27,110 +28,130 @@ class ScheduleModeContent extends StatelessWidget {
               shrinkWrap: true,
               separatorBuilder: (BuildContext context, int index) {
                 return Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 24),
                   width: double.infinity,
                   height: 1,
-                  color: Color(0xFFE1E1E1),
+                  color: getColorScheme(context).colorGray200,
                 ); // Adjust the height as needed
               },
               itemBuilder: (BuildContext context, int index) {
                 final item = items[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 24.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        width: 174,
-                        padding: const EdgeInsets.symmetric(vertical: 20),
-                        margin: const EdgeInsets.only(right: 28),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(item.first),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 24.0),
-                              child: Column(
+                  child: AspectRatio(
+                    aspectRatio: 342 / 223,
+                    child: Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 28.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                item.first,
+                                style: getTextTheme(context).s2b.copyWith(
+                                      color: getColorScheme(context).colorGray900,
+                                    ),
+                              ),
+                              Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text("Basic Menu Screen"),
+                                  Text(
+                                    "Basic Exposure",
+                                    style: getTextTheme(context).b2m.copyWith(
+                                          color: getColorScheme(context).colorGray900,
+                                        ),
+                                  ),
                                   Padding(
                                     padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text("Schedule Time : ${item.second}"),
+                                    child: Text(
+                                      "Schedule Time : ${item.second}",
+                                      style: getTextTheme(context).c1m.copyWith(
+                                            color: getColorScheme(context).colorGray900,
+                                          ),
+                                    ),
                                   ),
                                 ],
                               ),
-                            ),
-                            Row(
-                              children: [
-                                // Flexible(
-                                //   flex: 1,
-                                //   fit: FlexFit.tight,
-                                //   child: PrimaryFilledButton.round(
-                                //     content: Text("Edit"),
-                                //     isActivated: true,
-                                //     onPressed: () {
-                                //       Navigator.push(
-                                //         context,
-                                //         nextSlideScreen(RoutingScreen.ScreenList.route),
-                                //       );
-                                //     },
-                                //   ),
-                                // ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  NeutralOutlineButton.xSmallRect(
+                                    content: getAppLocalizations(context).common_edit,
+                                    leftIcon: Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: SvgPicture.asset(
+                                        "assets/imgs/icon_image.svg",
+                                        width: 18,
+                                        height: 18,
+                                        colorFilter: ColorFilter.mode(
+                                          getColorScheme(context).colorGray900,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                    ),
+                                    isActivated: true,
+                                    onPressed: () {},
+                                  ),
 
-                                /// Edit만 보이게 할거면 아래를 지우면 됨.
-                                SizedBox(width: 12),
-                                // Flexible(
-                                //   flex: 1,
-                                //   fit: FlexFit.tight,
-                                //   child: PrimaryFilledButton.round(content: Text("Edit"), isActivated: true),
-                                // ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                      Expanded(
-                        child: Center(
-                          child: SvgPicture.asset(
-                            "assets/imgs/image_default.svg",
-                            width: 140,
-                            height: 180,
-                            fit: BoxFit.contain, // 이미지를 영역에 꽉 채우도록 설정
+                                  /// Edit만 보이게 할거면 아래를 지우면 됨.
+                                  const SizedBox(width: 8),
+                                  NeutralOutlineButton.xSmallRect(
+                                    content: getAppLocalizations(context).common_time,
+                                    leftIcon: Padding(
+                                      padding: const EdgeInsets.only(right: 8.0),
+                                      child: SvgPicture.asset(
+                                        "assets/imgs/icon_time.svg",
+                                        width: 18,
+                                        height: 18,
+                                        colorFilter: ColorFilter.mode(
+                                          getColorScheme(context).colorGray900,
+                                          BlendMode.srcIn,
+                                        ),
+                                      ),
+                                    ),
+                                    isActivated: true,
+                                    onPressed: () {},
+                                  ),
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                      )
-                    ],
+                        const SizedBox(
+                          width: 14,
+                        ),
+                        Expanded(
+                          child: AspectRatio(
+                            aspectRatio: 140 / 175,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: getColorScheme(context).colorGray100,
+                              ),
+                              child: FittedBox(
+                                fit: BoxFit.scaleDown,
+                                child: Image.asset(
+                                  "assets/imgs/image_default.png",
+                                  width: 64,
+                                  height: 32,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
               itemCount: items.length,
             ),
           ),
-          _ApplyButton(),
         ],
       ),
-    );
-  }
-}
-
-class _ApplyButton extends StatelessWidget {
-  const _ApplyButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.only(bottom: 24, left: 24, right: 24),
-      // child: PrimaryFilledButton.round(
-      //   content: Padding(
-      //     padding: EdgeInsets.symmetric(vertical: 20.0),
-      //     child: Text("Apply"),
-      //   ),
-      //   isActivated: true,
-      // ),
     );
   }
 }

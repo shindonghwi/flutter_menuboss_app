@@ -3,7 +3,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/NeutralOutlineButton.dart';
-import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -13,26 +12,22 @@ class AllDayModeContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.only(top: 32, left: 24, right: 24),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                getAppLocalizations(context).schedule_time_basic,
-                style: getTextTheme(context).s2b.copyWith(
-                      color: getColorScheme(context).colorGray900,
-                    ),
-              ),
-              const SizedBox(height: 24),
-              const _Content(),
-              const Spacer(),
-              const _ApplyButton()
-            ],
-          ),
+    return SafeArea(
+      child: Container(
+        margin: const EdgeInsets.only(top: 32, left: 24, right: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              getAppLocalizations(context).schedule_time_basic,
+              style: getTextTheme(context).s2b.copyWith(
+                    color: getColorScheme(context).colorGray900,
+                  ),
+            ),
+            const SizedBox(height: 24),
+            const _Content(),
+          ],
         ),
       ),
     );
@@ -50,19 +45,20 @@ class _Content extends StatelessWidget {
       children: [
         Stack(
           children: [
-            Container(
-              width: 340,
-              height: 200,
-              decoration: BoxDecoration(
-                color: getColorScheme(context).colorGray100,
-                borderRadius: BorderRadius.circular(10),
-              ),
-              child: FittedBox(
-                fit: BoxFit.scaleDown,
-                child: Image.asset(
-                  "assets/imgs/image_default.png",
-                  width: 96,
-                  height: 48,
+            AspectRatio(
+              aspectRatio: 340 / 200,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: getColorScheme(context).colorGray100,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Image.asset(
+                    "assets/imgs/image_default.png",
+                    width: 96,
+                    height: 48,
+                  ),
                 ),
               ),
             ),
@@ -100,6 +96,10 @@ class _Content extends StatelessWidget {
                     "assets/imgs/icon_image.svg",
                     width: 18,
                     height: 18,
+                    colorFilter: ColorFilter.mode(
+                      getColorScheme(context).colorGray900,
+                      BlendMode.srcIn,
+                    )
                   ),
                 ),
                 content: getAppLocalizations(context).common_edit,
@@ -115,25 +115,6 @@ class _Content extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-}
-
-class _ApplyButton extends StatelessWidget {
-  const _ApplyButton({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.only(bottom: 24),
-      child: PrimaryFilledButton.largeRound(
-        content: getAppLocalizations(context).common_apply,
-        isActivated: true,
-        onPressed: () {},
-      ),
     );
   }
 }

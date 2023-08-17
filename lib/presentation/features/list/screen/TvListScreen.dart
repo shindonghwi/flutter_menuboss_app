@@ -64,20 +64,21 @@ class _Content extends HookWidget {
           return Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Clickable(
-                onPressed: () {
-                  if (checkedIndex.value == index) {
-                    checkedIndex.value = -1;
-                    return;
-                  }
-                  checkedIndex.value = index;
-                },
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(left: 24),
-                      child: BasicBorderCheckBox(
+              Container(
+                margin: const EdgeInsets.only(left: 24),
+                child: Clickable(
+                  onPressed: () {
+                    if (checkedIndex.value == index) {
+                      checkedIndex.value = -1;
+                      return;
+                    }
+                    checkedIndex.value = index;
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      BasicBorderCheckBox(
                         isChecked: checkedIndex.value == index,
                         onChange: (value) {
                           if (checkedIndex.value == index) {
@@ -87,10 +88,10 @@ class _Content extends HookWidget {
                           checkedIndex.value = index;
                         },
                       ),
-                    ),
-                    const SizedBox(width: 8), // Add some spacing
-                    Text(item.first),
-                  ],
+                      const SizedBox(width: 8), // Add some spacing
+                      Text(item.first),
+                    ],
+                  ),
                 ),
               ),
               const SizedBox(height: 16), // Add some spacing
