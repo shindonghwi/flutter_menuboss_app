@@ -29,6 +29,9 @@
     "detail_tv_setting_item_guideline": "Display selected Tv guideline",
 
     "profile_appbar_title": "My page",
+    "profile_setting_item": "Settings",
+    "profile_setting_items_profile": "Profile",
+    "profile_setting_items_plan": "Plan",
 
     "common_email": "Email",
     "common_address": "Address",
