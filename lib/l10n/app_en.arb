@@ -7,6 +7,13 @@
     "login_email_invalid": "Incorrect Email :(",
     "login_pw_invalid": "a-z, A-Z, up to 9 digits, with [ !,@,#,$,%,^,&,* ]",
 
+    "home_appbar_title": "TV List",
+    "home_appbar_add_tv": "Add TV",
+    "home_tv_not_register": "There is no TV list\nAdd TV by scanning QR code",
+    "home_tv_screen_on": "Screen on",
+    "home_tv_screen_off": "Screen off",
+
+    "profile_appbar_title": "My page",
 
     "common_email": "Email",
     "common_address": "Address",
