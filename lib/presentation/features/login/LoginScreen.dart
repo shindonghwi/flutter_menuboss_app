@@ -105,16 +105,19 @@ class _LoginButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return FillButton.normalRect(
-      content: getAppLocalizations(context).common_do_login,
-      isActivated: isActivated,
-      onPressed: () {
-        Navigator.pushNamedAndRemoveUntil(
-          context,
-          RoutingScreen.Main.route,
-          (route) => false,
-        );
-      },
+    return SizedBox(
+      width: double.infinity,
+      child: FillButton.normalRect(
+        content: getAppLocalizations(context).common_do_login,
+        isActivated: isActivated,
+        onPressed: () {
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RoutingScreen.Main.route,
+            (route) => false,
+          );
+        },
+      ),
     );
   }
 }

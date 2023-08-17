@@ -121,7 +121,7 @@ class OutlineTextField extends HookWidget {
               ),
             ),
             contentPadding: const EdgeInsets.symmetric(
-              vertical: 12,
+              vertical: 16,
               horizontal: 12,
             ),
             suffixIconConstraints: const BoxConstraints(minHeight: 24, minWidth: 24),
