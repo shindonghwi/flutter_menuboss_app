@@ -42,8 +42,8 @@ enum RoutingScreen {
       RoutingScreen.ScreenList.route: (context) => const TvListScreen(),
 
       RoutingScreen.AddTV.route: (context) => const AddTvScreen(),
-      RoutingScreen.MyProfile.route: (context) => const MyPlanScreen(),
-      RoutingScreen.MyProfilePlan.route: (context) => const MyProfileScreen(),
+      RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
+      // RoutingScreen.MyProfilePlan.route: (context) => const MyPlanScreen(),
     };
   }
 
@@ -65,10 +65,12 @@ enum RoutingScreen {
     } else if (route == RoutingScreen.AddTV.route) {
       return const AddTvScreen();
     } else if (route == RoutingScreen.MyProfile.route) {
-      return const MyPlanScreen();
-    } else if (route == RoutingScreen.MyProfilePlan.route) {
       return const MyProfileScreen();
-    } else {
+    }
+    // else if (route == RoutingScreen.MyProfilePlan.route) {
+    //   return const MyPlanScreen();
+    // }
+    else {
       return const SplashScreen();
     }
   }

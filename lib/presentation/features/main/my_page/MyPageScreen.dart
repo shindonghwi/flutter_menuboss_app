@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/progress/LinearAnimationProgressBar.dart';
@@ -17,7 +19,7 @@ class MyPageScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarTitle(
-        content: getAppLocalizations(context).profile_appbar_title,
+        content: getAppLocalizations(context).my_page_appbar_title,
       ),
       body: SafeArea(
         child: Column(
@@ -175,8 +177,18 @@ class _SettingItems extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      Pair(getAppLocalizations(context).profile_setting_items_profile, () {}),
-      Pair(getAppLocalizations(context).profile_setting_items_plan, () {})
+      Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
+        Navigator.push(
+          context,
+          nextSlideScreen(RoutingScreen.MyProfile.route),
+        );
+      }),
+      // Pair(getAppLocalizations(context).my_page_setting_items_plan, () {
+      //   Navigator.push(
+      //     context,
+      //     nextSlideScreen(RoutingScreen.MyProfilePlan.route),
+      //   );
+      // })
     ];
 
     return Container(
@@ -186,7 +198,7 @@ class _SettingItems extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            getAppLocalizations(context).profile_setting_item,
+            getAppLocalizations(context).my_page_setting_item,
             style: getTextTheme(context).c1sb.copyWith(
                   color: getColorScheme(context).colorGray500,
                 ),

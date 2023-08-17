@@ -28,13 +28,17 @@
     "detail_tv_setting_item_show_tv_name": "Show Tv Name",
     "detail_tv_setting_item_guideline": "Display selected Tv guideline",
 
-    "profile_appbar_title": "My page",
-    "profile_setting_item": "Settings",
-    "profile_setting_items_profile": "Profile",
-    "profile_setting_items_plan": "Plan",
+    "my_page_appbar_title": "My page",
+    "my_page_setting_item": "Settings",
+    "my_page_setting_items_profile": "Profile",
+    "my_page_setting_items_plan": "Plan",
+
+    "my_page_profile_appbar_title": "Profile",
+    "my_page_profile_full_name": "Full Name",
 
     "common_email": "Email",
     "common_address": "Address",
+    "common_business_name": "Business Name",
     "common_password": "Password",
     "common_or": "or",
     "common_do_login": "Log in",
