@@ -87,7 +87,7 @@ class FillButton extends HookWidget {
     }
 
     return SizedBox(
-      width: getMediaQuery(context).size.width,
+      height: height,
       child: ElevatedButton(
         onPressed: isActivated ? () => onPressed?.call() : null,
         style: ElevatedButton.styleFrom(
@@ -97,16 +97,14 @@ class FillButton extends HookWidget {
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              leftIcon ?? Container(),
-              Text(content, style: textStyle),
-            ],
-          ),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            leftIcon ?? Container(),
+            Text(content, style: textStyle),
+          ],
         ),
       ),
     );

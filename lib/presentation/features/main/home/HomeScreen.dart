@@ -3,8 +3,11 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
-import 'package:menuboss/presentation/components/button/FillButton.dart';
-import 'package:menuboss/presentation/features/detail/tv/DetailTvScreen.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarTitleButton.dart';
+import 'package:menuboss/presentation/utils/dto/Pair.dart';
 import 'package:menuboss/presentation/utils/dto/Triple.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -13,12 +16,18 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: TopBarTitleButton(
+        content: "Title",
+        buttonContent: "Button",
+        iconPath: 'assets/imgs/icon_plus.svg',
+        onPressed: () {
+        },
+      ),
       body: SafeArea(
         child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          child: const Column(
+          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+          child: Column(
             children: [
-              _AppBar(),
               _TvList(),
             ],
           ),
