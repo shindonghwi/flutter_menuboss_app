@@ -20,6 +20,8 @@
         }
     },
 
+    "add_tv_appbar_title": "Scan QR Code",
+
     "screen_list_appbar_title": "Screen List",
 
     "detail_tv_modify_appbar_title": "Modify TV Name",

@@ -1,9 +1,9 @@
 import 'dart:io';
 
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -43,29 +43,33 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            flex: 5,
-            child: QRView(
+      appBar: TopBarIconTitleIcon(
+        content: getAppLocalizations(context).add_tv_appbar_title,
+      ),
+      body: SizedBox(
+        width: double.infinity,
+        height: double.infinity,
+        child: Stack(
+          children: [
+            QRView(
               key: qrKey,
               onQRViewCreated: _onQRViewCreated,
             ),
-          ),
-          Expanded(
-            flex: 1,
-            child: Center(
-              child: (result != null)
-                  ? Text('Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  : const Text('Scan a code'),
+            Align(
+              alignment: Alignment.center,
+              child: Image.asset(
+                "assets/imgs/image_qr_guideline.png",
+                width: 180,
+                height: 180,
+              ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) async{
+  void _onQRViewCreated(QRViewController controller) async {
     final scheme = "menuboss://";
 
     this.controller = controller;
@@ -77,7 +81,6 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
           final url = Uri.parse("${result!.code}");
           launchUrl(url, mode: LaunchMode.inAppWebView);
         }
-
       });
     });
   }
