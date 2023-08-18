@@ -17,6 +17,7 @@ class OutlineTextField extends HookWidget {
   final List<RegCheckType> checkRegList;
   final bool showPwVisibleButton;
   final bool forceErrorCheck;
+  final bool enable;
   final List<TextInputFormatter>? inputFormatters;
   final Function(String)? onChanged;
 
@@ -29,6 +30,7 @@ class OutlineTextField extends HookWidget {
     this.checkRegList = const [],
     this.showPwVisibleButton = false,
     this.forceErrorCheck = false,
+    this.enable = true,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters = const [],
@@ -74,6 +76,7 @@ class OutlineTextField extends HookWidget {
           style: getTextTheme(context).b2m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
+          enabled: enable,
           onSubmitted: (text) {
             if (textInputAction == TextInputAction.next) {
               FocusScope.of(context).nextFocus();
@@ -83,6 +86,8 @@ class OutlineTextField extends HookWidget {
           },
           decoration: InputDecoration(
             isCollapsed: true,
+            filled: true,
+            fillColor: enable ? getColorScheme(context).white : getColorScheme(context).colorGray100,
             hintText: hint,
             hintStyle: getTextTheme(context).b2m.copyWith(
                   color: getColorScheme(context).colorGray500,
@@ -107,6 +112,13 @@ class OutlineTextField extends HookWidget {
                     : (forceErrorCheck || isSuccess.value == false) && errorMessage.isNotEmpty
                         ? getColorScheme(context).colorError500
                         : getColorScheme(context).colorGray300,
+              ),
+            ),
+            disabledBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(10),
+              borderSide: BorderSide(
+                width: 1,
+                color: getColorScheme(context).colorGray200,
               ),
             ),
             focusedBorder: OutlineInputBorder(

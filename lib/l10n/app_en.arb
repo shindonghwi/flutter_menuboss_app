@@ -35,10 +35,10 @@
 
     "my_page_profile_appbar_title": "Profile",
     "my_page_profile_full_name": "Full Name",
+    "my_page_profile_business_name": "Business Name",
 
     "common_email": "Email",
     "common_address": "Address",
-    "common_business_name": "Business Name",
     "common_password": "Password",
     "common_or": "or",
     "common_do_login": "Log in",
