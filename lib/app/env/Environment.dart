@@ -29,6 +29,7 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() async {
+
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
@@ -36,6 +37,8 @@ class Environment {
 
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
+      statusBarBrightness: Brightness.light, // 혹은 Brightness.dark, 앱의 주요 배경색에 따라 선택
+      statusBarIconBrightness: Brightness.dark, // 혹은 Brightness.light
     ));
 
     initServiceLocator();
