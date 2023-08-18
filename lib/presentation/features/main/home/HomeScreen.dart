@@ -19,7 +19,12 @@ class HomeScreen extends StatelessWidget {
         content: getAppLocalizations(context).home_appbar_title,
         buttonContent: getAppLocalizations(context).home_appbar_add_tv,
         iconPath: 'assets/imgs/icon_plus.svg',
-        onPressed: () {},
+        onPressed: () {
+          Navigator.push(
+            context,
+            nextSlideScreen(RoutingScreen.AddTV.route),
+          );
+        },
       ),
       body: SafeArea(
         child: Container(
