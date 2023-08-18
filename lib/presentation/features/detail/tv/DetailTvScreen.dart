@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/features/detail/tv/widget/AllDayModeContent.dart';
 import 'package:menuboss/presentation/features/detail/tv/widget/ScheduleModeContent.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -19,7 +20,7 @@ class DetailTvScreen extends HookWidget {
   Widget build(BuildContext context) {
     final isAllDayMode = useState(true);
 
-    return Scaffold(
+    return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarIconTitleIcon(
         content: "Tv",

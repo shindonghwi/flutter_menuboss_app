@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/checkbox/switch/SwitchCheckBox.dart';
+import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -18,7 +19,7 @@ class DetailTvSettingScreen extends HookWidget {
       Pair(getAppLocalizations(context).detail_tv_setting_item_guideline, useState(true)),
     ];
 
-    return Scaffold(
+    return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarIconTitleIcon(
         content: getAppLocalizations(context).detail_tv_setting_appbar_title,

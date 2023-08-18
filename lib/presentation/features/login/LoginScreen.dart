@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/Clickable/Clickable.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
+import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -18,27 +19,31 @@ class LoginScreen extends HookWidget {
     final isEmailValid = useState(false);
     final isPwValid = useState(false);
 
-    return Scaffold(
+    return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       body: SafeArea(
         child: Container(
           margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
-          child: Column(
-            children: [
-              const _Title(),
-              const SizedBox(height: 40),
-              _InputEmail(
-                onChanged: (text) => isEmailValid.value = RegUtil.checkEmail(text),
-              ),
-              const SizedBox(height: 16),
-              _InputPassword(
-                onChanged: (text) => isPwValid.value = RegUtil.checkPw(text),
-              ),
-              const SizedBox(height: 20),
-              _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
-              const SizedBox(height: 24),
-              const _SocialLoginButtons(),
-            ],
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Column(
+              children: [
+                const _Title(),
+                const SizedBox(height: 40),
+                _InputEmail(
+                  onChanged: (text) => isEmailValid.value = RegUtil.checkEmail(text),
+                ),
+                const SizedBox(height: 16),
+                _InputPassword(
+                  onChanged: (text) => isPwValid.value = RegUtil.checkPw(text),
+                ),
+                const SizedBox(height: 20),
+                _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
+                const SizedBox(height: 24),
+                const _SocialLoginButtons(),
+                const SizedBox(height: 40),
+              ],
+            ),
           ),
         ),
       ),
