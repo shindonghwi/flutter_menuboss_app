@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/appbar/TopBarTitleButton.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -14,29 +13,30 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold(
-      appBar: TopBarTitleButton(
-        content: getAppLocalizations(context).home_appbar_title,
-        buttonContent: getAppLocalizations(context).home_appbar_add_tv,
-        iconPath: 'assets/imgs/icon_plus.svg',
-        onPressed: () {
-          Navigator.push(
-            context,
-            nextSlideScreen(RoutingScreen.AddTV.route),
-          );
-        },
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-          child: const Column(
-            children: [
-              _TvList(),
-            ],
-          ),
-        ),
-      ),
-    );
+    return Container();
+    // return BaseScaffold(
+    //   appBar: TopBarTitleButton(
+    //     content: getAppLocalizations(context).home_appbar_title,
+    //     buttonContent: getAppLocalizations(context).home_appbar_add_tv,
+    //     iconPath: 'assets/imgs/icon_plus.svg',
+    //     onPressed: () {
+    //       Navigator.push(
+    //         context,
+    //         nextSlideScreen(RoutingScreen.AddTV.route),
+    //       );
+    //     },
+    //   ),
+    //   body: SafeArea(
+    //     child: Container(
+    //       padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+    //       child: const Column(
+    //         children: [
+    //           _TvList(),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
   }
 }
 

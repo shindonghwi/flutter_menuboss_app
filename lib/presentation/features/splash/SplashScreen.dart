@@ -18,7 +18,7 @@ class SplashScreen extends HookWidget {
         onPressed: () {
           Navigator.pushNamedAndRemoveUntil(
             context,
-            RoutingScreen.Main.route,
+            RoutingScreen.Login.route,
             (route) => false,
           );
         },

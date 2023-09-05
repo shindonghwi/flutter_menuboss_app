@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
@@ -16,7 +17,7 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
     return SafeArea(
       child: SizedBox(
         width: getMediaQuery(context).size.width,
-        height: 67,
+        height: 68,
         child: Stack(
           children: [
             Align(
@@ -26,7 +27,7 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
                 child: Text(
                   content,
                   style: getTextTheme(context).s2sb.copyWith(
-                    color: Colors.black,
+                    color: getColorScheme(context).colorGray900,
                   ),
                   textAlign: TextAlign.center,
                 ),

@@ -61,15 +61,15 @@ extension StyleColor on ColorScheme{
   Color get colorYellow100 => brightness == Brightness.light ? const Color(0xFFFCF4DB) : const Color(0xFFFCF4DB);
   Color get colorYellow50 => brightness == Brightness.light ? const Color(0xFFFEFAED) : const Color(0xFFFEFAED);
 
-  Color get colorError900 => brightness == Brightness.light ? const Color(0xFF2F1111) : const Color(0xFF2F1111);
-  Color get colorError800 => brightness == Brightness.light ? const Color(0xFF5E2323) : const Color(0xFF5E2323);
-  Color get colorError700 => brightness == Brightness.light ? const Color(0xFF8D3434) : const Color(0xFF8D3434);
-  Color get colorError600 => brightness == Brightness.light ? const Color(0xFFBC4646) : const Color(0xFFBC4646);
-  Color get colorError500 => brightness == Brightness.light ? const Color(0xFFEB5757) : const Color(0xFFEB5757);
-  Color get colorError400 => brightness == Brightness.light ? const Color(0xFFEF7979) : const Color(0xFFEF7979);
-  Color get colorError300 => brightness == Brightness.light ? const Color(0xFFF39A9A) : const Color(0xFFF39A9A);
-  Color get colorError200 => brightness == Brightness.light ? const Color(0xFFF7BCBC) : const Color(0xFFF7BCBC);
-  Color get colorError100 => brightness == Brightness.light ? const Color(0xFFFBDDDD) : const Color(0xFFFBDDDD);
-  Color get colorError50 => brightness == Brightness.light ? const Color(0xFFFDEEEE) : const Color(0xFFFDEEEE);
+  Color get colorRed900 => brightness == Brightness.light ? const Color(0xFF2F1111) : const Color(0xFF2F1111);
+  Color get colorRed800 => brightness == Brightness.light ? const Color(0xFF5E2323) : const Color(0xFF5E2323);
+  Color get colorRed700 => brightness == Brightness.light ? const Color(0xFF8D3434) : const Color(0xFF8D3434);
+  Color get colorRed600 => brightness == Brightness.light ? const Color(0xFFBC4646) : const Color(0xFFBC4646);
+  Color get colorRed500 => brightness == Brightness.light ? const Color(0xFFEB5757) : const Color(0xFFEB5757);
+  Color get colorRed400 => brightness == Brightness.light ? const Color(0xFFEF7979) : const Color(0xFFEF7979);
+  Color get colorRed300 => brightness == Brightness.light ? const Color(0xFFF39A9A) : const Color(0xFFF39A9A);
+  Color get colorRed200 => brightness == Brightness.light ? const Color(0xFFF7BCBC) : const Color(0xFFF7BCBC);
+  Color get colorRed100 => brightness == Brightness.light ? const Color(0xFFFBDDDD) : const Color(0xFFFBDDDD);
+  Color get colorRed50 => brightness == Brightness.light ? const Color(0xFFFDEEEE) : const Color(0xFFFDEEEE);
 
 }

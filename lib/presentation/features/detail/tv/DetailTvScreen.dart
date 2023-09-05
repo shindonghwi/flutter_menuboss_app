@@ -45,18 +45,18 @@ class DetailTvScreen extends HookWidget {
           _ModeContent(isAllDayMode: isAllDayMode.value),
         ],
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      floatingActionButton: SafeArea(
-        child: Container(
-          width: double.infinity,
-          margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
-          child: PrimaryFilledButton.largeRound(
-            content: getAppLocalizations(context).common_apply,
-            isActivated: true,
-            onPressed: () {},
-          ),
-        ),
-      ),
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      // floatingActionButton: SafeArea(
+      //   child: Container(
+      //     width: double.infinity,
+      //     margin: const EdgeInsets.only(bottom: 24, left: 24, right: 24),
+      //     child: PrimaryFilledButton.largeRound(
+      //       content: getAppLocalizations(context).common_apply,
+      //       isActivated: true,
+      //       onPressed: () {},
+      //     ),
+      //   ),
+      // ),
     );
   }
 }

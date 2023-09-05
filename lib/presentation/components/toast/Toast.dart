@@ -133,7 +133,7 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                     color: widget.type == ToastType.Success
                         ? getColorScheme(context).colorGreen500
                         : widget.type == ToastType.Error
-                        ? getColorScheme(context).colorError500
+                        ? getColorScheme(context).colorRed500
                         : getColorScheme(context).colorYellow500,
                     borderRadius: BorderRadius.circular(5),
                   ),

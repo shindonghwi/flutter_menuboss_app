@@ -3,9 +3,17 @@
 
     "login_title": "Login",
     "login_welcome": "Welcome! Please enter your details",
-    "login_email_correct": "Correct Email :)",
-    "login_email_invalid": "Incorrect Email :(",
+    "login_email_correct": "This is a valid email address",
+    "login_email_invalid": "Email address entered incorrectly",
     "login_pw_invalid": "a-z, A-Z, up to 9 digits, with [ !,@,#,$,%,^,&,* ]",
+
+    "main_navigation_menu_schedules": "Schedules",
+    "main_navigation_menu_playlists": "Playlists",
+    "main_navigation_menu_screens": "Screens",
+    "main_navigation_menu_media": "Media",
+    "main_navigation_menu_my": "My",
+
+
 
     "home_appbar_title": "TV List",
     "home_appbar_add_tv": "Add TV",
@@ -38,6 +46,15 @@
     "my_page_profile_appbar_title": "Profile",
     "my_page_profile_full_name": "Full Name",
     "my_page_profile_business_name": "Business Name",
+
+    "blank_message_content_add_screen": "Add screen",
+    "blank_message_content_new_schedule": "New schedule",
+    "blank_message_content_new_playlist": "New playlist",
+    "blank_message_content_upload_file": "Add content",
+    "blank_message_description_add_screen": "There is currently no saved screen list\nPlease register the screen through QR code",
+    "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
+    "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
+    "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
     "common_email": "Email",
     "common_address": "Address",

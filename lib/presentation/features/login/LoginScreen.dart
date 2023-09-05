@@ -112,7 +112,7 @@ class _LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: PrimaryFilledButton.normalRect(
+      child: PrimaryFilledButton.smallRound5(
         content: getAppLocalizations(context).common_do_login,
         isActivated: isActivated,
         onPressed: () {
@@ -183,7 +183,7 @@ class _InputEmail extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: OutlineTextField(
+            child: OutlineTextField.small(
               controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_email,
               successMessage: getAppLocalizations(context).login_email_correct,
@@ -223,7 +223,7 @@ class _InputPassword extends HookWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
-            child: OutlineTextField(
+            child: OutlineTextField.small(
               controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_password,
               errorMessage: getAppLocalizations(context).login_pw_invalid,
@@ -233,6 +233,7 @@ class _InputPassword extends HookWidget {
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.visiblePassword,
               showPwVisibleButton: true,
+              showSuffixStatusIcon: false,
               onChanged: (text) => onChanged(text),
             ),
           ),

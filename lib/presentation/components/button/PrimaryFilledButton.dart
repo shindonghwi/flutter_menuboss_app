@@ -12,9 +12,63 @@ class PrimaryFilledButton extends HookWidget {
   final double height;
   final double borderRadius;
 
-  const PrimaryFilledButton.smallRound({
+  /// @feature: xSmall buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const PrimaryFilledButton.xSmallRound5({
     Key? key,
-    this.leftIcon,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 5,
+        height = 36,
+        super(key: key);
+
+  const PrimaryFilledButton.xSmallRound5Icon({
+    Key? key,
+    required this.leftIcon,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : borderRadius = 5,
+        height = 36,
+        super(key: key);
+
+  const PrimaryFilledButton.xSmallRound100({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 100,
+        height = 36,
+        super(key: key);
+
+  /// @feature: small buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const PrimaryFilledButton.smallRound5({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 5,
+        height = 44,
+        super(key: key);
+
+  const PrimaryFilledButton.smallRound100({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 100,
+        height = 44,
+        super(key: key);
+
+  const PrimaryFilledButton.smallRound100Icon({
+    Key? key,
+    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
@@ -22,43 +76,47 @@ class PrimaryFilledButton extends HookWidget {
         height = 44,
         super(key: key);
 
-  const PrimaryFilledButton.smallRect({
+  /// @feature: normal buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const PrimaryFilledButton.normalRound5({
     Key? key,
-    this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : borderRadius = 10,
-        height = 44,
-        super(key: key);
-
-  const PrimaryFilledButton.normalRect({
-    Key? key,
-    this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 10,
+  })  : leftIcon = null,
+        borderRadius = 5,
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.largeRound({
+  const PrimaryFilledButton.normalRound100Icon({
     Key? key,
-    this.leftIcon,
+    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
   })  : borderRadius = 100,
-        height = 60,
+        height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.largeRect({
+  /// @feature: large buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const PrimaryFilledButton.largeRound100({
     Key? key,
-    this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : borderRadius = 10,
+  })  : leftIcon = null,
+        borderRadius = 100,
+        height = 60,
+        super(key: key);
+
+  const PrimaryFilledButton.largeRound100Icon({
+    Key? key,
+    required this.leftIcon,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : borderRadius = 100,
         height = 60,
         super(key: key);
 
@@ -68,6 +126,12 @@ class PrimaryFilledButton extends HookWidget {
     var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
 
     switch (height) {
+      case 36:
+        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        break;
+      case 44:
+        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        break;
       case 52:
         textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
         break;
@@ -81,13 +145,12 @@ class PrimaryFilledButton extends HookWidget {
       child: ElevatedButton(
         onPressed: isActivated ? () => onPressed?.call() : null,
         style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: getColorScheme(context).colorGray100,
-          backgroundColor: isActivated ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray100,
+          disabledBackgroundColor: getColorScheme(context).colorGray200,
+          backgroundColor: isActivated ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
           elevation: 0,
-          foregroundColor: getColorScheme(context).colorPrimary700,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,

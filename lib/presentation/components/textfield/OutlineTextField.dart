@@ -16,12 +16,14 @@ class OutlineTextField extends HookWidget {
   final TextInputAction textInputAction;
   final List<RegCheckType> checkRegList;
   final bool showPwVisibleButton;
-  final bool forceErrorCheck;
+  final bool showSuffixStatusIcon;
+  final bool forceRedCheck;
   final bool enable;
   final List<TextInputFormatter>? inputFormatters;
   final Function(String)? onChanged;
+  final double height;
 
-  const OutlineTextField({
+  const OutlineTextField.small({
     Key? key,
     this.controller,
     required this.hint,
@@ -29,21 +31,47 @@ class OutlineTextField extends HookWidget {
     this.errorMessage = '',
     this.checkRegList = const [],
     this.showPwVisibleButton = false,
-    this.forceErrorCheck = false,
+    this.showSuffixStatusIcon = true,
+    this.forceRedCheck = false,
     this.enable = true,
     this.textInputType = TextInputType.text,
     this.textInputAction = TextInputAction.next,
     this.inputFormatters = const [],
     this.onChanged,
-  }) : super(key: key);
+  })  : height = 48,
+        super(key: key);
+
+  const OutlineTextField.large({
+    Key? key,
+    this.controller,
+    required this.hint,
+    this.successMessage = '',
+    this.errorMessage = '',
+    this.checkRegList = const [],
+    this.showPwVisibleButton = false,
+    this.showSuffixStatusIcon = true,
+    this.forceRedCheck = false,
+    this.enable = true,
+    this.textInputType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.inputFormatters = const [],
+    this.onChanged,
+  })  : height = 56,
+        super(key: key);
 
   @override
   Widget build(BuildContext context) {
     TextEditingController controller = this.controller ?? useTextEditingController();
 
     final isSuccess = useState<bool?>(null);
-
     final isPwVisible = useState(false);
+
+    final contentPadding = EdgeInsets.symmetric(
+      vertical: height == 48 ? 14.5 : 17.5,
+      horizontal: 12,
+    );
+
+    final textStyle = height == 48 ? getTextTheme(context).b2m : getTextTheme(context).b1m;
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -63,8 +91,8 @@ class OutlineTextField extends HookWidget {
               }
             }
 
-            if (isSuccess.value == false && forceErrorCheck) {
-              isSuccess.value = forceErrorCheck;
+            if (isSuccess.value == false && forceRedCheck) {
+              isSuccess.value = forceRedCheck;
             }
 
             onChanged?.call(text);
@@ -73,7 +101,7 @@ class OutlineTextField extends HookWidget {
           obscureText: isPwVisible.value ? false : textInputType == TextInputType.visiblePassword,
           keyboardType: textInputType,
           textInputAction: textInputAction,
-          style: getTextTheme(context).b2m.copyWith(
+          style: textStyle.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
           enabled: enable,
@@ -89,8 +117,8 @@ class OutlineTextField extends HookWidget {
             filled: true,
             fillColor: enable ? getColorScheme(context).white : getColorScheme(context).colorGray100,
             hintText: hint,
-            hintStyle: getTextTheme(context).b2m.copyWith(
-                  color: getColorScheme(context).colorGray500,
+            hintStyle: textStyle.copyWith(
+                  color: getColorScheme(context).colorGray400,
                 ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
@@ -98,9 +126,9 @@ class OutlineTextField extends HookWidget {
                 width: 1,
                 color: isSuccess.value == true && successMessage.isNotEmpty
                     ? getColorScheme(context).colorGreen500
-                    : (forceErrorCheck || isSuccess.value == false) && errorMessage.isNotEmpty
-                    ? getColorScheme(context).colorError500
-                    : getColorScheme(context).colorGray300,
+                    : (forceRedCheck || isSuccess.value == false) && errorMessage.isNotEmpty
+                        ? getColorScheme(context).colorRed500
+                        : getColorScheme(context).colorGray300,
               ),
             ),
             enabledBorder: OutlineInputBorder(
@@ -109,8 +137,8 @@ class OutlineTextField extends HookWidget {
                 width: 1,
                 color: isSuccess.value == true && successMessage.isNotEmpty
                     ? getColorScheme(context).colorGreen500
-                    : (forceErrorCheck || isSuccess.value == false) && errorMessage.isNotEmpty
-                        ? getColorScheme(context).colorError500
+                    : (forceRedCheck || isSuccess.value == false) && errorMessage.isNotEmpty
+                        ? getColorScheme(context).colorRed500
                         : getColorScheme(context).colorGray300,
               ),
             ),
@@ -118,7 +146,7 @@ class OutlineTextField extends HookWidget {
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
                 width: 1,
-                color: getColorScheme(context).colorGray200,
+                color: getColorScheme(context).colorGray300,
               ),
             ),
             focusedBorder: OutlineInputBorder(
@@ -127,15 +155,12 @@ class OutlineTextField extends HookWidget {
                 width: 1,
                 color: isSuccess.value == true && successMessage.isNotEmpty
                     ? getColorScheme(context).colorGreen500
-                    : (forceErrorCheck || isSuccess.value == false) && errorMessage.isNotEmpty
-                    ? getColorScheme(context).colorError500
-                    : getColorScheme(context).colorGray300,
+                    : (forceRedCheck || isSuccess.value == false) && errorMessage.isNotEmpty
+                        ? getColorScheme(context).colorRed500
+                        : getColorScheme(context).colorGray900,
               ),
             ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 16,
-              horizontal: 12,
-            ),
+            contentPadding: contentPadding,
             suffixIconConstraints: const BoxConstraints(minHeight: 24, minWidth: 24),
             counter: null,
             counterText: '',
@@ -152,14 +177,41 @@ class OutlineTextField extends HookWidget {
                         child: Padding(
                           padding: const EdgeInsets.all(4.0),
                           child: SvgPicture.asset(
-                            isPwVisible.value == true ? "assets/imgs/icon_view.svg" : "assets/imgs/icon_view_hide.svg",
-                            width: 24,
-                            height: 24,
-                            colorFilter: ColorFilter.mode(
-                              getColorScheme(context).colorGray500,
-                              BlendMode.srcIn,
-                            )
-                          ),
+                              isPwVisible.value == true
+                                  ? "assets/imgs/icon_view.svg"
+                                  : "assets/imgs/icon_view_hide.svg",
+                              width: 24,
+                              height: 24,
+                              colorFilter: ColorFilter.mode(
+                                getColorScheme(context).colorGray500,
+                                BlendMode.srcIn,
+                              )),
+                        ),
+                      ),
+                    ),
+                  if (showSuffixStatusIcon && isSuccess.value == true && successMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: SvgPicture.asset(
+                        "assets/imgs/icon_check_filled_r100.svg",
+                        width: 16,
+                        height: 16,
+                        colorFilter: ColorFilter.mode(
+                          getColorScheme(context).colorGreen500,
+                          BlendMode.srcIn,
+                        ),
+                      ),
+                    ),
+                  if (showSuffixStatusIcon && (forceRedCheck || isSuccess.value == false) && errorMessage.isNotEmpty)
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: SvgPicture.asset(
+                        "assets/imgs/icon_error_filled.svg",
+                        width: 16,
+                        height: 16,
+                        colorFilter: ColorFilter.mode(
+                          getColorScheme(context).colorRed500,
+                          BlendMode.srcIn,
                         ),
                       ),
                     ),
@@ -169,36 +221,24 @@ class OutlineTextField extends HookWidget {
           ),
         ),
         if (isSuccess.value == true && successMessage.isNotEmpty)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Icon(Icons.check, color: Colors.green, size: 14),
-              ),
-              Text(
-                successMessage.toString(),
-                style: getTextTheme(context).c2m.copyWith(
-                      color: getColorScheme(context).colorGreen500,
-                    ),
-              ),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              successMessage.toString(),
+              style: getTextTheme(context).c2m.copyWith(
+                    color: getColorScheme(context).colorGreen500,
+                  ),
+            ),
           ),
-        if ((forceErrorCheck || isSuccess.value == false) && errorMessage.isNotEmpty)
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              const Padding(
-                padding: EdgeInsets.all(5.0),
-                child: Icon(Icons.error, color: Colors.red, size: 14),
-              ),
-              Text(
-                errorMessage.toString(),
-                style: getTextTheme(context).c2m.copyWith(
-                      color: getColorScheme(context).colorError500,
-                    ),
-              ),
-            ],
+        if ((forceRedCheck || isSuccess.value == false) && errorMessage.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.only(top: 4.0),
+            child: Text(
+              errorMessage.toString(),
+              style: getTextTheme(context).c2m.copyWith(
+                    color: getColorScheme(context).colorRed500,
+                  ),
+            ),
           ),
       ],
     );

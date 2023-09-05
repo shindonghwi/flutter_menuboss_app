@@ -29,7 +29,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
     return SafeArea(
       child: SizedBox(
         width: getMediaQuery(context).size.width,
-        height: 67,
+        height: 68,
         child: Stack(
           children: [
             Align(
@@ -54,7 +54,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
               child: Text(
                 content,
                 style: getTextTheme(context).s2sb.copyWith(
-                      color: Colors.black,
+                      color: getColorScheme(context).colorGray900,
                     ),
                 textAlign: TextAlign.center,
               ),

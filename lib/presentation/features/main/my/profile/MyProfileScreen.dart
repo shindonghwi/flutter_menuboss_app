@@ -121,7 +121,7 @@ class _InputFullName extends HookWidget {
               ),
         ),
         const SizedBox(height: 12),
-        OutlineTextField(
+        OutlineTextField.small(
           controller: useTextEditingController(),
           hint: "John Doe",
         )
@@ -145,7 +145,7 @@ class _InputEmail extends HookWidget {
               ),
         ),
         const SizedBox(height: 12),
-        OutlineTextField(
+        OutlineTextField.small(
           controller: useTextEditingController(),
           hint: "John Doe",
           enable: false,
@@ -170,7 +170,7 @@ class _InputBusinessName extends HookWidget {
               ),
         ),
         const SizedBox(height: 12),
-        OutlineTextField(
+        OutlineTextField.small(
           controller: useTextEditingController(),
           hint: "Menuboss",
         )

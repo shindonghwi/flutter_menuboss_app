@@ -12,8 +12,8 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-class MyPageScreen extends StatelessWidget {
-  const MyPageScreen({super.key});
+class MyScreen extends StatelessWidget {
+  const MyScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

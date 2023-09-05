@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menuboss/presentation/features/add_tv/AddTvScreen.dart';
-import 'package:menuboss/presentation/features/main/my_page/plan/MyPlanScreen.dart';
-import 'package:menuboss/presentation/features/main/my_page/profile/MyProfileScreen.dart';
-
+import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
 import '../presentation/features/detail/modify/DetailTvModifyScreen.dart';
 import '../presentation/features/detail/setting/DetailTvSettingScreen.dart';
 import '../presentation/features/detail/tv/DetailTvScreen.dart';
