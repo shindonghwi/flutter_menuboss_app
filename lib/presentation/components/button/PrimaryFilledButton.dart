@@ -46,13 +46,13 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: small buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.smallRound5({
+  const PrimaryFilledButton.smallRound10({
     Key? key,
     required this.content,
     required this.isActivated,
     this.onPressed,
   })  : leftIcon = null,
-        borderRadius = 5,
+        borderRadius = 10,
         height = 44,
         super(key: key);
 
@@ -78,13 +78,13 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: normal buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.normalRound5({
+  const PrimaryFilledButton.normalRound10({
     Key? key,
     required this.content,
     required this.isActivated,
     this.onPressed,
   })  : leftIcon = null,
-        borderRadius = 5,
+        borderRadius = 10,
         height = 52,
         super(key: key);
 

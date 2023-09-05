@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetPinCode.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
@@ -18,7 +20,9 @@ class DevicesScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
           child: BlankMessage(
             type: BlankMessageType.ADD_SCREEN,
-            onPressed: () {},
+            onPressed: () {
+              CommonBottomSheet.showBottomSheet(context, child: BottomSheetPinCode());
+            },
           ),
         ),
       ),

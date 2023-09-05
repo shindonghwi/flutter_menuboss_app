@@ -112,7 +112,7 @@ class _LoginButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      child: PrimaryFilledButton.smallRound5(
+      child: PrimaryFilledButton.smallRound10(
         content: getAppLocalizations(context).common_do_login,
         isActivated: isActivated,
         onPressed: () {

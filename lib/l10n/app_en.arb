@@ -47,6 +47,8 @@
     "my_page_profile_full_name": "Full Name",
     "my_page_profile_business_name": "Business Name",
 
+    "bottom_sheet_pin_code_description": "Please enter your PIN code",
+
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_new_schedule": "New schedule",
     "blank_message_content_new_playlist": "New playlist",
@@ -63,6 +65,7 @@
     "common_do_login": "Log in",
     "common_edit": "Edit",
     "common_apply": "Apply",
+    "common_confirm": "Confirm",
     "common_save": "Save",
     "common_time": "Time",
     "common_mode_all_day": "All day Mode",
