@@ -6,21 +6,15 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
+class TopBarIconTitleNone extends HookWidget implements PreferredSizeWidget {
   final String content;
   final String? leftIconPath;
-  final String? rightText;
-  final bool? rightTextActivated;
   final VoidCallback? leftIconOnPressed;
-  final VoidCallback? rightIconOnPressed;
 
-  const TopBarIconTitleText({
+  const TopBarIconTitleNone({
     super.key,
     this.leftIconPath,
-    this.rightText,
-    this.rightTextActivated,
-    this.leftIconOnPressed,
-    this.rightIconOnPressed,
+    required this.leftIconOnPressed,
     required this.content,
   });
 
@@ -59,27 +53,6 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                 textAlign: TextAlign.center,
               ),
             ),
-            if (rightText != null && rightTextActivated != null)
-              Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  margin: const EdgeInsets.only(right: 12.0),
-                  child: Clickable(
-                    onPressed: () => rightIconOnPressed?.call(),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        rightText ?? "",
-                        style: getTextTheme(context).b1sb.copyWith(
-                              color: rightTextActivated!
-                                  ? getColorScheme(context).colorSecondary500
-                                  : getColorScheme(context).colorGray400,
-                            ),
-                      ),
-                    ),
-                  ),
-                ),
-              ),
           ],
         ),
       ),

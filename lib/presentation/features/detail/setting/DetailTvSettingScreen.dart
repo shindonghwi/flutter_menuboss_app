@@ -21,9 +21,10 @@ class DetailTvSettingScreen extends HookWidget {
 
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
-      appBar: TopBarIconTitleIcon(
-        content: getAppLocalizations(context).detail_tv_setting_appbar_title,
-      ),
+      // appBar: TopBarIconTitleIcon(
+      //   leadingIsShow: true,
+      //   content: getAppLocalizations(context).detail_tv_setting_appbar_title,
+      // ),
       body: SafeArea(
         child: Column(
           children: [

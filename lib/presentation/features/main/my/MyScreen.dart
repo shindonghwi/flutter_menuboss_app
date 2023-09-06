@@ -88,26 +88,26 @@ class _UserProfile extends HookWidget {
               ),
             ],
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.centerRight,
-              child: Clickable(
-                onPressed: () {},
-                child: Padding(
-                  padding: const EdgeInsets.all(12.0),
-                  child: SvgPicture.asset(
-                    "assets/imgs/icon_log_out.svg",
-                    colorFilter: ColorFilter.mode(
-                      getColorScheme(context).black,
-                      BlendMode.srcIn,
-                    ),
-                    width: 24,
-                    height: 24,
-                  ),
-                ),
-              ),
-            ),
-          )
+          // Expanded(
+          //   child: Align(
+          //     alignment: Alignment.centerRight,
+          //     child: Clickable(
+          //       onPressed: () {},
+          //       child: Padding(
+          //         padding: const EdgeInsets.all(12.0),
+          //         child: SvgPicture.asset(
+          //           "assets/imgs/icon_log_out.svg",
+          //           colorFilter: ColorFilter.mode(
+          //             getColorScheme(context).black,
+          //             BlendMode.srcIn,
+          //           ),
+          //           width: 24,
+          //           height: 24,
+          //         ),
+          //       ),
+          //     ),
+          //   ),
+          // )
         ],
       ),
     );
@@ -131,11 +131,11 @@ class _UserPlanScreenInfo extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          SvgPicture.asset(
-            "assets/imgs/icon_primium.svg",
-            width: 40,
-            height: 40,
-          ),
+          // SvgPicture.asset(
+          //   "assets/imgs/icon_primium.svg",
+          //   width: 40,
+          //   height: 40,
+          // ),
           const SizedBox(width: 16),
           Expanded(
             child: Column(

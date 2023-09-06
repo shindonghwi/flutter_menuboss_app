@@ -94,5 +94,11 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
+	<key>NSPhotoLibraryUsageDescription</key>
+    <string>You need permission to upload media files\nYou can manage your media files by uploading photos and videos!</string>
+    <key>NSCameraUsageDescription</key>
+    <string>You can take pictures with your camera and upload and manage media files</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>You can record videos with your camera to upload and manage media files</string>
 </dict>
 </plist>

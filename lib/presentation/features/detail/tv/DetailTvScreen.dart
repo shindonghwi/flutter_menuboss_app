@@ -23,6 +23,7 @@ class DetailTvScreen extends HookWidget {
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarIconTitleIcon(
+        leadingIsShow: true,
         content: "Tv",
         suffixIcons: [
           Pair("assets/imgs/icon_edit.svg", () {

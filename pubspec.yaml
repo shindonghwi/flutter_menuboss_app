@@ -33,6 +33,7 @@ dependencies:
   sign_in_with_apple: ^4.3.0
   visibility_detector: ^0.4.0+2
   qr_code_scanner: ^1.0.1
+  image_picker: ^1.0.4
 
 dev_dependencies:
   flutter_test:

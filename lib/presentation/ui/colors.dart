@@ -14,7 +14,7 @@ extension StyleColor on ColorScheme{
   Color get colorGray400 => brightness == Brightness.light ? const Color(0xFFC2C2C2) : const Color(0xFFC2C2C2);
   Color get colorGray300 => brightness == Brightness.light ? const Color(0xFFD6D6D6) : const Color(0xFFD6D6D6);
   Color get colorGray200 => brightness == Brightness.light ? const Color(0xFFE1E1E1) : const Color(0xFFE1E1E1);
-  Color get colorGray100 => brightness == Brightness.light ? const Color(0xFFF5F5F5) : const Color(0xFFF5F5F5);
+  Color get colorGray100 => brightness == Brightness.light ? const Color(0xFFF1F1F1) : const Color(0xFFF1F1F1);
   Color get colorGray50 => brightness == Brightness.light ? const Color(0xFFFAFAFA) : const Color(0xFFFAFAFA);
 
   Color get colorPrimary900 => brightness == Brightness.light ? const Color(0xFF0E0702) : const Color(0xFF0E0702);

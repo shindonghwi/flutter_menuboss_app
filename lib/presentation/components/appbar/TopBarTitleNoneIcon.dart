@@ -6,17 +6,17 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
+class TopBarTitleNoneIcon extends HookWidget implements PreferredSizeWidget {
   final String content;
-  final String? leftIconPath;
+  final String? rightIconPath;
   final String? rightText;
   final bool? rightTextActivated;
   final VoidCallback? leftIconOnPressed;
   final VoidCallback? rightIconOnPressed;
 
-  const TopBarIconTitleText({
+  const TopBarTitleNoneIcon({
     super.key,
-    this.leftIconPath,
+    this.rightIconPath,
     this.rightText,
     this.rightTextActivated,
     this.leftIconOnPressed,
@@ -34,48 +34,28 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
           children: [
             Align(
               alignment: Alignment.centerLeft,
-              child: Container(
-                width: 48,
-                height: 48,
-                margin: const EdgeInsets.only(left: 12.0),
-                child: Clickable(
-                  onPressed: () {
-                    leftIconOnPressed != null ? leftIconOnPressed?.call() : Navigator.pop(context);
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: SvgPicture.asset(leftIconPath ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
-                  ),
-                ),
-              ),
-            ),
-            Align(
-              alignment: Alignment.center,
               child: Text(
                 content,
                 style: getTextTheme(context).s2b.copyWith(
-                      color: getColorScheme(context).colorGray900,
-                    ),
+                  color: getColorScheme(context).colorGray900,
+                ),
                 textAlign: TextAlign.center,
               ),
             ),
-            if (rightText != null && rightTextActivated != null)
+            if (rightIconPath != null && rightIconOnPressed != null)
               Align(
                 alignment: Alignment.centerRight,
                 child: Container(
-                  margin: const EdgeInsets.only(right: 12.0),
+                  width: 48,
+                  height: 48,
+                  margin: const EdgeInsets.only(left: 12.0),
                   child: Clickable(
-                    onPressed: () => rightIconOnPressed?.call(),
+                    onPressed: () {
+                      rightIconOnPressed != null ? rightIconOnPressed?.call() : Navigator.pop(context);
+                    },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: Text(
-                        rightText ?? "",
-                        style: getTextTheme(context).b1sb.copyWith(
-                              color: rightTextActivated!
-                                  ? getColorScheme(context).colorSecondary500
-                                  : getColorScheme(context).colorGray400,
-                            ),
-                      ),
+                      child: SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg", width: 24, height: 24),
                     ),
                   ),
                 ),

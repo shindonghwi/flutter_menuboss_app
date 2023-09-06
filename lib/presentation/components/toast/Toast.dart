@@ -147,7 +147,7 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: SvgPicture.asset(
                             widget.type == ToastType.Success
-                                ? "assets/imgs/icon_success.svg"
+                                ? "assets/imgs/icon_check_round.svg"
                                 : widget.type == ToastType.Error
                                 ? "assets/imgs/icon_info.svg"
                                 : "assets/imgs/icon_error.svg",

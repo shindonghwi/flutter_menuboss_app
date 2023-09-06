@@ -43,9 +43,10 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: TopBarIconTitleIcon(
-        content: getAppLocalizations(context).add_tv_appbar_title,
-      ),
+      // appBar: TopBarIconTitleIcon(
+      //   leadingIsShow: true,
+      //   content: getAppLocalizations(context).add_tv_appbar_title,
+      // ),
       body: SizedBox(
         width: double.infinity,
         height: double.infinity,

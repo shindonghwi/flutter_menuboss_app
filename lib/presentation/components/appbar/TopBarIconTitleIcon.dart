@@ -9,13 +9,15 @@ import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
   final String content;
+  final bool leadingIsShow;
   final Pair<String, VoidCallback>? leading;
   final List<Pair<String, VoidCallback>> suffixIcons;
 
   const TopBarIconTitleIcon({
     super.key,
     this.leading,
-    this.suffixIcons = const [],
+    required this.leadingIsShow,
+    required this.suffixIcons,
     required this.content,
   });
 
@@ -33,25 +35,26 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Container(
-                    width: 48,
-                    height: 48,
-                    margin: const EdgeInsets.only(left: 12.0),
-                    child: Clickable(
-                      onPressed: () {
-                        leading != null ? leading?.second.call() : Navigator.pop(context);
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(leading?.first ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+                  if (leadingIsShow)
+                    Container(
+                      width: 48,
+                      height: 48,
+                      margin: const EdgeInsets.only(left: 12),
+                      child: Clickable(
+                        onPressed: () {
+                          leading != null ? leading?.second.call() : Navigator.pop(context);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SvgPicture.asset(leading?.first ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+                        ),
                       ),
                     ),
-                  ),
                   Padding(
-                    padding: const EdgeInsets.only(left: 12.0),
+                    padding: EdgeInsets.only(left: leadingIsShow ? 12 : 24),
                     child: Text(
                       content,
-                      style: getTextTheme(context).s2sb.copyWith(
+                      style: getTextTheme(context).s2b.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                       textAlign: TextAlign.center,
@@ -87,5 +90,5 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(67);
+  Size get preferredSize => const Size.fromHeight(68);
 }

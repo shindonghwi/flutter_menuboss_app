@@ -26,7 +26,7 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
                 margin: const EdgeInsets.only(left: 24.0),
                 child: Text(
                   content,
-                  style: getTextTheme(context).s2sb.copyWith(
+                  style: getTextTheme(context).s2b.copyWith(
                     color: getColorScheme(context).colorGray900,
                   ),
                   textAlign: TextAlign.center,
@@ -40,5 +40,5 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(67);
+  Size get preferredSize => const Size.fromHeight(68);
 }
