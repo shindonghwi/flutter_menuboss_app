@@ -50,10 +50,12 @@
     "bottom_sheet_pin_code_description": "Please enter your PIN code",
 
     "blank_message_content_add_screen": "Add screen",
+    "blank_message_content_add_content": "Add content",
     "blank_message_content_new_schedule": "New schedule",
     "blank_message_content_new_playlist": "New playlist",
-    "blank_message_content_upload_file": "Add content",
+    "blank_message_content_upload_file": "Upload file",
     "blank_message_description_add_screen": "There is currently no saved screen list\nPlease register the screen through QR code",
+    "blank_message_description_add_content": "There is currently no content\nPlease add more content",
     "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",

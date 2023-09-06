@@ -8,6 +8,7 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 enum BlankMessageType {
   ADD_SCREEN,
+  ADD_CONTENT,
   NEW_SCHEDULE,
   NEW_PLAYLIST,
   UPLOAD_FILE,
@@ -29,6 +30,8 @@ class BlankMessage extends HookWidget {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return getAppLocalizations(context).blank_message_content_add_screen;
+        case BlankMessageType.ADD_CONTENT:
+          return getAppLocalizations(context).blank_message_content_add_content;
         case BlankMessageType.NEW_SCHEDULE:
           return getAppLocalizations(context).blank_message_content_new_schedule;
         case BlankMessageType.NEW_PLAYLIST:
@@ -44,6 +47,8 @@ class BlankMessage extends HookWidget {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return getAppLocalizations(context).blank_message_description_add_screen;
+        case BlankMessageType.ADD_CONTENT:
+          return getAppLocalizations(context).blank_message_description_add_content;
         case BlankMessageType.NEW_SCHEDULE:
           return getAppLocalizations(context).blank_message_description_new_schedule;
         case BlankMessageType.NEW_PLAYLIST:
@@ -59,6 +64,8 @@ class BlankMessage extends HookWidget {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return "assets/imgs/icon_blank_device.svg";
+        case BlankMessageType.ADD_CONTENT:
+          return "assets/imgs/icon_blank_folder.svg";
         case BlankMessageType.NEW_SCHEDULE:
           return "assets/imgs/icon_blank_schedule.svg";
         case BlankMessageType.NEW_PLAYLIST:
@@ -70,9 +77,27 @@ class BlankMessage extends HookWidget {
       }
     }
 
+    String? getButtonIconPath() {
+      switch (type) {
+        case BlankMessageType.ADD_SCREEN:
+          return "assets/imgs/icon_plus.svg";
+        case BlankMessageType.ADD_CONTENT:
+          return "assets/imgs/icon_new_folder.svg";
+        case BlankMessageType.NEW_SCHEDULE:
+          return "assets/imgs/icon_plus.svg";
+        case BlankMessageType.NEW_PLAYLIST:
+          return "assets/imgs/icon_plus.svg";
+        case BlankMessageType.UPLOAD_FILE:
+          return "assets/imgs/icon_upload.svg";
+        default:
+          return null;
+      }
+    }
+
     final content = getContent();
     final description = getDescription();
     final iconPath = getIconPath();
+    final buttonIconPath = getButtonIconPath();
 
     return Center(
       child: Column(
@@ -103,21 +128,22 @@ class BlankMessage extends HookWidget {
           const SizedBox(
             height: 20,
           ),
-          PrimaryFilledButton.smallRound100Icon(
-            leftIcon: Padding(
-              padding: const EdgeInsets.only(right: 4.0),
-              child: SvgPicture.asset("assets/imgs/icon_plus.svg",
-                  width: 20,
-                  height: 20,
-                  colorFilter: ColorFilter.mode(
-                    getColorScheme(context).white,
-                    BlendMode.srcIn,
-                  )),
-            ),
-            content: content.toString(),
-            isActivated: true,
-            onPressed: () => onPressed.call(),
-          )
+          if (buttonIconPath != null)
+            PrimaryFilledButton.smallRound100Icon(
+              leftIcon: Padding(
+                padding: const EdgeInsets.only(right: 4.0),
+                child: SvgPicture.asset(buttonIconPath,
+                    width: 20,
+                    height: 20,
+                    colorFilter: ColorFilter.mode(
+                      getColorScheme(context).white,
+                      BlendMode.srcIn,
+                    )),
+              ),
+              content: content.toString(),
+              isActivated: true,
+              onPressed: () => onPressed.call(),
+            )
         ],
       ),
     );
