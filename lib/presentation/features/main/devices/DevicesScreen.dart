@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetPinCode.dart';
@@ -21,7 +23,10 @@ class DevicesScreen extends StatelessWidget {
           child: BlankMessage(
             type: BlankMessageType.ADD_SCREEN,
             onPressed: () {
-              CommonBottomSheet.showBottomSheet(context, child: BottomSheetPinCode());
+              Navigator.push(
+                context,
+                nextSlideScreen(RoutingScreen.ScanQR.route),
+              );
             },
           ),
         ),

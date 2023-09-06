@@ -7,8 +7,8 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class AddTvScreen extends StatelessWidget {
-  const AddTvScreen({super.key});
+class ScanQrScreen extends StatelessWidget {
+  const ScanQrScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
