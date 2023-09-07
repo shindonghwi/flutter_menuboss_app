@@ -8,11 +8,15 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class FilterButton extends HookWidget {
-  const FilterButton({super.key});
+  final Function(FilterType type, String text) onSelected;
+
+  const FilterButton({
+    super.key,
+    required this.onSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
-
     final filterText = useState(filterDescriptions[FilterType.NameAsc]);
 
     return Container(
@@ -31,6 +35,7 @@ class FilterButton extends HookWidget {
             child: BottomSheetFilterSelector(
               onSelected: (FilterType type, String text) {
                 filterText.value = text;
+                onSelected(type, text);
               },
             ),
           ),

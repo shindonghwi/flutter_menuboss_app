@@ -117,22 +117,22 @@ class _TvContent extends StatelessWidget {
               children: [
                 Stack(
                   children: [
-                    Ink(
-                      width: 340,
-                      height: 200,
-                      decoration: BoxDecoration(
-                        color: getColorScheme(context).colorGray100,
-                        borderRadius: BorderRadius.circular(10),
-                      ),
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Image.asset(
-                          "assets/imgs/image_default.png",
-                          width: 96,
-                          height: 48,
-                        ),
-                      ),
-                    ),
+                    // Ink(
+                    //   width: 340,
+                    //   height: 200,
+                    //   decoration: BoxDecoration(
+                    //     color: getColorScheme(context).colorGray100,
+                    //     borderRadius: BorderRadius.circular(10),
+                    //   ),
+                    //   child: FittedBox(
+                    //     fit: BoxFit.scaleDown,
+                    //     child: Image.asset(
+                    //       "assets/imgs/image_default.png",
+                    //       width: 96,
+                    //       height: 48,
+                    //     ),
+                    //   ),
+                    // ),
                     Positioned(
                       left: 12,
                       top: 12,

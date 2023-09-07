@@ -130,25 +130,25 @@ class ScheduleModeContent extends StatelessWidget {
                         const SizedBox(
                           width: 14,
                         ),
-                        Expanded(
-                          child: AspectRatio(
-                            aspectRatio: 140 / 175,
-                            child: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: getColorScheme(context).colorGray100,
-                              ),
-                              child: FittedBox(
-                                fit: BoxFit.scaleDown,
-                                child: Image.asset(
-                                  "assets/imgs/image_default.png",
-                                  width: 64,
-                                  height: 32,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
+                        // Expanded(
+                        //   child: AspectRatio(
+                        //     aspectRatio: 140 / 175,
+                        //     child: Container(
+                        //       decoration: BoxDecoration(
+                        //         borderRadius: BorderRadius.circular(10),
+                        //         color: getColorScheme(context).colorGray100,
+                        //       ),
+                        //       child: FittedBox(
+                        //         fit: BoxFit.scaleDown,
+                        //         child: Image.asset(
+                        //           "assets/imgs/image_default.png",
+                        //           width: 64,
+                        //           height: 32,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ),
+                        // ),
                       ],
                     ),
                   ),

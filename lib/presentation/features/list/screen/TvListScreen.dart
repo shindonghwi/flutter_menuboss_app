@@ -120,14 +120,15 @@ class _Content extends HookWidget {
                           fit: BoxFit.fill,
                           loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
                             if (loadingProgress == null) return child;
-                            return FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Image.asset(
-                                "assets/imgs/image_default.png",
-                                width: 96,
-                                height: 48,
-                              ),
-                            );
+                            return SizedBox();
+                            // return FittedBox(
+                            //   fit: BoxFit.scaleDown,
+                            //   child: Image.asset(
+                            //     "assets/imgs/image_default.png",
+                            //     width: 96,
+                            //     height: 48,
+                            //   ),
+                            // );
                           },
                         ),
                       ),

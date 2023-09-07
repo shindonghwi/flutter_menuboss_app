@@ -39,22 +39,22 @@ class MyProfileScreen extends HookWidget {
                       height: 120,
                       child: Stack(
                         children: [
-                          Container(
-                            width: 120,
-                            height: 120,
-                            decoration: BoxDecoration(
-                              color: getColorScheme(context).colorGray100,
-                              borderRadius: BorderRadius.circular(100),
-                            ),
-                            child: FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Image.asset(
-                                "assets/imgs/image_default.png",
-                                width: 60,
-                                height: 30,
-                              ),
-                            ),
-                          ),
+                          // Container(
+                          //   width: 120,
+                          //   height: 120,
+                          //   decoration: BoxDecoration(
+                          //     color: getColorScheme(context).colorGray100,
+                          //     borderRadius: BorderRadius.circular(100),
+                          //   ),
+                          //   child: FittedBox(
+                          //     fit: BoxFit.scaleDown,
+                          //     child: Image.asset(
+                          //       "assets/imgs/image_default.png",
+                          //       width: 60,
+                          //       height: 30,
+                          //     ),
+                          //   ),
+                          // ),
                           Align(
                             alignment: Alignment.bottomRight,
                             child: Container(

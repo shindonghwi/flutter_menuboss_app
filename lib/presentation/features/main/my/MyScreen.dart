@@ -52,22 +52,22 @@ class _UserProfile extends HookWidget {
       margin: const EdgeInsets.only(left: 24, right: 12),
       child: Row(
         children: [
-          Container(
-            width: 80,
-            height: 80,
-            decoration: BoxDecoration(
-              color: getColorScheme(context).colorGray100,
-              borderRadius: BorderRadius.circular(100),
-            ),
-            child: FittedBox(
-              fit: BoxFit.scaleDown,
-              child: Image.asset(
-                "assets/imgs/image_default.png",
-                width: 40,
-                height: 20,
-              ),
-            ),
-          ),
+          // Container(
+          //   width: 80,
+          //   height: 80,
+          //   decoration: BoxDecoration(
+          //     color: getColorScheme(context).colorGray100,
+          //     borderRadius: BorderRadius.circular(100),
+          //   ),
+          //   child: FittedBox(
+          //     fit: BoxFit.scaleDown,
+          //     child: Image.asset(
+          //       "assets/imgs/image_default.png",
+          //       width: 40,
+          //       height: 20,
+          //     ),
+          //   ),
+          // ),
           const SizedBox(
             width: 16,
           ),

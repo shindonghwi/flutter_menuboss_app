@@ -45,23 +45,23 @@ class _Content extends StatelessWidget {
       children: [
         Stack(
           children: [
-            AspectRatio(
-              aspectRatio: 340 / 200,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: getColorScheme(context).colorGray100,
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Image.asset(
-                    "assets/imgs/image_default.png",
-                    width: 96,
-                    height: 48,
-                  ),
-                ),
-              ),
-            ),
+            // AspectRatio(
+            //   aspectRatio: 340 / 200,
+            //   child: Container(
+            //     decoration: BoxDecoration(
+            //       color: getColorScheme(context).colorGray100,
+            //       borderRadius: BorderRadius.circular(10),
+            //     ),
+            //     child: FittedBox(
+            //       fit: BoxFit.scaleDown,
+            //       child: Image.asset(
+            //         "assets/imgs/image_default.png",
+            //         width: 96,
+            //         height: 48,
+            //       ),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
         Padding(
