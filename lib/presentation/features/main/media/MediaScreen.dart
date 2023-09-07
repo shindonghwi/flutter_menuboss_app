@@ -19,6 +19,11 @@ import 'widget/MediaFolder.dart';
 import 'widget/MediaImage.dart';
 import 'widget/MediaVideo.dart';
 
+GlobalKey<T> useGlobalKey<T extends State<StatefulWidget>>() {
+  final key = useMemoized(() => GlobalKey<T>(), []);
+  return key;
+}
+
 class MediaScreen extends HookWidget implements FilePickerListener {
   const MediaScreen({super.key});
 
@@ -26,6 +31,8 @@ class MediaScreen extends HookWidget implements FilePickerListener {
   Widget build(BuildContext context) {
     final random = Random();
     final typeList = [MediaType.FOLDER, MediaType.IMAGE, MediaType.VIDEO];
+
+    final _listKey = useGlobalKey<AnimatedListState>();
 
     // 랜덤으로 아이템 생성
     List<MediaItem> generateItems(int count) {
@@ -71,12 +78,20 @@ class MediaScreen extends HookWidget implements FilePickerListener {
 
     final items = useState(sortByName(generateItems(10), FilterType.NameAsc));
 
+    void addItem(MediaItem item) {
+      _listKey.currentState?.insertItem(0, duration: const Duration(milliseconds: 500));
+      items.value = [item, ...items.value];
+    }
+
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
         leadingIsShow: false,
         content: getAppLocalizations(context).main_navigation_menu_media,
         suffixIcons: [
-          Pair("assets/imgs/icon_new_folder.svg", () {}),
+          Pair("assets/imgs/icon_new_folder.svg", () {
+            addItem(MediaItem(MediaType.FOLDER, "New folder ${items.value.length + 1}", 1 + random.nextInt(10),
+                "${random.nextInt(10)}MB"));
+          }),
           Pair("assets/imgs/icon_upload.svg", () {}),
         ],
       ),
@@ -98,23 +113,22 @@ class MediaScreen extends HookWidget implements FilePickerListener {
               ),
               items.value.isNotEmpty
                   ? Expanded(
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        padding: const EdgeInsets.only(bottom: 24),
-                        separatorBuilder: (BuildContext context, int index) {
-                          return const SizedBox(height: 0); // Adjust the height as needed
-                        },
-                        itemBuilder: (BuildContext context, int index) {
+                      child: AnimatedList(
+                        key: _listKey,
+                        initialItemCount: items.value.length,
+                        itemBuilder: (context, index, animation) {
                           final item = items.value[index];
-                          if (item.type == MediaType.FOLDER) {
-                            return MediaFolder(item: item);
-                          } else if (item.type == MediaType.IMAGE) {
-                            return MediaImage(item: item);
-                          } else if (item.type == MediaType.VIDEO) {
-                            return MediaVideo(item: item);
-                          }
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0, -0.15),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: _buildListItem(item),
+                            ),
+                          );
                         },
-                        itemCount: items.value.length,
                       ),
                     )
                   : Expanded(
@@ -131,6 +145,18 @@ class MediaScreen extends HookWidget implements FilePickerListener {
         ),
       ),
     );
+  }
+
+  Widget _buildListItem(MediaItem item) {
+    if (item.type == MediaType.FOLDER) {
+      return MediaFolder(item: item);
+    } else if (item.type == MediaType.IMAGE) {
+      return MediaImage(item: item);
+    } else if (item.type == MediaType.VIDEO) {
+      return MediaVideo(item: item);
+    } else {
+      throw Exception('Unsupported media type');
+    }
   }
 
   @override
