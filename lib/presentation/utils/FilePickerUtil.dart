@@ -1,13 +1,5 @@
 import 'package:image_picker/image_picker.dart';
 
-abstract class FilePickerListener {
-  void onSelectedImage(XFile file);
-
-  void onSelectedVideo(XFile file);
-
-  void notAvailableFile();
-}
-
 class FilePickerUtil {
   static final _picker = ImagePicker();
   static final allowedExtensionsImage = ['jpg', 'jpeg', 'png', 'gif'];
@@ -15,20 +7,24 @@ class FilePickerUtil {
 
   /// @feature: 파일을 선택하는 기능 ( 이미지, 비디오 )
   /// @author: 2023/09/06 11:56 AM donghwishin
-  static void pickFile(FilePickerListener listener) async {
+  static void pickFile({
+    required Function(XFile)? onImageSelected,
+    required Function(XFile)? onVideoSelected,
+    required Function()? notAvailableFile,
+  }) async {
     XFile? xFile = await _picker.pickImage(source: ImageSource.gallery);
 
     final String? extension = xFile?.path.split('.').last;
 
-    if (xFile != null){
+    if (xFile != null) {
       if (allowedExtensionsImage.contains(extension?.toLowerCase())) {
-        listener.onSelectedImage(xFile);
+        if (onImageSelected != null) onImageSelected(xFile);
         return;
       } else if (allowedExtensionsVideo.contains(extension?.toLowerCase())) {
-        listener.onSelectedVideo(xFile);
+        if (onVideoSelected != null) onVideoSelected(xFile);
         return;
       }
     }
-    listener.notAvailableFile();
+    if (notAvailableFile != null) notAvailableFile();
   }
 }

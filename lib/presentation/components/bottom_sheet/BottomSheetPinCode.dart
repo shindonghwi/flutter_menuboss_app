@@ -116,7 +116,7 @@ class BottomSheetPinCode extends HookWidget {
           width: double.infinity,
           child: Padding(
             padding: const EdgeInsets.all(24.0),
-            child: PrimaryFilledButton.normalRound10(
+            child: PrimaryFilledButton.normalRound8(
               content: getAppLocalizations(context).common_confirm,
               isActivated: isCompleted.value,
               onPressed: () {

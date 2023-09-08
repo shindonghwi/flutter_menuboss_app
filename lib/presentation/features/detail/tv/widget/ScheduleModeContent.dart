@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/button/NeutralOutlineButton.dart';
+import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -80,48 +80,48 @@ class ScheduleModeContent extends StatelessWidget {
                               Row(
                                 mainAxisSize: MainAxisSize.min,
                                 children: [
-                                  NeutralOutlineButton.xSmallRect(
-                                    content: getAppLocalizations(context).common_edit,
-                                    leftIcon: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: SvgPicture.asset(
-                                        "assets/imgs/icon_image.svg",
-                                        width: 18,
-                                        height: 18,
-                                        colorFilter: ColorFilter.mode(
-                                          getColorScheme(context).colorGray900,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                    ),
-                                    isActivated: true,
-                                    onPressed: () {
-                                      // Navigator.push(
-                                      //   context,
-                                      //   nextSlideScreen(RoutingScreen.ScreenList.route),
-                                      // );
-                                    },
-                                  ),
+                                  // NeutralOutlineButton.xSmallRect(
+                                  //   content: getAppLocalizations(context).common_edit,
+                                  //   leftIcon: Padding(
+                                  //     padding: const EdgeInsets.only(right: 8.0),
+                                  //     child: SvgPicture.asset(
+                                  //       "assets/imgs/icon_image.svg",
+                                  //       width: 18,
+                                  //       height: 18,
+                                  //       colorFilter: ColorFilter.mode(
+                                  //         getColorScheme(context).colorGray900,
+                                  //         BlendMode.srcIn,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  //   isActivated: true,
+                                  //   onPressed: () {
+                                  //     // Navigator.push(
+                                  //     //   context,
+                                  //     //   nextSlideScreen(RoutingScreen.ScreenList.route),
+                                  //     // );
+                                  //   },
+                                  // ),
 
                                   /// Edit만 보이게 할거면 아래를 지우면 됨.
                                   const SizedBox(width: 8),
-                                  NeutralOutlineButton.xSmallRect(
-                                    content: getAppLocalizations(context).common_time,
-                                    leftIcon: Padding(
-                                      padding: const EdgeInsets.only(right: 8.0),
-                                      child: SvgPicture.asset(
-                                        "assets/imgs/icon_time.svg",
-                                        width: 18,
-                                        height: 18,
-                                        colorFilter: ColorFilter.mode(
-                                          getColorScheme(context).colorGray900,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                    ),
-                                    isActivated: true,
-                                    onPressed: () {},
-                                  ),
+                                  // NeutralOutlineButton.xSmallRect(
+                                  //   content: getAppLocalizations(context).common_time,
+                                  //   leftIcon: Padding(
+                                  //     padding: const EdgeInsets.only(right: 8.0),
+                                  //     child: SvgPicture.asset(
+                                  //       "assets/imgs/icon_time.svg",
+                                  //       width: 18,
+                                  //       height: 18,
+                                  //       colorFilter: ColorFilter.mode(
+                                  //         getColorScheme(context).colorGray900,
+                                  //         BlendMode.srcIn,
+                                  //       ),
+                                  //     ),
+                                  //   ),
+                                  //   isActivated: true,
+                                  //   onPressed: () {},
+                                  // ),
                                 ],
                               ),
                             ],

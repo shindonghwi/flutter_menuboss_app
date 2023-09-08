@@ -67,6 +67,10 @@
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
+    "popup_input_new_name": "New name",
+    "popup_delete_title": "Are you sure?",
+    "popup_delete_description": "Do you really want to delete these record?\nThis process cannot be undone",
+
     "common_email": "Email",
     "common_address": "Address",
     "common_password": "Password",
@@ -75,6 +79,10 @@
     "common_edit": "Edit",
     "common_apply": "Apply",
     "common_confirm": "Confirm",
+    "common_rename": "Rename",
+    "common_delete": "Delete",
+    "common_ok": "Ok",
+    "common_cancel": "Cancel",
     "common_save": "Save",
     "common_time": "Time",
     "common_mode_all_day": "All day Mode",

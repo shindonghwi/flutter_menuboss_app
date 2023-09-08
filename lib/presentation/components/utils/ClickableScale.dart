@@ -17,19 +17,27 @@ class ClickableScale extends HookWidget {
   Widget build(BuildContext context) {
     final animationController = useAnimationController(
       duration: const Duration(milliseconds: 100),
-      initialValue: 1.0,
     );
 
-    final scaleAnimation = Tween<double>(begin: 1.0, end: 0.98).animate(
-      CurvedAnimation(parent: animationController, curve: Curves.easeInOut),
+    final scaleNotifier = useState<ValueNotifier<double>>(
+      ValueNotifier(1.0),
     );
+
+    animationController.addListener(() {
+      scaleNotifier.value.value = Tween<double>(begin: 1.0, end: 0.96).transform(
+        animationController.value,
+      );
+    });
+
+    useEffect(() {
+      return () => animationController.dispose;
+    }, const []);
 
     return Material(
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(borderRadius),
         onTap: () {
-          // 이 부분에서 애니메이션을 빠르게 재생하도록 로직을 추가합니다.
           animationController.forward().then((_) {
             animationController.reverse();
           });
@@ -42,13 +50,10 @@ class ClickableScale extends HookWidget {
             animationController.reverse();
           }
         },
-        child: AnimatedBuilder(
-          animation: scaleAnimation,
-          builder: (context, child) {
-            return Transform.scale(
-              scale: scaleAnimation.value,
-              child: child,
-            );
+        child: ValueListenableBuilder<double>(
+          valueListenable: scaleNotifier.value,
+          builder: (context, scale, child) {
+            return Transform.scale(scale: scale, child: child);
           },
           child: child,
         ),

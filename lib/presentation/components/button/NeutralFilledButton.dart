@@ -12,24 +12,48 @@ class NeutralFilledButton extends HookWidget {
   final double height;
   final double borderRadius;
 
-  const NeutralFilledButton({
+  /// @feature: xSmall buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const NeutralFilledButton.xSmallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
-    this.leftIcon,
     this.onPressed,
-    this.height = 0,
-    this.borderRadius = 0,
-  }) : super(key: key);
+  })  : leftIcon = null,
+        borderRadius = 4,
+        height = 40,
+        super(key: key);
 
-  const NeutralFilledButton.smallRect({
+  const NeutralFilledButton.xSmallRound100({
     Key? key,
-    this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : borderRadius = 10,
-        height = 44,
+  })  : leftIcon = null,
+        borderRadius = 100,
+        height = 40,
+        super(key: key);
+
+  /// @feature: small buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const NeutralFilledButton.smallRound8({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 8,
+        height = 48,
+        super(key: key);
+
+  const NeutralFilledButton.smallRound100({
+    Key? key,
+    required this.leftIcon,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : borderRadius = 100,
+        height = 48,
         super(key: key);
 
   @override
@@ -37,25 +61,38 @@ class NeutralFilledButton extends HookWidget {
     var textColor = isActivated ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
     var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
 
+    switch (height) {
+      case 40:
+        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        break;
+      case 48:
+        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        break;
+    }
+
     return SizedBox(
       height: height,
       child: ElevatedButton(
         onPressed: isActivated ? () => onPressed?.call() : null,
         style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: getColorScheme(context).colorGray100,
-          backgroundColor: isActivated ? getColorScheme(context).colorGray50 : getColorScheme(context).colorGray100,
+          disabledBackgroundColor: getColorScheme(context).colorGray200,
+          backgroundColor: isActivated ? getColorScheme(context).colorGray100 : getColorScheme(context).colorGray200,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
           elevation: 0,
-          foregroundColor: getColorScheme(context).colorGray100,
+          foregroundColor: getColorScheme(context).colorGray500,
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            leftIcon ?? Container(),
+            if (leftIcon != null)
+              Padding(
+                padding: const EdgeInsets.only(right: 8),
+                child: leftIcon,
+              ),
             Text(content, style: textStyle),
           ],
         ),

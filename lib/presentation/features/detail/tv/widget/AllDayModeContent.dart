@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/button/NeutralOutlineButton.dart';
+import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -89,28 +89,28 @@ class _Content extends StatelessWidget {
                   ),
                 ],
               ),
-              NeutralOutlineButton.smallRect(
-                leftIcon: Padding(
-                  padding: const EdgeInsets.only(right: 8.0),
-                  child: SvgPicture.asset(
-                    "assets/imgs/icon_image.svg",
-                    width: 18,
-                    height: 18,
-                    colorFilter: ColorFilter.mode(
-                      getColorScheme(context).colorGray900,
-                      BlendMode.srcIn,
-                    )
-                  ),
-                ),
-                content: getAppLocalizations(context).common_edit,
-                isActivated: true,
-                onPressed: () {
-                  // Navigator.push(
-                  //   context,
-                  //   nextSlideScreen(RoutingScreen.ScreenList.route),
-                  // );
-                },
-              ),
+              // NeutralOutlineButton.smallRect(
+              //   leftIcon: Padding(
+              //     padding: const EdgeInsets.only(right: 8.0),
+              //     child: SvgPicture.asset(
+              //       "assets/imgs/icon_image.svg",
+              //       width: 18,
+              //       height: 18,
+              //       colorFilter: ColorFilter.mode(
+              //         getColorScheme(context).colorGray900,
+              //         BlendMode.srcIn,
+              //       )
+              //     ),
+              //   ),
+              //   content: getAppLocalizations(context).common_edit,
+              //   isActivated: true,
+              //   onPressed: () {
+              //     // Navigator.push(
+              //     //   context,
+              //     //   nextSlideScreen(RoutingScreen.ScreenList.route),
+              //     // );
+              //   },
+              // ),
             ],
           ),
         ),

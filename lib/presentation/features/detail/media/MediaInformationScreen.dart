@@ -23,7 +23,9 @@ class MediaInformationScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            _FileImage(imagePath: "https://blog.kakaocdn.net/dn/cxrMOV/btqCqOwWxYV/ltWjZ6UdKCPtbch4lsDbW1/img.jpg"),
+            _FileImage(
+              imagePath: "https://blog.kakaocdn.net/dn/cxrMOV/btqCqOwWxYV/ltWjZ6UdKCPtbch4lsDbW1/img.jpg",
+            ),
             DividerVertical(marginVertical: 12),
             _MediaInformation(),
           ],

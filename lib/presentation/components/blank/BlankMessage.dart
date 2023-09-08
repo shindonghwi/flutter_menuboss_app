@@ -130,15 +130,14 @@ class BlankMessage extends HookWidget {
           ),
           if (buttonIconPath != null)
             PrimaryFilledButton.smallRound100Icon(
-              leftIcon: Padding(
-                padding: const EdgeInsets.only(right: 4.0),
-                child: SvgPicture.asset(buttonIconPath,
-                    width: 20,
-                    height: 20,
-                    colorFilter: ColorFilter.mode(
-                      getColorScheme(context).white,
-                      BlendMode.srcIn,
-                    )),
+              leftIcon: SvgPicture.asset(
+                buttonIconPath,
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).white,
+                  BlendMode.srcIn,
+                ),
               ),
               content: content.toString(),
               isActivated: true,

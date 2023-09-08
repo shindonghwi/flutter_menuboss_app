@@ -4,7 +4,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class PrimaryFilledButton extends HookWidget {
+class NeutralLineButton extends HookWidget {
   final Widget? leftIcon;
   final String content;
   final bool isActivated;
@@ -14,7 +14,7 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: xSmall buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.xSmallRound4({
+  const NeutralLineButton.xSmallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -24,29 +24,9 @@ class PrimaryFilledButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const PrimaryFilledButton.xSmallRound4Icon({
-    Key? key,
-    required this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 4,
-        height = 40,
-        super(key: key);
-
-  const PrimaryFilledButton.xSmallRound100({
-    Key? key,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 100,
-        height = 40,
-        super(key: key);
-
   /// @feature: small buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.smallRound8({
+  const NeutralLineButton.smallRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -56,39 +36,19 @@ class PrimaryFilledButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const PrimaryFilledButton.smallRound8Icon({
+  const NeutralLineButton.smallRound8Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
   })  : borderRadius = 8,
-        height = 48,
-        super(key: key);
-
-  const PrimaryFilledButton.smallRound100({
-    Key? key,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 100,
-        height = 48,
-        super(key: key);
-
-  const PrimaryFilledButton.smallRound100Icon({
-    Key? key,
-    required this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 100,
         height = 48,
         super(key: key);
 
   /// @feature: normal buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.normalRound8({
+  const NeutralLineButton.normalRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -98,7 +58,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.normalRound8Icon({
+  const NeutralLineButton.normalRound8Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -108,7 +68,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.normalRound100({
+  const NeutralLineButton.normalRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -118,7 +78,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.normalRound100Icon({
+  const NeutralLineButton.normalRound100Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -126,33 +86,11 @@ class PrimaryFilledButton extends HookWidget {
     this.onPressed,
   })  : borderRadius = 100,
         height = 52,
-        super(key: key);
-
-  /// @feature: large buttons
-  /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.largeRound100({
-    Key? key,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 100,
-        height = 60,
-        super(key: key);
-
-  const PrimaryFilledButton.largeRound100Icon({
-    Key? key,
-    required this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 100,
-        height = 60,
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    var textColor = isActivated ? getColorScheme(context).white : getColorScheme(context).colorGray400;
+    var textColor = isActivated ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
     var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
 
     switch (height) {
@@ -165,21 +103,19 @@ class PrimaryFilledButton extends HookWidget {
       case 52:
         textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
         break;
-      case 60:
-        textStyle = getTextTheme(context).s2sb.copyWith(color: textColor);
-        break;
     }
 
     return SizedBox(
       height: height,
-      child: ElevatedButton(
+      child: OutlinedButton(
         onPressed: isActivated ? () => onPressed?.call() : null,
-        style: ElevatedButton.styleFrom(
-          disabledBackgroundColor: getColorScheme(context).colorGray200,
-          backgroundColor: isActivated ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
+        style: OutlinedButton.styleFrom(
+          side: BorderSide(color: getColorScheme(context).colorGray300),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
           ),
+          backgroundColor: isActivated ? getColorScheme(context).white : getColorScheme(context).colorGray400,
+          disabledBackgroundColor: getColorScheme(context).colorGray400,
           elevation: 0,
           foregroundColor: getColorScheme(context).colorGray500,
         ),
