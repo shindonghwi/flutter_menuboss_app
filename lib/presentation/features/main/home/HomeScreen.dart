@@ -107,10 +107,10 @@ class _TvContent extends StatelessWidget {
           final item = items[index];
           return Clickable(
             onPressed: () {
-              Navigator.push(
-                context,
-                nextSlideScreen(RoutingScreen.DetailTv.route),
-              );
+              // Navigator.push(
+              //   context,
+              //   nextSlideScreen(RoutingScreen.DetailTv.route),
+              // );
             },
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

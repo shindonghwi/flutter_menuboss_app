@@ -96,10 +96,10 @@ class ScheduleModeContent extends StatelessWidget {
                                     ),
                                     isActivated: true,
                                     onPressed: () {
-                                      Navigator.push(
-                                        context,
-                                        nextSlideScreen(RoutingScreen.ScreenList.route),
-                                      );
+                                      // Navigator.push(
+                                      //   context,
+                                      //   nextSlideScreen(RoutingScreen.ScreenList.route),
+                                      // );
                                     },
                                   ),
 

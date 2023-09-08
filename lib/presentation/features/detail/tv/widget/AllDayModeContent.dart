@@ -105,10 +105,10 @@ class _Content extends StatelessWidget {
                 content: getAppLocalizations(context).common_edit,
                 isActivated: true,
                 onPressed: () {
-                  Navigator.push(
-                    context,
-                    nextSlideScreen(RoutingScreen.ScreenList.route),
-                  );
+                  // Navigator.push(
+                  //   context,
+                  //   nextSlideScreen(RoutingScreen.ScreenList.route),
+                  // );
                 },
               ),
             ],

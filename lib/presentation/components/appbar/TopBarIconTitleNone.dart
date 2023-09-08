@@ -14,7 +14,7 @@ class TopBarIconTitleNone extends HookWidget implements PreferredSizeWidget {
   const TopBarIconTitleNone({
     super.key,
     this.leftIconPath,
-    required this.leftIconOnPressed,
+    this.leftIconOnPressed,
     required this.content,
   });
 

@@ -49,6 +49,13 @@
 
     "bottom_sheet_pin_code_description": "Please enter your PIN code",
 
+    "detail_media_information_title": "File name",
+    "detail_media_information_media_information": "Media Information",
+    "detail_media_information_media_information_uploaded_data": "Uploaded date",
+    "detail_media_information_media_information_file_size": "File size",
+    "detail_media_information_media_information_file_type": "File type",
+    "detail_media_information_media_information_file_capacity": "File capacity",
+
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_add_content": "Add content",
     "blank_message_content_new_schedule": "New schedule",

@@ -179,10 +179,10 @@ class _SettingItems extends HookWidget {
   Widget build(BuildContext context) {
     final items = [
       Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
-        Navigator.push(
-          context,
-          nextSlideScreen(RoutingScreen.MyProfile.route),
-        );
+        // Navigator.push(
+        //   context,
+        //   nextSlideScreen(RoutingScreen.MyProfile.route),
+        // );
       }),
       // Pair(getAppLocalizations(context).my_page_setting_items_plan, () {
       //   Navigator.push(

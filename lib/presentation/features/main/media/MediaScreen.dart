@@ -3,12 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/button/FilterButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
@@ -118,14 +121,22 @@ class MediaScreen extends HookWidget implements FilePickerListener {
                         initialItemCount: items.value.length,
                         itemBuilder: (context, index, animation) {
                           final item = items.value[index];
-                          return SlideTransition(
-                            position: Tween<Offset>(
-                              begin: const Offset(0, -0.15),
-                              end: Offset.zero,
-                            ).animate(animation),
-                            child: FadeTransition(
-                              opacity: animation,
-                              child: _buildListItem(item),
+                          return ClickableScale(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                nextSlideScreen(RoutingScreen.DetailMediaInformation.route),
+                              );
+                            },
+                            child: SlideTransition(
+                              position: Tween<Offset>(
+                                begin: const Offset(0, -0.15),
+                                end: Offset.zero,
+                              ).animate(animation),
+                              child: FadeTransition(
+                                opacity: animation,
+                                child: _buildListItem(item),
+                              ),
                             ),
                           );
                         },

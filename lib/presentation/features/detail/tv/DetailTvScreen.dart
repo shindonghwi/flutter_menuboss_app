@@ -26,18 +26,18 @@ class DetailTvScreen extends HookWidget {
         leadingIsShow: true,
         content: "Tv",
         suffixIcons: [
-          Pair("assets/imgs/icon_edit.svg", () {
-            Navigator.push(
-              context,
-              nextSlideScreen(RoutingScreen.DetailTvModify.route),
-            );
-          }),
-          Pair("assets/imgs/icon_settings.svg", () {
-            Navigator.push(
-              context,
-              nextSlideScreen(RoutingScreen.DetailTvSetting.route),
-            );
-          }),
+          // Pair("assets/imgs/icon_edit.svg", () {
+          //   Navigator.push(
+          //     context,
+          //     nextSlideScreen(RoutingScreen.DetailTvModify.route),
+          //   );
+          // }),
+          // Pair("assets/imgs/icon_settings.svg", () {
+          //   Navigator.push(
+          //     context,
+          //     nextSlideScreen(RoutingScreen.DetailTvSetting.route),
+          //   );
+          // }),
         ],
       ),
       body: Column(
