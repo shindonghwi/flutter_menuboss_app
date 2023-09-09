@@ -34,8 +34,8 @@ class MediaListNotifier extends StateNotifier<List<MediaItem>> {
   }
 
   // 사용자가 정의한 필터로 정렬
-  void sortByName(List<MediaItem> items, FilterType type) {
-    items.sort((a, b) {
+  void sortByName(FilterType type) {
+    state.sort((a, b) {
       // 폴더가 항상 상위에 오게 한다.
       if (a.type == MediaType.FOLDER && b.type != MediaType.FOLDER) return -1;
       if (a.type != MediaType.FOLDER && b.type == MediaType.FOLDER) return 1;
@@ -46,7 +46,7 @@ class MediaListNotifier extends StateNotifier<List<MediaItem>> {
         return b.fileName.compareTo(a.fileName);
       }
     });
-    state = [...items];
+    state = [...state];
   }
 
   /// @feature: media 아이템 빌더 ( media screen ) 내용과 겹침.

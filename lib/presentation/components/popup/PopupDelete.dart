@@ -35,7 +35,7 @@ class PopupDelete extends HookWidget {
               BlendMode.srcIn,
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 32,
           ),
           Text(
@@ -79,6 +79,7 @@ class PopupDelete extends HookWidget {
                   content: getAppLocalizations(context).common_delete,
                   isActivated: true,
                   onPressed: () {
+                    onClicked?.call(true);
                     Navigator.pop(context);
                   },
                 ),

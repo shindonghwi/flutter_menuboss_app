@@ -61,6 +61,9 @@ class MediaScreen extends HookConsumerWidget {
               break;
           }
         }
+
+        mediaProvider.sortByName(FilterType.NameAsc);
+
       }
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -105,7 +108,7 @@ class MediaScreen extends HookConsumerWidget {
                 alignment: Alignment.centerRight,
                 child: FilterButton(
                   onSelected: (type, text) {
-                    mediaProvider.sortByName(items, type);
+                    mediaProvider.sortByName(type);
                   },
                 ),
               ),
