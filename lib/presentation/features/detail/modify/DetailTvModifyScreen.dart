@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
-import 'package:menuboss/presentation/components/textfield/UnderLineTextField.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -26,20 +25,20 @@ class DetailTvModifyScreen extends HookWidget {
       body: SafeArea(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24.0),
-              child: UnderLineTextField(
-                maxLength: 20,
-                controller: useTextEditingController(),
-                hint: 'Name',
-                onChanged: (value) {
-                  saveButtonActivated.value = value.isNotEmpty;
-                },
-                inputFormatters: [
-                  InputFormatterUtil.onlyName(),
-                ],
-              ),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 24.0),
+            //   child: UnderLineTextField(
+            //     maxLength: 20,
+            //     controller: useTextEditingController(),
+            //     hint: 'Name',
+            //     onChanged: (value) {
+            //       saveButtonActivated.value = value.isNotEmpty;
+            //     },
+            //     inputFormatters: [
+            //       InputFormatterUtil.onlyName(),
+            //     ],
+            //   ),
+            // )
           ],
         ),
       ),

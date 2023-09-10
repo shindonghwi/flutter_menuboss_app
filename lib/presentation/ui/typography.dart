@@ -35,32 +35,37 @@ extension StyleText on TextTheme {
       fontWeight: FontWeight.w600,
       height: 1.35
   );
-  TextStyle get b1b => defaultTextStyle.copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w700,
-      height: 1.375
-  );
   TextStyle get b1sb => defaultTextStyle.copyWith(
       fontSize: 16,
       fontWeight: FontWeight.w600,
       height: 1.375
   );
-  TextStyle get b1m => defaultTextStyle.copyWith(
-      fontSize: 16,
-      fontWeight: FontWeight.w500,
-      height: 1.375
-  );
   TextStyle get b2b => defaultTextStyle.copyWith(
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w700,
       height: 1.357
   );
   TextStyle get b2sb => defaultTextStyle.copyWith(
-      fontSize: 14,
+      fontSize: 16,
       fontWeight: FontWeight.w600,
       height: 1.357
   );
   TextStyle get b2m => defaultTextStyle.copyWith(
+      fontSize: 16,
+      fontWeight: FontWeight.w500,
+      height: 1.357
+  );
+  TextStyle get b3b => defaultTextStyle.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w700,
+      height: 1.357
+  );
+  TextStyle get b3sb => defaultTextStyle.copyWith(
+      fontSize: 14,
+      fontWeight: FontWeight.w600,
+      height: 1.357
+  );
+  TextStyle get b3m => defaultTextStyle.copyWith(
       fontSize: 14,
       fontWeight: FontWeight.w500,
       height: 1.357

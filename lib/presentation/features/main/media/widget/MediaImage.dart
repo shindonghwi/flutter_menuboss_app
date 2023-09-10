@@ -50,7 +50,7 @@ class MediaImage extends HookConsumerWidget {
         children: [
           Row(
             children: [
-              const ImagePlaceholder(type: PlaceholderType.Small),
+              const ImagePlaceholder(type: ImagePlaceholderType.Small),
               const SizedBox(width: 16),
               Column(
                 mainAxisSize: MainAxisSize.max,

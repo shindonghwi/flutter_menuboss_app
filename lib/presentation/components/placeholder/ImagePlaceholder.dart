@@ -5,10 +5,10 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 // small: 60x60, normal: 80x80, large: 120x120
-enum PlaceholderType { Small, Normal, Large, AUTO_16x9 }
+enum ImagePlaceholderType { Small, Normal, Large, AUTO_16x9 }
 
 class ImagePlaceholder extends StatelessWidget {
-  final PlaceholderType type;
+  final ImagePlaceholderType type;
 
   const ImagePlaceholder({
     super.key,
@@ -21,28 +21,21 @@ class ImagePlaceholder extends StatelessWidget {
     Pair<double, double> imageSize = Pair(0.0, 0.0);
 
     switch (type) {
-      case PlaceholderType.Small:
+      case ImagePlaceholderType.Small:
         containerSize = 60;
-      case PlaceholderType.Normal:
-        containerSize = 80;
-      case PlaceholderType.Large:
-        containerSize = 120;
-      default:
-        containerSize = 80;
-    }
-
-    switch (type) {
-      case PlaceholderType.Small:
         imageSize = Pair(36, 18);
-      case PlaceholderType.Normal:
+      case ImagePlaceholderType.Normal:
+        containerSize = 80;
         imageSize = Pair(52, 26);
-      case PlaceholderType.Large:
+      case ImagePlaceholderType.Large:
+        containerSize = 120;
         imageSize = Pair(72, 36);
       default:
+        containerSize = 80;
         imageSize = Pair(52, 26);
     }
 
-    return type == PlaceholderType.AUTO_16x9
+    return type == ImagePlaceholderType.AUTO_16x9
         ? SizedBox(
             width: double.infinity,
             child: LayoutBuilder(builder: (context, constraints) {

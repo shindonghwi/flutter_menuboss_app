@@ -4,7 +4,7 @@ import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.da
 
 class LoadImage extends StatelessWidget {
   final String url;
-  final PlaceholderType type;
+  final ImagePlaceholderType type;
 
   const LoadImage({
     super.key,

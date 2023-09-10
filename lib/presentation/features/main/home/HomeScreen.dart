@@ -65,16 +65,16 @@ class _TvContentEmpty extends StatelessWidget {
               width: 120,
               height: 120,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 24.0),
-              child: Text(
-                getAppLocalizations(context).home_tv_not_register,
-                style: getTextTheme(context).b1m.copyWith(
-                      color: getColorScheme(context).colorGray400,
-                    ),
-                textAlign: TextAlign.center,
-              ),
-            )
+            // Padding(
+            //   padding: const EdgeInsets.only(top: 24.0),
+            //   child: Text(
+            //     getAppLocalizations(context).home_tv_not_register,
+            //     style: getTextTheme(context).b1m.copyWith(
+            //           color: getColorScheme(context).colorGray400,
+            //         ),
+            //     textAlign: TextAlign.center,
+            //   ),
+            // )
           ],
         ),
       ),

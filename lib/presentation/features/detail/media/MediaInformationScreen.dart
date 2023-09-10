@@ -59,7 +59,7 @@ class _FileImage extends StatelessWidget {
             ),
             child: LoadImage(
               url: imagePath!,
-              type: PlaceholderType.AUTO_16x9,
+              type: ImagePlaceholderType.AUTO_16x9,
             ),
           ),
         ),

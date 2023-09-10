@@ -4,6 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
+import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
+import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
+import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/progress/LinearAnimationProgressBar.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
@@ -20,7 +23,7 @@ class MyScreen extends StatelessWidget {
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarTitle(
-        content: getAppLocalizations(context).my_page_appbar_title,
+        content: getAppLocalizations(context).main_navigation_menu_my,
       ),
       body: SafeArea(
         child: Column(
@@ -49,44 +52,71 @@ class _UserProfile extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 100,
       margin: const EdgeInsets.only(left: 24, right: 12),
       child: Row(
         children: [
-          // Container(
-          //   width: 80,
-          //   height: 80,
-          //   decoration: BoxDecoration(
-          //     color: getColorScheme(context).colorGray100,
-          //     borderRadius: BorderRadius.circular(100),
-          //   ),
-          //   child: FittedBox(
-          //     fit: BoxFit.scaleDown,
-          //     child: Image.asset(
-          //       "assets/imgs/image_default.png",
-          //       width: 40,
-          //       height: 20,
-          //     ),
-          //   ),
-          // ),
-          const SizedBox(
-            width: 16,
+          const LoadProfile(
+            url: 'https://img.freepik.com/free-photo/portrait-of-white-man-isolated_53876-40306.jpg',
+            type: ProfileImagePlaceholderType.Size100x100,
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'MenuBoss',
-                style: getTextTheme(context).b1b.copyWith(
-                      color: getColorScheme(context).colorGray900,
+          const SizedBox(
+            width: 24,
+          ),
+          Container(
+            padding: const EdgeInsets.symmetric(vertical: 4),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        color: getColorScheme(context).colorSecondary500,
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                      margin: const EdgeInsets.only(bottom: 4),
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        child: Text(
+                          'Owner',
+                          style: getTextTheme(context).c2m.copyWith(
+                                color: getColorScheme(context).white,
+                              ),
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
                     ),
-              ),
-              Text(
-                'admin@menuboss.com',
-                style: getTextTheme(context).b2m.copyWith(
-                      color: getColorScheme(context).colorGray500,
+                    Text(
+                      'Admin MenuBoss',
+                      style: getTextTheme(context).b2b.copyWith(
+                            color: getColorScheme(context).colorGray900,
+                          ),
                     ),
-              ),
-            ],
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'MenuBoss',
+                      style: getTextTheme(context).c1sb.copyWith(
+                            color: getColorScheme(context).colorGray500,
+                          ),
+                    ),
+                    Text(
+                      'admin@menuboss.com',
+                      style: getTextTheme(context).c1sb.copyWith(
+                            color: getColorScheme(context).colorGray500,
+                          ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
           // Expanded(
           //   child: Align(
@@ -122,7 +152,7 @@ class _UserPlanScreenInfo extends HookWidget {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.symmetric(horizontal: 24),
-      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
+      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       decoration: BoxDecoration(
         color: getColorScheme(context).colorGray50,
         borderRadius: BorderRadius.circular(10),
@@ -131,12 +161,12 @@ class _UserPlanScreenInfo extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisSize: MainAxisSize.max,
         children: [
-          // SvgPicture.asset(
-          //   "assets/imgs/icon_primium.svg",
-          //   width: 40,
-          //   height: 40,
-          // ),
-          const SizedBox(width: 16),
+          SvgPicture.asset(
+            "assets/imgs/icon_premium.svg",
+            width: 24,
+            height: 24,
+          ),
+          const SizedBox(width: 4),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

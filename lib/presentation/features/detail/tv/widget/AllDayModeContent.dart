@@ -72,12 +72,12 @@ class _Content extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    "Basic Menu Screen",
-                    style: getTextTheme(context).b1m.copyWith(
-                          color: getColorScheme(context).colorGray900,
-                        ),
-                  ),
+                  // Text(
+                  //   "Basic Menu Screen",
+                  //   style: getTextTheme(context).b1m.copyWith(
+                  //         color: getColorScheme(context).colorGray900,
+                  //       ),
+                  // ),
                   Padding(
                     padding: const EdgeInsets.only(top: 4.0),
                     child: Text(

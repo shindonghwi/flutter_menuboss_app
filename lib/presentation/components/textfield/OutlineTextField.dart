@@ -23,6 +23,24 @@ class OutlineTextField extends HookWidget {
   final Function(String)? onChanged;
   final double height;
 
+  const OutlineTextField.xsmall({
+    Key? key,
+    this.controller,
+    required this.hint,
+    this.successMessage = '',
+    this.errorMessage = '',
+    this.checkRegList = const [],
+    this.showPwVisibleButton = false,
+    this.showSuffixStatusIcon = true,
+    this.forceRedCheck = false,
+    this.enable = true,
+    this.textInputType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.inputFormatters = const [],
+    this.onChanged,
+  })  : height = 44,
+        super(key: key);
+
   const OutlineTextField.small({
     Key? key,
     this.controller,
@@ -56,7 +74,7 @@ class OutlineTextField extends HookWidget {
     this.textInputAction = TextInputAction.next,
     this.inputFormatters = const [],
     this.onChanged,
-  })  : height = 56,
+  })  : height = 52,
         super(key: key);
 
   @override
@@ -65,13 +83,25 @@ class OutlineTextField extends HookWidget {
 
     final isSuccess = useState<bool?>(null);
     final isPwVisible = useState(false);
+    EdgeInsets contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
+    TextStyle textStyle = getTextTheme(context).b3m;
 
-    final contentPadding = EdgeInsets.symmetric(
-      vertical: height == 48 ? 14.5 : 17.5,
-      horizontal: 12,
-    );
-
-    final textStyle = height == 48 ? getTextTheme(context).b2m : getTextTheme(context).b1m;
+    switch (height) {
+      case 44:
+        contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
+        textStyle = getTextTheme(context).b3m;
+        break;
+      case 48:
+        contentPadding = const EdgeInsets.symmetric(vertical: 14.5, horizontal: 16);
+        textStyle = getTextTheme(context).b3m;
+        break;
+      case 52:
+        contentPadding = const EdgeInsets.symmetric(vertical: 15, horizontal: 16);
+        textStyle = getTextTheme(context).b2m;
+        break;
+      default:
+        break;
+    }
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,8 +132,8 @@ class OutlineTextField extends HookWidget {
           keyboardType: textInputType,
           textInputAction: textInputAction,
           style: textStyle.copyWith(
-                color: getColorScheme(context).colorGray900,
-              ),
+            color: getColorScheme(context).colorGray900,
+          ),
           enabled: enable,
           onSubmitted: (text) {
             if (textInputAction == TextInputAction.next) {
@@ -118,8 +148,8 @@ class OutlineTextField extends HookWidget {
             fillColor: enable ? getColorScheme(context).white : getColorScheme(context).colorGray100,
             hintText: hint,
             hintStyle: textStyle.copyWith(
-                  color: getColorScheme(context).colorGray400,
-                ),
+              color: getColorScheme(context).colorGray400,
+            ),
             border: OutlineInputBorder(
               borderRadius: BorderRadius.circular(10),
               borderSide: BorderSide(
