@@ -4,10 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
-import 'package:menuboss/presentation/components/divider/DividerHorizontal.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
-import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/progress/LinearAnimationProgressBar.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
@@ -205,7 +203,12 @@ class _SettingItems extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      Pair(getAppLocalizations(context).my_page_setting_items_profile, () {}),
+      Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
+        Navigator.push(
+          context,
+          nextSlideScreen(RoutingScreen.MyProfile.route),
+        );
+      }),
       Pair(getAppLocalizations(context).my_page_setting_items_log_out, () {}),
     ];
 
@@ -265,13 +268,6 @@ class _SettingItems extends HookWidget {
             },
             itemCount: items.length,
           )
-
-          //
-          // Row(
-          //   children: items.map((e) {
-          //     return
-          //   }).toList(),
-          // )
         ],
       ),
     );

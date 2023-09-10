@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
+import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
+import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
@@ -18,7 +20,9 @@ class MyProfileScreen extends HookWidget {
       appBar: TopBarIconTitleText(
         content: getAppLocalizations(context).my_page_profile_appbar_title,
         rightText: getAppLocalizations(context).common_save,
-        rightIconOnPressed: () {},
+        rightIconOnPressed: () {
+          Navigator.of(context).pop();
+        },
         rightTextActivated: true,
       ),
       backgroundColor: getColorScheme(context).white,
@@ -29,57 +33,19 @@ class MyProfileScreen extends HookWidget {
             child: Column(
               children: [
                 const SizedBox(height: 24),
-                Align(
+                const Align(
                   alignment: Alignment.center,
-                  child: Clickable(
-                    borderRadius: 50,
-                    onPressed: () {},
-                    child: SizedBox(
-                      width: 120,
-                      height: 120,
-                      child: Stack(
-                        children: [
-                          // Container(
-                          //   width: 120,
-                          //   height: 120,
-                          //   decoration: BoxDecoration(
-                          //     color: getColorScheme(context).colorGray100,
-                          //     borderRadius: BorderRadius.circular(100),
-                          //   ),
-                          //   child: FittedBox(
-                          //     fit: BoxFit.scaleDown,
-                          //     child: Image.asset(
-                          //       "assets/imgs/image_default.png",
-                          //       width: 60,
-                          //       height: 30,
-                          //     ),
-                          //   ),
-                          // ),
-                          Align(
-                            alignment: Alignment.bottomRight,
-                            child: Container(
-                              width: 32,
-                              height: 32,
-                              decoration: BoxDecoration(
-                                color: getColorScheme(context).colorGray500,
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(7.0),
-                                child: SvgPicture.asset(
-                                  "assets/imgs/icon_camera.svg",
-                                  width: 18,
-                                  height: 18,
-                                  colorFilter: ColorFilter.mode(
-                                    getColorScheme(context).white,
-                                    BlendMode.srcIn,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          )
-                        ],
-                      ),
+                  child: SizedBox(
+                    width: 120,
+                    height: 120,
+                    child: Stack(
+                      children: [
+                        LoadProfile(
+                          url: "https://img.freepik.com/free-photo/portrait-of-white-man-isolated_53876-40306.jpg",
+                          type: ProfileImagePlaceholderType.Size120x120,
+                        ),
+                        _CameraWidget()
+                      ],
                     ),
                   ),
                 ),
@@ -98,6 +64,43 @@ class MyProfileScreen extends HookWidget {
                   ),
                 )
               ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class _CameraWidget extends StatelessWidget {
+  const _CameraWidget({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Align(
+      alignment: Alignment.bottomRight,
+      child: Container(
+        width: 40,
+        height: 40,
+        decoration: BoxDecoration(
+          color: getColorScheme(context).colorPrimary500,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: Clickable(
+          onPressed: () {},
+          borderRadius: 100,
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: SvgPicture.asset(
+              "assets/imgs/icon_picture.svg",
+              width: 20,
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).white,
+                BlendMode.srcIn,
+              ),
             ),
           ),
         ),

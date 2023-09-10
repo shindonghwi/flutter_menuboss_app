@@ -16,14 +16,14 @@ enum RoutingScreen {
   Main(route: "/main"), // 메인
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
-  DetailMediaInformation(route: "/detail/media"); // 미디어 정보
+  DetailMediaInformation(route: "/detail/media"), // 미디어 정보
 
   // DetailTv(route: "/detail/tv"), // 티비 상세
   // DetailTvSetting(route: "/detail/tv/setting"), // 티비 상세 설정
   // DetailTvModify(route: "/detail/tv/modify"), // 티비 정보 수정
   // ScreenList(route: "/list/tv_screen"), // 스크린 리스트
   //
-  // MyProfile(route: "/my/profile"), // 프로필 정보
+  MyProfile(route: "/my/profile"); // 프로필 정보
   // MyProfilePlan(route: "/my/profile/plan"); // 프로필 플랜 정보
 
   final String route;
@@ -45,8 +45,8 @@ enum RoutingScreen {
       // RoutingScreen.DetailTvSetting.route: (context) => const DetailTvSettingScreen(),
       // RoutingScreen.DetailTvModify.route: (context) => const DetailTvModifyScreen(),
       // RoutingScreen.ScreenList.route: (context) => const TvListScreen(),
-      //
-      // RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
+
+      RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
       // RoutingScreen.MyProfilePlan.route: (context) => const MyPlanScreen(),
     };
   }
@@ -73,9 +73,10 @@ enum RoutingScreen {
     //   return const TvListScreen();
     // } else if (route == RoutingScreen.ScanQR.route) {
     //   return const ScanQrScreen();
-    // } else if (route == RoutingScreen.MyProfile.route) {
-    //   return const MyProfileScreen();
     // }
+    else if (route == RoutingScreen.MyProfile.route) {
+      return const MyProfileScreen();
+    }
     // else if (route == RoutingScreen.MyProfilePlan.route) {
     //   return const MyPlanScreen();
     // }
