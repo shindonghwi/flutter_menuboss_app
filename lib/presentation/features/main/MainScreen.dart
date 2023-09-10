@@ -73,7 +73,7 @@ class _BottomNavigationBar extends HookWidget {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: getColorScheme(context).colorGray300,
+                    color: getColorScheme(context).colorGray400,
                     width: 0.5,
                   ),
                 ),

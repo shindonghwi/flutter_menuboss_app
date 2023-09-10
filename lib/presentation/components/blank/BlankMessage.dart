@@ -129,7 +129,7 @@ class BlankMessage extends HookWidget {
             height: 20,
           ),
           if (buttonIconPath != null)
-            PrimaryFilledButton.smallRound100Icon(
+            PrimaryFilledButton.mediumRound100Icon(
               leftIcon: SvgPicture.asset(
                 buttonIconPath,
                 width: 20,

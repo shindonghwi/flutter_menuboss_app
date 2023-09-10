@@ -7,15 +7,16 @@ class BaseScaffold extends HookWidget {
   final bool extendBody;
   final Color? backgroundColor;
   final PreferredSizeWidget? appBar;
-  final Widget? floatingActionButton;
+  final Widget? floatingButtonWidget;
   final FloatingActionButtonLocation? floatingActionButtonLocation;
 
-  const BaseScaffold({super.key,
+  const BaseScaffold({
+    super.key,
     required this.body,
     this.extendBody = false,
     this.appBar,
     this.backgroundColor,
-    this.floatingActionButton,
+    this.floatingButtonWidget,
     this.bottomNavigationBar,
     this.floatingActionButtonLocation,
   });
@@ -26,14 +27,12 @@ class BaseScaffold extends HookWidget {
       appBar: appBar,
       backgroundColor: backgroundColor,
       body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
+        onTap: () => FocusScope.of(context).unfocus(),
         behavior: HitTestBehavior.translucent,
         child: body,
       ),
       extendBody: extendBody,
-      floatingActionButton: floatingActionButton,
+      floatingActionButton: floatingButtonWidget,
       floatingActionButtonLocation: floatingActionButtonLocation,
       bottomNavigationBar: bottomNavigationBar,
     );

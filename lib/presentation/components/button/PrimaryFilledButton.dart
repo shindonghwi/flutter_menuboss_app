@@ -14,7 +14,7 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: xSmall buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.xSmallRound4({
+  const PrimaryFilledButton.extraSmallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -24,7 +24,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const PrimaryFilledButton.xSmallRound4Icon({
+  const PrimaryFilledButton.extraSmallRound4Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -34,7 +34,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const PrimaryFilledButton.xSmallRound100({
+  const PrimaryFilledButton.extraSmallRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -46,7 +46,7 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: small buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.smallRound8({
+  const PrimaryFilledButton.mediumRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -56,7 +56,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const PrimaryFilledButton.smallRound8Icon({
+  const PrimaryFilledButton.mediumRound8Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -66,7 +66,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const PrimaryFilledButton.smallRound100({
+  const PrimaryFilledButton.mediumRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -76,7 +76,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const PrimaryFilledButton.smallRound100Icon({
+  const PrimaryFilledButton.mediumRound100Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -88,7 +88,7 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: normal buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.normalRound8({
+  const PrimaryFilledButton.largeRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -98,7 +98,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.normalRound8Icon({
+  const PrimaryFilledButton.largeRound8Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -108,7 +108,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.normalRound100({
+  const PrimaryFilledButton.largeRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -118,7 +118,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 52,
         super(key: key);
 
-  const PrimaryFilledButton.normalRound100Icon({
+  const PrimaryFilledButton.largeRound100Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -130,7 +130,7 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: large buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.largeRound100({
+  const PrimaryFilledButton.extraLargeRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -140,7 +140,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 60,
         super(key: key);
 
-  const PrimaryFilledButton.largeRound100Icon({
+  const PrimaryFilledButton.extraLargeRound100Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -157,16 +157,16 @@ class PrimaryFilledButton extends HookWidget {
 
     switch (height) {
       case 40:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
         break;
       case 52:
-        textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
         break;
       case 60:
-        textStyle = getTextTheme(context).s2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
         break;
     }
 

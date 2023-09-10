@@ -64,7 +64,7 @@ class PopupRename extends HookWidget {
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
-                child: PrimaryFilledButton.smallRound8(
+                child: PrimaryFilledButton.mediumRound8(
                   content: getAppLocalizations(context).common_ok,
                   isActivated: true,
                   onPressed: () {
