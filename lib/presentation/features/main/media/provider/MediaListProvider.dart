@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaItem.dart';
+import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
 import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
 
 import '../widget/MediaFolder.dart';
@@ -9,21 +9,21 @@ import '../widget/MediaImage.dart';
 import '../widget/MediaVideo.dart';
 
 final mediaListProvider =
-    StateNotifierProvider.family<MediaListNotifier, List<MediaItem>, GlobalKey<AnimatedListState>>(
+    StateNotifierProvider.family<MediaListNotifier, List<MediaModel>, GlobalKey<AnimatedListState>>(
   (ref, listKey) => MediaListNotifier(listKey: listKey),
 );
 
-class MediaListNotifier extends StateNotifier<List<MediaItem>> {
+class MediaListNotifier extends StateNotifier<List<MediaModel>> {
   MediaListNotifier({required this.listKey}) : super([]);
 
   final GlobalKey<AnimatedListState> listKey;
 
-  void addItem(MediaItem item) {
+  void addItem(MediaModel item) {
     listKey.currentState?.insertItem(0, duration: const Duration(milliseconds: 300));
     state = [item, ...state];
   }
 
-  void removeItem(MediaItem item) {
+  void removeItem(MediaModel item) {
     final index = state.indexOf(item);
     if (index != -1) {
       listKey.currentState?.removeItem(index, (context, animation) {
@@ -51,11 +51,11 @@ class MediaListNotifier extends StateNotifier<List<MediaItem>> {
 
   /// @feature: media 아이템 빌더 ( media screen ) 내용과 겹침.
   /// @author: 2023/09/08 1:02 PM donghwishin
-  /// @param: [MediaItem] item, [Animation<double>] animation
+  /// @param: [MediaModel] item, [Animation<double>] animation
   /// @return: [Widget] _animatedItemBuilder
   /// @description: 아이템 삭제시 애니메이션 효과를 위한 메소드
 
-  Widget _animatedItemBuilder(MediaItem item, Animation<double> animation) {
+  Widget _animatedItemBuilder(MediaModel item, Animation<double> animation) {
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(-0.6, 0),
@@ -68,7 +68,7 @@ class MediaListNotifier extends StateNotifier<List<MediaItem>> {
     );
   }
 
-  Widget _buildListItem(MediaItem item, GlobalKey<AnimatedListState> listKey) {
+  Widget _buildListItem(MediaModel item, GlobalKey<AnimatedListState> listKey) {
     if (item.type == MediaType.FOLDER) {
       return MediaFolder(item: item, listKey: listKey);
     } else if (item.type == MediaType.IMAGE) {

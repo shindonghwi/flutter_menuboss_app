@@ -2,13 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
-import 'package:menuboss/presentation/components/toast/Toast.dart';
-import 'package:menuboss/presentation/components/utils/Clickable.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaItem.dart';
+import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -17,7 +14,7 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import 'MediaMoreWidget.dart';
 
 class MediaFolder extends HookConsumerWidget {
-  final MediaItem item;
+  final MediaModel item;
   final GlobalKey<AnimatedListState> listKey;
 
   const MediaFolder({
