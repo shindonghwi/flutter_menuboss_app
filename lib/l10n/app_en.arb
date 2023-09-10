@@ -47,7 +47,9 @@
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
-    "popup_input_new_name": "New name",
+    "popup_rename_media_hint": "Media name",
+    "popup_rename_screen_hint": "Screen name",
+    "popup_rename_schedule_hint": "Schedule name",
     "popup_delete_title": "Are you sure?",
     "popup_delete_description": "Do you really want to delete these record?\nThis process cannot be undone",
 

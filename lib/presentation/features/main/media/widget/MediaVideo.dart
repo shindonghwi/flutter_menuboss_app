@@ -78,7 +78,7 @@ class MediaVideo extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
-                    hint: getAppLocalizations(context).popup_input_new_name,
+                    hint: getAppLocalizations(context).popup_rename_media_hint,
                     onClicked: (name) {},
                   ),
                 );

@@ -81,7 +81,7 @@ class DeviceItem extends HookConsumerWidget {
                   CommonPopup.showPopup(
                     context,
                     child: PopupRename(
-                        hint: "Screen Name",
+                        hint: getAppLocalizations(context).popup_rename_screen_hint,
                         onClicked: (name) {
                           if (name.isNotEmpty) {
                             deviceProvider.renameItem(item, name);
