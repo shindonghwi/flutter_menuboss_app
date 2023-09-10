@@ -14,8 +14,8 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class DeviceItem extends HookConsumerWidget {
-  final DeviceListModel item;
   final GlobalKey<AnimatedListState> listKey;
+  final DeviceListModel item;
 
   const DeviceItem({
     super.key,
@@ -25,7 +25,7 @@ class DeviceItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceProvider = ref.read(deviceListProvider(listKey).notifier);
+    final deviceProvider = ref.read(deviceListProvider.notifier);
 
     return Container(
       width: double.infinity,
@@ -94,7 +94,7 @@ class DeviceItem extends HookConsumerWidget {
                     child: PopupDelete(
                       onClicked: (isCompleted) {
                         if (isCompleted) {
-                          deviceProvider.removeItem(item);
+                          deviceProvider.removeItem(item, listKey);
                         }
                       },
                     ),

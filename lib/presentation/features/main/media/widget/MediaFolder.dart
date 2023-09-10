@@ -25,7 +25,7 @@ class MediaFolder extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaProvider = ref.read(mediaListProvider(listKey).notifier);
+    final mediaProvider = ref.read(mediaListProvider.notifier);
 
     return SizedBox(
       width: double.infinity,
@@ -73,7 +73,7 @@ class MediaFolder extends HookConsumerWidget {
                   child: PopupDelete(
                     onClicked: (isCompleted) {
                       if (isCompleted) {
-                        mediaProvider.removeItem(item);
+                        mediaProvider.removeItem(item, listKey);
                       }
                     },
                   ),

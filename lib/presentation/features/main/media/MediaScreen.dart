@@ -15,7 +15,6 @@ import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/presentation/utils/CustomHook.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
@@ -31,9 +30,9 @@ class MediaScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final random = Random();
-    final listKey = useState(CustomHook.useGlobalKey<AnimatedListState>()).value;
-    final items = ref.watch(mediaListProvider(listKey));
-    final mediaProvider = ref.read(mediaListProvider(listKey).notifier);
+    final listKey = GlobalKey<AnimatedListState>();
+    final items = ref.watch(mediaListProvider);
+    final mediaProvider = ref.read(mediaListProvider.notifier);
 
     useEffect(() {
       // 랜덤으로 아이템 생성
@@ -113,7 +112,7 @@ class MediaScreen extends HookConsumerWidget {
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(24, 0, 12, 0),
                       child: AnimatedList(
-                        key: mediaProvider.listKey,
+                        key: listKey,
                         initialItemCount: items.length,
                         itemBuilder: (context, index, animation) {
                           final item = items[index];

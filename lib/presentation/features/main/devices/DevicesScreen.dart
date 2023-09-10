@@ -8,16 +8,15 @@ import 'package:menuboss/presentation/features/main/devices/model/DeviceListMode
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/presentation/utils/CustomHook.dart';
 
 class DevicesScreen extends HookConsumerWidget {
   const DevicesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = useState(CustomHook.useGlobalKey<AnimatedListState>()).value;
-    final items = ref.watch(deviceListProvider(listKey));
-    final deviceProvider = ref.read(deviceListProvider(listKey).notifier);
+    final listKey = GlobalKey<AnimatedListState>();
+    final items = ref.watch(deviceListProvider);
+    final deviceProvider = ref.read(deviceListProvider.notifier);
 
     useEffect(() {
       void generateItems(int count) {
@@ -27,7 +26,7 @@ class DevicesScreen extends HookConsumerWidget {
       }
 
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        generateItems(10);
+        generateItems(5);
       });
       return null;
     }, []);
@@ -43,7 +42,7 @@ class DevicesScreen extends HookConsumerWidget {
                   child: Stack(
                     children: [
                       AnimatedList(
-                        key: deviceProvider.listKey,
+                        key: listKey,
                         initialItemCount: items.length,
                         padding: const EdgeInsets.only(bottom: 80),
                         itemBuilder: (context, index, animation) {
@@ -65,7 +64,8 @@ class DevicesScreen extends HookConsumerWidget {
                         margin: const EdgeInsets.only(bottom: 32, right: 24),
                         child: FloatingPlusButton(
                           onPressed: () {
-                            deviceProvider.addItem(DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"));
+                            deviceProvider
+                                .addItem(DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"));
                           },
                         ),
                       )

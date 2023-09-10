@@ -11,16 +11,15 @@ import 'package:menuboss/presentation/features/main/playlists/model/PlayListMode
 import 'package:menuboss/presentation/features/main/playlists/provider/PlayListProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/widget/PlayListItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/presentation/utils/CustomHook.dart';
 
 class PlayListsScreens extends HookConsumerWidget {
   const PlayListsScreens({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = useState(CustomHook.useGlobalKey<AnimatedListState>()).value;
-    final items = ref.watch(playListProvider(listKey));
-    final listProvider = ref.read(playListProvider(listKey).notifier);
+    final listKey = GlobalKey<AnimatedListState>();
+    final items = ref.watch(playListProvider);
+    final listProvider = ref.read(playListProvider.notifier);
 
     useEffect(() {
       void generateItems(int count) {
@@ -35,7 +34,7 @@ class PlayListsScreens extends HookConsumerWidget {
       return null;
     }, []);
 
-    void goToApplyToScreen(){
+    void goToApplyToScreen() {
       Navigator.push(
         context,
         nextSlideScreen(RoutingScreen.ApplyScreen.route),
@@ -53,7 +52,7 @@ class PlayListsScreens extends HookConsumerWidget {
                   child: Stack(
                     children: [
                       AnimatedList(
-                        key: listProvider.listKey,
+                        key: listKey,
                         initialItemCount: items.length,
                         padding: const EdgeInsets.only(bottom: 80),
                         itemBuilder: (context, index, animation) {

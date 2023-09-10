@@ -8,35 +8,32 @@ import '../widget/MediaFolder.dart';
 import '../widget/MediaImage.dart';
 import '../widget/MediaVideo.dart';
 
-final mediaListProvider =
-    StateNotifierProvider.family<MediaListNotifier, List<MediaModel>, GlobalKey<AnimatedListState>>(
-  (ref, listKey) => MediaListNotifier(listKey: listKey),
+final mediaListProvider = StateNotifierProvider<MediaListNotifier, List<MediaModel>>(
+      (ref) => MediaListNotifier(),
 );
 
 class MediaListNotifier extends StateNotifier<List<MediaModel>> {
-  MediaListNotifier({required this.listKey}) : super([]);
+  MediaListNotifier() : super([]);
 
-  final GlobalKey<AnimatedListState> listKey;
-
-  void addItem(MediaModel item) {
-    listKey.currentState?.insertItem(0, duration: const Duration(milliseconds: 300));
+  void addItem(MediaModel item, {GlobalKey<AnimatedListState>? listKey}) {
+    listKey?.currentState?.insertItem(0, duration: const Duration(milliseconds: 300));
     state = [item, ...state];
   }
 
-  void removeItem(MediaModel item) {
+  void removeItem(MediaModel item, GlobalKey<AnimatedListState>? listKey) {
     final index = state.indexOf(item);
     if (index != -1) {
-      listKey.currentState?.removeItem(index, (context, animation) {
-        return _animatedItemBuilder(item, animation);
+      listKey?.currentState?.removeItem(index, (context, animation) {
+        return _animatedItemBuilder(item, animation, listKey);
       }, duration: const Duration(milliseconds: 300));
-      state = [...state]..remove(item);
+      Future.delayed(const Duration(milliseconds: 300), () {
+        state = [...state]..remove(item);
+      });
     }
   }
 
-  // 사용자가 정의한 필터로 정렬
   void sortByName(FilterType type) {
     state.sort((a, b) {
-      // 폴더가 항상 상위에 오게 한다.
       if (a.type == MediaType.FOLDER && b.type != MediaType.FOLDER) return -1;
       if (a.type != MediaType.FOLDER && b.type == MediaType.FOLDER) return 1;
 
@@ -49,13 +46,7 @@ class MediaListNotifier extends StateNotifier<List<MediaModel>> {
     state = [...state];
   }
 
-  /// @feature: media 아이템 빌더 ( media screen ) 내용과 겹침.
-  /// @author: 2023/09/08 1:02 PM donghwishin
-  /// @param: [MediaModel] item, [Animation<double>] animation
-  /// @return: [Widget] _animatedItemBuilder
-  /// @description: 아이템 삭제시 애니메이션 효과를 위한 메소드
-
-  Widget _animatedItemBuilder(MediaModel item, Animation<double> animation) {
+  Widget _animatedItemBuilder(MediaModel item, Animation<double> animation, GlobalKey<AnimatedListState> listKey) {
     return SlideTransition(
       position: Tween<Offset>(
         begin: const Offset(-0.6, 0),
@@ -63,7 +54,7 @@ class MediaListNotifier extends StateNotifier<List<MediaModel>> {
       ).animate(animation),
       child: FadeTransition(
         opacity: animation,
-        child: _buildListItem(item, listKey), // Assuming this method returns the visual representation of the item.
+        child: _buildListItem(item, listKey),
       ),
     );
   }

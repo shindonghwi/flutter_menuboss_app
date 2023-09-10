@@ -9,29 +9,15 @@ import 'package:menuboss/presentation/features/apply_screen/widget/ApplyScreenIt
 import 'package:menuboss/presentation/features/main/devices/model/DeviceListModel.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/presentation/utils/CustomHook.dart';
 
 class ApplyToScreen extends HookConsumerWidget {
   const ApplyToScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = useState(CustomHook.useGlobalKey<AnimatedListState>()).value;
-    final items = ref.watch(deviceListProvider(listKey));
-    final listProvider = ref.read(deviceListProvider(listKey).notifier);
-
-    useEffect(() {
-      void generateItems(int count) {
-        for (int i = 0; i < count; i++) {
-          listProvider.addItem(DeviceListModel(null, "New Screen $i", "Schedule Name $i", "2021.09.08"));
-        }
-      }
-
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        generateItems(10);
-      });
-      return null;
-    }, []);
+    final listKey = GlobalKey<AnimatedListState>();
+    final items = ref.watch(deviceListProvider);
+    final listProvider = ref.read(deviceListProvider.notifier);
 
     return BaseScaffold(
       body: SafeArea(
@@ -45,12 +31,14 @@ class ApplyToScreen extends HookConsumerWidget {
                     child: Stack(
                       children: [
                         AnimatedList(
-                          key: listProvider.listKey,
+                          key: listKey,
                           initialItemCount: items.length,
                           padding: const EdgeInsets.only(bottom: 80),
                           itemBuilder: (context, index, animation) {
                             return ClickableScale(
-                              onPressed: () {},
+                              onPressed: () {
+                                listProvider.removeItem(items[index], listKey);
+                              },
                               child: SlideTransition(
                                 position: Tween<Offset>(
                                   begin: const Offset(0, -0.15),
