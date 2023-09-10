@@ -37,7 +37,7 @@ class PlayListsScreens extends HookConsumerWidget {
     void goToApplyToScreen() {
       Navigator.push(
         context,
-        nextSlideScreen(RoutingScreen.ApplyScreen.route),
+        nextSlideScreen(RoutingScreen.ApplyDevice.route),
       );
     }
 

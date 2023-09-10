@@ -24,7 +24,7 @@ class PlayListItem extends StatelessWidget {
     void goToApplyToScreen(){
       Navigator.push(
         context,
-        nextSlideScreen(RoutingScreen.ApplyScreen.route),
+        nextSlideScreen(RoutingScreen.ApplyDevice.route),
       );
     }
 
