@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/features/main/playlists/model/PlayListModel.dart';
@@ -18,6 +20,14 @@ class PlayListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    void goToApplyToScreen(){
+      Navigator.push(
+        context,
+        nextSlideScreen(RoutingScreen.ApplyScreen.route),
+      );
+    }
+
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
@@ -54,6 +64,9 @@ class PlayListItem extends StatelessWidget {
           PrimaryFilledButton.extraSmallRound100(
             content: getAppLocalizations(context).common_apply,
             isActivated: true,
+            onPressed: () {
+              goToApplyToScreen();
+            },
           )
         ],
       ),

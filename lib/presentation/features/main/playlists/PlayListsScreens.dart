@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
@@ -33,6 +35,13 @@ class PlayListsScreens extends HookConsumerWidget {
       return null;
     }, []);
 
+    void goToApplyToScreen(){
+      Navigator.push(
+        context,
+        nextSlideScreen(RoutingScreen.ApplyScreen.route),
+      );
+    }
+
     return SafeArea(
       child: Column(
         children: [
@@ -51,10 +60,7 @@ class PlayListsScreens extends HookConsumerWidget {
                           final item = items[index];
                           return ClickableScale(
                             onPressed: () {
-                              // Navigator.push(
-                              //   context,
-                              //   nextSlideScreen(RoutingScreen.DetailMediaInformation.route),
-                              // );
+                              goToApplyToScreen();
                             },
                             child: SlideTransition(
                               position: Tween<Offset>(
@@ -73,7 +79,9 @@ class PlayListsScreens extends HookConsumerWidget {
                         alignment: Alignment.bottomRight,
                         margin: const EdgeInsets.only(bottom: 32, right: 24),
                         child: FloatingPlusButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            goToApplyToScreen();
+                          },
                         ),
                       )
                     ],

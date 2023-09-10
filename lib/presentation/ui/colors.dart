@@ -44,11 +44,11 @@ extension StyleColor on ColorScheme{
   Color get colorGreen700 => brightness == Brightness.light ? const Color(0xFF00662B) : const Color(0xFF00662B);
   Color get colorGreen600 => brightness == Brightness.light ? const Color(0xFF008839) : const Color(0xFF008839);
   Color get colorGreen500 => brightness == Brightness.light ? const Color(0xFF00AA47) : const Color(0xFF00AA47);
-  Color get colorGreen400 => brightness == Brightness.light ? const Color(0xFFCD8559) : const Color(0xFFCD8559);
-  Color get colorGreen300 => brightness == Brightness.light ? const Color(0xFFDAA382) : const Color(0xFFDAA382);
-  Color get colorGreen200 => brightness == Brightness.light ? const Color(0xFFE6C2AC) : const Color(0xFFE6C2AC);
-  Color get colorGreen100 => brightness == Brightness.light ? const Color(0xFFF3E0D5) : const Color(0xFFF3E0D5);
-  Color get colorGreen50 => brightness == Brightness.light ? const Color(0xFFF9F0EA) : const Color(0xFFF9F0EA);
+  Color get colorGreen400 => brightness == Brightness.light ? const Color(0xFF33BB6C) : const Color(0xFF33BB6C);
+  Color get colorGreen300 => brightness == Brightness.light ? const Color(0xFF66CC91) : const Color(0xFF66CC91);
+  Color get colorGreen200 => brightness == Brightness.light ? const Color(0xFF99DDB5) : const Color(0xFF99DDB5);
+  Color get colorGreen100 => brightness == Brightness.light ? const Color(0xFFCCEEDA) : const Color(0xFFCCEEDA);
+  Color get colorGreen50 => brightness == Brightness.light ? const Color(0xFFE5F6ED) : const Color(0xFFE5F6ED);
 
   Color get colorYellow900 => brightness == Brightness.light ? const Color(0xFF30280F) : const Color(0xFF30280F);
   Color get colorYellow800 => brightness == Brightness.light ? const Color(0xFF61501E) : const Color(0xFF61501E);

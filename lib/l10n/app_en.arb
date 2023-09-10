@@ -13,30 +13,9 @@
     "main_navigation_menu_media": "Media",
     "main_navigation_menu_my": "My",
 
-
-
-    "home_appbar_title": "TV List",
-    "home_appbar_add_tv": "Add TV",
-    "home_tv_not_register": "There is no TV list\nAdd TV by scanning QR code",
-    "home_tv_screen_on": "Screen on",
-    "home_tv_screen_off": "Screen off",
-
-    "detail_tv_appbar_title": "TV - {id}",
-    "@detail_tv_appbar_title":{
-        "placeholders": {
-            "id": {}
-        }
-    },
-
     "add_tv_appbar_title": "Scan QR Code",
 
-    "screen_list_appbar_title": "Screen List",
-
-    "detail_tv_modify_appbar_title": "Modify TV Name",
-
-    "detail_tv_setting_appbar_title": "TV Settings",
-    "detail_tv_setting_item_show_tv_name": "Show Tv Name",
-    "detail_tv_setting_item_guideline": "Display selected Tv guideline",
+    "apply_screen_title": "Apply to Screen",
 
     "my_page_appbar_title": "My page",
     "my_page_setting_item": "Settings",
@@ -50,12 +29,12 @@
 
     "bottom_sheet_pin_code_description": "Please enter your PIN code",
 
-    "detail_media_information_title": "File name",
-    "detail_media_information_media_information": "Media Information",
-    "detail_media_information_media_information_uploaded_data": "Uploaded date",
-    "detail_media_information_media_information_file_size": "File size",
-    "detail_media_information_media_information_file_type": "File type",
-    "detail_media_information_media_information_file_capacity": "File capacity",
+    "info_media_title": "File name",
+    "info_media_menu": "Media Information",
+    "info_media_menu_uploaded_data": "Uploaded date",
+    "info_media_menu_file_size": "File size",
+    "info_media_menu_file_type": "File type",
+    "info_media_menu_file_capacity": "File capacity",
 
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_add_content": "Add content",

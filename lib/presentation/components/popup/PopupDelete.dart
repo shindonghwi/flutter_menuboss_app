@@ -49,9 +49,11 @@ class PopupDelete extends HookWidget {
           ),
           Text(
             getAppLocalizations(context).popup_delete_description,
-            style: getTextTheme(context).b2m.copyWith(
-              color: getColorScheme(context).colorGray400,
+            style: getTextTheme(context).b3m.copyWith(
+              color: getColorScheme(context).colorGray500,
+              overflow: TextOverflow.visible,
             ),
+            textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 32,

@@ -52,24 +52,22 @@ class BasicBorderCheckBox extends HookWidget {
                     child: SvgPicture.asset(
                       width: 24,
                       height: 24,
-                      "assets/imgs/icon_check.svg",
-                      colorFilter: ColorFilter.mode(
-                        getColorScheme(context).colorGray300,
-                        BlendMode.srcIn,
-                      ),
-                    ),
-                  )
-                : Align(
-                    key: const Key('checked'),
-                    alignment: Alignment.center,
-                    child: SvgPicture.asset(
-                      width: 24,
-                      height: 24,
-                      "assets/imgs/icon_check.svg",
+                      "assets/imgs/icon_check_filled.svg",
                       colorFilter: ColorFilter.mode(
                         getColorScheme(context).colorPrimary500,
                         BlendMode.srcIn,
                       ),
+                    ),
+                  )
+                : Container(
+                    width: 24,
+                    height: 24,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: getColorScheme(context).colorGray300,
+                        width: 1,
+                      ),
+                      borderRadius: BorderRadius.circular(100),
                     ),
                   ),
           ),

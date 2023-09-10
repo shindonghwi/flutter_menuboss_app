@@ -16,7 +16,7 @@ class MediaInformationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: getAppLocalizations(context).detail_media_information_title,
+        content: getAppLocalizations(context).info_media_title,
       ),
       body: SingleChildScrollView(
         child: Column(
@@ -73,19 +73,19 @@ class _MediaInformation extends StatelessWidget {
   Widget build(BuildContext context) {
     final items = [
       Pair(
-        getAppLocalizations(context).detail_media_information_media_information_uploaded_data,
+        getAppLocalizations(context).info_media_menu_uploaded_data,
         "Aug 24th, 2023",
       ),
       Pair(
-        getAppLocalizations(context).detail_media_information_media_information_file_size,
+        getAppLocalizations(context).info_media_menu_file_size,
         "320 X 280",
       ),
       Pair(
-        getAppLocalizations(context).detail_media_information_media_information_file_type,
+        getAppLocalizations(context).info_media_menu_file_type,
         "image / png",
       ),
       Pair(
-        getAppLocalizations(context).detail_media_information_media_information_file_capacity,
+        getAppLocalizations(context).info_media_menu_file_capacity,
         "320KB",
       ),
     ];
@@ -98,7 +98,7 @@ class _MediaInformation extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: Text(
-              getAppLocalizations(context).detail_media_information_media_information,
+              getAppLocalizations(context).info_media_menu,
               style: getTextTheme(context).c1sb.copyWith(
                     color: getColorScheme(context).colorGray500,
                   ),

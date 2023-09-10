@@ -1,35 +1,84 @@
 import 'package:flutter/material.dart';
-import 'package:menuboss/navigation/PageMoveUtil.dart';
-import 'package:menuboss/navigation/Route.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetPinCode.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
-import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/features/main/devices/model/DeviceListModel.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
+import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/CustomHook.dart';
 
-class DevicesScreen extends StatelessWidget {
+class DevicesScreen extends HookConsumerWidget {
   const DevicesScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return BaseScaffold(
-      appBar: TopBarTitle(
-        content: getAppLocalizations(context).main_navigation_menu_screens,
-      ),
-      body: SafeArea(
-        child: Container(
-          padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-          child: BlankMessage(
-            type: BlankMessageType.ADD_SCREEN,
-            onPressed: () {
-              Navigator.push(
-                context,
-                nextSlideScreen(RoutingScreen.ScanQR.route),
-              );
-            },
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listKey = useState(CustomHook.useGlobalKey<AnimatedListState>()).value;
+    final items = ref.watch(deviceListProvider(listKey));
+    final deviceProvider = ref.read(deviceListProvider(listKey).notifier);
+
+    useEffect(() {
+      void generateItems(int count) {
+        for (int i = 0; i < count; i++) {
+          deviceProvider.addItem(DeviceListModel(null, "New Screen $i", "Schedule Name", "2022-03-23"));
+        }
+      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        generateItems(10);
+      });
+      return null;
+    }, []);
+
+    return SafeArea(
+      child: Column(
+        children: [
+          TopBarTitle(
+            content: getAppLocalizations(context).main_navigation_menu_screens,
           ),
-        ),
+          items.isNotEmpty
+              ? Expanded(
+                  child: Stack(
+                    children: [
+                      AnimatedList(
+                        key: deviceProvider.listKey,
+                        initialItemCount: items.length,
+                        padding: const EdgeInsets.only(bottom: 80),
+                        itemBuilder: (context, index, animation) {
+                          final item = items[index];
+                          return SlideTransition(
+                            position: Tween<Offset>(
+                              begin: const Offset(0, -0.15),
+                              end: Offset.zero,
+                            ).animate(animation),
+                            child: FadeTransition(
+                              opacity: animation,
+                              child: DeviceItem(item: item, listKey: listKey),
+                            ),
+                          );
+                        },
+                      ),
+                      Container(
+                        alignment: Alignment.bottomRight,
+                        margin: const EdgeInsets.only(bottom: 32, right: 24),
+                        child: FloatingPlusButton(
+                          onPressed: () {
+                            deviceProvider.addItem(DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"));
+                          },
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : Expanded(
+                  child: BlankMessage(
+                    type: BlankMessageType.ADD_SCREEN,
+                    onPressed: () {},
+                  ),
+                ),
+        ],
       ),
     );
   }
