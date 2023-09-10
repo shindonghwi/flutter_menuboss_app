@@ -4,6 +4,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
+import 'package:menuboss/presentation/components/divider/DividerHorizontal.dart';
+import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
@@ -32,12 +34,7 @@ class MyScreen extends StatelessWidget {
             const _UserProfile(),
             const SizedBox(height: 24),
             const _UserPlanScreenInfo(),
-            Container(
-              width: double.infinity,
-              height: 1,
-              margin: const EdgeInsets.symmetric(vertical: 32),
-              color: getColorScheme(context).colorGray200,
-            ),
+            DividerVertical(marginVertical: 12),
             const _SettingItems(),
           ],
         ),
@@ -118,26 +115,6 @@ class _UserProfile extends HookWidget {
               ],
             ),
           ),
-          // Expanded(
-          //   child: Align(
-          //     alignment: Alignment.centerRight,
-          //     child: Clickable(
-          //       onPressed: () {},
-          //       child: Padding(
-          //         padding: const EdgeInsets.all(12.0),
-          //         child: SvgPicture.asset(
-          //           "assets/imgs/icon_log_out.svg",
-          //           colorFilter: ColorFilter.mode(
-          //             getColorScheme(context).black,
-          //             BlendMode.srcIn,
-          //           ),
-          //           width: 24,
-          //           height: 24,
-          //         ),
-          //       ),
-          //     ),
-          //   ),
-          // )
         ],
       ),
     );
@@ -151,7 +128,7 @@ class _UserPlanScreenInfo extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 24),
+      margin: const EdgeInsets.fromLTRB(24, 0, 24, 12),
       padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
       decoration: BoxDecoration(
         color: getColorScheme(context).colorGray50,
@@ -168,32 +145,52 @@ class _UserPlanScreenInfo extends HookWidget {
           ),
           const SizedBox(width: 4),
           Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'MenuBoss',
-                  style: getTextTheme(context).b1sb.copyWith(
-                        color: getColorScheme(context).colorGray900,
+            child: Container(
+              margin: const EdgeInsets.only(top: 2.5),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        'MenuBoss',
+                        style: getTextTheme(context).b3b.copyWith(
+                              color: getColorScheme(context).colorGray900,
+                            ),
                       ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 2.0),
-                  child: Text(
-                    '4 page / 12 page [Screen page]',
-                    style: getTextTheme(context).c1m.copyWith(
-                          color: getColorScheme(context).colorGray500,
-                        ),
+                      Text(
+                        'Payment : Aug 24th, 2023',
+                        style: getTextTheme(context).c1sb.copyWith(
+                              color: getColorScheme(context).colorGray500,
+                            ),
+                      ),
+                    ],
                   ),
-                ),
-                Container(
-                  width: double.infinity,
-                  margin: const EdgeInsets.only(top: 16.0),
-                  child: const LinearAnimationProgressBar(
-                    percentage: 0.5,
+                  Container(
+                    width: double.infinity,
+                    margin: const EdgeInsets.only(top: 12.0),
+                    child: const LinearAnimationProgressBar(
+                      percentage: 0.5,
+                    ),
                   ),
-                ),
-              ],
+                  Align(
+                    alignment: Alignment.centerRight,
+                    child: Padding(
+                      padding: const EdgeInsets.only(top: 8.0),
+                      child: Text(
+                        'Screens : 3 /4',
+                        style: getTextTheme(context).c1m.copyWith(
+                              color: getColorScheme(context).colorGray500,
+                            ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
           )
         ],
@@ -208,18 +205,8 @@ class _SettingItems extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final items = [
-      Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
-        // Navigator.push(
-        //   context,
-        //   nextSlideScreen(RoutingScreen.MyProfile.route),
-        // );
-      }),
-      // Pair(getAppLocalizations(context).my_page_setting_items_plan, () {
-      //   Navigator.push(
-      //     context,
-      //     nextSlideScreen(RoutingScreen.MyProfilePlan.route),
-      //   );
-      // })
+      Pair(getAppLocalizations(context).my_page_setting_items_profile, () {}),
+      Pair(getAppLocalizations(context).my_page_setting_items_log_out, () {}),
     ];
 
     return Container(
@@ -228,30 +215,30 @@ class _SettingItems extends HookWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            getAppLocalizations(context).my_page_setting_item,
-            style: getTextTheme(context).c1sb.copyWith(
-                  color: getColorScheme(context).colorGray500,
-                ),
-            textAlign: TextAlign.start,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Text(
+              getAppLocalizations(context).my_page_setting_item,
+              style: getTextTheme(context).c1sb.copyWith(
+                    color: getColorScheme(context).colorGray500,
+                  ),
+              textAlign: TextAlign.start,
+            ),
           ),
-          const SizedBox(height: 16),
-
           ListView.separated(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
             separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 12);
+              return const SizedBox(height: 0);
             },
             itemBuilder: (BuildContext context, int index) {
               final item = items[index];
               return Clickable(
                 onPressed: item.second,
-                child: SizedBox(
-                  width: double.infinity,
-                  height: 48,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
                   child: Row(
-                    mainAxisSize: MainAxisSize.max,
+                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -261,15 +248,16 @@ class _SettingItems extends HookWidget {
                               color: getColorScheme(context).colorGray900,
                             ),
                       ),
-                      SvgPicture.asset(
-                        "assets/imgs/icon_next.svg",
-                        colorFilter: ColorFilter.mode(
-                          getColorScheme(context).colorGray500,
-                          BlendMode.srcIn,
-                        ),
-                        width: 24,
-                        height: 24,
-                      )
+                      if (item.first != getAppLocalizations(context).my_page_setting_items_log_out)
+                        SvgPicture.asset(
+                          "assets/imgs/icon_next.svg",
+                          colorFilter: ColorFilter.mode(
+                            getColorScheme(context).colorGray400,
+                            BlendMode.srcIn,
+                          ),
+                          width: 24,
+                          height: 24,
+                        )
                     ],
                   ),
                 ),

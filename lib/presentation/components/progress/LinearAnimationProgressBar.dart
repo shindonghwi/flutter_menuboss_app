@@ -31,7 +31,7 @@ class LinearAnimationProgressBar extends HookWidget {
             width: double.infinity,
             height: 8,
             decoration: BoxDecoration(
-              color: getColorScheme(context).colorPrimary50,
+              color: getColorScheme(context).colorGray100,
               borderRadius: BorderRadius.circular(100.0),
             ),
             child: Align(
