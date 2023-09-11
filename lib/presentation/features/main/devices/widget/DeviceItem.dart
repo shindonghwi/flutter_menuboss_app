@@ -33,42 +33,49 @@ class DeviceItem extends HookConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              const ImagePlaceholder(type: ImagePlaceholderType.Normal),
-              const SizedBox(width: 16),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Row(
+          Expanded(
+            child: Row(
+              children: [
+                const ImagePlaceholder(type: ImagePlaceholderType.Normal),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const LabelText(
-                        content: "On",
-                        isOn: true,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          item.screenName,
-                          style: getTextTheme(context).b2sb.copyWith(
-                                color: getColorScheme(context).colorGray900,
+                      Row(
+                        children: [
+                          const LabelText(
+                            content: "On",
+                            isOn: true,
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 4.0),
+                              child: Text(
+                                item.screenName,
+                                style: getTextTheme(context).b2sb.copyWith(
+                                      color: getColorScheme(context).colorGray900,
+                                    ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                        ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(
+                        item.scheduleName,
+                        style: getTextTheme(context).b3m.copyWith(
+                              color: getColorScheme(context).colorGray500,
+                            ),
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item.scheduleName,
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray500,
-                        ),
-                  ),
-                ],
-              ),
-            ],
+                ),
+              ],
+            ),
           ),
           DeviceMoreWidget(
             items: const [
