@@ -73,6 +73,12 @@
     "common_mode_all_day": "All day Mode",
     "common_mode_schedule": "Schedule Mode",
 
+    "message_server_error_5xx": "A server error has occurred\nPlease try again in a minute",
+    "message_network_required": "The network connection is unstable",
+    "message_not_found_user": "User information not found",
+    "message_api_success": "",
+    "message_temp_login_fail": "A temporary failure has occurred\nPlease use a different login method",
+
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",
     "schedule_time_lunch": "Lunch",
