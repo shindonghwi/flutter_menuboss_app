@@ -151,7 +151,7 @@ class OutlineTextField extends HookWidget {
               color: getColorScheme(context).colorGray400,
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 width: 1,
                 color: isSuccess.value == true && successMessage.isNotEmpty
@@ -162,7 +162,7 @@ class OutlineTextField extends HookWidget {
               ),
             ),
             enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 width: 1,
                 color: isSuccess.value == true && successMessage.isNotEmpty
@@ -173,14 +173,14 @@ class OutlineTextField extends HookWidget {
               ),
             ),
             disabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 width: 1,
                 color: getColorScheme(context).colorGray300,
               ),
             ),
             focusedBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(10),
+              borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 width: 1,
                 color: isSuccess.value == true && successMessage.isNotEmpty
