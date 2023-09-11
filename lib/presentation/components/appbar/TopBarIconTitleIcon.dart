@@ -23,67 +23,71 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        width: getMediaQuery(context).size.width,
-        height: 68,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  if (leadingIsShow)
-                    Container(
-                      width: 48,
-                      height: 48,
-                      margin: const EdgeInsets.only(left: 12),
-                      child: Clickable(
-                        onPressed: () {
-                          leading != null ? leading?.second.call() : Navigator.pop(context);
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: SvgPicture.asset(leading?.first ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+    return Container(
+      color: getColorScheme(context).white,
+      child: SafeArea(
+        child: SizedBox(
+          width: getMediaQuery(context).size.width,
+          height: 68,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    if (leadingIsShow)
+                      Container(
+                        width: 48,
+                        height: 48,
+                        margin: const EdgeInsets.only(left: 12),
+                        child: Clickable(
+                          onPressed: () {
+                            leading != null ? leading?.second.call() : Navigator.pop(context);
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child:
+                                SvgPicture.asset(leading?.first ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+                          ),
                         ),
                       ),
-                    ),
-                  Padding(
-                    padding: EdgeInsets.only(left: leadingIsShow ? 12 : 24),
-                    child: Text(
-                      content,
-                      style: getTextTheme(context).s2b.copyWith(
-                            color: getColorScheme(context).colorGray900,
-                          ),
-                      textAlign: TextAlign.center,
-                    ),
-                  )
-                ],
-              ),
-            ),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Row(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: suffixIcons.asMap().entries.map((e) {
-                  int index = e.key;
-                  return Container(
-                    margin: EdgeInsets.only(right: index == suffixIcons.length - 1 ? 16.0 : 0.0),
-                    child: Clickable(
-                      onPressed: () => e.value.second.call(),
-                      child: Padding(
-                        padding: const EdgeInsets.all(12.0),
-                        child: SvgPicture.asset(e.value.first, width: 24, height: 24),
+                    Padding(
+                      padding: EdgeInsets.only(left: leadingIsShow ? 12 : 24),
+                      child: Text(
+                        content,
+                        style: getTextTheme(context).s2b.copyWith(
+                              color: getColorScheme(context).colorGray900,
+                            ),
+                        textAlign: TextAlign.center,
                       ),
-                    ),
-                  );
-                }).toList(),
+                    )
+                  ],
+                ),
               ),
-            )
-          ],
+              Align(
+                alignment: Alignment.centerRight,
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: suffixIcons.asMap().entries.map((e) {
+                    int index = e.key;
+                    return Container(
+                      margin: EdgeInsets.only(right: index == suffixIcons.length - 1 ? 16.0 : 0.0),
+                      child: Clickable(
+                        onPressed: () => e.value.second.call(),
+                        child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: SvgPicture.asset(e.value.first, width: 24, height: 24),
+                        ),
+                      ),
+                    );
+                  }).toList(),
+                ),
+              )
+            ],
+          ),
         ),
       ),
     );

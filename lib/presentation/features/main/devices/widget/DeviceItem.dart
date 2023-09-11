@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
+import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/label/LabelText.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
@@ -8,7 +9,6 @@ import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/features/main/devices/model/DeviceListModel.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
-import 'package:menuboss/presentation/features/main/devices/widget/DeviceMoreWidget.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -77,7 +77,7 @@ class DeviceItem extends HookConsumerWidget {
               ],
             ),
           ),
-          DeviceMoreWidget(
+          MoreButton(
             items: const [
               ModifyType.Rename,
               ModifyType.Delete,

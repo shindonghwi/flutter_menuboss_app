@@ -14,26 +14,29 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        width: getMediaQuery(context).size.width,
-        height: 68,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Container(
-                margin: const EdgeInsets.only(left: 24.0),
-                child: Text(
-                  content,
-                  style: getTextTheme(context).s2b.copyWith(
-                    color: getColorScheme(context).colorGray900,
+    return Container(
+      color: getColorScheme(context).white,
+      child: SafeArea(
+        child: SizedBox(
+          width: getMediaQuery(context).size.width,
+          height: 68,
+          child: Stack(
+            children: [
+              Align(
+                alignment: Alignment.centerLeft,
+                child: Container(
+                  margin: const EdgeInsets.only(left: 24.0),
+                  child: Text(
+                    content,
+                    style: getTextTheme(context).s2b.copyWith(
+                          color: getColorScheme(context).colorGray900,
+                        ),
+                    textAlign: TextAlign.center,
                   ),
-                  textAlign: TextAlign.center,
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

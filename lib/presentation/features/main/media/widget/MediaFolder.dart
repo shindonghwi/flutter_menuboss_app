@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
+import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
@@ -10,8 +11,6 @@ import 'package:menuboss/presentation/features/main/media/provider/MediaListProv
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-
-import 'MediaMoreWidget.dart';
 
 class MediaFolder extends HookConsumerWidget {
   final MediaModel item;
@@ -63,7 +62,7 @@ class MediaFolder extends HookConsumerWidget {
               ),
             ],
           ),
-          MediaMoreWidget(
+          MoreButton(
             items: const [ModifyType.Rename, ModifyType.Delete],
             onSelected: (type, text) {
               debugPrint("type: $type, text: $text");

@@ -26,41 +26,45 @@ class TopBarTitleNoneIcon extends HookWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SizedBox(
-        width: getMediaQuery(context).size.width,
-        height: 68,
-        child: Stack(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                content,
-                style: getTextTheme(context).s2b.copyWith(
-                  color: getColorScheme(context).colorGray900,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ),
-            if (rightIconPath != null && rightIconOnPressed != null)
+    return Container(
+      color: getColorScheme(context).white,
+      child: SafeArea(
+        child: SizedBox(
+          width: getMediaQuery(context).size.width,
+          height: 68,
+          child: Stack(
+            children: [
               Align(
-                alignment: Alignment.centerRight,
-                child: Container(
-                  width: 48,
-                  height: 48,
-                  margin: const EdgeInsets.only(right: 12.0),
-                  child: Clickable(
-                    onPressed: () {
-                      rightIconOnPressed != null ? rightIconOnPressed?.call() : Navigator.pop(context);
-                    },
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg", width: 24, height: 24),
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  content,
+                  style: getTextTheme(context).s2b.copyWith(
+                        color: getColorScheme(context).colorGray900,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+              if (rightIconPath != null && rightIconOnPressed != null)
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: Container(
+                    width: 48,
+                    height: 48,
+                    margin: const EdgeInsets.only(right: 12.0),
+                    child: Clickable(
+                      onPressed: () {
+                        rightIconOnPressed != null ? rightIconOnPressed?.call() : Navigator.pop(context);
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child:
+                            SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg", width: 24, height: 24),
+                      ),
                     ),
                   ),
                 ),
-              ),
-          ],
+            ],
+          ),
         ),
       ),
     );

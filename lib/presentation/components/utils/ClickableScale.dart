@@ -24,7 +24,7 @@ class ClickableScale extends HookWidget {
     );
 
     animationController.addListener(() {
-      scaleNotifier.value.value = Tween<double>(begin: 1.0, end: 0.96).transform(
+      scaleNotifier.value.value = Tween<double>(begin: 1.0, end: 0.98).transform(
         animationController.value,
       );
     });

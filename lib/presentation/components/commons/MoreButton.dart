@@ -6,11 +6,11 @@ import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class MediaMoreWidget extends StatelessWidget {
+class MoreButton extends StatelessWidget {
   final List<ModifyType> items;
   final Function(ModifyType, String) onSelected;
 
-  const MediaMoreWidget({
+  const MoreButton({
     super.key,
     required this.items,
     required this.onSelected,

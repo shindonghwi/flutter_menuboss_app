@@ -24,7 +24,7 @@ class ApplyDeviceItem extends HookWidget {
 
     void onPressedEvent(){
       checkState.value = !checkState.value; // 체크 상태는 바로 변경
-      Future.delayed(const Duration(milliseconds: 100), () {
+      Future.delayed(const Duration(milliseconds: 250), () {
         onPressed.call();
       });
     }
