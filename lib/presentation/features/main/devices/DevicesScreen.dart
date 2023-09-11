@@ -8,6 +8,7 @@ import 'package:menuboss/presentation/features/main/devices/model/DeviceListMode
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:rive/rive.dart';
 
 class DevicesScreen extends HookConsumerWidget {
   const DevicesScreen({super.key});
@@ -68,7 +69,7 @@ class DevicesScreen extends HookConsumerWidget {
                                 .addItem(DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"));
                           },
                         ),
-                      )
+                      ),
                     ],
                   ),
                 )

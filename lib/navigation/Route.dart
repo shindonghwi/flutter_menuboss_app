@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
+import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
@@ -14,6 +15,7 @@ enum RoutingScreen {
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
   InfoMedia(route: "/info/media"), // 미디어 정보
+  CreatePlaylist(route: "/create/playlist"), // 플레이리스트 만들기
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"); // 프로필 정보
@@ -31,6 +33,7 @@ enum RoutingScreen {
       RoutingScreen.Main.route: (context) => const MainScreen(),
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.InfoMedia.route: (context) => const MediaInformationScreen(),
+      RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
     };
@@ -47,6 +50,8 @@ enum RoutingScreen {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.InfoMedia.route) {
       return const MediaInformationScreen();
+    } else if (route == RoutingScreen.CreatePlaylist.route) {
+      return const CreatePlaylistScreen();
     } else if (route == RoutingScreen.ApplyDevice.route) {
       return const ApplyToDeviceScreen();
     } else if (route == RoutingScreen.MyProfile.route) {

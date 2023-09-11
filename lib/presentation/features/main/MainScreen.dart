@@ -10,7 +10,7 @@ import 'package:menuboss/presentation/utils/dto/Pair.dart';
 import 'devices/DevicesScreen.dart';
 import 'media/MediaScreen.dart';
 import 'my/MyScreen.dart';
-import 'playlists/PlayListsScreens.dart';
+import 'playlists/PlaylistsScreens.dart';
 import 'schedules/SchedulesScreen.dart';
 
 class MainScreen extends HookWidget {
@@ -36,7 +36,7 @@ class MainScreen extends HookWidget {
             index: currentIndex.value,
             children: const [
               SchedulesScreen(),
-              PlayListsScreens(),
+              PlaylistsScreens(),
               DevicesScreen(),
               MediaScreen(),
               MyScreen(),

@@ -7,13 +7,14 @@ import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
-import 'package:menuboss/presentation/features/main/playlists/model/PlayListModel.dart';
-import 'package:menuboss/presentation/features/main/playlists/provider/PlayListProvider.dart';
-import 'package:menuboss/presentation/features/main/playlists/widget/PlayListItem.dart';
+import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
+import 'package:menuboss/presentation/features/main/playlists/model/PlaylistModel.dart';
+import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
+import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class PlayListsScreens extends HookConsumerWidget {
-  const PlayListsScreens({super.key});
+class PlaylistsScreens extends HookConsumerWidget {
+  const PlaylistsScreens({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -24,7 +25,7 @@ class PlayListsScreens extends HookConsumerWidget {
     useEffect(() {
       void generateItems(int count) {
         for (int i = 0; i < count; i++) {
-          listProvider.addItem(PlayListModel(null, "New folder $i", "2021.09.08"));
+          listProvider.addItem(PlaylistModel(null, "New folder $i", "2021.09.08"));
         }
       }
 
@@ -38,6 +39,13 @@ class PlayListsScreens extends HookConsumerWidget {
       Navigator.push(
         context,
         nextSlideScreen(RoutingScreen.ApplyDevice.route),
+      );
+    }
+
+    void goToCreatePlaylistScreen() {
+      Navigator.push(
+        context,
+        nextFadeInOutScreen(RoutingScreen.CreatePlaylist.route, fullScreen: true),
       );
     }
 
@@ -79,7 +87,7 @@ class PlayListsScreens extends HookConsumerWidget {
                         margin: const EdgeInsets.only(bottom: 32, right: 24),
                         child: FloatingPlusButton(
                           onPressed: () {
-                            goToApplyToScreen();
+                            goToCreatePlaylistScreen();
                           },
                         ),
                       )

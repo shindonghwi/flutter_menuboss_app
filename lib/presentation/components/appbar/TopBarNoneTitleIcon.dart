@@ -13,8 +13,8 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
 
   const TopBarNoneTitleIcon({
     super.key,
-    required this.rightIconPath,
-    required this.rightIconOnPressed,
+    this.rightIconPath,
+    this.rightIconOnPressed,
     required this.content,
   });
 
@@ -41,7 +41,7 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
               child: Container(
                 width: 48,
                 height: 48,
-                margin: const EdgeInsets.only(left: 12.0),
+                margin: const EdgeInsets.only(right: 12.0),
                 child: Clickable(
                   onPressed: () {
                     rightIconOnPressed != null ? rightIconOnPressed?.call() : Navigator.pop(context);

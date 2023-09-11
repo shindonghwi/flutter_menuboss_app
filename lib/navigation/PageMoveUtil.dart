@@ -11,13 +11,11 @@ PageRoute nextSlideScreen(String route, {dynamic parameter}) {
   } else {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 250),
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          RoutingScreen.getScreen(route, parameter: parameter),
+      pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
       reverseTransitionDuration: const Duration(milliseconds: 250),
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
-          position: Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0))
-              .animate(animation),
+          position: Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0)).animate(animation),
           child: child,
         );
       },
@@ -25,18 +23,18 @@ PageRoute nextSlideScreen(String route, {dynamic parameter}) {
   }
 }
 
-
-PageRoute nextFadeInOutScreen(String route, {dynamic parameter}) {
+PageRoute nextFadeInOutScreen(String route, {dynamic parameter, fullScreen = false}) {
   if (Platform.isIOS) {
     return CupertinoPageRoute(
       builder: (context) => RoutingScreen.getScreen(route, parameter: parameter),
+      fullscreenDialog: fullScreen,
     );
   } else {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 250),
-      pageBuilder: (context, animation, secondaryAnimation) =>
-          RoutingScreen.getScreen(route, parameter: parameter),
+      pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
       reverseTransitionDuration: const Duration(milliseconds: 250),
+      fullscreenDialog: fullScreen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return FadeTransition(
           opacity: animation,

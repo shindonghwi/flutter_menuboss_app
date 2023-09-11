@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/presentation/features/main/playlists/model/PlayListModel.dart';
-import 'package:menuboss/presentation/features/main/playlists/widget/PlayListItem.dart';
+import 'package:menuboss/presentation/features/main/playlists/model/PlaylistModel.dart';
+import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
 
-final playListProvider = StateNotifierProvider<PlayListNotifier, List<PlayListModel>>(
+final playListProvider = StateNotifierProvider<PlayListNotifier, List<PlaylistModel>>(
   (ref) => PlayListNotifier(),
 );
 
-class PlayListNotifier extends StateNotifier<List<PlayListModel>> {
+class PlayListNotifier extends StateNotifier<List<PlaylistModel>> {
   PlayListNotifier() : super([]);
 
-  void addItem(PlayListModel item, {GlobalKey<AnimatedListState>? listKey}) {
+  void addItem(PlaylistModel item, {GlobalKey<AnimatedListState>? listKey}) {
     listKey?.currentState?.insertItem(0, duration: const Duration(milliseconds: 300));
     state = [item, ...state];
   }
 
-  void removeItem(PlayListModel item, GlobalKey<AnimatedListState>? listKey) {
+  void removeItem(PlaylistModel item, GlobalKey<AnimatedListState>? listKey) {
     final index = state.indexOf(item);
     if (index != -1) {
       listKey?.currentState?.removeItem(index, (context, animation) {
@@ -28,7 +28,7 @@ class PlayListNotifier extends StateNotifier<List<PlayListModel>> {
   }
 
   Widget _animatedItemBuilder(
-    PlayListModel item,
+    PlaylistModel item,
     Animation<double> animation,
     GlobalKey<AnimatedListState> listKey,
   ) {

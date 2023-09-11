@@ -82,7 +82,7 @@ class BlankMessage extends HookWidget {
         case BlankMessageType.ADD_SCREEN:
           return "assets/imgs/icon_plus.svg";
         case BlankMessageType.ADD_CONTENT:
-          return "assets/imgs/icon_new_folder.svg";
+          return "assets/imgs/icon_plus.svg";
         case BlankMessageType.NEW_SCHEDULE:
           return "assets/imgs/icon_plus.svg";
         case BlankMessageType.NEW_PLAYLIST:

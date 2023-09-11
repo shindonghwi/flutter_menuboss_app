@@ -17,6 +17,8 @@
 
     "apply_screen_title": "Apply to Screens",
 
+    "create_playlist_title": "Create playlist",
+
     "my_page_appbar_title": "My page",
     "my_page_setting_item": "Settings",
     "my_page_setting_items_profile": "Profile",
@@ -27,14 +29,14 @@
     "my_page_profile_full_name": "Full Name",
     "my_page_profile_business_name": "Business Name",
 
-    "bottom_sheet_pin_code_description": "Please enter your PIN code",
-
     "info_media_title": "File name",
     "info_media_menu": "Media Information",
     "info_media_menu_uploaded_data": "Uploaded date",
     "info_media_menu_file_size": "File size",
     "info_media_menu_file_type": "File type",
     "info_media_menu_file_capacity": "File capacity",
+
+    "bottom_sheet_pin_code_description": "Please enter your PIN code",
 
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_add_content": "Add content",
@@ -50,6 +52,7 @@
     "popup_rename_media_hint": "Media name",
     "popup_rename_screen_hint": "Screen name",
     "popup_rename_schedule_hint": "Schedule name",
+    "popup_rename_playlist_hint": "Playlist name",
     "popup_delete_title": "Are you sure?",
     "popup_delete_description": "Do you really want to delete these record?\nThis process cannot be undone",
     "popup_apply_screen_title": "Apply to screens?",
@@ -58,6 +61,11 @@
     "common_email": "Email",
     "common_address": "Address",
     "common_password": "Password",
+    "common_settings": "Settings",
+    "common_horizontal": "Horizontal",
+    "common_vertical": "Vertical",
+    "common_fit": "Fit",
+    "common_fill": "Fill",
     "common_or": "or",
     "common_done": "Done",
     "common_do_login": "Log in",

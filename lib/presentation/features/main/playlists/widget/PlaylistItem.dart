@@ -3,13 +3,13 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
-import 'package:menuboss/presentation/features/main/playlists/model/PlayListModel.dart';
+import 'package:menuboss/presentation/features/main/playlists/model/PlaylistModel.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class PlayListItem extends StatelessWidget {
-  final PlayListModel item;
+  final PlaylistModel item;
   final GlobalKey<AnimatedListState> listKey;
 
   const PlayListItem({

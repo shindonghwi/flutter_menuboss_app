@@ -1,5 +1,5 @@
-class PlayListModel {
-  PlayListModel(
+class PlaylistModel {
+  PlaylistModel(
     this.thumbnail,
     this.name,
     this.updatedAt,
