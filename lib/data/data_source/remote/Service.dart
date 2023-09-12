@@ -8,16 +8,17 @@ import 'package:http/http.dart';
 import '../../../app/env/Environment.dart';
 import '../../../presentation/utils/Common.dart';
 import 'BaseApiUtil.dart';
+import 'HeaderKey.dart';
 
 class Service {
   static AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
   static String baseUrl = "${Environment.apiUrl}/${Environment.apiVersion}";
 
   static Map<String, String> headers = {
-    'Accept-Language': 'ko-KR',
-    'Application-Time-Zone': 'ody-android',
-    'Accept': '*/*',
-    'Connection': 'keep-alive',
+    HeaderKey.ContentType: 'application/json',
+    HeaderKey.AcceptLanguage: 'ko-KR',
+    HeaderKey.Accept: '*/*',
+    HeaderKey.Connection: 'keep-alive',
   };
 
   static setHeader({
@@ -27,10 +28,10 @@ class Service {
     String token = "",
   }) {
     headers = {
-      'Content-Type': 'application/json',
-      'Accept-Language': '$languageCode-$countryCode',
-      'Application-Time-Zone': timeZone,
-      'Authorization': 'Bearer $token',
+      HeaderKey.ContentType: 'application/json',
+      HeaderKey.AcceptLanguage: '$languageCode-$countryCode',
+      HeaderKey.Accept: timeZone,
+      HeaderKey.Authorization: 'Bearer $token',
     };
     debugPrint('setHeader: $headers');
   }

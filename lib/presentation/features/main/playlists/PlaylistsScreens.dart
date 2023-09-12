@@ -8,7 +8,6 @@ import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
-import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/main/playlists/model/PlaylistModel.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
@@ -20,8 +19,8 @@ class PlaylistsScreens extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listKey = GlobalKey<AnimatedListState>();
-    final items = ref.watch(playListProvider);
-    final listProvider = ref.read(playListProvider.notifier);
+    final items = ref.watch(PlayListProvider);
+    final listProvider = ref.read(PlayListProvider.notifier);
 
     useEffect(() {
       void generateItems(int count) {

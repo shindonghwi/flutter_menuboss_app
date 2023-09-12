@@ -8,7 +8,6 @@ import 'package:menuboss/presentation/features/main/devices/model/DeviceListMode
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:rive/rive.dart';
 
 class DevicesScreen extends HookConsumerWidget {
   const DevicesScreen({super.key});
@@ -16,8 +15,8 @@ class DevicesScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listKey = GlobalKey<AnimatedListState>();
-    final items = ref.watch(deviceListProvider);
-    final deviceProvider = ref.read(deviceListProvider.notifier);
+    final items = ref.watch(DeviceListProvider);
+    final deviceProvider = ref.read(DeviceListProvider.notifier);
 
     useEffect(() {
       void generateItems(int count) {

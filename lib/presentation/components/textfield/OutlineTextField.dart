@@ -208,7 +208,7 @@ class OutlineTextField extends HookWidget {
                           padding: const EdgeInsets.all(4.0),
                           child: SvgPicture.asset(
                               isPwVisible.value == true
-                                  ? "assets/imgs/icon_view.svg"
+                                  ? "assets/imgs/icon_view_on.svg"
                                   : "assets/imgs/icon_view_hide.svg",
                               width: 24,
                               height: 24,

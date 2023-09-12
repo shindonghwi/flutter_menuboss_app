@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/features/main/devices/model/DeviceListModel.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 
-final deviceListProvider = StateNotifierProvider<DeviceListNotifier, List<DeviceListModel>>(
+final DeviceListProvider = StateNotifierProvider<DeviceListNotifier, List<DeviceListModel>>(
   (ref) => DeviceListNotifier(),
 );
 

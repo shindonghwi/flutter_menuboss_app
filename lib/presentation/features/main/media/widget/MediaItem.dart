@@ -26,7 +26,7 @@ class MediaItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaProvider = ref.read(mediaListProvider.notifier);
+    final mediaProvider = ref.read(MediaListProvider.notifier);
     final Widget iconWidget;
 
     switch (item.type) {

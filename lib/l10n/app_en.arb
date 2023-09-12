@@ -5,7 +5,7 @@
     "login_welcome": "Welcome! Please enter your details",
     "login_email_correct": "This is a valid email address",
     "login_email_invalid": "Email address entered incorrectly",
-    "login_pw_invalid": "a-z, A-Z, up to 9 digits, with [ !,@,#,$,%,^,&,* ]",
+    "login_pw_invalid": "a-z, A-Z, 0-9, 4 or more digits",
 
     "main_navigation_menu_schedules": "Schedules",
     "main_navigation_menu_playlists": "Playlists",

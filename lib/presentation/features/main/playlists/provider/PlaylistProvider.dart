@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/features/main/playlists/model/PlaylistModel.dart';
 import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
 
-final playListProvider = StateNotifierProvider<PlayListNotifier, List<PlaylistModel>>(
+final PlayListProvider = StateNotifierProvider<PlayListNotifier, List<PlaylistModel>>(
   (ref) => PlayListNotifier(),
 );
 

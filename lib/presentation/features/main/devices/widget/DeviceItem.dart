@@ -25,7 +25,7 @@ class DeviceItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceProvider = ref.read(deviceListProvider.notifier);
+    final deviceProvider = ref.read(DeviceListProvider.notifier);
 
     return Container(
       width: double.infinity,

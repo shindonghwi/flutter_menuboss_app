@@ -1,52 +1,100 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/RegUtil.dart';
 
-class LoginScreen extends HookWidget {
+import 'provider/MeInfoProvider.dart';
+
+class LoginScreen extends HookConsumerWidget {
   const LoginScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final loginState = ref.watch(LoginProvider);
+    final loginProvider = ref.read(LoginProvider.notifier);
+    final meInfoProvider = ref.read(MeInfoProvider.notifier);
     final isEmailValid = useState(false);
     final isPwValid = useState(false);
 
+    void goToMainScreen(){
+      Navigator.pushNamedAndRemoveUntil(
+        context,
+        RoutingScreen.Main.route,
+        (route) => false,
+      );
+    }
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        loginState.when(
+          success: (event) async {
+            loginProvider.init();
+            if (loginProvider.meInfo != null){
+              meInfoProvider.updateMeInfo(loginProvider.meInfo);
+            }
+            goToMainScreen();
+          },
+          failure: (event) {
+            ToastUtil.errorToast(event.errorMessage);
+          },
+        );
+      });
+      return null;
+    }, [loginState]);
+
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
-      body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            child: Column(
-              children: [
-                const _Title(),
-                const SizedBox(height: 40),
-                _InputEmail(
-                  onChanged: (text) => isEmailValid.value = RegUtil.checkEmail(text),
+      body: Stack(
+        children: [
+          SafeArea(
+            child: Container(
+              margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
+              child: SingleChildScrollView(
+                physics: const BouncingScrollPhysics(),
+                child: Column(
+                  children: [
+                    const _Title(),
+                    const SizedBox(height: 40),
+                    _InputEmail(
+                      onChanged: (text) {
+                        loginProvider.updateEmail(text);
+                        isEmailValid.value = RegUtil.checkEmail(text);
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    _InputPassword(
+                      onChanged: (text) {
+                        loginProvider.updatePassword(text);
+                        isPwValid.value = RegUtil.checkPw(text);
+                      },
+                    ),
+                    const SizedBox(height: 20),
+                    _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
+                    const SizedBox(height: 24),
+                    const _SocialLoginButtons(),
+                    const SizedBox(height: 40),
+                  ],
                 ),
-                const SizedBox(height: 16),
-                _InputPassword(
-                  onChanged: (text) => isPwValid.value = RegUtil.checkPw(text),
-                ),
-                const SizedBox(height: 20),
-                _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
-                const SizedBox(height: 24),
-                const _SocialLoginButtons(),
-                const SizedBox(height: 40),
-              ],
+              ),
             ),
           ),
-        ),
-      ),
+          if (loginState is Loading) const LoadingView(),
+        ],
+      )
     );
   }
 }
@@ -100,7 +148,7 @@ class _SocialLoginButtons extends StatelessWidget {
   }
 }
 
-class _LoginButton extends StatelessWidget {
+class _LoginButton extends HookConsumerWidget {
   final bool isActivated;
 
   const _LoginButton({
@@ -109,18 +157,16 @@ class _LoginButton extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginProvider = ref.read(LoginProvider.notifier);
+
     return SizedBox(
       width: double.infinity,
       child: PrimaryFilledButton.mediumRound8(
         content: getAppLocalizations(context).common_do_login,
         isActivated: isActivated,
         onPressed: () {
-          Navigator.pushNamedAndRemoveUntil(
-            context,
-            RoutingScreen.Main.route,
-            (route) => false,
-          );
+          loginProvider.doEmailLogin();
         },
       ),
     );

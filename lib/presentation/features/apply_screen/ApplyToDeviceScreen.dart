@@ -20,10 +20,10 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final listKey = GlobalKey<AnimatedListState>();
-    final items = ref.watch(deviceListProvider);
+    final items = ref.watch(DeviceListProvider);
 
-    final checkList = ref.watch(applyScreenCheckListProvider);
-    final checkListProvider = ref.read(applyScreenCheckListProvider.notifier);
+    final checkList = ref.watch(ApplyScreenCheckListProvider);
+    final checkListProvider = ref.read(ApplyScreenCheckListProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {

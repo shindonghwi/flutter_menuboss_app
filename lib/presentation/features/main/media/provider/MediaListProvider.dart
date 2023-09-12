@@ -5,7 +5,7 @@ import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart'
 import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
 import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
 
-final mediaListProvider = StateNotifierProvider<MediaListNotifier, List<MediaModel>>(
+final MediaListProvider = StateNotifierProvider<MediaListNotifier, List<MediaModel>>(
   (ref) => MediaListNotifier(),
 );
 

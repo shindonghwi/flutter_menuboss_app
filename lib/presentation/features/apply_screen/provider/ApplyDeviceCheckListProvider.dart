@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final applyScreenCheckListProvider = StateNotifierProvider<ApplyDeviceCheckListNotifier, List<int>>(
+final ApplyScreenCheckListProvider = StateNotifierProvider<ApplyDeviceCheckListNotifier, List<int>>(
   (ref) => ApplyDeviceCheckListNotifier(),
 );
 

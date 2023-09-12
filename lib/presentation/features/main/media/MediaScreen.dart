@@ -29,8 +29,8 @@ class MediaScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final random = Random();
     final listKey = GlobalKey<AnimatedListState>();
-    final items = ref.watch(mediaListProvider);
-    final mediaProvider = ref.read(mediaListProvider.notifier);
+    final items = ref.watch(MediaListProvider);
+    final mediaProvider = ref.read(MediaListProvider.notifier);
 
     useEffect(() {
       // 랜덤으로 아이템 생성
