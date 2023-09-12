@@ -118,7 +118,7 @@ class MediaScreen extends HookConsumerWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                nextSlideScreen(RoutingScreen.MediaInfo.route),
+                                nextSlideHorizontalScreen(RoutingScreen.MediaInfo.route),
                               );
                             },
                             child: SlideTransition(

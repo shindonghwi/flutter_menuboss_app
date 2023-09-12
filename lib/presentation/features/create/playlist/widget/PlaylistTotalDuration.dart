@@ -42,7 +42,7 @@ class PlaylistTotalDuration extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                nextFadeInOutScreen(
+                nextSlideHorizontalScreen(
                   RoutingScreen.MediaContent.route,
                   fullScreen: true,
                 ),

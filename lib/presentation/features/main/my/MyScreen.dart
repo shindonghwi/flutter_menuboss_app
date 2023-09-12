@@ -220,7 +220,7 @@ class _SettingItems extends HookConsumerWidget {
       Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
         Navigator.push(
           context,
-          nextSlideScreen(RoutingScreen.MyProfile.route),
+          nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
         );
       }),
       Pair(getAppLocalizations(context).my_page_setting_items_log_out, () {
