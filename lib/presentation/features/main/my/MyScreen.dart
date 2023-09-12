@@ -78,12 +78,12 @@ class _UserProfile extends HookWidget {
                   children: [
                     Container(
                       decoration: BoxDecoration(
-                        color: getColorScheme(context).colorSecondary500,
+                        color: getColorScheme(context).colorPrimary500,
                         borderRadius: BorderRadius.circular(100),
                       ),
                       margin: const EdgeInsets.only(bottom: 4),
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         child: Text(
                           'Owner',
                           style: getTextTheme(context).c2m.copyWith(
@@ -107,13 +107,13 @@ class _UserProfile extends HookWidget {
                     Text(
                       'MenuBoss',
                       style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray500,
+                            color: getColorScheme(context).colorGray900,
                           ),
                     ),
                     Text(
                       'admin@menuboss.com',
                       style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray500,
+                            color: getColorScheme(context).colorGray900,
                           ),
                     ),
                   ],
@@ -140,65 +140,58 @@ class _UserPlanScreenInfo extends HookWidget {
         color: getColorScheme(context).colorGray50,
         borderRadius: BorderRadius.circular(10),
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
-          SvgPicture.asset(
-            "assets/imgs/icon_premium.svg",
-            width: 24,
-            height: 24,
-          ),
-          const SizedBox(width: 4),
-          Expanded(
-            child: Container(
-              margin: const EdgeInsets.only(top: 2.5),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
                 children: [
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        'MenuBoss',
-                        style: getTextTheme(context).b3b.copyWith(
-                              color: getColorScheme(context).colorGray900,
-                            ),
-                      ),
-                      Text(
-                        'Payment : Aug 24th, 2023',
-                        style: getTextTheme(context).c1sb.copyWith(
-                              color: getColorScheme(context).colorGray500,
-                            ),
-                      ),
-                    ],
+                  SvgPicture.asset(
+                    "assets/imgs/icon_premium.svg",
+                    width: 24,
+                    height: 24,
                   ),
-                  Container(
-                    width: double.infinity,
-                    margin: const EdgeInsets.only(top: 12.0),
-                    child: const LinearAnimationProgressBar(
-                      percentage: 0.5,
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 8.0),
-                      child: Text(
-                        'Screens : 3 /4',
-                        style: getTextTheme(context).c1m.copyWith(
-                              color: getColorScheme(context).colorGray500,
-                            ),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 4.0),
+                    child: Text(
+                      'Premium',
+                      style: getTextTheme(context).b3b.copyWith(
+                            color: getColorScheme(context).colorGray900,
+                          ),
                     ),
                   ),
                 ],
               ),
+              Text(
+                'Payment : Aug 24th, 2023',
+                style: getTextTheme(context).c1sb.copyWith(
+                      color: getColorScheme(context).colorGray500,
+                    ),
+              ),
+            ],
+          ),
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 12.0),
+            child: const LinearAnimationProgressBar(
+              percentage: 0.5,
             ),
-          )
+          ),
+          Align(
+            alignment: Alignment.centerRight,
+            child: Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: Text(
+                'Screens : 3 /4',
+                style: getTextTheme(context).c1m.copyWith(
+                      color: getColorScheme(context).colorGray500,
+                    ),
+              ),
+            ),
+          ),
         ],
       ),
     );
