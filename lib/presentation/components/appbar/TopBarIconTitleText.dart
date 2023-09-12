@@ -74,7 +74,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                           rightText ?? "",
                           style: getTextTheme(context).b1sb.copyWith(
                                 color: rightTextActivated!
-                                    ? getColorScheme(context).colorSecondary500
+                                    ? getColorScheme(context).colorPrimary500
                                     : getColorScheme(context).colorGray400,
                               ),
                         ),

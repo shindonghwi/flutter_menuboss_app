@@ -65,8 +65,9 @@ class DevicesScreen extends HookConsumerWidget {
                         margin: const EdgeInsets.only(bottom: 32, right: 24),
                         child: FloatingPlusButton(
                           onPressed: () {
-                            deviceProvider
-                                .addItem(DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"));
+                            deviceProvider.addItem(
+                              DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"),
+                            );
                           },
                         ),
                       ),

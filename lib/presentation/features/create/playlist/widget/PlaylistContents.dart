@@ -23,10 +23,9 @@ class PlaylistContents extends HookWidget {
               return ReorderableListView(
                 children: itemsValue
                     .map(
-                      (item) => Material(
+                      (item) => Container(
                         key: ValueKey(item),
-                        color: Colors.transparent,
-                        child: PlaylistContentItem(item: item),
+                        child: PlaylistContentItem(item: item, items: items)
                       ),
                     )
                     .toList(),
@@ -43,3 +42,4 @@ class PlaylistContents extends HookWidget {
           );
   }
 }
+

@@ -17,16 +17,16 @@ extension StyleColor on ColorScheme{
   Color get colorGray100 => brightness == Brightness.light ? const Color(0xFFF1F1F1) : const Color(0xFFF1F1F1);
   Color get colorGray50 => brightness == Brightness.light ? const Color(0xFFFAFAFA) : const Color(0xFFFAFAFA);
 
-  Color get colorPrimary900 => brightness == Brightness.light ? const Color(0xFF0E0702) : const Color(0xFF0E0702);
-  Color get colorPrimary800 => brightness == Brightness.light ? const Color(0xFF1D0E04) : const Color(0xFF1D0E04);
-  Color get colorPrimary700 => brightness == Brightness.light ? const Color(0xFF2B1605) : const Color(0xFF2B1605);
-  Color get colorPrimary600 => brightness == Brightness.light ? const Color(0xFF3A1D07) : const Color(0xFF3A1D07);
-  Color get colorPrimary500 => brightness == Brightness.light ? const Color(0xFF482409) : const Color(0xFF482409);
-  Color get colorPrimary400 => brightness == Brightness.light ? const Color(0xFF6D503A) : const Color(0xFF6D503A);
-  Color get colorPrimary300 => brightness == Brightness.light ? const Color(0xFF917C6B) : const Color(0xFF917C6B);
-  Color get colorPrimary200 => brightness == Brightness.light ? const Color(0xFFB6A79D) : const Color(0xFFB6A79D);
-  Color get colorPrimary100 => brightness == Brightness.light ? const Color(0xFFDAD3CE) : const Color(0xFFDAD3CE);
-  Color get colorPrimary50 => brightness == Brightness.light ? const Color(0xFFEDE9E6) : const Color(0xFFEDE9E6);
+  Color get colorPrimary900 => brightness == Brightness.light ? const Color(0xFF140B04) : const Color(0xFF140B04);
+  Color get colorPrimary800 => brightness == Brightness.light ? const Color(0xFF281609) : const Color(0xFF281609);
+  Color get colorPrimary700 => brightness == Brightness.light ? const Color(0xFF3B220D) : const Color(0xFF3B220D);
+  Color get colorPrimary600 => brightness == Brightness.light ? const Color(0xFF4F2D12) : const Color(0xFF4F2D12);
+  Color get colorPrimary500 => brightness == Brightness.light ? const Color(0xFF633816) : const Color(0xFF633816);
+  Color get colorPrimary400 => brightness == Brightness.light ? const Color(0xFF826045) : const Color(0xFF826045);
+  Color get colorPrimary300 => brightness == Brightness.light ? const Color(0xFFA18873) : const Color(0xFFA18873);
+  Color get colorPrimary200 => brightness == Brightness.light ? const Color(0xFFC1AFA2) : const Color(0xFFC1AFA2);
+  Color get colorPrimary100 => brightness == Brightness.light ? const Color(0xFFE0D7D0) : const Color(0xFFE0D7D0);
+  Color get colorPrimary50 => brightness == Brightness.light ? const Color(0xFFF7F5F3) : const Color(0xFFF7F5F3);
 
   Color get colorSecondary900 => brightness == Brightness.light ? const Color(0xFF271409) : const Color(0xFF271409);
   Color get colorSecondary800 => brightness == Brightness.light ? const Color(0xFF4D2913) : const Color(0xFF4D2913);
