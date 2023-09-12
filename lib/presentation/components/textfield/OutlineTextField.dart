@@ -223,7 +223,7 @@ class OutlineTextField extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: SvgPicture.asset(
-                        "assets/imgs/icon_check_filled_r100.svg",
+                        "assets/imgs/icon_check_filled.svg",
                         width: 16,
                         height: 16,
                         colorFilter: ColorFilter.mode(
@@ -236,7 +236,7 @@ class OutlineTextField extends HookWidget {
                     Padding(
                       padding: const EdgeInsets.only(left: 8.0),
                       child: SvgPicture.asset(
-                        "assets/imgs/icon_error_filled.svg",
+                        "assets/imgs/icon_warning.svg",
                         width: 16,
                         height: 16,
                         colorFilter: ColorFilter.mode(
