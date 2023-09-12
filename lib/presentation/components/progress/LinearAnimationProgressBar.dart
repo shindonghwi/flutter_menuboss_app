@@ -4,12 +4,14 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:visibility_detector/visibility_detector.dart';
 
+
 class LinearAnimationProgressBar extends HookWidget {
   final double percentage;
+
   const LinearAnimationProgressBar({
-    super.key,
+    Key? key,
     required this.percentage,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +23,8 @@ class LinearAnimationProgressBar extends HookWidget {
         return VisibilityDetector(
           key: const Key('visible_detector'),
           onVisibilityChanged: (info) {
-            if (info.visibleFraction == 1) { // or you can use > 0.5 or another fraction to detect partial visibility
+            if (info.visibleFraction == 1) {
               controller.forward();
-            } else {
-              controller.reset();
             }
           },
           child: Container(
@@ -51,3 +51,8 @@ class LinearAnimationProgressBar extends HookWidget {
     );
   }
 }
+
+
+
+
+

@@ -8,7 +8,7 @@ part of 'ResponseMeInfoModel.dart';
 
 ResponseMeInfoModel _$ResponseMeInfoModelFromJson(Map<String, dynamic> json) =>
     ResponseMeInfoModel(
-      memberId: json['memberId'] as String?,
+      memberId: json['memberId'] as int,
       email: json['email'] as String?,
       name: json['name'] as String?,
       phone: json['phone'] == null

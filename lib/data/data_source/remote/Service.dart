@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+
 import '../../../app/env/Environment.dart';
 import '../../../presentation/utils/Common.dart';
 import 'BaseApiUtil.dart';
@@ -33,15 +34,24 @@ class Service {
       HeaderKey.Accept: timeZone,
       HeaderKey.Authorization: 'Bearer $token',
     };
-    debugPrint('setHeader: $headers');
+    headers.forEach((key, value) {
+      debugPrint('headerInfo: $key: $value');
+    });
   }
 
   static addHeader({
     required String key,
     required String value,
   }) {
-    headers[key] = value;
-    debugPrint('addHeader: $headers');
+    if (key == HeaderKey.Authorization) {
+      headers[key] = "Bearer $value";
+    } else {
+      headers[key] = value;
+    }
+
+    headers.forEach((key, value) {
+      debugPrint('headerInfo: $key: $value');
+    });
   }
 
   static Future<bool> isNetworkAvailable() async {

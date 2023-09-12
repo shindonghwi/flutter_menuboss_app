@@ -24,23 +24,16 @@ PageRoute nextSlideScreen(String route, {dynamic parameter}) {
 }
 
 PageRoute nextFadeInOutScreen(String route, {dynamic parameter, fullScreen = false}) {
-  if (Platform.isIOS) {
-    return CupertinoPageRoute(
-      builder: (context) => RoutingScreen.getScreen(route, parameter: parameter),
-      fullscreenDialog: fullScreen,
-    );
-  } else {
-    return PageRouteBuilder(
-      transitionDuration: const Duration(milliseconds: 250),
-      pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
-      reverseTransitionDuration: const Duration(milliseconds: 250),
-      fullscreenDialog: fullScreen,
-      transitionsBuilder: (context, animation, secondaryAnimation, child) {
-        return FadeTransition(
-          opacity: animation,
-          child: child,
-        );
-      },
-    );
-  }
+  return PageRouteBuilder(
+    transitionDuration: const Duration(milliseconds: 300),
+    pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
+    reverseTransitionDuration: const Duration(milliseconds: 300),
+    fullscreenDialog: fullScreen,
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      return FadeTransition(
+        opacity: animation,
+        child: child,
+      );
+    },
+  );
 }

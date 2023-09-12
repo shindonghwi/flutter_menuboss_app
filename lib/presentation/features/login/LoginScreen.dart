@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/loading/LoadingView.dart';
@@ -31,10 +32,9 @@ class LoginScreen extends HookConsumerWidget {
     final isPwValid = useState(false);
 
     void goToMainScreen(){
-      Navigator.pushNamedAndRemoveUntil(
+      Navigator.pushReplacement(
         context,
-        RoutingScreen.Main.route,
-        (route) => false,
+        nextFadeInOutScreen(RoutingScreen.Main.route),
       );
     }
 

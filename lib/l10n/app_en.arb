@@ -61,6 +61,7 @@
     "popup_delete_description": "Do you really want to delete these record?\nThis process cannot be undone",
     "popup_apply_screen_title": "Apply to screens?",
     "popup_apply_screen_description": "Are you sure you want to apply it directly to the screens?",
+    "popup_logout_description": "Are yor sure want to log out?",
 
     "common_email": "Email",
     "common_address": "Address",
@@ -78,6 +79,7 @@
     "common_apply": "Apply",
     "common_confirm": "Confirm",
     "common_rename": "Rename",
+    "common_logout": "Log out",
     "common_delete": "Delete",
     "common_ok": "Ok",
     "common_cancel": "Cancel",

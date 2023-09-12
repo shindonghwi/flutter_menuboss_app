@@ -8,8 +8,8 @@ import '../../../../data/models/auth/RequestSocialLoginModel.dart';
 import '../../../models/auth/LoginPlatform.dart';
 import '../../../repositories/remote/auth/RemoteAuthRepository.dart';
 
-class PostEmailLoginInUseCase {
-  PostEmailLoginInUseCase();
+class PostEmailLoginUseCase {
+  PostEmailLoginUseCase();
 
   final RemoteAuthRepository _remoteAuthRepository = GetIt.instance<RemoteAuthRepository>();
 

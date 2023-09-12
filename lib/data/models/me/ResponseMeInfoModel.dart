@@ -8,7 +8,7 @@ part 'ResponseMeInfoModel.g.dart';
 
 @JsonSerializable()
 class ResponseMeInfoModel {
-  final String? memberId;
+  final int memberId;
   final String? email;
   final String? name;
   final ResponseMePhone? phone;
@@ -29,7 +29,6 @@ class ResponseMeInfoModel {
   Map<String, dynamic> toJson() => _$ResponseMeInfoModelToJson(this);
 
   ResponseMeInfoModel copyWith({
-    String? memberId,
     String? email,
     String? name,
     ResponseMePhone? phone,
@@ -37,7 +36,7 @@ class ResponseMeInfoModel {
     ResponseMeAuthorization? authorization,
   }) {
     return ResponseMeInfoModel(
-      memberId: memberId ?? this.memberId,
+      memberId: memberId,
       email: email ?? this.email,
       name: name ?? this.name,
       phone: phone ?? this.phone,

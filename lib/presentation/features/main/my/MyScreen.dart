@@ -1,15 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
+import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
+import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
+import 'package:menuboss/presentation/components/popup/PopupLogout.dart';
 import 'package:menuboss/presentation/components/progress/LinearAnimationProgressBar.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
+import 'package:menuboss/presentation/features/main/my/provider/LogoutProvider.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -197,11 +205,24 @@ class _UserPlanScreenInfo extends HookWidget {
   }
 }
 
-class _SettingItems extends HookWidget {
+class _SettingItems extends HookConsumerWidget {
   const _SettingItems({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final logoutState = ref.watch(LogoutProvider);
+    final logoutProvider = ref.read(LogoutProvider.notifier);
+    final meInfoProvider = ref.read(MeInfoProvider.notifier);
+
+    void goToLogin() {
+      meInfoProvider.updateMeInfo(null);
+      Navigator.pushAndRemoveUntil(
+        context,
+        nextFadeInOutScreen(RoutingScreen.Login.route),
+        (route) => false,
+      );
+    }
+
     final items = [
       Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
         Navigator.push(
@@ -209,65 +230,96 @@ class _SettingItems extends HookWidget {
           nextSlideScreen(RoutingScreen.MyProfile.route),
         );
       }),
-      Pair(getAppLocalizations(context).my_page_setting_items_log_out, () {}),
+      Pair(getAppLocalizations(context).my_page_setting_items_log_out, () {
+        CommonPopup.showPopup(
+          context,
+          child: PopupLogout(onClicked: (isCompleted) {
+            if (isCompleted) {
+              logoutProvider.requestLogout();
+            }
+          }),
+        );
+      }),
     ];
 
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.symmetric(horizontal: 24),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        logoutState.when(
+          success: (event) async {
+            logoutProvider.init();
+            goToLogin();
+          },
+          failure: (event) {
+            ToastUtil.errorToast(event.errorMessage);
+          },
+        );
+      });
+      return null;
+    }, [logoutState]);
+
+    return Expanded(
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Text(
-              getAppLocalizations(context).my_page_setting_item,
-              style: getTextTheme(context).c1sb.copyWith(
-                    color: getColorScheme(context).colorGray500,
-                  ),
-              textAlign: TextAlign.start,
-            ),
-          ),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 0);
-            },
-            itemBuilder: (BuildContext context, int index) {
-              final item = items[index];
-              return Clickable(
-                onPressed: item.second,
-                child: Padding(
+          Container(
+            width: double.infinity,
+            margin: const EdgeInsets.symmetric(horizontal: 24),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        item.first,
-                        style: getTextTheme(context).b2sb.copyWith(
-                              color: getColorScheme(context).colorGray900,
-                            ),
-                      ),
-                      if (item.first != getAppLocalizations(context).my_page_setting_items_log_out)
-                        SvgPicture.asset(
-                          "assets/imgs/icon_next.svg",
-                          colorFilter: ColorFilter.mode(
-                            getColorScheme(context).colorGray400,
-                            BlendMode.srcIn,
-                          ),
-                          width: 24,
-                          height: 24,
-                        )
-                    ],
+                  child: Text(
+                    getAppLocalizations(context).my_page_setting_item,
+                    style: getTextTheme(context).c1sb.copyWith(
+                          color: getColorScheme(context).colorGray500,
+                        ),
+                    textAlign: TextAlign.start,
                   ),
                 ),
-              );
-            },
-            itemCount: items.length,
-          )
+                ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 0);
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    final item = items[index];
+                    return Clickable(
+                      onPressed: item.second,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              item.first,
+                              style: getTextTheme(context).b2sb.copyWith(
+                                    color: getColorScheme(context).colorGray900,
+                                  ),
+                            ),
+                            if (item.first != getAppLocalizations(context).my_page_setting_items_log_out)
+                              SvgPicture.asset(
+                                "assets/imgs/icon_next.svg",
+                                colorFilter: ColorFilter.mode(
+                                  getColorScheme(context).colorGray400,
+                                  BlendMode.srcIn,
+                                ),
+                                width: 24,
+                                height: 24,
+                              )
+                          ],
+                        ),
+                      ),
+                    );
+                  },
+                  itemCount: items.length,
+                )
+              ],
+            ),
+          ),
+          if (logoutState is Loading) const LoadingView()
         ],
       ),
     );
