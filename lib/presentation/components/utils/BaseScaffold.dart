@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 
 class BaseScaffold extends HookWidget {
   final Widget body;
@@ -25,7 +27,7 @@ class BaseScaffold extends HookWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: appBar,
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor ?? getColorScheme(context).white,
       body: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         behavior: HitTestBehavior.translucent,

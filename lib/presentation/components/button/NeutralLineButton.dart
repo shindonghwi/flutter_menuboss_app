@@ -12,21 +12,21 @@ class NeutralLineButton extends HookWidget {
   final double height;
   final double borderRadius;
 
-  /// @feature: xSmall buttons
+  /// @feature: extraSmall buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralLineButton.xSmallRound4({
+  const NeutralLineButton.extraSmallRound4({
     Key? key,
+    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 4,
+  })  : borderRadius = 4,
         height = 40,
         super(key: key);
 
-  /// @feature: small buttons
+  /// @feature: medium buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralLineButton.smallRound8({
+  const NeutralLineButton.mediumRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -36,7 +36,7 @@ class NeutralLineButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const NeutralLineButton.smallRound8Icon({
+  const NeutralLineButton.mediumRound8Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -46,47 +46,70 @@ class NeutralLineButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  /// @feature: normal buttons
-  /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralLineButton.normalRound8({
-    Key? key,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 8,
-        height = 52,
-        super(key: key);
-
-  const NeutralLineButton.normalRound8Icon({
-    Key? key,
-    required this.leftIcon,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : borderRadius = 8,
-        height = 52,
-        super(key: key);
-
-  const NeutralLineButton.normalRound100({
+  const NeutralLineButton.mediumRound100({
     Key? key,
     required this.content,
     required this.isActivated,
     this.onPressed,
   })  : leftIcon = null,
         borderRadius = 100,
-        height = 52,
+        height = 48,
         super(key: key);
 
-  const NeutralLineButton.normalRound100Icon({
+  const NeutralLineButton.mediumRound100Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
   })  : borderRadius = 100,
+        height = 48,
+        super(key: key);
+
+  /// @feature: large buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const NeutralLineButton.largeRound8({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 8,
         height = 52,
         super(key: key);
+
+  const NeutralLineButton.largeRound8Icon({
+    Key? key,
+    required this.leftIcon,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : borderRadius = 8,
+        height = 52,
+        super(key: key);
+
+
+  /// @feature: extraLarge buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const NeutralLineButton.extraLargeRound8({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 8,
+        height = 60,
+        super(key: key);
+  const NeutralLineButton.extraLargeRound8Icon({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 8,
+        height = 60,
+        super(key: key);
+
 
   @override
   Widget build(BuildContext context) {

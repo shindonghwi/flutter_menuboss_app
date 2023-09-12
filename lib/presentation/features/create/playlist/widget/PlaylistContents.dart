@@ -21,6 +21,7 @@ class PlaylistContents extends HookWidget {
             valueListenable: items,
             builder: (context, itemsValue, child) {
               return ReorderableListView(
+                physics: const NeverScrollableScrollPhysics(),
                 children: itemsValue
                     .map(
                       (item) => Container(

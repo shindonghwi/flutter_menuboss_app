@@ -19,7 +19,7 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
       child: SafeArea(
         child: SizedBox(
           width: getMediaQuery(context).size.width,
-          height: 68,
+          height: 56,
           child: Stack(
             children: [
               Align(
@@ -43,5 +43,5 @@ class TopBarTitle extends HookWidget implements PreferredSizeWidget {
   }
 
   @override
-  Size get preferredSize => const Size.fromHeight(68);
+  Size get preferredSize => const Size.fromHeight(56);
 }

@@ -63,7 +63,7 @@ class PopupDelete extends HookWidget {
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
-                child: NeutralLineButton.smallRound8(
+                child: NeutralLineButton.mediumRound8(
                   content: getAppLocalizations(context).common_cancel,
                   isActivated: true,
                   onPressed: () {
@@ -77,7 +77,7 @@ class PopupDelete extends HookWidget {
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
-                child: ErrorFilledButton.smallRound8(
+                child: ErrorFilledButton.mediumRound8(
                   content: getAppLocalizations(context).common_delete,
                   isActivated: true,
                   onPressed: () {

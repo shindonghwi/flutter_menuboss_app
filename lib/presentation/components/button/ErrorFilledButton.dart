@@ -12,9 +12,9 @@ class ErrorFilledButton extends HookWidget {
   final double height;
   final double borderRadius;
 
-  /// @feature: small buttons
+  /// @feature: medium buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const ErrorFilledButton.smallRound8({
+  const ErrorFilledButton.mediumRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -24,7 +24,7 @@ class ErrorFilledButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const ErrorFilledButton.smallRound100({
+  const ErrorFilledButton.mediumRound100({
     Key? key,
     required this.leftIcon,
     required this.content,

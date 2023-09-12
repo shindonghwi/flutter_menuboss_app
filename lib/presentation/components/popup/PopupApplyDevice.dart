@@ -63,7 +63,7 @@ class PopupApplyDevice extends HookWidget {
               Flexible(
                 fit: FlexFit.tight,
                 flex: 1,
-                child: NeutralLineButton.smallRound8(
+                child: NeutralLineButton.mediumRound8(
                   content: getAppLocalizations(context).common_cancel,
                   isActivated: true,
                   onPressed: () {
