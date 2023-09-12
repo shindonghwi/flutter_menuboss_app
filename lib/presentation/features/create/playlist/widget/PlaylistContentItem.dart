@@ -17,16 +17,14 @@ class PlaylistContentItem extends HookWidget {
 
   const PlaylistContentItem({
     super.key,
-    required this.item, required this.items,
+    required this.item,
+    required this.items,
   });
 
   @override
   Widget build(BuildContext context) {
     final isDeleting = useState<bool>(false);
-    final animationController = useAnimationController(
-      duration: const Duration(milliseconds: 300),
-      initialValue: 1.0
-    );
+    final animationController = useAnimationController(duration: const Duration(milliseconds: 300), initialValue: 1.0);
 
     useEffect(() {
       if (isDeleting.value) {
@@ -121,32 +119,23 @@ class PlaylistContentItem extends HookWidget {
                 onLongPress: () {},
                 child: MoreButton(
                   items: const [
-                    ModifyType.Rename,
+                    ModifyType.ChangeDuration,
                     ModifyType.Delete,
                   ],
                   onSelected: (type, text) {
-                    switch (type) {
-                      case ModifyType.Rename:
-                        CommonPopup.showPopup(
-                          context,
-                          child: PopupRename(
-                            hint: getAppLocalizations(context).popup_rename_playlist_hint,
-                            onClicked: (name) {},
-                          ),
-                        );
-                        break;
-                      case ModifyType.Delete:
-                        CommonPopup.showPopup(
-                          context,
-                          child: PopupDelete(
-                            onClicked: (isCompleted) {
-                              if (isCompleted) {
-                                isDeleting.value = true;
-                              }
-                            },
-                          ),
-                        );
-                        break;
+                    if (type == ModifyType.ChangeDuration){
+
+                    }else if (type == ModifyType.Delete){
+                      CommonPopup.showPopup(
+                        context,
+                        child: PopupDelete(
+                          onClicked: (isCompleted) {
+                            if (isCompleted) {
+                              isDeleting.value = true;
+                            }
+                          },
+                        ),
+                      );
                     }
                   },
                 ),

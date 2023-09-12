@@ -83,29 +83,28 @@ class DeviceItem extends HookConsumerWidget {
               ModifyType.Delete,
             ],
             onSelected: (type, text) {
-              switch (type) {
-                case ModifyType.Rename:
-                  CommonPopup.showPopup(
-                    context,
-                    child: PopupRename(
-                        hint: getAppLocalizations(context).popup_rename_screen_hint,
-                        onClicked: (name) {
-                          if (name.isNotEmpty) {
-                            deviceProvider.renameItem(item, name);
-                          }
-                        }),
-                  );
-                case ModifyType.Delete:
-                  CommonPopup.showPopup(
-                    context,
-                    child: PopupDelete(
-                      onClicked: (isCompleted) {
-                        if (isCompleted) {
-                          deviceProvider.removeItem(item, listKey);
+              if (type == ModifyType.Rename) {
+                CommonPopup.showPopup(
+                  context,
+                  child: PopupRename(
+                      hint: getAppLocalizations(context).popup_rename_screen_hint,
+                      onClicked: (name) {
+                        if (name.isNotEmpty) {
+                          deviceProvider.renameItem(item, name);
                         }
-                      },
-                    ),
-                  );
+                      }),
+                );
+              } else if (type == ModifyType.Delete) {
+                CommonPopup.showPopup(
+                  context,
+                  child: PopupDelete(
+                    onClicked: (isCompleted) {
+                      if (isCompleted) {
+                        deviceProvider.removeItem(item, listKey);
+                      }
+                    },
+                  ),
+                );
               }
             },
           ),

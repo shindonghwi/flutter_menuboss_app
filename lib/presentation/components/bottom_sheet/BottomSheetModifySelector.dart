@@ -7,11 +7,12 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-enum ModifyType { Rename, Delete }
+enum ModifyType { Rename, Delete, ChangeDuration }
 
 final Map<ModifyType, String> modifyDescriptions = {
   ModifyType.Rename: "Rename",
   ModifyType.Delete: "Delete",
+  ModifyType.ChangeDuration: "Change duration",
 };
 
 class BottomSheetModifySelector extends HookWidget {
@@ -36,6 +37,8 @@ class BottomSheetModifySelector extends HookWidget {
           return "assets/imgs/icon_rename.svg";
         case ModifyType.Delete:
           return "assets/imgs/icon_trash.svg";
+        case ModifyType.ChangeDuration:
+          return "assets/imgs/icon_time.svg";
         default:
           return null;
       }
@@ -44,9 +47,11 @@ class BottomSheetModifySelector extends HookWidget {
     Color? getIconColor(ModifyType type) {
       switch (type) {
         case ModifyType.Rename:
-          return getColorScheme(context).colorGray900;
+          return getColorScheme(context).black;
         case ModifyType.Delete:
           return getColorScheme(context).colorRed500;
+        case ModifyType.ChangeDuration:
+          return getColorScheme(context).black;
         default:
           return null;
       }
@@ -86,7 +91,7 @@ class BottomSheetModifySelector extends HookWidget {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         value,
-                        style: getTextTheme(context).b1sb.copyWith(
+                        style: getTextTheme(context).b2sb.copyWith(
                               color: color,
                             ),
                       ),
