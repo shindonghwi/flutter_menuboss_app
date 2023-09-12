@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -37,7 +39,15 @@ class PlaylistTotalDuration extends StatelessWidget {
             ],
           ),
           Clickable(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                nextFadeInOutScreen(
+                  RoutingScreen.MediaContent.route,
+                  fullScreen: true,
+                ),
+              );
+            },
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: SvgPicture.asset(

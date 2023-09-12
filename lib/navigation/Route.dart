@@ -4,6 +4,7 @@ import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScr
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
+import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
@@ -14,7 +15,8 @@ enum RoutingScreen {
   Main(route: "/main"), // 메인
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
-  InfoMedia(route: "/info/media"), // 미디어 정보
+  MediaInfo(route: "/media/info"), // 미디어 정보
+  MediaContent(route: "/media/content"), // 미디어 콘텐츠 목록
   CreatePlaylist(route: "/create/playlist"), // 플레이리스트 만들기
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
@@ -32,7 +34,8 @@ enum RoutingScreen {
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
-      RoutingScreen.InfoMedia.route: (context) => const MediaInformationScreen(),
+      RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
+      RoutingScreen.MediaContent.route: (context) => const MediaContentScreen(),
       RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
@@ -48,8 +51,10 @@ enum RoutingScreen {
       return const MainScreen();
     } else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
-    } else if (route == RoutingScreen.InfoMedia.route) {
+    } else if (route == RoutingScreen.MediaInfo.route) {
       return const MediaInformationScreen();
+    } else if (route == RoutingScreen.MediaContent.route) {
+      return const MediaContentScreen();
     } else if (route == RoutingScreen.CreatePlaylist.route) {
       return const CreatePlaylistScreen();
     } else if (route == RoutingScreen.ApplyDevice.route) {
