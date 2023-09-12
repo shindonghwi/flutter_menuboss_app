@@ -14,15 +14,13 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
+import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 import 'model/MediaModel.dart';
 import 'model/MediaType.dart';
-import 'widget/MediaFolder.dart';
-import 'widget/MediaImage.dart';
-import 'widget/MediaVideo.dart';
 
 class MediaScreen extends HookConsumerWidget {
   const MediaScreen({super.key});
@@ -130,7 +128,7 @@ class MediaScreen extends HookConsumerWidget {
                               ).animate(animation),
                               child: FadeTransition(
                                 opacity: animation,
-                                child: _buildListItem(item, listKey),
+                                child: MediaItem(item: item, listKey: listKey),
                               ),
                             ),
                           );
@@ -166,17 +164,5 @@ class MediaScreen extends HookConsumerWidget {
         ),
       ),
     );
-  }
-
-  Widget _buildListItem(MediaModel item, GlobalKey<AnimatedListState> listKey) {
-    if (item.type == MediaType.FOLDER) {
-      return MediaFolder(item: item, listKey: listKey);
-    } else if (item.type == MediaType.IMAGE) {
-      return MediaImage(item: item, listKey: listKey);
-    } else if (item.type == MediaType.VIDEO) {
-      return MediaVideo(item: item, listKey: listKey);
-    } else {
-      throw Exception('Unsupported media type');
-    }
   }
 }

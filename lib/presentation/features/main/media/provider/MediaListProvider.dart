@@ -3,13 +3,10 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
 import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
-
-import '../widget/MediaFolder.dart';
-import '../widget/MediaImage.dart';
-import '../widget/MediaVideo.dart';
+import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
 
 final mediaListProvider = StateNotifierProvider<MediaListNotifier, List<MediaModel>>(
-      (ref) => MediaListNotifier(),
+  (ref) => MediaListNotifier(),
 );
 
 class MediaListNotifier extends StateNotifier<List<MediaModel>> {
@@ -54,20 +51,8 @@ class MediaListNotifier extends StateNotifier<List<MediaModel>> {
       ).animate(animation),
       child: FadeTransition(
         opacity: animation,
-        child: _buildListItem(item, listKey),
+        child: MediaItem(item: item, listKey: listKey),
       ),
     );
-  }
-
-  Widget _buildListItem(MediaModel item, GlobalKey<AnimatedListState> listKey) {
-    if (item.type == MediaType.FOLDER) {
-      return MediaFolder(item: item, listKey: listKey);
-    } else if (item.type == MediaType.IMAGE) {
-      return MediaImage(item: item, listKey: listKey);
-    } else if (item.type == MediaType.VIDEO) {
-      return MediaVideo(item: item, listKey: listKey);
-    } else {
-      throw Exception('Unsupported media type');
-    }
   }
 }

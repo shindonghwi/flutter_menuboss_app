@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class Clickable extends StatelessWidget {
   final Widget child;
   final double borderRadius;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const Clickable({
     super.key,
@@ -18,7 +18,7 @@ class Clickable extends StatelessWidget {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(borderRadius),
-        onTap: () => onPressed.call(),
+        onTap: onPressed == null ? null : () => onPressed?.call(),
         child: child,
       ),
     );

@@ -3,20 +3,22 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss/presentation/components/commons/MoreButton.dart';
+import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
+import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class MediaFolder extends HookConsumerWidget {
+class MediaItem extends HookConsumerWidget {
   final MediaModel item;
   final GlobalKey<AnimatedListState> listKey;
 
-  const MediaFolder({
+  const MediaItem({
     super.key,
     required this.item,
     required this.listKey,
@@ -25,6 +27,20 @@ class MediaFolder extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaProvider = ref.read(mediaListProvider.notifier);
+    final Widget iconWidget;
+
+    switch (item.type) {
+      case MediaType.FOLDER:
+        iconWidget = SvgPicture.asset(
+          "assets/imgs/icon_folder.svg",
+          width: 60,
+          height: 60,
+        );
+      case MediaType.IMAGE:
+        iconWidget = ImagePlaceholder(type: ImagePlaceholderType.Small);
+      case MediaType.VIDEO:
+        iconWidget = ImagePlaceholder(type: ImagePlaceholderType.Small);
+    }
 
     return SizedBox(
       width: double.infinity,
@@ -34,11 +50,7 @@ class MediaFolder extends HookConsumerWidget {
         children: [
           Row(
             children: [
-              SvgPicture.asset(
-                "assets/imgs/icon_folder.svg",
-                width: 60,
-                height: 60,
-              ),
+              iconWidget,
               const SizedBox(width: 16),
               Column(
                 mainAxisSize: MainAxisSize.max,

@@ -37,6 +37,8 @@
     "media_info_menu_file_capacity": "File capacity",
 
     "media_content_title": "Contents",
+    "media_content_tab_media": "Media",
+    "media_content_tab_canvas": "Canvas",
 
     "bottom_sheet_pin_code_description": "Please enter your PIN code",
 
@@ -64,6 +66,7 @@
     "common_address": "Address",
     "common_password": "Password",
     "common_settings": "Settings",
+    "common_add": "Add",
     "common_horizontal": "Horizontal",
     "common_vertical": "Vertical",
     "common_fit": "Fit",
