@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/ApiListResponse.dart';
+import 'package:menuboss/data/models/ApiResponse.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../models/device/ResponseDeviceModel.dart';
@@ -36,6 +37,29 @@ class RemoteDeviceApi {
             json.map((item) => ResponseDeviceModel.fromJson(item as Map<String, dynamic>)),
           );
         },
+      );
+    }
+  }
+
+  /// 스크린 등록
+  Future<ApiResponse<void>> postDevice(String code) async {
+    final response = await Service.postApi(
+      type: ServiceType.Device,
+      endPoint: "connect/$code",
+      jsonBody: null,
+    );
+
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
+      return ApiResponse(
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+            (json) {},
       );
     }
   }

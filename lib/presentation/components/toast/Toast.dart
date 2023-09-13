@@ -128,7 +128,7 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                 color: Colors.transparent,
                 child: Container(
                   width: getMediaQuery(context).size.width * 0.9,
-                  padding: const EdgeInsets.symmetric(vertical: 14),
+                  padding: const EdgeInsets.symmetric(vertical: 14, horizontal: 12),
                   decoration: BoxDecoration(
                     color: widget.type == ToastType.Success
                         ? getColorScheme(context).colorGreen500
@@ -143,7 +143,7 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                     children: [
                       if (widget.type == ToastType.Error)
                         Container(
-                          margin: const EdgeInsets.only(right: 12),
+                          margin: const EdgeInsets.only(right: 4),
                           padding: const EdgeInsets.symmetric(horizontal: 8),
                           child: SvgPicture.asset(
                             widget.type == ToastType.Success
@@ -156,10 +156,13 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                             colorFilter: ColorFilter.mode(getColorScheme(context).white, BlendMode.srcIn),
                           ),
                         ),
-                      Text(
-                        widget.message.toString(),
-                        style: getTextTheme(context).b1sb.copyWith(color: getColorScheme(context).white),
-                        textAlign: TextAlign.center,
+                      Flexible(
+                        child: Text(
+                          widget.message.toString(),
+                          style: getTextTheme(context).b1sb.copyWith(color: getColorScheme(context).white),
+                          textAlign: TextAlign.center,
+                          maxLines: 5,
+                        ),
                       ),
                     ],
                   ),

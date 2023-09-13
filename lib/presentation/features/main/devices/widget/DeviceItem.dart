@@ -12,6 +12,7 @@ import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class DeviceItem extends HookConsumerWidget {
@@ -47,9 +48,11 @@ class DeviceItem extends HookConsumerWidget {
                     children: [
                       Row(
                         children: [
-                          const LabelText(
-                            content: "On",
-                            isOn: true,
+                          LabelText(
+                            content: item.isOnline
+                                ? getAppLocalizations(context).common_on
+                                : getAppLocalizations(context).common_off,
+                            isOn: item.isOnline,
                           ),
                           Expanded(
                             child: Padding(
@@ -65,13 +68,16 @@ class DeviceItem extends HookConsumerWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(height: 4),
-                      Text(
-                        item.content?.name ?? "",
-                        style: getTextTheme(context).b3m.copyWith(
-                              color: getColorScheme(context).colorGray500,
-                            ),
-                      ),
+                      if (!CollectionUtil.isNullEmptyFromString(item.content?.name))
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Text(
+                            item.content?.name ?? "",
+                            style: getTextTheme(context).b3m.copyWith(
+                                  color: getColorScheme(context).colorGray500,
+                                ),
+                          ),
+                        ),
                     ],
                   ),
                 ),

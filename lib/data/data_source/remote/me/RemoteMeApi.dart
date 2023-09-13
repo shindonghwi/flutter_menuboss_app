@@ -53,7 +53,7 @@ class RemoteMeApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-        (json) => ResponseMeInfoModel.fromJson(json),
+        (json) {},
       );
     }
   }

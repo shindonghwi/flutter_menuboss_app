@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
@@ -20,6 +22,17 @@ class DevicesScreen extends HookConsumerWidget {
 
     final deviceState = ref.watch(DeviceListProvider);
     final deviceProvider = ref.read(DeviceListProvider.notifier);
+
+    void goToRegisterDevice() async {
+      final isAdded = await Navigator.push(
+        context,
+        nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
+      );
+
+      if (isAdded){
+        deviceProvider.requestGetDevices();
+      }
+    }
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,9 +77,7 @@ class DevicesScreen extends HookConsumerWidget {
                               margin: const EdgeInsets.only(bottom: 32, right: 24),
                               child: FloatingPlusButton(
                                 onPressed: () {
-                                  // deviceProvider.addItem(
-                                  //   DeviceListModel(null, "New Screen AA", "Schedule Name", "2022-03-23"),
-                                  // );
+                                  goToRegisterDevice();
                                 },
                               ),
                             ),
@@ -76,7 +87,9 @@ class DevicesScreen extends HookConsumerWidget {
                     : Expanded(
                         child: BlankMessage(
                           type: BlankMessageType.ADD_SCREEN,
-                          onPressed: () {},
+                          onPressed: () {
+                            goToRegisterDevice();
+                          },
                         ),
                       ),
               ],

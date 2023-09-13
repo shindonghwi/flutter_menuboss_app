@@ -13,7 +13,7 @@
     "main_navigation_menu_media": "Media",
     "main_navigation_menu_my": "My",
 
-    "add_tv_appbar_title": "Scan QR Code",
+    "add_tv_appbar_title": "Scan QR code",
 
     "apply_screen_title": "Apply to Screens",
 
@@ -72,6 +72,8 @@
     "common_vertical": "Vertical",
     "common_fit": "Fit",
     "common_fill": "Fill",
+    "common_on": "On",
+    "common_off": "Off",
     "common_or": "or",
     "common_done": "Done",
     "common_do_login": "Log in",

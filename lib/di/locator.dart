@@ -19,6 +19,7 @@ import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -53,6 +54,7 @@ void initServiceLocator() {
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());
+  GetIt.instance.registerLazySingleton<PostDeviceUseCase>(() => PostDeviceUseCase());
 
   /// -------
   /// repository

@@ -9,19 +9,21 @@ import 'package:menuboss/presentation/utils/Common.dart';
 class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
   final String content;
   final String? rightIconPath;
+  final Color? backgroundColor;
   final VoidCallback? rightIconOnPressed;
 
   const TopBarNoneTitleIcon({
     super.key,
     this.rightIconPath,
     this.rightIconOnPressed,
+    this.backgroundColor,
     required this.content,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: getColorScheme(context).white,
+      color: backgroundColor ?? getColorScheme(context).white,
       child: SafeArea(
         child: SizedBox(
           width: getMediaQuery(context).size.width,
