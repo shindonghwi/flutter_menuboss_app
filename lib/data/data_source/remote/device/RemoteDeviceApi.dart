@@ -32,7 +32,7 @@ class RemoteDeviceApi {
     } else {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
-            (json) {
+        (json) {
           return List<ResponseDeviceModel>.from(
             json.map((item) => ResponseDeviceModel.fromJson(item as Map<String, dynamic>)),
           );
@@ -59,7 +59,7 @@ class RemoteDeviceApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) {},
+        (json) {},
       );
     }
   }
@@ -82,7 +82,7 @@ class RemoteDeviceApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) {},
+        (json) {},
       );
     }
   }
@@ -105,7 +105,30 @@ class RemoteDeviceApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) {},
+        (json) {},
+      );
+    }
+  }
+
+  /// 스크린 이름 변경
+  Future<ApiResponse<void>> postDevicesContents(List<int> screenIds, String contentType, int contentId) async {
+    final response = await Service.patchApi(
+      type: ServiceType.Device,
+      endPoint: "contents",
+      jsonBody: {"screenIds": screenIds, "contentType": contentType, "contentId": contentId},
+    );
+
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
+      return ApiResponse(
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) {},
       );
     }
   }

@@ -18,4 +18,7 @@ abstract class RemoteDeviceRepository {
   /// 스크린 이름 변경
   Future<ApiResponse<void>> patchDeviceName(int screenId, String name);
 
+  /// 스크린 목록에 콘텐츠 적용
+  Future<ApiResponse<void>> postDevicesContents(List<int> screenIds, String contentType, int contentId);
+
 }

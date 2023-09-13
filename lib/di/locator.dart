@@ -22,6 +22,7 @@ import 'package:menuboss/domain/usecases/remote/device/DelDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/device/PostDevicesContentsUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -58,6 +59,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostDeviceUseCase>(() => PostDeviceUseCase());
   GetIt.instance.registerLazySingleton<DelDeviceUseCase>(() => DelDeviceUseCase());
   GetIt.instance.registerLazySingleton<PatchDeviceNameUseCase>(() => PatchDeviceNameUseCase());
+  GetIt.instance.registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
 
   /// -------
   /// repository

@@ -34,4 +34,9 @@ class RemoteDeviceRepositoryImpl implements RemoteDeviceRepository {
     return _remoteDeviceApi.patchDeviceName(screenId, name);
   }
 
+  @override
+  Future<ApiResponse<void>> postDevicesContents(List<int> screenIds, String contentType, int contentId) {
+    return _remoteDeviceApi.postDevicesContents(screenIds, contentType, contentId);
+  }
+
 }
