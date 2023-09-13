@@ -23,25 +23,59 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-class MyScreen extends StatelessWidget {
+class MyScreen extends HookConsumerWidget {
   const MyScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final logoutState = ref.watch(LogoutProvider);
+    final meInfoProvider = ref.read(MeInfoProvider.notifier);
+    final logoutProvider = ref.read(LogoutProvider.notifier);
+
+    void goToLogin() {
+      meInfoProvider.updateMeInfo(null);
+      Navigator.pushAndRemoveUntil(
+        context,
+        nextFadeInOutScreen(RoutingScreen.Login.route),
+            (route) => false,
+      );
+    }
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        logoutState.when(
+          success: (event) async {
+            logoutProvider.init();
+            goToLogin();
+          },
+          failure: (event) {
+            ToastUtil.errorToast(event.errorMessage);
+          },
+        );
+      });
+      return null;
+    }, [logoutState]);
+
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarTitle(
         content: getAppLocalizations(context).main_navigation_menu_my,
       ),
       body: SafeArea(
-        child: Column(
+        child: Stack(
           children: [
-            const SizedBox(height: 24),
-            const _UserProfile(),
-            const SizedBox(height: 24),
-            const _UserPlanScreenInfo(),
-            DividerVertical(marginVertical: 12),
-            const _SettingItems(),
+            const Column(
+              children: [
+                SizedBox(height: 24),
+                _UserProfile(),
+                SizedBox(height: 24),
+                _UserPlanScreenInfo(),
+                DividerVertical(marginVertical: 12),
+                _SettingItems(),
+              ],
+            ),
+            if (logoutState is Loading) const LoadingView()
           ],
         ),
       ),
@@ -203,18 +237,7 @@ class _SettingItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutState = ref.watch(LogoutProvider);
     final logoutProvider = ref.read(LogoutProvider.notifier);
-    final meInfoProvider = ref.read(MeInfoProvider.notifier);
-
-    void goToLogin() {
-      meInfoProvider.updateMeInfo(null);
-      Navigator.pushAndRemoveUntil(
-        context,
-        nextFadeInOutScreen(RoutingScreen.Login.route),
-        (route) => false,
-      );
-    }
 
     final items = [
       Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
@@ -235,85 +258,65 @@ class _SettingItems extends HookConsumerWidget {
       }),
     ];
 
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        logoutState.when(
-          success: (event) async {
-            logoutProvider.init();
-            goToLogin();
-          },
-          failure: (event) {
-            ToastUtil.errorToast(event.errorMessage);
-          },
-        );
-      });
-      return null;
-    }, [logoutState]);
-
     return Expanded(
-      child: Stack(
-        children: [
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.symmetric(horizontal: 24),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
-                  child: Text(
-                    getAppLocalizations(context).my_page_setting_item,
-                    style: getTextTheme(context).c1sb.copyWith(
-                          color: getColorScheme(context).colorGray500,
-                        ),
-                    textAlign: TextAlign.start,
-                  ),
-                ),
-                ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 0);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    final item = items[index];
-                    return Clickable(
-                      onPressed: item.second,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              item.first,
-                              style: getTextTheme(context).b2sb.copyWith(
-                                    color: getColorScheme(context).colorGray900,
-                                  ),
-                            ),
-                            if (item.first != getAppLocalizations(context).my_page_setting_items_log_out)
-                              SvgPicture.asset(
-                                "assets/imgs/icon_next.svg",
-                                colorFilter: ColorFilter.mode(
-                                  getColorScheme(context).colorGray400,
-                                  BlendMode.srcIn,
-                                ),
-                                width: 24,
-                                height: 24,
-                              )
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                  itemCount: items.length,
-                )
-              ],
+      child: Container(
+        width: double.infinity,
+        margin: const EdgeInsets.symmetric(horizontal: 24),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: Text(
+                getAppLocalizations(context).my_page_setting_item,
+                style: getTextTheme(context).c1sb.copyWith(
+                      color: getColorScheme(context).colorGray500,
+                    ),
+                textAlign: TextAlign.start,
+              ),
             ),
-          ),
-          if (logoutState is Loading) const LoadingView()
-        ],
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              shrinkWrap: true,
+              separatorBuilder: (BuildContext context, int index) {
+                return const SizedBox(height: 0);
+              },
+              itemBuilder: (BuildContext context, int index) {
+                final item = items[index];
+                return Clickable(
+                  onPressed: item.second,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          item.first,
+                          style: getTextTheme(context).b2sb.copyWith(
+                                color: getColorScheme(context).colorGray900,
+                              ),
+                        ),
+                        if (item.first != getAppLocalizations(context).my_page_setting_items_log_out)
+                          SvgPicture.asset(
+                            "assets/imgs/icon_next.svg",
+                            colorFilter: ColorFilter.mode(
+                              getColorScheme(context).colorGray400,
+                              BlendMode.srcIn,
+                            ),
+                            width: 24,
+                            height: 24,
+                          )
+                      ],
+                    ),
+                  ),
+                );
+              },
+              itemCount: items.length,
+            )
+          ],
+        ),
       ),
     );
   }
