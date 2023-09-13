@@ -21,4 +21,9 @@ class ResponseMeAuthorization {
       accessToken: accessToken ?? this.accessToken,
     );
   }
+
+  @override
+  String toString() {
+    return '{"accessToken": "$accessToken"}';
+  }
 }

@@ -29,4 +29,9 @@ class ResponseMeBusiness {
       permissions: permissions ?? this.permissions,
     );
   }
+
+  @override
+  String toString() {
+    return '{"title": "$title", "role": "$role", "permissions": "$permissions"}';
+  }
 }

@@ -1,27 +1,52 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
+import 'package:menuboss/presentation/features/main/my/profile/provider/NameChangeProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class MyProfileScreen extends HookWidget {
+class MyProfileScreen extends HookConsumerWidget {
   const MyProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final nameChangeState = ref.watch(NameChangeProvider);
+    final meInfoProvider = ref.read(MeInfoProvider.notifier);
+    final nameChangeProvider = ref.read(NameChangeProvider.notifier);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        nameChangeState.when(
+          success: (event) async {
+            meInfoProvider.updateMeFullName(nameChangeProvider.getName());
+            nameChangeProvider.init();
+            Navigator.of(context).pop();
+          },
+          failure: (event) {
+            ToastUtil.errorToast(event.errorMessage);
+          },
+        );
+      });
+      return null;
+    }, [nameChangeState]);
+
     return BaseScaffold(
       appBar: TopBarIconTitleText(
         content: getAppLocalizations(context).my_page_profile_appbar_title,
         rightText: getAppLocalizations(context).common_save,
         rightIconOnPressed: () {
-          Navigator.of(context).pop();
+          nameChangeProvider.requestChangeName();
         },
         rightTextActivated: true,
       ),
@@ -58,8 +83,6 @@ class MyProfileScreen extends HookWidget {
                       _InputFullName(),
                       SizedBox(height: 24),
                       _InputEmail(),
-                      SizedBox(height: 24),
-                      _InputBusinessName(),
                     ],
                   ),
                 )
@@ -109,11 +132,14 @@ class _CameraWidget extends StatelessWidget {
   }
 }
 
-class _InputFullName extends HookWidget {
+class _InputFullName extends HookConsumerWidget {
   const _InputFullName({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final nameChangeProvider = ref.read(NameChangeProvider.notifier);
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -127,6 +153,7 @@ class _InputFullName extends HookWidget {
         OutlineTextField.small(
           controller: useTextEditingController(),
           hint: "John Doe",
+          onChanged: (value) => nameChangeProvider.updateName(value),
         )
       ],
     );
@@ -152,30 +179,6 @@ class _InputEmail extends HookWidget {
           controller: useTextEditingController(),
           hint: "John Doe",
           enable: false,
-        )
-      ],
-    );
-  }
-}
-
-class _InputBusinessName extends HookWidget {
-  const _InputBusinessName({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          getAppLocalizations(context).my_page_profile_business_name,
-          style: getTextTheme(context).b1sb.copyWith(
-                color: getColorScheme(context).colorGray900,
-              ),
-        ),
-        const SizedBox(height: 12),
-        OutlineTextField.small(
-          controller: useTextEditingController(),
-          hint: "Menuboss",
         )
       ],
     );

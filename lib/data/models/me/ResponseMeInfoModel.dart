@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponseMeAuthorization.dart';
 import 'ResponseMeBusiness.dart';
@@ -43,5 +46,10 @@ class ResponseMeInfoModel {
       business: business ?? this.business,
       authorization: authorization ?? this.authorization,
     );
+  }
+
+  @override
+  String toString() {
+    return StringUtil.convertPrettyJson(toJson());
   }
 }

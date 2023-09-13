@@ -29,4 +29,9 @@ class ResponseMePhone {
       phone: phone ?? this.phone,
     );
   }
+
+  @override
+  String toString() {
+    return '{"country": "$country", "calling": "$calling", "phone": "$phone"}';
+  }
 }

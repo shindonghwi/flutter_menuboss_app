@@ -1,8 +1,5 @@
-import 'dart:developer';
-
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:menuboss/data/models/me/ResponseMeInfoModel.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -17,6 +14,7 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     if (meInfo == null) {
       FirebaseAuth.instance.signOut();
     }
+    debugPrint("updateMeInfo : $meInfo");
     state = meInfo;
   }
 
@@ -24,7 +22,7 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     ResponseMeInfoModel meInfo = state!.copyWith(
       name: name,
     );
-    debugPrint("updateMeFullName : ${meInfo.toJson()}");
+    debugPrint("updateMeFullName : $meInfo");
     state = meInfo;
   }
 }
