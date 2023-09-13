@@ -11,4 +11,11 @@ abstract class RemoteDeviceRepository {
 
   /// 스크린 등록
   Future<ApiResponse<void>> postDevice(String code);
+
+  /// 스크린 삭제
+  Future<ApiResponse<void>> delDevice(int screenId);
+
+  /// 스크린 이름 변경
+  Future<ApiResponse<void>> patchDeviceName(int screenId, String name);
+
 }

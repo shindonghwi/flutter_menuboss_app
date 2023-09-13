@@ -8,6 +8,7 @@ import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
 import 'package:menuboss/presentation/components/loading/LoadingView.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -18,21 +19,9 @@ class DevicesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = GlobalKey<AnimatedListState>();
-
+    final screenList = useState<List<ResponseDeviceModel>?>(null);
     final deviceState = ref.watch(DeviceListProvider);
     final deviceProvider = ref.read(DeviceListProvider.notifier);
-
-    void goToRegisterDevice() async {
-      final isAdded = await Navigator.push(
-        context,
-        nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
-      );
-
-      if (isAdded){
-        deviceProvider.requestGetDevices();
-      }
-    }
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -40,6 +29,22 @@ class DevicesScreen extends HookConsumerWidget {
       });
       return null;
     }, []);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          deviceState.when(
+            success: (event) async {
+              screenList.value = event.value;
+            },
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [deviceState]);
 
     return SafeArea(
       child: Stack(
@@ -50,53 +55,81 @@ class DevicesScreen extends HookConsumerWidget {
                 TopBarTitle(
                   content: getAppLocalizations(context).main_navigation_menu_screens,
                 ),
-                deviceState.value.isNotEmpty
-                    ? Expanded(
-                        child: Stack(
-                          children: [
-                            AnimatedList(
-                              key: listKey,
-                              initialItemCount: deviceState.value.length,
-                              padding: const EdgeInsets.only(bottom: 80),
-                              itemBuilder: (context, index, animation) {
-                                final item = deviceState.value[index];
-                                return SlideTransition(
-                                  position: Tween<Offset>(
-                                    begin: const Offset(0, -0.15),
-                                    end: Offset.zero,
-                                  ).animate(animation),
-                                  child: FadeTransition(
-                                    opacity: animation,
-                                    child: DeviceItem(item: item, listKey: listKey),
-                                  ),
-                                );
-                              },
-                            ),
-                            Container(
-                              alignment: Alignment.bottomRight,
-                              margin: const EdgeInsets.only(bottom: 32, right: 24),
-                              child: FloatingPlusButton(
-                                onPressed: () {
-                                  goToRegisterDevice();
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : Expanded(
-                        child: BlankMessage(
-                          type: BlankMessageType.ADD_SCREEN,
-                          onPressed: () {
-                            goToRegisterDevice();
-                          },
-                        ),
-                      ),
+                _DeviceContentList(items: deviceState.value)
               ],
             ),
           if (deviceState is Loading) const LoadingView(),
         ],
       ),
     );
+  }
+}
+
+class _DeviceContentList extends HookConsumerWidget {
+  final List<ResponseDeviceModel> items;
+
+  const _DeviceContentList({
+    super.key,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final listKey = GlobalKey<AnimatedListState>();
+    final deviceProvider = ref.read(DeviceListProvider.notifier);
+
+    void goToRegisterDevice() async {
+      final isAdded = await Navigator.push(
+        context,
+        nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
+      );
+
+      if (isAdded) {
+        deviceProvider.requestGetDevices();
+      }
+    }
+
+    return items.isNotEmpty
+        ? Expanded(
+            child: Stack(
+              children: [
+                AnimatedList(
+                  key: listKey,
+                  initialItemCount: items.length,
+                  padding: const EdgeInsets.only(bottom: 80),
+                  itemBuilder: (context, index, animation) {
+                    final item = items[index];
+                    return SlideTransition(
+                      position: Tween<Offset>(
+                        begin: const Offset(0, -0.15),
+                        end: Offset.zero,
+                      ).animate(animation),
+                      child: FadeTransition(
+                        opacity: animation,
+                        child: DeviceItem(item: item, listKey: listKey),
+                      ),
+                    );
+                  },
+                ),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  margin: const EdgeInsets.only(bottom: 32, right: 24),
+                  child: FloatingPlusButton(
+                    onPressed: () {
+                      goToRegisterDevice();
+                    },
+                  ),
+                ),
+              ],
+            ),
+          )
+        : Expanded(
+            child: BlankMessage(
+              type: BlankMessageType.ADD_SCREEN,
+              onPressed: () {
+                goToRegisterDevice();
+              },
+            ),
+          );
   }
 }

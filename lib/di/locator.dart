@@ -14,16 +14,17 @@ import 'package:menuboss/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:menuboss/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/device/DelDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-
 
 final serviceLocator = GetIt.instance;
 
@@ -55,6 +56,8 @@ void initServiceLocator() {
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());
   GetIt.instance.registerLazySingleton<PostDeviceUseCase>(() => PostDeviceUseCase());
+  GetIt.instance.registerLazySingleton<DelDeviceUseCase>(() => DelDeviceUseCase());
+  GetIt.instance.registerLazySingleton<PatchDeviceNameUseCase>(() => PatchDeviceNameUseCase());
 
   /// -------
   /// repository

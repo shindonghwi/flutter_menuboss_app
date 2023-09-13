@@ -63,4 +63,50 @@ class RemoteDeviceApi {
       );
     }
   }
+
+  /// 스크린 삭제
+  Future<ApiResponse<void>> delDevice(int screenId) async {
+    final response = await Service.deleteApi(
+      type: ServiceType.Device,
+      endPoint: "$screenId",
+      jsonBody: null,
+    );
+
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
+      return ApiResponse(
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+            (json) {},
+      );
+    }
+  }
+
+  /// 스크린 이름 변경
+  Future<ApiResponse<void>> patchDeviceName(int screenId, String name) async {
+    final response = await Service.patchApi(
+      type: ServiceType.Device,
+      endPoint: "$screenId/name",
+      jsonBody: {"name": name},
+    );
+
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
+      return ApiResponse(
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+            (json) {},
+      );
+    }
+  }
 }

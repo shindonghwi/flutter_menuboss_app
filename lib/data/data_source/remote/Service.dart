@@ -109,7 +109,7 @@ class Service {
   static Future<Response> patchApi({
     required ServiceType type,
     required String? endPoint,
-    required Map<String, dynamic> jsonBody,
+    required Map<String, dynamic>? jsonBody,
   }) async {
     if (await isNetworkAvailable()) {
       final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');

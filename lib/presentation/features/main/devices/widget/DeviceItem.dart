@@ -97,6 +97,7 @@ class DeviceItem extends HookConsumerWidget {
                       hint: getAppLocalizations(context).popup_rename_screen_hint,
                       onClicked: (name) {
                         if (name.isNotEmpty) {
+                          deviceProvider.requestPatchDeviceName(item.screenId, name, listKey);
                           // deviceProvider.renameItem(item, name);
                         }
                       }),
@@ -107,7 +108,7 @@ class DeviceItem extends HookConsumerWidget {
                   child: PopupDelete(
                     onClicked: (isCompleted) {
                       if (isCompleted) {
-                        // deviceProvider.removeItem(item, listKey);
+                        deviceProvider.requestDelDevice(item.screenId, listKey);
                       }
                     },
                   ),

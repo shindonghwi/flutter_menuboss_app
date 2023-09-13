@@ -25,6 +25,22 @@ class ResponseDeviceModel {
 
   Map<String, dynamic> toJson() => _$ResponseDeviceModelToJson(this);
 
+  ResponseDeviceModel copyWith({
+    String? object,
+    String? name,
+    ResponseDeviceContent? content,
+    int? screenId,
+    bool? isOnline,
+  }) {
+    return ResponseDeviceModel(
+      object: object ?? this.object,
+      name: name ?? this.name,
+      content: content ?? this.content,
+      screenId: screenId ?? this.screenId,
+      isOnline: isOnline ?? this.isOnline,
+    );
+  }
+
   @override
   String toString() {
     return StringUtil.convertPrettyJson(toJson());
