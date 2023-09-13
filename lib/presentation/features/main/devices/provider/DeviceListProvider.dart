@@ -22,8 +22,8 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   final PatchDeviceNameUseCase _patchDeviceNameUseCase = GetIt.instance<PatchDeviceNameUseCase>();
 
   void requestGetDevices() {
+    state = Loading();
     _getDevicesUseCase.call().then((response) {
-      state = Loading();
       if (response.status == 200) {
         state = Success(response.list?.reversed.toList() ?? []);
       } else {

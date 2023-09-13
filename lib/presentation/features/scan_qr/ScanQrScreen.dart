@@ -4,6 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetPinCode.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
+import 'package:menuboss/presentation/components/button/NeutralFilledButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -14,7 +17,9 @@ class ScanQrScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const QrCodeScanner();
+    return BaseScaffold(
+      body: const QrCodeScanner(),
+    );
   }
 }
 
@@ -26,6 +31,7 @@ class QrCodeScanner extends StatefulWidget {
 }
 
 class _QrCodeScannerState extends State<QrCodeScanner> {
+  var isProcessing = false;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
   QRViewController? controller;
@@ -42,38 +48,66 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold(
-      body: Column(
-        children: [
-          TopBarNoneTitleIcon(
-            content: getAppLocalizations(context).add_tv_appbar_title,
+    return Stack(
+      children: [
+        QRView(
+          key: qrKey,
+          onQRViewCreated: _onQRViewCreated,
+        ),
+        Align(
+          alignment: Alignment.topCenter,
+          child: TopBarNoneTitleIcon(
+            content: getAppLocalizations(context).scan_qr_title,
             backgroundColor: Colors.transparent,
+            reverseContentColor: true,
           ),
-          Expanded(
-            child: Stack(
-              children: [
-                QRView(
-                  key: qrKey,
-                  onQRViewCreated: _onQRViewCreated,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: Image.asset(
-                    "assets/imgs/image_qr_guideline.png",
-                    width: 180,
-                    height: 180,
-                  ),
-                ),
-              ],
-            ),
+        ),
+        Align(
+          alignment: Alignment.center,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/imgs/image_qr_guideline.png",
+                width: 180,
+                height: 180,
+              ),
+              const SizedBox(height: 32),
+              NeutralFilledButton.mediumRound100(
+                content: getAppLocalizations(context).scan_qr_enter_pin_code,
+                isActivated: true,
+                onPressed: () {
+                  CommonBottomSheet.showBottomSheet(
+                    context,
+                    child: BottomSheetPinCode(
+                      onConfirmed: (code) {
+                        postDevice(code, isDelayed: false);
+                      },
+                    ),
+                  );
+                },
+              )
+            ],
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 
+  void postDevice(String code, {isDelayed = true}) {
+    isProcessing = true;
+    GetIt.instance<PostDeviceUseCase>().call(code).then((response) async {
+      if (response.status == 200) {
+        Navigator.of(context).pop(true);
+      } else {
+        ToastUtil.errorToast(response.message ?? "");
+        await Future.delayed(const Duration(seconds: 2));
+        isProcessing = false;
+      }
+    });
+  }
+
   void _onQRViewCreated(QRViewController controller) async {
-    var isProcessing = false;
     const scheme = "https://dev-internal.themenuboss.com/qrcode/";
 
     this.controller = controller;
@@ -84,19 +118,8 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
         if (isProcessing) return;
 
         if (result!.code.toString().startsWith(scheme) && !isProcessing) {
-          isProcessing = true;
-
           final code = result!.code.toString().replaceAll(scheme, "");
-
-          GetIt.instance<PostDeviceUseCase>().call(code).then((response) async {
-            if (response.status == 200) {
-              Navigator.of(context).pop(true);
-            } else {
-              ToastUtil.errorToast(response.message ?? "");
-              await Future.delayed(const Duration(seconds: 2));
-              isProcessing = false;
-            }
-          });
+          postDevice(code);
         }
       });
     });

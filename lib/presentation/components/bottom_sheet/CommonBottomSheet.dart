@@ -20,19 +20,22 @@ class CommonBottomSheet {
       ),
       isScrollControlled: true,
       builder: (BuildContext context) {
-        return Container(
-          decoration: BoxDecoration(
-            color: safeAreaColor,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(borderRadius),
-              topRight: Radius.circular(borderRadius),
+        return Padding(
+          padding: MediaQuery.of(context).viewInsets,
+          child: Container(
+            decoration: BoxDecoration(
+              color: safeAreaColor,
+              borderRadius: BorderRadius.only(
+                topLeft: Radius.circular(borderRadius),
+                topRight: Radius.circular(borderRadius),
+              ),
             ),
-          ),
-          child: SafeArea(
-            child: BottomSheetWidget(
-              borderRadius: borderRadius,
-              backgroundColor: backgroundColor,
-              child: child,
+            child: SafeArea(
+              child: BottomSheetWidget(
+                borderRadius: borderRadius,
+                backgroundColor: backgroundColor,
+                child: child,
+              ),
             ),
           ),
         );

@@ -10,12 +10,14 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
   final String content;
   final String? rightIconPath;
   final Color? backgroundColor;
+  final bool reverseContentColor;
   final VoidCallback? rightIconOnPressed;
 
   const TopBarNoneTitleIcon({
     super.key,
     this.rightIconPath,
     this.rightIconOnPressed,
+    this.reverseContentColor = false,
     this.backgroundColor,
     required this.content,
   });
@@ -23,7 +25,7 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor ?? getColorScheme(context).white,
+      color: backgroundColor ?? getColorScheme(context).colorRed900,
       child: SafeArea(
         child: SizedBox(
           width: getMediaQuery(context).size.width,
@@ -35,7 +37,7 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
                 child: Text(
                   content,
                   style: getTextTheme(context).s2b.copyWith(
-                        color: getColorScheme(context).colorGray900,
+                        color: reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -52,8 +54,13 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child:
-                          SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg", width: 24, height: 24),
+                      child: SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg",
+                          width: 24,
+                          height: 24,
+                          colorFilter: ColorFilter.mode(
+                            reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
+                            BlendMode.srcIn,
+                          )),
                     ),
                   ),
                 ),

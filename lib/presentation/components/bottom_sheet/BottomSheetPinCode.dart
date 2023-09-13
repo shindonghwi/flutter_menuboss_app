@@ -6,15 +6,27 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class BottomSheetPinCode extends HookWidget {
-  const BottomSheetPinCode({Key? key}) : super(key: key);
+  final Function(String)? onConfirmed;
+
+  const BottomSheetPinCode({
+    Key? key,
+    required this.onConfirmed,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     const pinCodeLength = 4;
     final controllers = List.generate(pinCodeLength, (_) => useTextEditingController());
     final focusNodes = List.generate(pinCodeLength, (_) => useFocusNode());
+    final currentFocusIndex = useState(0);
 
     final isCompleted = useState<bool>(false);
+
+    void actionConfirm() {
+      final String code = controllers.map((e) => e.text).join();
+      Navigator.of(context).pop();
+      onConfirmed?.call(code);
+    }
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -39,6 +51,13 @@ class BottomSheetPinCode extends HookWidget {
         }
       };
     }, [controllers]);
+
+    useEffect(() {
+      if (isCompleted.value) {
+        actionConfirm();
+      }
+      return null;
+    }, [isCompleted.value]);
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -83,7 +102,7 @@ class BottomSheetPinCode extends HookWidget {
                   counterText: '',
                   enabledBorder: UnderlineInputBorder(
                     borderSide: BorderSide(
-                      color: focusNodes[index].hasFocus
+                      color: currentFocusIndex.value == index
                           ? getColorScheme(context).colorGray900
                           : getColorScheme(context).colorGray300,
                       width: 2,
@@ -98,14 +117,17 @@ class BottomSheetPinCode extends HookWidget {
                 ),
                 onChanged: (value) {
                   if (value.isNotEmpty) {
+                    if (index < 3) {
+                      FocusScope.of(context).requestFocus(focusNodes[index + 1]);
+                      currentFocusIndex.value = index + 1;
+                    } else {
+                      FocusScope.of(context).unfocus();
+                    }
+
+                    // Update the value after moving focus
                     controllers[index].text = value.substring(value.length - 1);
                     controllers[index].selection =
                         TextSelection.fromPosition(TextPosition(offset: controllers[index].text.length));
-
-                    if (index < 3) {
-                      // Move focus to next TextField
-                      FocusScope.of(context).requestFocus(focusNodes[index + 1]);
-                    }
                   }
                 },
               ),
@@ -120,7 +142,7 @@ class BottomSheetPinCode extends HookWidget {
               content: getAppLocalizations(context).common_confirm,
               isActivated: isCompleted.value,
               onPressed: () {
-                Navigator.pop(context);
+                actionConfirm();
               },
             ),
           ),

@@ -13,7 +13,8 @@
     "main_navigation_menu_media": "Media",
     "main_navigation_menu_my": "My",
 
-    "add_tv_appbar_title": "Scan QR code",
+    "scan_qr_title": "Scan QR code",
+    "scan_qr_enter_pin_code": "Enter PIN code",
 
     "apply_screen_title": "Apply to Screens",
 

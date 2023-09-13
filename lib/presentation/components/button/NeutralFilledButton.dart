@@ -12,9 +12,9 @@ class NeutralFilledButton extends HookWidget {
   final double height;
   final double borderRadius;
 
-  /// @feature: xSmall buttons
+  /// @feature: extra small buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralFilledButton.xSmallRound4({
+  const NeutralFilledButton.extraSmallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -24,19 +24,19 @@ class NeutralFilledButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const NeutralFilledButton.xSmallRound100({
+  const NeutralFilledButton.extraSmallRound100({
     Key? key,
+    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 100,
+  })  : borderRadius = 100,
         height = 40,
         super(key: key);
 
-  /// @feature: small buttons
+  /// @feature: medium buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralFilledButton.smallRound8({
+  const NeutralFilledButton.mediumRound8({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -46,15 +46,16 @@ class NeutralFilledButton extends HookWidget {
         height = 48,
         super(key: key);
 
-  const NeutralFilledButton.smallRound100({
+  const NeutralFilledButton.mediumRound100({
     Key? key,
-    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : borderRadius = 100,
+  })  : leftIcon = null,
+        borderRadius = 100,
         height = 48,
         super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
