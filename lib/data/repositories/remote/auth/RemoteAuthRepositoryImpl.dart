@@ -11,15 +11,15 @@ import '../../../data_source/remote/auth/RemoteAuthApi.dart';
 class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
   RemoteAuthRepositoryImpl();
 
+  RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
+
   @override
   Future<ApiResponse<SocialLoginModel>> doAppleLogin() {
-    RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
     return remoteAuthApi.doAppleLogin();
   }
 
   @override
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() {
-    RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
     return remoteAuthApi.doGoogleLogin();
   }
 
@@ -27,7 +27,6 @@ class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
   Future<ApiResponse<ResponseLoginModel>> postSocialLogin({
     required RequestSocialLoginModel requestSocialLoginModel,
   }) {
-    RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
     return remoteAuthApi.postSocialLogin(
       requestSocialLoginModel: requestSocialLoginModel,
     );
@@ -37,7 +36,6 @@ class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
   Future<ApiResponse<ResponseLoginModel>> postEmailLogin({
     required RequestEmailLoginModel requestEmailLoginModel,
   }) {
-    RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
     return remoteAuthApi.postEmailLogin(
       requestEmailLoginModel: requestEmailLoginModel,
     );
@@ -45,8 +43,6 @@ class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
 
   @override
   Future<ApiResponse<void>> postLogout() {
-    RemoteAuthApi remoteAuthApi = GetIt.instance<RemoteAuthApi>();
     return remoteAuthApi.postLogout();
   }
-
 }

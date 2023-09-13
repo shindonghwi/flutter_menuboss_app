@@ -8,15 +8,15 @@ import '../../../models/me/ResponseMeInfoModel.dart';
 class RemoteMeRepositoryImpl implements RemoteMeRepository {
   RemoteMeRepositoryImpl();
 
+  RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
+
   @override
   Future<ApiResponse<ResponseMeInfoModel>> getMe() {
-    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.getMe();
   }
 
   @override
   Future<ApiResponse<void>> patchName(String name) {
-    RemoteMeApi remoteMeApi = GetIt.instance<RemoteMeApi>();
     return remoteMeApi.patchName(name);
   }
 }

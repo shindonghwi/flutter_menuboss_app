@@ -6,15 +6,15 @@ import '../../../data_source/local/app/LocalAppApi.dart';
 class LocalAppRepositoryImpl implements LocalAppRepository {
   LocalAppRepositoryImpl();
 
+  LocalAppApi localAppApi = GetIt.instance<LocalAppApi>();
+
   @override
   Future<String> getLoginAccessToken() {
-    LocalAppApi localAppApi = GetIt.instance<LocalAppApi>();
     return localAppApi.getLoginAccessToken();
   }
 
   @override
   Future<void> setLoginAccessToken(String token) {
-    LocalAppApi localAppApi = GetIt.instance<LocalAppApi>();
     return localAppApi.setLoginAccessToken(token);
   }
 }

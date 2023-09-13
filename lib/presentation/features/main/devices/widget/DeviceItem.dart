@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/label/LabelText.dart';
+import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
-import 'package:menuboss/presentation/features/main/devices/model/DeviceListModel.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -15,7 +16,7 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 class DeviceItem extends HookConsumerWidget {
   final GlobalKey<AnimatedListState> listKey;
-  final DeviceListModel item;
+  final ResponseDeviceModel item;
 
   const DeviceItem({
     super.key,
@@ -36,7 +37,7 @@ class DeviceItem extends HookConsumerWidget {
           Expanded(
             child: Row(
               children: [
-                const ImagePlaceholder(type: ImagePlaceholderType.Normal),
+                LoadImage(url: item.content?.imageUrl ?? "", type: ImagePlaceholderType.Normal),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
@@ -54,7 +55,7 @@ class DeviceItem extends HookConsumerWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
-                                item.screenName,
+                                item.name,
                                 style: getTextTheme(context).b2sb.copyWith(
                                       color: getColorScheme(context).colorGray900,
                                     ),
@@ -66,7 +67,7 @@ class DeviceItem extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        item.scheduleName,
+                        item.content?.name ?? "",
                         style: getTextTheme(context).b3m.copyWith(
                               color: getColorScheme(context).colorGray500,
                             ),
@@ -90,7 +91,7 @@ class DeviceItem extends HookConsumerWidget {
                       hint: getAppLocalizations(context).popup_rename_screen_hint,
                       onClicked: (name) {
                         if (name.isNotEmpty) {
-                          deviceProvider.renameItem(item, name);
+                          // deviceProvider.renameItem(item, name);
                         }
                       }),
                 );
@@ -100,7 +101,7 @@ class DeviceItem extends HookConsumerWidget {
                   child: PopupDelete(
                     onClicked: (isCompleted) {
                       if (isCompleted) {
-                        deviceProvider.removeItem(item, listKey);
+                        // deviceProvider.removeItem(item, listKey);
                       }
                     },
                   ),
