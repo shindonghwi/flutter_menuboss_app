@@ -16,8 +16,8 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class DeviceItem extends HookConsumerWidget {
-  final GlobalKey<AnimatedListState> listKey;
   final ResponseDeviceModel item;
+  final GlobalKey<AnimatedListState> listKey;
 
   const DeviceItem({
     super.key,

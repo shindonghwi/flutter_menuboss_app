@@ -17,27 +17,10 @@ class Service {
 
   static Map<String, String> headers = {
     HeaderKey.ContentType: 'application/json',
-    HeaderKey.AcceptLanguage: 'ko-KR',
+    HeaderKey.AcceptLanguage: 'en-US',
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
   };
-
-  static setHeader({
-    required String languageCode,
-    required String countryCode,
-    required String timeZone,
-    String token = "",
-  }) {
-    headers = {
-      HeaderKey.ContentType: 'application/json',
-      HeaderKey.AcceptLanguage: '$languageCode-$countryCode',
-      HeaderKey.Accept: timeZone,
-      HeaderKey.Authorization: 'Bearer $token',
-    };
-    headers.forEach((key, value) {
-      debugPrint('headerInfo: $key: $value');
-    });
-  }
 
   static addHeader({
     required String key,

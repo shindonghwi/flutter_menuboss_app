@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 
 class LoadImage extends StatelessWidget {
-  final String url;
+  final String? url;
   final ImagePlaceholderType type;
 
   const LoadImage({
@@ -15,7 +15,7 @@ class LoadImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: url,
+      imageUrl: url ?? "",
       placeholder: (context, url) => ImagePlaceholder(type: type),
       errorWidget: (context, url, error) => ImagePlaceholder(type: type),
       fit: BoxFit.cover,

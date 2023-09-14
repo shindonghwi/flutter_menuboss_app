@@ -19,7 +19,6 @@ class DevicesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final screenList = useState<List<ResponseDeviceModel>?>(null);
     final deviceState = ref.watch(DeviceListProvider);
     final deviceProvider = ref.read(DeviceListProvider.notifier);
 
@@ -34,9 +33,6 @@ class DevicesScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           deviceState.when(
-            success: (event) async {
-              screenList.value = event.value;
-            },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -52,9 +48,7 @@ class DevicesScreen extends HookConsumerWidget {
           if (deviceState is Success<List<ResponseDeviceModel>>)
             Column(
               children: [
-                TopBarTitle(
-                  content: getAppLocalizations(context).main_navigation_menu_screens,
-                ),
+                TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_screens),
                 _DeviceContentList(items: deviceState.value)
               ],
             ),
