@@ -1,45 +1,49 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 class MediaItem extends HookConsumerWidget {
-  final MediaModel item;
-  final GlobalKey<AnimatedListState> listKey;
+  final ResponseMediaModel item;
+  final Function(String) onRename;
+  final VoidCallback onRemove;
 
   const MediaItem({
     super.key,
     required this.item,
-    required this.listKey,
+    required this.onRename,
+    required this.onRemove,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaProvider = ref.read(MediaListProvider.notifier);
-    final Widget iconWidget;
+    Widget? iconWidget;
 
-    switch (item.type) {
-      case MediaType.FOLDER:
+    switch (item.type?.code.toLowerCase()) {
+      case "folder":
         iconWidget = SvgPicture.asset(
           "assets/imgs/icon_folder.svg",
           width: 60,
           height: 60,
         );
-      case MediaType.IMAGE:
-        iconWidget = ImagePlaceholder(type: ImagePlaceholderType.Small);
-      case MediaType.VIDEO:
-        iconWidget = ImagePlaceholder(type: ImagePlaceholderType.Small);
+      case "image":
+        iconWidget = const ImagePlaceholder(type: ImagePlaceholderType.Small);
+      case "video":
+        iconWidget = const ImagePlaceholder(type: ImagePlaceholderType.Small);
     }
 
     return SizedBox(
@@ -48,31 +52,16 @@ class MediaItem extends HookConsumerWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              iconWidget,
-              const SizedBox(width: 16),
-              Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    item.fileName,
-                    style: getTextTheme(context).b1sb.copyWith(
-                          color: getColorScheme(context).colorGray900,
-                        ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    "${item.folderCount} File (${item.size})",
-                    style: getTextTheme(context).b1sb.copyWith(
-                          color: getColorScheme(context).colorGray500,
-                        ),
-                  ),
-                ],
-              ),
-            ],
+          Expanded(
+            child: Row(
+              children: [
+                if (iconWidget != null) iconWidget,
+                const SizedBox(width: 16),
+                Expanded(
+                  child: _MediaSimpleInfo(item: item),
+                ),
+              ],
+            ),
           ),
           MoreButton(
             items: const [ModifyType.Rename, ModifyType.Delete],
@@ -83,9 +72,7 @@ class MediaItem extends HookConsumerWidget {
                   context,
                   child: PopupDelete(
                     onClicked: (isCompleted) {
-                      if (isCompleted) {
-                        mediaProvider.removeItem(item, listKey);
-                      }
+                      if (isCompleted) onRemove.call();
                     },
                   ),
                 );
@@ -94,7 +81,7 @@ class MediaItem extends HookConsumerWidget {
                   context,
                   child: PopupRename(
                     hint: getAppLocalizations(context).popup_rename_media_hint,
-                    onClicked: (name) {},
+                    onClicked: (name) => onRename.call(name),
                   ),
                 );
               }
@@ -102,6 +89,50 @@ class MediaItem extends HookConsumerWidget {
           )
         ],
       ),
+    );
+  }
+}
+
+class _MediaSimpleInfo extends HookWidget {
+  final ResponseMediaModel item;
+
+  const _MediaSimpleInfo({
+    super.key,
+    required this.item,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final code = item.type?.code.toLowerCase();
+    String content = "";
+    if (code == "image" || code == "video") {
+      content = "$code - (${StringUtil.formatBytesToMegabytes(item.size ?? 0)})";
+    } else if (code == "folder") {
+      content = "${item.count} File (${StringUtil.formatBytesToMegabytes(item.size ?? 0)})";
+    }
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          item.name.toString(),
+          style: getTextTheme(context).b1sb.copyWith(
+                color: getColorScheme(context).colorGray900,
+              ),
+        ),
+        !CollectionUtil.isNullEmptyFromString(content)
+            ? Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Text(
+                  content,
+                  style: getTextTheme(context).b3m.copyWith(
+                        color: getColorScheme(context).colorGray500,
+                      ),
+                ),
+              )
+            : const SizedBox(),
+      ],
     );
   }
 }

@@ -25,7 +25,7 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: backgroundColor ?? getColorScheme(context).colorRed900,
+      color: backgroundColor ?? getColorScheme(context).white,
       child: SafeArea(
         child: SizedBox(
           width: getMediaQuery(context).size.width,

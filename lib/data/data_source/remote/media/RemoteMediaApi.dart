@@ -17,8 +17,12 @@ class RemoteMediaApi {
 
   /// 미디어 목록 조회
   Future<ApiListResponse<List<ResponseMediaModel>>> getMedias(
-      {String q = "", int page = 1, int size = 50, String sort = "name_asc"}) async {
-    final response = await Service.getApi(type: ServiceType.Media, endPoint: "q=$q&page=$page&size=$size&sort=$sort");
+      {String q = "", int page = 1, int size = 10, String sort = "name_asc"}) async {
+    final response = await Service.getApi(
+      type: ServiceType.Media,
+      endPoint: null,
+      query: "q=$q&page=$page&size=$size&sort=$sort",
+    );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);
     if (errorResponse != null) {
@@ -63,7 +67,7 @@ class RemoteMediaApi {
   }
 
   /// 폴더 생성
-  Future<ApiResponse<ResponseMediaCreate>> postCreateMediaFolder(String mediaId) async {
+  Future<ApiResponse<ResponseMediaCreate>> postCreateMediaFolder() async {
     final response = await Service.postApi(
       type: ServiceType.Media,
       endPoint: "folder",

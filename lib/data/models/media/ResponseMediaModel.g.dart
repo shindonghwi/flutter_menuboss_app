@@ -8,9 +8,9 @@ part of 'ResponseMediaModel.dart';
 
 ResponseMediaModel _$ResponseMediaModelFromJson(Map<String, dynamic> json) =>
     ResponseMediaModel(
-      object: json['object'] as String,
-      mediaId: json['mediaId'] as int,
-      name: json['name'] as String,
+      object: json['object'] as String? ?? "",
+      mediaId: json['mediaId'] as String? ?? "",
+      name: json['name'] as String? ?? "",
       type: json['type'] == null
           ? null
           : ResponseMediaPropertyInfo.fromJson(
@@ -22,10 +22,11 @@ ResponseMediaModel _$ResponseMediaModelFromJson(Map<String, dynamic> json) =>
       files: json['files'] == null
           ? null
           : ResponseMediaFiles.fromJson(json['files'] as Map<String, dynamic>),
-      size: json['size'] as int,
-      thumbnailUrl: json['thumbnailUrl'] as String,
-      createdAt: json['createdAt'] as String,
-      updatedAt: json['updatedAt'] as String,
+      size: json['size'] as int? ?? 0,
+      count: json['count'] as int? ?? 0,
+      thumbnailUrl: json['thumbnailUrl'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$ResponseMediaModelToJson(ResponseMediaModel instance) =>
@@ -37,6 +38,7 @@ Map<String, dynamic> _$ResponseMediaModelToJson(ResponseMediaModel instance) =>
       'property': instance.property,
       'files': instance.files,
       'size': instance.size,
+      'count': instance.count,
       'thumbnailUrl': instance.thumbnailUrl,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,

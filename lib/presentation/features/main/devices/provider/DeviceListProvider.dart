@@ -5,7 +5,6 @@ import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/domain/usecases/remote/device/DelDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
-import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
 import '../widget/DeviceItem.dart';
@@ -25,7 +24,7 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
     state = Loading();
     _getDevicesUseCase.call().then((response) {
       if (response.status == 200) {
-        state = Success(response.list?.reversed.toList() ?? []);
+        state = Success(response.list?.toList() ?? []);
       } else {
         state = Failure(response.message);
       }

@@ -8,19 +8,21 @@ class PageResponse {
   final int offsetTime;
   final int size;
   final int totalItems;
-  final String q;
-  final int currentPage;
   final int totalPages;
+  final int currentPage;
+  final String? q;
+  final String? sort;
   final bool isFirst;
   final bool isLast;
   final bool hasNext;
   final bool hasPrevious;
 
   PageResponse({
+    this.q  ,
+    this.sort = "created_asc"  ,
     required this.offsetTime,
     required this.size,
     required this.totalItems,
-    required this.q,
     required this.currentPage,
     required this.totalPages,
     required this.isFirst,

@@ -8,7 +8,7 @@ class PostCreateMediaFolderUseCase {
 
   final RemoteMediaRepository _remoteMediaRepository = GetIt.instance<RemoteMediaRepository>();
 
-  Future<ApiResponse<ResponseMediaCreate>> call(String mediaId) async {
-    return await _remoteMediaRepository.postCreateMediaFolder(mediaId);
+  Future<ApiResponse<ResponseMediaCreate>> call() async {
+    return await _remoteMediaRepository.postCreateMediaFolder();
   }
 }

@@ -10,27 +10,29 @@ part 'ResponseMediaModel.g.dart';
 @JsonSerializable()
 class ResponseMediaModel {
   final String object;
-  final int mediaId;
-  final String name;
+  final String mediaId;
+  final String? name;
   final ResponseMediaPropertyInfo? type;
   final ResponseMediaProperty? property;
   final ResponseMediaFiles? files;
-  final int size;
-  final String thumbnailUrl;
-  final String createdAt;
-  final String updatedAt;
+  final int? size;
+  final int? count;
+  final String? thumbnailUrl;
+  final String? createdAt;
+  final String? updatedAt;
 
   ResponseMediaModel({
-    required this.object,
-    required this.mediaId,
-    required this.name,
-    required this.type,
-    required this.property,
-    required this.files,
-    required this.size,
-    required this.thumbnailUrl,
-    required this.createdAt,
-    required this.updatedAt,
+    this.object = "",
+    this.mediaId = "",
+    this.name = "",
+    this.type,
+    this.property,
+    this.files,
+    this.size = 0,
+    this.count = 0,
+    this.thumbnailUrl,
+    this.createdAt,
+    this.updatedAt,
   });
 
   factory ResponseMediaModel.fromJson(Map<String, dynamic> json) => _$ResponseMediaModelFromJson(json);

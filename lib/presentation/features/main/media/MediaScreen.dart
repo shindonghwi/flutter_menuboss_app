@@ -1,168 +1,170 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:menuboss/navigation/PageMoveUtil.dart';
-import 'package:menuboss/navigation/Route.dart';
+import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/button/FilterButton.dart';
+import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
-import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
-import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
-import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-import 'model/MediaModel.dart';
-import 'model/MediaType.dart';
+import 'widget/MediaItem.dart';
 
 class MediaScreen extends HookConsumerWidget {
   const MediaScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final random = Random();
-    final listKey = GlobalKey<AnimatedListState>();
-    final items = ref.watch(MediaListProvider);
+    final mediaState = ref.watch(MediaListProvider);
     final mediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaList = useState<List<ResponseMediaModel>?>(null);
 
     useEffect(() {
-      // 랜덤으로 아이템 생성
-      void generateItems(int count) {
-        final typeList = [MediaType.FOLDER, MediaType.IMAGE, MediaType.VIDEO];
-        for (int i = 0; i < count; i++) {
-          MediaType type = typeList[random.nextInt(typeList.length)];
-
-          switch (type) {
-            case MediaType.FOLDER:
-              final size = random.nextInt(10);
-              mediaProvider.addItem(MediaModel(MediaType.FOLDER, "New folder $i", 1 + random.nextInt(10), "${size}MB"));
-              break;
-            case MediaType.IMAGE:
-              final size = (0.01 + random.nextDouble() * (10.0 - 0.01)).toStringAsFixed(1);
-              mediaProvider.addItem(MediaModel(MediaType.IMAGE, "Image $i", 0, "${size}MB"));
-              break;
-            case MediaType.VIDEO:
-              final size = (0.01 + random.nextDouble() * (10.0 - 0.01)).toStringAsFixed(1);
-              mediaProvider.addItem(MediaModel(MediaType.VIDEO, "Video $i", 0, "${size}MB"));
-              break;
-          }
-        }
-
-        mediaProvider.sortByName(FilterType.NameAsc);
-      }
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        generateItems(10);
+        mediaProvider.requestGetMedias();
       });
       return null;
     }, []);
 
-    return BaseScaffold(
-      appBar: TopBarIconTitleIcon(
-        leadingIsShow: false,
-        content: getAppLocalizations(context).main_navigation_menu_media,
-        suffixIcons: [
-          Pair("assets/imgs/icon_new_folder.svg", () {
-            mediaProvider.addItem(
-              MediaModel(
-                MediaType.FOLDER,
-                "New folder ${items.length + 1}",
-                1 + random.nextInt(10),
-                "${random.nextInt(10)}MB",
-              ),
-            );
-          }),
-          Pair("assets/imgs/icon_upload.svg", () {
-            mediaProvider.addItem(
-              MediaModel(
-                MediaType.IMAGE,
-                "New Image ${items.length + 1}",
-                1 + random.nextInt(10),
-                "${random.nextInt(10)}MB",
-              ),
-            );
-          }),
-        ],
-      ),
-      body: SafeArea(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-              child: Align(
-                alignment: Alignment.centerRight,
-                child: FilterButton(
-                  onSelected: (type, text) {
-                    mediaProvider.sortByName(type);
-                  },
-                ),
-              ),
-            ),
-            items.isNotEmpty
-                ? Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 12, 0),
-                      child: AnimatedList(
-                        key: listKey,
-                        initialItemCount: items.length,
-                        itemBuilder: (context, index, animation) {
-                          final item = items[index];
-                          return ClickableScale(
-                            onPressed: () {
-                              Navigator.push(
-                                context,
-                                nextSlideHorizontalScreen(RoutingScreen.MediaInfo.route),
-                              );
-                            },
-                            child: SlideTransition(
-                              position: Tween<Offset>(
-                                begin: const Offset(0, -0.15),
-                                end: Offset.zero,
-                              ).animate(animation),
-                              child: FadeTransition(
-                                opacity: animation,
-                                child: MediaItem(item: item, listKey: listKey),
-                              ),
-                            ),
-                          );
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          mediaState.when(
+            success: (event) {
+              mediaList.value = event.value;
+            },
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [mediaState]);
+
+    return SafeArea(
+      child: Stack(
+        children: [
+          Column(
+            children: [
+              TopBarIconTitleIcon(
+                leadingIsShow: false,
+                content: getAppLocalizations(context).main_navigation_menu_media,
+                suffixIcons: [
+                  Pair("assets/imgs/icon_new_folder.svg", () {
+                    mediaProvider.createFolder();
+                  }),
+                  Pair(
+                    "assets/imgs/icon_upload.svg",
+                    () {
+                      FilePickerUtil.pickFile(
+                        onImageSelected: (XFile xFile) {
+                          ToastUtil.successToast("이미지 업로드 진행해야함");
                         },
-                      ),
-                    ),
-                  )
-                : Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
-                      child: BlankMessage(
-                        type: BlankMessageType.UPLOAD_FILE,
-                        onPressed: () => FilePickerUtil.pickFile(
-                          onImageSelected: (XFile xfile) {
-                            mediaProvider.addItem(
-                              MediaModel(
-                                MediaType.IMAGE,
-                                "New Image ${items.length + 1}",
-                                1 + random.nextInt(10),
-                                "${random.nextInt(10)}MB",
-                              ),
-                            );
-                          },
-                          onVideoSelected: (XFile xfile) {},
-                          notAvailableFile: () {
-                            ToastUtil.errorToast("사용 할 수 없는 파일입니다.");
-                          },
-                        ),
-                      ),
-                    ),
+                        onVideoSelected: (XFile xFile) {
+                          ToastUtil.successToast("비디오 업로드 진행해야함");
+                        },
+                        notAvailableFile: () {
+                          ToastUtil.successToast("업로드 불가능한 파일");
+                        },
+                      );
+                    },
                   ),
-          ],
-        ),
+                ],
+              ),
+              mediaList.value == null
+                  ? mediaState is Success<List<ResponseMediaModel>>
+                      ? _MediaContentList(
+                          items: mediaState.value,
+                          onMediaUpload: () {},
+                        )
+                      : const SizedBox()
+                  : _MediaContentList(
+                      items: mediaList.value!,
+                      onMediaUpload: () {},
+                    ),
+            ],
+          ),
+          if (mediaState is Loading) const LoadingView(),
+        ],
       ),
     );
   }
 }
+
+class _MediaContentList extends HookConsumerWidget {
+  final List<ResponseMediaModel> items;
+  final VoidCallback onMediaUpload;
+
+  const _MediaContentList({
+    super.key,
+    required this.items,
+    required this.onMediaUpload,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaProvider = ref.read(MediaListProvider.notifier);
+    final scrollController = useScrollController(keepScrollOffset: true);
+
+    useEffect(() {
+      scrollController.addListener(() {
+        if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
+          mediaProvider.requestGetMedias();
+        }
+      });
+      return null;
+    }, []);
+
+    return Expanded(
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
+            child: Align(
+              alignment: Alignment.centerRight,
+              child: FilterButton(
+                onSelected: (type, text) {
+                  mediaProvider.changeFilterType(type);
+                },
+              ),
+            ),
+          ),
+          Expanded(
+            child: items.isNotEmpty
+                ? Container(
+                    padding: const EdgeInsets.fromLTRB(24, 0, 12, 0),
+                    child: ListView.builder(
+                      controller: scrollController,
+                      itemCount: items.length,
+                      itemBuilder: (context, index) {
+                        final item = items[index];
+                        return MediaItem(
+                          item: item,
+                          onRemove: () {
+                            mediaProvider.removeItem([item.mediaId]);
+                          },
+                          onRename: (newName) {
+                            mediaProvider.renameItem(item.mediaId, newName);
+                          },
+                        );
+                      },
+                    ),
+                  )
+                : BlankMessage(
+                    type: BlankMessageType.UPLOAD_FILE,
+                    onPressed: () => onMediaUpload.call(),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+

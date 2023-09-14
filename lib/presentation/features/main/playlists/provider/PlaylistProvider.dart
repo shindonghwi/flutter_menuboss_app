@@ -21,7 +21,7 @@ class PlayListNotifier extends StateNotifier<UIState<List<ResponsePlaylistModel>
     state = Loading();
     _getPlaylistsUseCase.call().then((response) {
       if (response.status == 200) {
-        state = Success(response.list?.reversed.toList() ?? []);
+        state = Success(response.list?.toList() ?? []);
       } else {
         state = Failure(response.message);
       }

@@ -8,15 +8,19 @@ part of 'ResponseMediaCreate.dart';
 
 ResponseMediaCreate _$ResponseMediaCreateFromJson(Map<String, dynamic> json) =>
     ResponseMediaCreate(
-      object: json['object'] as String,
-      mediaId: json['mediaId'] as int,
-      name: json['name'] as String,
-      type: json['type'] as String,
+      object: json['object'] as String?,
+      mediaId: json['mediaId'] as String?,
+      name: json['name'] as String?,
+      type: json['type'] as String?,
       property: json['property'] == null
           ? null
           : ResponseMediaProperty.fromJson(
               json['property'] as Map<String, dynamic>),
-      createdAt: json['createdAt'] as String,
+      files: (json['files'] as List<dynamic>?)
+          ?.map((e) => ResponseMediaFiles.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      updatedAt: json['updatedAt'] as String?,
+      createdAt: json['createdAt'] as String?,
     );
 
 Map<String, dynamic> _$ResponseMediaCreateToJson(
@@ -24,8 +28,10 @@ Map<String, dynamic> _$ResponseMediaCreateToJson(
     <String, dynamic>{
       'object': instance.object,
       'mediaId': instance.mediaId,
-      'name': instance.name,
       'type': instance.type,
+      'name': instance.name,
       'property': instance.property,
+      'files': instance.files,
+      'updatedAt': instance.updatedAt,
       'createdAt': instance.createdAt,
     };

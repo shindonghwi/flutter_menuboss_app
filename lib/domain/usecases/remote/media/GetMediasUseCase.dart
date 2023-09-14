@@ -11,8 +11,8 @@ class GetMediasUseCase {
   Future<ApiListResponse<List<ResponseMediaModel>>> call({
     String q = "",
     int page = 1,
-    int size = 50,
-    String sort = "name_asc",
+    int size = 10,
+    String sort = "created_desc",
   }) async {
     return await _remoteMediaRepository.getMedias(q: q, page: page, size: size, sort: sort);
   }

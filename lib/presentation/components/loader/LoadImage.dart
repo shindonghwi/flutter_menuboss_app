@@ -15,7 +15,7 @@ class LoadImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: url ?? "",
+      imageUrl: url.toString(),
       placeholder: (context, url) => ImagePlaceholder(type: type),
       errorWidget: (context, url, error) => ImagePlaceholder(type: type),
       fit: BoxFit.cover,

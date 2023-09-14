@@ -15,18 +15,17 @@ class ResponseMediaProperty {
   final String? videoUrl;
 
   ResponseMediaProperty({
-    required this.count,
-    required this.width,
-    required this.height,
-    required this.size,
-    required this.duration,
-    required this.rotation,
-    required this.imageUrl,
-    required this.videoUrl,
+    this.count,
+    this.width,
+    this.height,
+    this.size,
+    this.duration,
+    this.rotation,
+    this.imageUrl,
+    this.videoUrl,
   });
 
-  factory ResponseMediaProperty.fromJson(Map<String, dynamic> json) =>
-      _$ResponseMediaPropertyFromJson(json);
+  factory ResponseMediaProperty.fromJson(Map<String, dynamic> json) => _$ResponseMediaPropertyFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMediaPropertyToJson(this);
 

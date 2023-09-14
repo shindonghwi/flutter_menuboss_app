@@ -15,6 +15,13 @@ final Map<FilterType, String> filterDescriptions = {
   FilterType.OldestFirst: "Oldest First"
 };
 
+final Map<FilterType, String> filterParams = {
+  FilterType.NameAsc: "name_asc",
+  FilterType.NameDesc: "name_desc",
+  FilterType.NewestFirst: "created_desc",
+  FilterType.OldestFirst: "created_asc"
+};
+
 class BottomSheetFilterSelector extends HookWidget {
   final Function(FilterType, String) onSelected;
 

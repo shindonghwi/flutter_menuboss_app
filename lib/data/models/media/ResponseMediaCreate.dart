@@ -9,20 +9,24 @@ part 'ResponseMediaCreate.g.dart';
 
 @JsonSerializable()
 class ResponseMediaCreate {
-  final String object;
-  final int mediaId;
-  final String name;
-  final String type;
+  final String? object;
+  final String? mediaId;
+  final String? type;
+  final String? name;
   final ResponseMediaProperty? property;
-  final String createdAt;
+  final List<ResponseMediaFiles>? files;
+  final String? updatedAt;
+  final String? createdAt;
 
   ResponseMediaCreate({
-    required this.object,
-    required this.mediaId,
-    required this.name,
-    required this.type,
-    required this.property,
-    required this.createdAt,
+    this.object,
+    this.mediaId,
+    this.name,
+    this.type,
+    this.property,
+    this.files,
+    this.updatedAt,
+    this.createdAt,
   });
 
   factory ResponseMediaCreate.fromJson(Map<String, dynamic> json) => _$ResponseMediaCreateFromJson(json);

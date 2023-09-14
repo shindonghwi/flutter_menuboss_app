@@ -11,7 +11,7 @@ abstract class RemoteMediaRepository {
   Future<ApiListResponse<List<ResponseMediaModel>>> getMedias({
     String q = "",
     int page = 1,
-    int size = 50,
+    int size = 10,
     String sort = "name_asc",
   });
 
@@ -19,7 +19,7 @@ abstract class RemoteMediaRepository {
   Future<ApiResponse<ResponseMediaModel>> getMedia(String mediaId);
 
   /// 폴더 생성
-  Future<ApiResponse<ResponseMediaCreate>> postCreateMediaFolder(String mediaId);
+  Future<ApiResponse<ResponseMediaCreate>> postCreateMediaFolder();
 
   /// 미디어 이름 변경
   Future<ApiResponse<void>> patchMediaName(String mediaId, String name);

@@ -45,9 +45,13 @@ class Service {
   static Future<Response> getApi({
     required ServiceType type,
     required String? endPoint,
+    String? query,
   }) async {
     if (await isNetworkAvailable()) {
-      final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+      final url = Uri.parse('$baseUrl/'
+          '${_ServiceTypeHelper.fromString(type)}'
+          '${endPoint == null ? "" : "/$endPoint"}'
+          '${query == null ? "" : "?$query"}');
       debugPrint('\nrequest Url: $url');
       debugPrint('request header: $headers\n');
 
