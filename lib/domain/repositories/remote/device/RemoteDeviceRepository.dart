@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:menuboss/data/models/ApiListResponse.dart';
-import 'package:menuboss/data/models/ApiResponse.dart';
+import 'package:menuboss/data/models/base/ApiListResponse.dart';
+import 'package:menuboss/data/models/base/ApiResponse.dart';
 
 import '../../../../data/models/device/ResponseDeviceModel.dart';
 

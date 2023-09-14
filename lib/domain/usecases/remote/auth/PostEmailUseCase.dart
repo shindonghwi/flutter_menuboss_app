@@ -3,7 +3,7 @@ import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/auth/ResponseLoginModel.dart';
 import 'package:menuboss/firebase/FirebaseCloudMessage.dart';
 
-import '../../../../data/models/ApiResponse.dart';
+import '../../../../data/models/base/ApiResponse.dart';
 import '../../../../data/models/auth/RequestSocialLoginModel.dart';
 import '../../../models/auth/LoginPlatform.dart';
 import '../../../repositories/remote/auth/RemoteAuthRepository.dart';

@@ -1,6 +1,6 @@
 import 'package:get_it/get_it.dart';
 
-import '../../../../data/models/ApiResponse.dart';
+import '../../../../data/models/base/ApiResponse.dart';
 import '../../../models/auth/SocialLoginModel.dart';
 import '../../../repositories/remote/auth/RemoteAuthRepository.dart';
 

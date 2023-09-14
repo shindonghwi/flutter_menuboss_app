@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/data_source/remote/device/RemoteDeviceApi.dart';
-import 'package:menuboss/data/models/ApiListResponse.dart';
+import 'package:menuboss/data/models/base/ApiListResponse.dart';
 
 import '../../../../domain/repositories/remote/device/RemoteDeviceRepository.dart';
 import '../../../../domain/repositories/remote/me/RemoteMeRepository.dart';
 import '../../../data_source/remote/me/RemoteMeApi.dart';
-import '../../../models/ApiResponse.dart';
+import '../../../models/base/ApiResponse.dart';
 import '../../../models/device/ResponseDeviceModel.dart';
 import '../../../models/me/ResponseMeInfoModel.dart';
 

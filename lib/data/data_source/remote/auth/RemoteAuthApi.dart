@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
-import 'package:menuboss/data/models/ApiResponse.dart';
+import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';

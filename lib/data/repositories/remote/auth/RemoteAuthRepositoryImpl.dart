@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:menuboss/data/models/ApiResponse.dart';
+import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/auth/RequestSocialLoginModel.dart';
 import 'package:menuboss/data/models/auth/ResponseLoginModel.dart';

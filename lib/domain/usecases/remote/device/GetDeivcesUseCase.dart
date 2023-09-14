@@ -1,5 +1,5 @@
 import 'package:get_it/get_it.dart';
-import 'package:menuboss/data/models/ApiListResponse.dart';
+import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/domain/repositories/remote/device/RemoteDeviceRepository.dart';
 

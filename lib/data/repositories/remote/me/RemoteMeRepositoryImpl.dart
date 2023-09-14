@@ -2,7 +2,7 @@ import 'package:get_it/get_it.dart';
 
 import '../../../../domain/repositories/remote/me/RemoteMeRepository.dart';
 import '../../../data_source/remote/me/RemoteMeApi.dart';
-import '../../../models/ApiResponse.dart';
+import '../../../models/base/ApiResponse.dart';
 import '../../../models/me/ResponseMeInfoModel.dart';
 
 class RemoteMeRepositoryImpl implements RemoteMeRepository {

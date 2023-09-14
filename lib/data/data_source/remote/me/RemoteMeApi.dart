@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:get_it/get_it.dart';
-import 'package:menuboss/data/models/ApiResponse.dart';
+import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../models/me/ResponseMeInfoModel.dart';

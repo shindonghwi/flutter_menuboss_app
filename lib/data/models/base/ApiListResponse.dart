@@ -1,8 +1,10 @@
 import 'package:flutter/cupertino.dart';
+import 'package:menuboss/data/models/base/PageResponse.dart';
 
 class ApiListResponse<T> {
   final int status;
   final String message;
+  final PageResponse? page;
   final T? list;
   final int count;
 
@@ -11,6 +13,7 @@ class ApiListResponse<T> {
     required this.message,
     required this.list,
     required this.count,
+    this.page,
   });
 
   factory ApiListResponse.fromJson(
@@ -21,6 +24,7 @@ class ApiListResponse<T> {
       return ApiListResponse(
         status: json!['status'] as int,
         message: json['message'] as String,
+        page: json['page'] as PageResponse?,
         list: fromJsonT(json['list']),
         count: json['count'] as int,
       );
@@ -29,6 +33,7 @@ class ApiListResponse<T> {
       return ApiListResponse(
         status: json!['status'] as int,
         message: json['message'] as String,
+        page: json['page'] as PageResponse?,
         list: null,
         count: json['count'] as int,
       );

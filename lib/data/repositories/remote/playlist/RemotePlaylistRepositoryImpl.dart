@@ -1,11 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/data_source/remote/playlist/RemotePlaylistApi.dart';
-import 'package:menuboss/data/models/ApiListResponse.dart';
+import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 
 import '../../../../domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
-import '../../../models/ApiResponse.dart';
+import '../../../models/base/ApiResponse.dart';
 
 class RemotePlaylistRepositoryImpl implements RemotePlaylistRepository {
   RemotePlaylistRepositoryImpl();

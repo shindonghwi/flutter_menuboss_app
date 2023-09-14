@@ -3,16 +3,19 @@ import 'package:menuboss/data/data_source/local/app/LocalAppApi.dart';
 import 'package:menuboss/data/data_source/remote/auth/RemoteAuthApi.dart';
 import 'package:menuboss/data/data_source/remote/device/RemoteDeviceApi.dart';
 import 'package:menuboss/data/data_source/remote/me/RemoteMeApi.dart';
+import 'package:menuboss/data/data_source/remote/media/RemoteMediaApi.dart';
 import 'package:menuboss/data/data_source/remote/playlist/RemotePlaylistApi.dart';
 import 'package:menuboss/data/repositories/local/app/LocalAppRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/auth/RemoteAuthRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/device/RemoteDeviceRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/me/RemoteMeRepositoryImpl.dart';
+import 'package:menuboss/data/repositories/remote/media/RemoteMediaRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/playlist/RemotePlaylistRepositoryImpl.dart';
 import 'package:menuboss/domain/repositories/local/app/LocalAppRepository.dart';
 import 'package:menuboss/domain/repositories/remote/auth/RemoteAuthRepository.dart';
 import 'package:menuboss/domain/repositories/remote/device/RemoteDeviceRepository.dart';
 import 'package:menuboss/domain/repositories/remote/me/RemoteMeRepository.dart';
+import 'package:menuboss/domain/repositories/remote/media/RemoteMediaRepository.dart';
 import 'package:menuboss/domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
 import 'package:menuboss/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
@@ -28,6 +31,12 @@ import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDevicesContentsUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/media/PatchMediaNameUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/media/PostCreateMediaFolderUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/media/PostMediaMoveUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistsUseCase.dart';
@@ -78,6 +87,14 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchPlaylistNameUseCase>(() => PatchPlaylistNameUseCase());
   GetIt.instance.registerLazySingleton<DelPlaylistUseCase>(() => DelPlaylistUseCase());
 
+  // media
+  GetIt.instance.registerLazySingleton<GetMediasUseCase>(() => GetMediasUseCase());
+  GetIt.instance.registerLazySingleton<GetMediaUseCase>(() => GetMediaUseCase());
+  GetIt.instance.registerLazySingleton<PostCreateMediaFolderUseCase>(() => PostCreateMediaFolderUseCase());
+  GetIt.instance.registerLazySingleton<PatchMediaNameUseCase>(() => PatchMediaNameUseCase());
+  GetIt.instance.registerLazySingleton<PostMediaMoveUseCase>(() => PostMediaMoveUseCase());
+  GetIt.instance.registerLazySingleton<DelMediaUseCase>(() => DelMediaUseCase());
+
   /// -------
   /// repository
   /// -------
@@ -86,6 +103,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteMeRepository>(() => RemoteMeRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteDeviceRepository>(() => RemoteDeviceRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemotePlaylistRepository>(() => RemotePlaylistRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteMediaRepository>(() => RemoteMediaRepositoryImpl());
 
   /// -------
   /// api
@@ -95,4 +113,5 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteMeApi>(() => RemoteMeApi());
   GetIt.instance.registerLazySingleton<RemoteDeviceApi>(() => RemoteDeviceApi());
   GetIt.instance.registerLazySingleton<RemotePlaylistApi>(() => RemotePlaylistApi());
+  GetIt.instance.registerLazySingleton<RemoteMediaApi>(() => RemoteMediaApi());
 }
