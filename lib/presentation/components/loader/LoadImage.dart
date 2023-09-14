@@ -14,11 +14,14 @@ class LoadImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CachedNetworkImage(
-      imageUrl: url.toString(),
-      placeholder: (context, url) => ImagePlaceholder(type: type),
-      errorWidget: (context, url, error) => ImagePlaceholder(type: type),
-      fit: BoxFit.cover,
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(4),
+      child: CachedNetworkImage(
+        imageUrl: url.toString(),
+        placeholder: (context, url) => ImagePlaceholder(type: type),
+        errorWidget: (context, url, error) => ImagePlaceholder(type: type),
+        fit: BoxFit.cover,
+      ),
     );
   }
 }

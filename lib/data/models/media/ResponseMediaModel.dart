@@ -39,6 +39,34 @@ class ResponseMediaModel {
 
   Map<String, dynamic> toJson() => _$ResponseMediaModelToJson(this);
 
+  ResponseMediaModel copyWith({
+    String? object,
+    String? mediaId,
+    String? name,
+    ResponseMediaPropertyInfo? type,
+    ResponseMediaProperty? property,
+    ResponseMediaFiles? files,
+    int? size,
+    int? count,
+    String? thumbnailUrl,
+    String? createdAt,
+    String? updatedAt,
+  }) {
+    return ResponseMediaModel(
+      object: object ?? this.object,
+      mediaId: mediaId ?? this.mediaId,
+      name: name ?? this.name,
+      type: type ?? this.type,
+      property: property ?? this.property,
+      files: files ?? this.files,
+      size: size ?? this.size,
+      count: count ?? this.count,
+      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      createdAt: createdAt ?? this.createdAt,
+      updatedAt: updatedAt ?? this.updatedAt,
+    );
+  }
+
   @override
   String toString() {
     return StringUtil.convertPrettyJson(toJson());

@@ -67,7 +67,6 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
 
   /// 미디어 폴더 생성
   void createFolder() {
-    final currentItems = (state as Success<List<ResponseMediaModel>>).value;
     state = Loading();
     _createMediaFolderUseCase.call().then((response) {
       if (response.status == 200) {
@@ -93,7 +92,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
           updatedAt: formattedDate,
         );
 
-        List<ResponseMediaModel> updateItems = [newFolder, ...currentItems];
+        List<ResponseMediaModel> updateItems = [newFolder, ..._currentItems];
         updateCurrentItems(updateItems);
         state = Success(updateItems);
       } else {
@@ -109,15 +108,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (response.status == 200) {
         final updatedItems = _currentItems.map((item) {
           if (item.mediaId == mediaId) {
-            return ResponseMediaModel(
-              object: item.object,
-              mediaId: item.mediaId,
-              name: newName,
-              type: item.type,
-              property: item.property,
-              createdAt: item.createdAt,
-              updatedAt: item.updatedAt,
-            );
+            return item.copyWith(name: newName, createdAt: item.createdAt, updatedAt: item.updatedAt);
           }
           return item;
         }).toList();

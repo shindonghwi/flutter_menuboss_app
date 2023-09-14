@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss/presentation/components/commons/MoreButton.dart';
+import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
@@ -41,9 +42,12 @@ class MediaItem extends HookConsumerWidget {
           height: 60,
         );
       case "image":
-        iconWidget = const ImagePlaceholder(type: ImagePlaceholderType.Small);
       case "video":
-        iconWidget = const ImagePlaceholder(type: ImagePlaceholderType.Small);
+        iconWidget = SizedBox(
+          width: 60,
+          height: 60,
+          child: LoadImage(url: item.thumbnailUrl, type: ImagePlaceholderType.Small),
+        );
     }
 
     return SizedBox(
