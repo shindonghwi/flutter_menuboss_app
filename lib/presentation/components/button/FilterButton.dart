@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
+import 'package:menuboss/domain/usecases/local/app/GetMediaFilterTypeUseCase.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -17,7 +19,14 @@ class FilterButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final filterText = useState(filterDescriptions[FilterType.NameAsc]);
+    final filterText = useState(filterDescriptions[FilterType.NewestFirst]);
+
+    useEffect(() {
+      GetIt.instance<GetMediaFilterTypeUseCase>().call().then((response) {
+        filterText.value = filterDescriptions[response];
+      });
+      return null;
+    }, []);
 
     return Container(
       constraints: const BoxConstraints(
@@ -33,6 +42,9 @@ class FilterButton extends HookWidget {
           onTap: () => CommonBottomSheet.showBottomSheet(
             context,
             child: BottomSheetFilterSelector(
+              checkedFilterType: FilterType.values.firstWhere(
+                (element) => filterDescriptions[element] == filterText.value,
+              ),
               onSelected: (FilterType type, String text) {
                 filterText.value = text;
                 onSelected(type, text);

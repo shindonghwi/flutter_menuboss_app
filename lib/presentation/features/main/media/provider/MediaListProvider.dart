@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/media/ResponseMediaProperty.dart';
 import 'package:menuboss/data/models/media/ResponseMediaPropertyInfo.dart';
+import 'package:menuboss/domain/usecases/local/app/PostMediaFilterTypeUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/PatchMediaNameUseCase.dart';
@@ -28,6 +29,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   final DelMediaUseCase _delMediaUseCase = GetIt.instance<DelMediaUseCase>();
   final PostCreateMediaFolderUseCase _createMediaFolderUseCase = GetIt.instance<PostCreateMediaFolderUseCase>();
   final PatchMediaNameUseCase _mediaNameUseCase = GetIt.instance<PatchMediaNameUseCase>();
+  final PostMediaFilterTypeUseCase _filterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
 
   /// 미디어 리스트 요청
   Future<void> requestGetMedias({int? delayed}) async {
@@ -136,7 +138,8 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   }
 
   /// 미디어 정렬 순서 변경
-  void changeFilterType(FilterType type) {
+  void changeFilterType(FilterType type) async {
+    await _filterTypeUseCase.call(type);
     _filterType = type;
     initPageInfo();
     requestGetMedias(delayed: 600);

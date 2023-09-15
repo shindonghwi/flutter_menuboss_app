@@ -13,6 +13,7 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
@@ -158,7 +159,10 @@ class _MediaContentList extends HookConsumerWidget {
                                 parameter: item,
                               ),
                             );
-                            mediaProvider.renameItem(item.mediaId, newName);
+
+                            if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                              mediaProvider.renameItem(item.mediaId, newName);
+                            }
                           }
                         },
                         child: Padding(

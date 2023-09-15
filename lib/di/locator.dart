@@ -18,7 +18,9 @@ import 'package:menuboss/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:menuboss/domain/repositories/remote/media/RemoteMediaRepository.dart';
 import 'package:menuboss/domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
 import 'package:menuboss/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
+import 'package:menuboss/domain/usecases/local/app/GetMediaFilterTypeUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
+import 'package:menuboss/domain/usecases/local/app/PostMediaFilterTypeUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
@@ -60,6 +62,8 @@ void initServiceLocator() {
   // app
   GetIt.instance.registerLazySingleton<GetLoginAccessTokenUseCase>(() => GetLoginAccessTokenUseCase());
   GetIt.instance.registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
+  GetIt.instance.registerLazySingleton<GetMediaFilterTypeUseCase>(() => GetMediaFilterTypeUseCase());
+  GetIt.instance.registerLazySingleton<PostMediaFilterTypeUseCase>(() => PostMediaFilterTypeUseCase());
 
   // auth
   GetIt.instance.registerLazySingleton<PostAppleSignInUseCase>(() => PostAppleSignInUseCase());

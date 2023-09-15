@@ -23,15 +23,18 @@ final Map<FilterType, String> filterParams = {
 };
 
 class BottomSheetFilterSelector extends HookWidget {
+  final FilterType checkedFilterType;
   final Function(FilterType, String) onSelected;
 
   const BottomSheetFilterSelector({
     Key? key,
+    required this.checkedFilterType,
     required this.onSelected,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    const filterTypeList = FilterType.values;
 
     return Container(
       margin: const EdgeInsets.only(top: 24),
@@ -39,11 +42,11 @@ class BottomSheetFilterSelector extends HookWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: filterDescriptions.entries.map((e) {
-            int index = FilterType.values.indexOf(e.key);
+            int index = filterTypeList.indexOf(e.key);
             String value = e.value;
             return Clickable(
               onPressed: () {
-                onSelected(FilterType.values[index], value);
+                onSelected(filterTypeList[index], value);
                 Navigator.pop(context);
               },
               child: Padding(
@@ -54,18 +57,19 @@ class BottomSheetFilterSelector extends HookWidget {
                     Text(
                       value,
                       style: getTextTheme(context).b1sb.copyWith(
-                        color: getColorScheme(context).colorGray900,
-                      ),
+                            color: getColorScheme(context).colorGray900,
+                          ),
                     ),
-                    SvgPicture.asset(
-                      "assets/imgs/icon_check_line.svg",
-                      width: 24,
-                      height: 24,
-                      colorFilter: ColorFilter.mode(
-                        getColorScheme(context).colorGray900,
-                        BlendMode.srcIn,
+                    if (checkedFilterType == filterTypeList[index])
+                      SvgPicture.asset(
+                        "assets/imgs/icon_check_line.svg",
+                        width: 24,
+                        height: 24,
+                        colorFilter: ColorFilter.mode(
+                          getColorScheme(context).colorGray900,
+                          BlendMode.srcIn,
+                        ),
                       ),
-                    ),
                   ],
                 ),
               ),
