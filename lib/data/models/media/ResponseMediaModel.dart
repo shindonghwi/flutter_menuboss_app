@@ -1,9 +1,11 @@
+import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponseMediaFiles.dart';
 import 'ResponseMediaProperty.dart';
 import 'ResponseMediaPropertyInfo.dart';
+import 'SimpleMediaContentModel.dart';
 
 part 'ResponseMediaModel.g.dart';
 
@@ -65,6 +67,22 @@ class ResponseMediaModel {
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
+  }
+
+  SimpleMediaContentModel toMapperMediaContentModel() {
+    final model = SimpleMediaContentModel(
+      object: object,
+      mediaId: mediaId,
+      name: name ?? "",
+      type: type?.code ?? "",
+      thumbnailUrl: thumbnailUrl,
+      size: size ?? 0,
+      count: count ?? 0,
+    );
+
+    debugPrint("model: ${model.toString()}");
+
+    return model;
   }
 
   @override
