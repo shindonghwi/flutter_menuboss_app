@@ -9,7 +9,7 @@ part of 'ResponseCanvasModel.dart';
 ResponseCanvasModel _$ResponseCanvasModelFromJson(Map<String, dynamic> json) =>
     ResponseCanvasModel(
       object: json['object'] as String,
-      canvasId: json['canvasId'] as int,
+      canvasId: json['canvasId'] as String,
       name: json['name'] as String?,
       imageUrl: json['imageUrl'] as String?,
       updatedAt: json['updatedAt'] as String?,

@@ -8,7 +8,7 @@ part 'ResponseCanvasModel.g.dart';
 @JsonSerializable()
 class ResponseCanvasModel {
   final String object;
-  final int canvasId;
+  final String canvasId;
   final String? name;
   final String? imageUrl;
   final String? updatedAt;
@@ -30,7 +30,7 @@ class ResponseCanvasModel {
   SimpleMediaContentModel toMapperMediaContentModel() {
     final model = SimpleMediaContentModel(
       object: object,
-      id: canvasId.toString(),
+      id: canvasId,
       name: name ?? "",
       type: "canvas",
       imageUrl: imageUrl,
