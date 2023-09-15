@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 part 'RequestPlaylistUpdateInfoContents.g.dart';
 
@@ -26,4 +27,9 @@ class RequestPlaylistUpdateInfoContents {
   }
 
   Map<String, dynamic> toJson() => _$RequestPlaylistUpdateInfoContentsToJson(this);
+
+  @override
+  String toString() {
+    return StringUtil.convertPrettyJson(toJson());
+  }
 }
