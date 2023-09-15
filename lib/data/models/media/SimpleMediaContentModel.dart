@@ -12,7 +12,7 @@ class SimpleMediaContentModel {
   final int? size;
   final int? count;
   final int? duration;
-  final String? thumbnailUrl;
+  final String? imageUrl;
 
   SimpleMediaContentModel({
     this.object,
@@ -22,7 +22,7 @@ class SimpleMediaContentModel {
     this.size = 0,
     this.count = 0,
     this.duration = 10,
-    this.thumbnailUrl,
+    this.imageUrl,
   });
 
   factory SimpleMediaContentModel.fromJson(Map<String, dynamic> json) => _$SimpleMediaContentModelFromJson(json);
@@ -37,7 +37,7 @@ class SimpleMediaContentModel {
     int? size,
     int? count,
     int? duration,
-    String? thumbnailUrl,
+    String? imageUrl,
   }) {
     return SimpleMediaContentModel(
       object: object ?? this.object,
@@ -47,7 +47,7 @@ class SimpleMediaContentModel {
       size: size ?? this.size,
       count: count ?? this.count,
       duration: duration ?? this.duration,
-      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 
@@ -66,7 +66,7 @@ class SimpleMediaContentModel {
         other.size == size &&
         other.count == count &&
         other.duration == duration &&
-        other.thumbnailUrl == thumbnailUrl;
+        other.imageUrl == imageUrl;
   }
 
   @override

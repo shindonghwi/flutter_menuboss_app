@@ -25,7 +25,6 @@ class PlaylistContents extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         items.value = [...contentItems];
         saveProvider.changeContents(items.value);
-
       });
       return null;
     }, [contentItems]);
@@ -64,7 +63,8 @@ class PlaylistContents extends HookConsumerWidget {
                 }
                 final item = items.value.removeAt(oldIndex);
                 items.value.insert(newIndex, item);
-                items.value = [...items.value]; // Trigger an update
+                items.value = [...items.value];
+                saveProvider.changeContents(items.value);
               },
             ),
           );

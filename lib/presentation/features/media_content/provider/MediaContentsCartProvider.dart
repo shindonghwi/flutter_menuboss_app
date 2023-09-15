@@ -13,15 +13,16 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
   final GetMediaUseCase _getMediaUseCase = GetIt.instance<GetMediaUseCase>();
 
   void addItem(SimpleMediaContentModel item) {
-    if (item.type?.toLowerCase() == "folder") {
-      _getMediaUseCase.call(item.id.toString()).then((response) {
-        if (response.status == 200) {
-          // response.data
-          // state = [...state, ...response.data?.toList() ?? []];
-        }
-      });
-    } else {
-      state = [...state, item];
+    switch(item.type?.toLowerCase()){
+      case "folder":
+        _getMediaUseCase.call(item.id.toString()).then((response) {
+          if (response.status == 200) {
+            // response.data
+            // state = [...state, ...response.data?.toList() ?? []];
+          }
+        });
+      default:
+        state = [...state, item];
     }
   }
 

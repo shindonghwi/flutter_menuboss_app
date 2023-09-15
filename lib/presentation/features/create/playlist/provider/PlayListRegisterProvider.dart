@@ -23,4 +23,8 @@ class PlayListRegisterProviderNotifier extends StateNotifier<UIState<String?>> {
       }
     });
   }
+
+  void init(){
+    state = Idle();
+  }
 }

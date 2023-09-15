@@ -33,7 +33,7 @@ class ResponseCanvasModel {
       id: canvasId.toString(),
       name: name ?? "",
       type: "canvas",
-      thumbnailUrl: imageUrl,
+      imageUrl: imageUrl,
     );
 
     debugPrint("model: ${model.toString()}");

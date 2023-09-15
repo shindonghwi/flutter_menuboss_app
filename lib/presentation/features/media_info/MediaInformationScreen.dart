@@ -123,7 +123,7 @@ class _FileImage extends StatelessWidget {
           aspectRatio: 342 / 200,
           child: LoadImage(
             tag: item?.mediaId.toString(),
-            url: item?.thumbnailUrl,
+            url: item?.property?.imageUrl,
             type: ImagePlaceholderType.AUTO_16x9,
           ),
         ),

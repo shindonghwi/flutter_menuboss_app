@@ -55,7 +55,7 @@ class MediaItemAdd extends HookConsumerWidget {
         iconWidget = SizedBox(
           width: 60,
           height: 60,
-          child: LoadImage(url: item.thumbnailUrl, type: ImagePlaceholderType.Small),
+          child: LoadImage(url: item.imageUrl, type: ImagePlaceholderType.Small),
         );
     }
 

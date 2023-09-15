@@ -24,7 +24,6 @@ ResponseMediaModel _$ResponseMediaModelFromJson(Map<String, dynamic> json) =>
           : ResponseMediaFiles.fromJson(json['files'] as Map<String, dynamic>),
       size: json['size'] as int? ?? 0,
       count: json['count'] as int? ?? 0,
-      thumbnailUrl: json['thumbnailUrl'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
     );
@@ -39,7 +38,6 @@ Map<String, dynamic> _$ResponseMediaModelToJson(ResponseMediaModel instance) =>
       'files': instance.files,
       'size': instance.size,
       'count': instance.count,
-      'thumbnailUrl': instance.thumbnailUrl,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,
     };

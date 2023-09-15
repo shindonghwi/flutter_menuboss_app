@@ -5,13 +5,13 @@ part 'ResponseMediaFiles.g.dart';
 
 @JsonSerializable()
 class ResponseMediaFiles {
-  final String object;
-  final String mediaId;
-  final String type;
-  final String name;
-  final int size;
-  final String thumbnailUrl;
-  final String createdAt;
+  final String? object;
+  final String? mediaId;
+  final String? type;
+  final String? name;
+  final int? size;
+  final String? thumbnailUrl;
+  final String? createdAt;
 
   ResponseMediaFiles({
     required this.object,

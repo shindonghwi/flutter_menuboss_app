@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
@@ -19,7 +18,6 @@ class ResponseMediaModel {
   final ResponseMediaFiles? files;
   final int? size;
   final int? count;
-  final String? thumbnailUrl;
   final String? createdAt;
   final String? updatedAt;
 
@@ -32,7 +30,6 @@ class ResponseMediaModel {
     this.files,
     this.size = 0,
     this.count = 0,
-    this.thumbnailUrl,
     this.createdAt,
     this.updatedAt,
   });
@@ -50,7 +47,6 @@ class ResponseMediaModel {
     ResponseMediaFiles? files,
     int? size,
     int? count,
-    String? thumbnailUrl,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -63,7 +59,6 @@ class ResponseMediaModel {
       files: files ?? this.files,
       size: size ?? this.size,
       count: count ?? this.count,
-      thumbnailUrl: thumbnailUrl ?? this.thumbnailUrl,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -75,9 +70,10 @@ class ResponseMediaModel {
       id: mediaId,
       name: name ?? "",
       type: type?.code ?? "",
-      thumbnailUrl: thumbnailUrl,
-      size: size ?? 0,
-      count: count ?? 0,
+      imageUrl: property?.imageUrl ?? "",
+      duration: property?.duration ?? 10,
+      size: property?.size ,
+      count: count,
     );
     return model;
   }

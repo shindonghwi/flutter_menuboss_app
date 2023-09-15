@@ -16,7 +16,7 @@ SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
       size: json['size'] as int? ?? 0,
       count: json['count'] as int? ?? 0,
       duration: json['duration'] as int? ?? 10,
-      thumbnailUrl: json['thumbnailUrl'] as String?,
+      imageUrl: json['imageUrl'] as String?,
     );
 
 Map<String, dynamic> _$SimpleMediaContentModelToJson(
@@ -29,5 +29,5 @@ Map<String, dynamic> _$SimpleMediaContentModelToJson(
       'size': instance.size,
       'count': instance.count,
       'duration': instance.duration,
-      'thumbnailUrl': instance.thumbnailUrl,
+      'imageUrl': instance.imageUrl,
     };

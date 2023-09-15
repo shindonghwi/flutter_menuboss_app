@@ -9,7 +9,6 @@ import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.da
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupChangeDuration.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
-import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -29,6 +28,8 @@ class PlaylistContentItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaCartProvider = ref.read(MediaContentsCartProvider.notifier);
+    final type = item.type?.toLowerCase();
+    final isAvailableChangeDuration = !(type == "video" || type == "folder");
 
     return Container(
       width: double.infinity,
@@ -62,7 +63,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                         width: 60,
                         height: 60,
                         child: LoadImage(
-                          url: item.thumbnailUrl,
+                          url: item.imageUrl,
                           type: ImagePlaceholderType.Small,
                         ),
                       ),
@@ -119,8 +120,8 @@ class PlaylistContentItem extends HookConsumerWidget {
           GestureDetector(
             onLongPress: () {},
             child: MoreButton(
-              items: const [
-                ModifyType.ChangeDuration,
+              items: [
+                if (isAvailableChangeDuration) ModifyType.ChangeDuration,
                 ModifyType.Delete,
               ],
               onSelected: (type, text) {

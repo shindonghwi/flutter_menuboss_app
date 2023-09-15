@@ -8,13 +8,13 @@ part of 'ResponseMediaFiles.dart';
 
 ResponseMediaFiles _$ResponseMediaFilesFromJson(Map<String, dynamic> json) =>
     ResponseMediaFiles(
-      object: json['object'] as String,
-      mediaId: json['mediaId'] as String,
-      type: json['type'] as String,
-      name: json['name'] as String,
-      size: json['size'] as int,
-      thumbnailUrl: json['thumbnailUrl'] as String,
-      createdAt: json['createdAt'] as String,
+      object: json['object'] as String?,
+      mediaId: json['mediaId'] as String?,
+      type: json['type'] as String?,
+      name: json['name'] as String?,
+      size: json['size'] as int?,
+      thumbnailUrl: json['thumbnailUrl'] as String?,
+      createdAt: json['createdAt'] as String?,
     );
 
 Map<String, dynamic> _$ResponseMediaFilesToJson(ResponseMediaFiles instance) =>

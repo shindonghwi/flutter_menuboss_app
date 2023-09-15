@@ -10,6 +10,7 @@ import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
 import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -87,9 +88,12 @@ class _PlaylistContentList extends HookConsumerWidget {
           RoutingScreen.CreatePlaylist.route,
         ),
       );
-
-      if (isRegistered) {
-        playlistProvider.requestGetPlaylists();
+      try{
+        if (isRegistered) {
+          playlistProvider.requestGetPlaylists();
+        }
+      }catch(e){
+        debugPrint(e.toString());
       }
     }
 
@@ -102,7 +106,17 @@ class _PlaylistContentList extends HookConsumerWidget {
                   itemCount: items.length,
                   itemBuilder: (context, index) {
                     final item = items[index];
-                    return PlayListItem(item: item);
+                    return ClickableScale(
+                      child: PlayListItem(item: item),
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          nextSlideHorizontalScreen(
+                            RoutingScreen.CreatePlaylist.route,
+                          ),
+                        );
+                      }
+                    );
                   },
                 ),
                 Container(
