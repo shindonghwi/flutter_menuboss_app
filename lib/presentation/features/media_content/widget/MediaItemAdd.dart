@@ -1,23 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
+import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import 'package:menuboss/presentation/components/commons/MoreButton.dart';
+import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
-import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
-import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
-import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
-import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 class MediaItemAdd extends HookConsumerWidget {
-  final MediaModel item;
+  final SimpleMediaContentModel item;
   final VoidCallback onFolderTap;
 
   const MediaItemAdd({
@@ -28,62 +24,80 @@ class MediaItemAdd extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Widget iconWidget;
+    Widget? iconWidget;
+    bool isFolderType = false;
 
-    switch (item.type) {
-      case MediaType.FOLDER:
+    switch (item.type.toLowerCase()) {
+      case "folder":
         iconWidget = SvgPicture.asset(
           "assets/imgs/icon_folder.svg",
           width: 60,
           height: 60,
         );
-      case MediaType.IMAGE:
-        iconWidget = const ImagePlaceholder(type: ImagePlaceholderType.Small);
-      case MediaType.VIDEO:
-        iconWidget = const ImagePlaceholder(type: ImagePlaceholderType.Small);
+      default:
+        iconWidget = SizedBox(
+          width: 60,
+          height: 60,
+          child: LoadImage(url: item.thumbnailUrl, type: ImagePlaceholderType.Small),
+        );
+    }
+
+    final code = item.type.toLowerCase();
+    String content = "";
+    if (code == "image" || code == "video") {
+      isFolderType = false;
+      content = "$code - (${StringUtil.formatBytesToMegabytes(item.size)})";
+    } else if (code == "folder") {
+      isFolderType = true;
+      content = "${item.count} File (${StringUtil.formatBytesToMegabytes(item.size)})";
     }
 
     return Clickable(
-      onPressed: item.type == MediaType.FOLDER ? () => onFolderTap.call() : null,
+      onPressed: isFolderType ? () => onFolderTap.call() : null,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
-        child: SizedBox(
-          width: double.infinity,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Expanded(
+              child: Row(
                 children: [
-                  iconWidget,
+                  if (iconWidget != null) iconWidget,
                   const SizedBox(width: 16),
-                  Column(
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        item.fileName,
-                        style: getTextTheme(context).b1sb.copyWith(
-                              color: getColorScheme(context).colorGray900,
-                            ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        "${item.folderCount} File (${item.size})",
-                        style: getTextTheme(context).b1sb.copyWith(
-                              color: getColorScheme(context).colorGray500,
-                            ),
-                      ),
-                    ],
+                  Expanded(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          item.name,
+                          style: getTextTheme(context).b1sb.copyWith(
+                                color: getColorScheme(context).colorGray900,
+                              ),
+                        ),
+                        !CollectionUtil.isNullEmptyFromString(content)
+                            ? Padding(
+                                padding: const EdgeInsets.only(top: 4.0),
+                                child: Text(
+                                  content,
+                                  style: getTextTheme(context).b3m.copyWith(
+                                        color: getColorScheme(context).colorGray500,
+                                      ),
+                                ),
+                              )
+                            : const SizedBox(),
+                      ],
+                    ),
                   ),
                 ],
               ),
-              PrimaryFilledButton.extraSmallRound100(
-                content: getAppLocalizations(context).common_add,
-                isActivated: true,
-              )
-            ],
-          ),
+            ),
+            PrimaryFilledButton.extraSmallRound100(
+              content: getAppLocalizations(context).common_add,
+              isActivated: true,
+            )
+          ],
         ),
       ),
     );

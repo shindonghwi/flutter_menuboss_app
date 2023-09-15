@@ -6,7 +6,7 @@ part 'SimpleMediaContentModel.g.dart';
 
 class SimpleMediaContentModel {
   final String object;
-  final String mediaId;
+  final String id;
   final String name;
   final String type;
   final int size;
@@ -15,7 +15,7 @@ class SimpleMediaContentModel {
 
   SimpleMediaContentModel({
     required this.object,
-    required this.mediaId,
+    required this.id,
     required this.name,
     required this.type,
     this.size = 0,

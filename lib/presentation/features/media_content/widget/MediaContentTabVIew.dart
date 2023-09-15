@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/features/media_content/provider/MediaContentsProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class MediaContentTabView extends StatelessWidget {
+class MediaContentTabView extends HookConsumerWidget {
   final int currentIndex;
   final Function(int index) onTap;
 
@@ -15,11 +18,22 @@ class MediaContentTabView extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final mediaContentsProvider = ref.read(MediaContentsProvider.notifier);
+
     final mediaTabTextColor = currentIndex <= 1 ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
     final mediaTabDividerColor = currentIndex <= 1 ? getColorScheme(context).colorGray900 : Colors.transparent;
     final canvasTabTextColor = currentIndex > 1 ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
     final canvasTabDividerColor = currentIndex > 1 ? getColorScheme(context).colorGray900 : Colors.transparent;
+
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        mediaContentsProvider.requestGetMedias(); // 미디어 목록 호출
+      });
+      return null;
+    },[]);
 
     return Row(
       children: [

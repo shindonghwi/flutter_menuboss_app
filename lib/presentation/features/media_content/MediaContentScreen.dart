@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
-import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/features/media_content/widget/MediaContentTabVIew.dart';
 import 'package:menuboss/presentation/features/media_content/widget/MediaTabCanvas.dart';
@@ -21,9 +20,7 @@ class MediaContentScreen extends HookWidget {
     final pageController = usePageController(initialPage: currentIndex.value);
 
     return BaseScaffold(
-      appBar: TopBarIconTitleNone(
-        content: getAppLocalizations(context).media_content_title,
-      ),
+      appBar: TopBarIconTitleNone(content: getAppLocalizations(context).media_content_title),
       body: Column(
         children: [
           MediaContentTabView(
@@ -63,16 +60,22 @@ class MediaContentScreen extends HookWidget {
                   MediaTab(
                     onFolderTap: () {
                       currentIndex.value = 1;
-                      pageController.animateToPage(1,
-                          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      pageController.animateToPage(
+                        1,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                     },
                   ),
                   MediaTabFolder(
                     pageController: pageController,
                     onPressed: () {
                       currentIndex.value = 0;
-                      pageController.animateToPage(0,
-                          duration: const Duration(milliseconds: 300), curve: Curves.easeInOut);
+                      pageController.animateToPage(
+                        0,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                      );
                     },
                   ),
                   const MediaTabCanvas(),

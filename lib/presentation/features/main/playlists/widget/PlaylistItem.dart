@@ -14,12 +14,10 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 class PlayListItem extends HookConsumerWidget {
   final ResponsePlaylistModel item;
-  final GlobalKey<AnimatedListState> listKey;
 
   const PlayListItem({
     super.key,
     required this.item,
-    required this.listKey,
   });
 
   @override

@@ -1,13 +1,14 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaModel.dart';
-import 'package:menuboss/presentation/features/main/media/model/MediaType.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/features/media_content/provider/MediaContentsProvider.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 
 import 'MediaItemAdd.dart';
 
-class MediaTab extends HookWidget {
+class MediaTab extends HookConsumerWidget {
   final VoidCallback onFolderTap;
 
   const MediaTab({
@@ -16,48 +17,71 @@ class MediaTab extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     useAutomaticKeepAlive();
 
-    final random = Random();
-    final items = useState<List<MediaModel>>([]);
+    final mediaContents = useState<List<SimpleMediaContentModel>?>(null);
+    final mediaContentsState = ref.watch(MediaContentsProvider);
 
     useEffect(() {
-      // 랜덤으로 아이템 생성
-      void generateItems(int count) {
-        final typeList = [MediaType.FOLDER, MediaType.IMAGE, MediaType.VIDEO];
-        for (int i = 0; i < count; i++) {
-          MediaType type = typeList[random.nextInt(typeList.length)];
-
-          switch (type) {
-            case MediaType.FOLDER:
-              final size = random.nextInt(10);
-              items.value.add(MediaModel(MediaType.FOLDER, "New folder $i", 1 + random.nextInt(10), "${size}MB"));
-              break;
-            case MediaType.IMAGE:
-              final size = (0.01 + random.nextDouble() * (10.0 - 0.01)).toStringAsFixed(1);
-              items.value.add(MediaModel(MediaType.IMAGE, "New Image $i", 1 + random.nextInt(10), "${size}MB"));
-              break;
-            case MediaType.VIDEO:
-              final size = (0.01 + random.nextDouble() * (10.0 - 0.01)).toStringAsFixed(1);
-              items.value.add(MediaModel(MediaType.VIDEO, "New Video $i", 1 + random.nextInt(10), "${size}MB"));
-              break;
-          }
-        }
+      void handleUiStateChange() async {
+        await Future(() {
+          mediaContentsState.when(
+            success: (event) {
+              mediaContents.value = event.value;
+            },
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+          );
+        });
       }
 
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        generateItems(10);
+      handleUiStateChange();
+      return null;
+    }, [mediaContentsState]);
+
+    return Stack(
+      children: [
+        mediaContents.value == null
+            ? mediaContentsState is Success<List<SimpleMediaContentModel>>
+                ? _SimpleMediaList(items: mediaContentsState.value)
+                : const SizedBox()
+            : _SimpleMediaList(items: mediaContents.value!)
+      ],
+    );
+  }
+}
+
+class _SimpleMediaList extends HookConsumerWidget {
+  final List<SimpleMediaContentModel> items;
+
+  const _SimpleMediaList({
+    super.key,
+    required this.items,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaContentsProvider = ref.read(MediaContentsProvider.notifier);
+    final scrollController = useScrollController(keepScrollOffset: true);
+
+    useEffect(() {
+      scrollController.addListener(() {
+        if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
+          mediaContentsProvider.requestGetMedias();
+        }
       });
       return null;
     }, []);
 
-    return ListView.builder(
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-      itemCount: items.value.length,
-      itemBuilder: (context, index) {
-        return MediaItemAdd(item: items.value[index], onFolderTap: onFolderTap);
-      },
+    return SafeArea(
+      child: ListView.builder(
+        controller: scrollController,
+        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          return MediaItemAdd(item: items[index], onFolderTap: () {});
+        },
+      ),
     );
   }
 }

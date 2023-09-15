@@ -72,7 +72,7 @@ class ResponseMediaModel {
   SimpleMediaContentModel toMapperMediaContentModel() {
     final model = SimpleMediaContentModel(
       object: object,
-      mediaId: mediaId,
+      id: mediaId,
       name: name ?? "",
       type: type?.code ?? "",
       thumbnailUrl: thumbnailUrl,

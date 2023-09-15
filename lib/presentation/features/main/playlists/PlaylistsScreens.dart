@@ -20,6 +20,7 @@ class PlaylistsScreens extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final playlist = useState<List<ResponsePlaylistModel>?>(null);
     final playlistState = ref.watch(PlayListProvider);
     final playlistProvider = ref.read(PlayListProvider.notifier);
 
@@ -34,6 +35,9 @@ class PlaylistsScreens extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           playlistState.when(
+            success: (event) {
+              playlist.value = event.value;
+            },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -46,13 +50,16 @@ class PlaylistsScreens extends HookConsumerWidget {
     return SafeArea(
       child: Stack(
         children: [
-          if (playlistState is Success<List<ResponsePlaylistModel>>)
-            Column(
-              children: [
-                TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_playlists),
-                _PlaylistContentList(items: playlistState.value)
-              ],
-            ),
+          Column(
+            children: [
+              TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_playlists),
+              playlist.value == null
+                  ? playlistState is Success<List<ResponsePlaylistModel>>
+                      ? _PlaylistContentList(items: playlistState.value)
+                      : const SizedBox()
+                  : _PlaylistContentList(items: playlist.value!),
+            ],
+          ),
           if (playlistState is Loading) const LoadingView(),
         ],
       ),
@@ -70,7 +77,7 @@ class _PlaylistContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = GlobalKey<AnimatedListState>();
+    final scrollController = useScrollController(keepScrollOffset: true);
 
     void goToCreatePlaylist() {
       Navigator.push(
@@ -85,22 +92,12 @@ class _PlaylistContentList extends HookConsumerWidget {
         ? Expanded(
             child: Stack(
               children: [
-                AnimatedList(
-                  key: listKey,
-                  initialItemCount: items.length,
-                  padding: const EdgeInsets.only(bottom: 80),
-                  itemBuilder: (context, index, animation) {
+                ListView.builder(
+                  controller: scrollController,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
                     final item = items[index];
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, -0.15),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: FadeTransition(
-                        opacity: animation,
-                        child: PlayListItem(item: item, listKey: listKey),
-                      ),
-                    );
+                    return PlayListItem(item: item);
                   },
                 ),
                 Container(

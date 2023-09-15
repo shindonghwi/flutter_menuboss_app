@@ -6,11 +6,9 @@ part of 'SimpleMediaContentModel.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
-        Map<String, dynamic> json) =>
-    SimpleMediaContentModel(
+SimpleMediaContentModel _$SimpleMediaContentModelFromJson(Map<String, dynamic> json) => SimpleMediaContentModel(
       object: json['object'] as String,
-      mediaId: json['mediaId'] as String,
+      id: json['id'] as String,
       name: json['name'] as String,
       type: json['type'] as String,
       size: json['size'] as int? ?? 0,
@@ -18,11 +16,9 @@ SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
       thumbnailUrl: json['thumbnailUrl'] as String?,
     );
 
-Map<String, dynamic> _$SimpleMediaContentModelToJson(
-        SimpleMediaContentModel instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$SimpleMediaContentModelToJson(SimpleMediaContentModel instance) => <String, dynamic>{
       'object': instance.object,
-      'mediaId': instance.mediaId,
+      'id': instance.id,
       'name': instance.name,
       'type': instance.type,
       'size': instance.size,
