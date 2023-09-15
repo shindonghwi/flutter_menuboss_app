@@ -7,6 +7,7 @@ import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dar
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../models/playlist/ResponsePlaylistCreate.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
 
@@ -66,7 +67,7 @@ class RemotePlaylistApi {
 
   /// 플레이 리스트 등록
   /// return playlistId
-  Future<ApiResponse<ResponsePlaylistModel>> postPlaylist(RequestPlaylistUpdateInfoModel data) async {
+  Future<ApiResponse<ResponsePlaylistCreate>> postPlaylist(RequestPlaylistUpdateInfoModel data) async {
     final response = await Service.postApi(
       type: ServiceType.Playlist,
       endPoint: null,
@@ -83,7 +84,7 @@ class RemotePlaylistApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-        (json) => ResponsePlaylistModel.fromJson(json),
+        (json) => ResponsePlaylistCreate.fromJson(json),
       );
     }
   }

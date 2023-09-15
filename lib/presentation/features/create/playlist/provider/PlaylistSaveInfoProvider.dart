@@ -25,11 +25,13 @@ final PlaylistSaveInfoProvider =
 
 class PlaylistSaveInfoProviderNotifier extends StateNotifier<RequestPlaylistUpdateInfoModel> {
   PlaylistSaveInfoProviderNotifier()
-      : super(RequestPlaylistUpdateInfoModel(
-          name: "",
-          property: RequestPlaylistUpdateInfoProperty(),
-          contents: [],
-        ));
+      : super(
+          RequestPlaylistUpdateInfoModel(
+            name: "",
+            property: RequestPlaylistUpdateInfoProperty(),
+            contents: [],
+          ),
+        );
 
   /// 이름 변경
   void changeName(String name) {
@@ -42,7 +44,7 @@ class PlaylistSaveInfoProviderNotifier extends StateNotifier<RequestPlaylistUpda
   }
 
   /// 스케일 변경
-  void changeScale(PlaylistSettingType type) {
+  void changeFill(PlaylistSettingType type) {
     state = state.copyWith(property: state.property.copyWith(fill: playListSaveParams[type]!));
   }
 
@@ -59,7 +61,7 @@ class PlaylistSaveInfoProviderNotifier extends StateNotifier<RequestPlaylistUpda
   }
 
   /// 상태 초기화
-  void init(){
+  void init() {
     state = RequestPlaylistUpdateInfoModel(
       name: "",
       property: RequestPlaylistUpdateInfoProperty(),

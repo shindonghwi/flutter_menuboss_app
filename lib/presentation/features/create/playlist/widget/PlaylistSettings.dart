@@ -11,7 +11,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-import '../provider/PlaylistSettingInfoProvider/PlaylistSaveInfoProvider.dart';
+import '../provider/PlaylistSaveInfoProvider.dart';
 
 class PlaylistSettings extends HookWidget {
   const PlaylistSettings({
@@ -147,8 +147,8 @@ class _SettingContents extends HookConsumerWidget {
                   iconPath: "assets/imgs/icon_fit.svg",
                   iconText: getAppLocalizations(context).common_fit,
                   onPressed: () {
-                    saveProvider.changeDirection(PlaylistSettingType.Fit);
-                    directionType.value = PlaylistSettingType.Fit;
+                    saveProvider.changeFill(PlaylistSettingType.Fit);
+                    scaleType.value = PlaylistSettingType.Fit;
                   },
                   isChecked: scaleType.value == PlaylistSettingType.Fit,
                 ),
@@ -157,8 +157,8 @@ class _SettingContents extends HookConsumerWidget {
                   iconPath: "assets/imgs/icon_fill.svg",
                   iconText: getAppLocalizations(context).common_fill,
                   onPressed: () {
-                    saveProvider.changeDirection(PlaylistSettingType.Fill);
-                    directionType.value = PlaylistSettingType.Fill;
+                    saveProvider.changeFill(PlaylistSettingType.Fill);
+                    scaleType.value = PlaylistSettingType.Fill;
                   },
                   isChecked: scaleType.value == PlaylistSettingType.Fill,
                 ),

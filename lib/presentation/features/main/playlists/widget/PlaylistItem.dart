@@ -35,7 +35,11 @@ class PlayListItem extends HookConsumerWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                LoadImage(url: item.property?.imageUrl, type: ImagePlaceholderType.Normal),
+                SizedBox(
+                  width: 80,
+                  height: 80,
+                  child: LoadImage(url: item.property?.imageUrl, type: ImagePlaceholderType.Normal),
+                ),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(

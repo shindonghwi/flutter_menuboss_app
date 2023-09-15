@@ -77,15 +77,20 @@ class _PlaylistContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final playlistProvider = ref.read(PlayListProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
-    void goToCreatePlaylist() {
-      Navigator.push(
+    void goToCreatePlaylist() async {
+      bool isRegistered = await Navigator.push(
         context,
         nextSlideVerticalScreen(
           RoutingScreen.CreatePlaylist.route,
         ),
       );
+
+      if (isRegistered) {
+        playlistProvider.requestGetPlaylists();
+      }
     }
 
     return items.isNotEmpty

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistCreate.dart';
 
 import '../../../../data/models/device/ResponseDeviceModel.dart';
 import '../../../../data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
@@ -15,7 +16,7 @@ abstract class RemotePlaylistRepository {
   Future<ApiResponse<void>> getPlaylist(int playlistId);
 
   /// 플레이 리스트 등록
-  Future<ApiResponse<ResponsePlaylistModel>> postPlaylist(RequestPlaylistUpdateInfoModel data);
+  Future<ApiResponse<ResponsePlaylistCreate>> postPlaylist(RequestPlaylistUpdateInfoModel data);
 
   /// 플레이 리스트 정보 업데이트
   Future<ApiResponse<void>> patchPlaylist(int playlistId, RequestPlaylistUpdateInfoModel data);

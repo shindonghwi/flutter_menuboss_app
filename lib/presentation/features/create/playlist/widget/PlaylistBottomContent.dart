@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSettingInfoProvider/PlaylistSaveInfoProvider.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/PlayListRegisterProvider.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -15,6 +16,7 @@ class PlaylistBottomContent extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaCart = ref.watch(MediaContentsCartProvider);
+    final playListRegisterProvider = ref.watch(PlayListRegisterProvider.notifier);
     final playlistSaveInfo = ref.watch(PlaylistSaveInfoProvider);
 
     return mediaCart.isNotEmpty
@@ -42,9 +44,9 @@ class PlaylistBottomContent extends HookConsumerWidget {
                       fit: FlexFit.tight,
                       flex: 1,
                       child: PrimaryFilledButton.largeRound8(
-                        onPressed: () {},
+                        onPressed: () => playListRegisterProvider.registerPlaylist(playlistSaveInfo),
                         content: getAppLocalizations(context).common_save,
-                        isActivated: playlistSaveInfo!.isCreateAvailable(),
+                        isActivated: playlistSaveInfo.isCreateAvailable(),
                       ),
                     ),
                   ],
@@ -52,6 +54,6 @@ class PlaylistBottomContent extends HookConsumerWidget {
               ),
             ),
           )
-        : SizedBox();
+        : const SizedBox();
   }
 }
