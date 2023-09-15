@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss/presentation/components/commons/MoreButton.dart';
@@ -10,14 +9,13 @@ import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.da
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
-import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-class MediaItem extends HookConsumerWidget {
+class MediaItem extends HookWidget {
   final ResponseMediaModel item;
   final Function(String) onRename;
   final VoidCallback onRemove;
@@ -30,8 +28,7 @@ class MediaItem extends HookConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final mediaProvider = ref.read(MediaListProvider.notifier);
+  Widget build(BuildContext context) {
     Widget? iconWidget;
 
     switch (item.type?.code.toLowerCase()) {
@@ -46,7 +43,11 @@ class MediaItem extends HookConsumerWidget {
         iconWidget = SizedBox(
           width: 60,
           height: 60,
-          child: LoadImage(url: item.thumbnailUrl, type: ImagePlaceholderType.Small),
+          child: LoadImage(
+            tag: item.mediaId.toString(),
+            url: item.thumbnailUrl,
+            type: ImagePlaceholderType.Small,
+          ),
         );
     }
 
@@ -74,11 +75,7 @@ class MediaItem extends HookConsumerWidget {
               if (type == ModifyType.Delete) {
                 CommonPopup.showPopup(
                   context,
-                  child: PopupDelete(
-                    onClicked: (isCompleted) {
-                      if (isCompleted) onRemove.call();
-                    },
-                  ),
+                  child: PopupDelete(onClicked: () => onRemove.call()),
                 );
               } else if (type == ModifyType.Rename) {
                 CommonPopup.showPopup(

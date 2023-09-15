@@ -4,6 +4,7 @@ import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 
 import '../../../../data/models/media/ResponseMediaCreate.dart';
+import '../../../../data/models/media/ResponseMediaInfoModel.dart';
 import '../../../../data/models/media/ResponseMediaModel.dart';
 
 abstract class RemoteMediaRepository {
@@ -16,7 +17,7 @@ abstract class RemoteMediaRepository {
   });
 
   /// 미디어 정보 조회
-  Future<ApiResponse<ResponseMediaModel>> getMedia(String mediaId);
+  Future<ApiResponse<ResponseMediaInfoModel>> getMedia(String mediaId);
 
   /// 폴더 생성
   Future<ApiResponse<ResponseMediaCreate>> postCreateMediaFolder();

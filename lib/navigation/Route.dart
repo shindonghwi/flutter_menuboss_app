@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
@@ -52,7 +53,8 @@ enum RoutingScreen {
     } else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.MediaInfo.route) {
-      return const MediaInformationScreen();
+      ResponseMediaModel model = parameter;
+      return MediaInformationScreen(item: model);
     } else if (route == RoutingScreen.MediaContent.route) {
       return const MediaContentScreen();
     } else if (route == RoutingScreen.CreatePlaylist.route) {

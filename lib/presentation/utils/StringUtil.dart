@@ -14,5 +14,10 @@ class StringUtil{
     return '${megabytes.toStringAsFixed(1)}MB';
   }
 
+  /// url에서 파일 확장자를 추출하여 반환합니다.
+  static String? extractFileExtensionFromUrl(String? url) {
+    return url?.split('.').last;
+  }
+
 
 }

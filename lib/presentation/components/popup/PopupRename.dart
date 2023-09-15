@@ -54,7 +54,6 @@ class PopupRename extends HookWidget {
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);
-                    onClicked?.call("");
                   },
                 ),
               ),

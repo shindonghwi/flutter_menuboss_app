@@ -6,7 +6,6 @@ import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
-import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -123,17 +122,12 @@ class PlaylistContentItem extends HookWidget {
                     ModifyType.Delete,
                   ],
                   onSelected: (type, text) {
-                    if (type == ModifyType.ChangeDuration){
-
-                    }else if (type == ModifyType.Delete){
+                    if (type == ModifyType.ChangeDuration) {
+                    } else if (type == ModifyType.Delete) {
                       CommonPopup.showPopup(
                         context,
                         child: PopupDelete(
-                          onClicked: (isCompleted) {
-                            if (isCompleted) {
-                              isDeleting.value = true;
-                            }
-                          },
+                          onClicked: () => isDeleting.value = true,
                         ),
                       );
                     }

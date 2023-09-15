@@ -6,6 +6,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 
 import '../../../../domain/repositories/remote/media/RemoteMediaRepository.dart';
 import '../../../models/base/ApiResponse.dart';
+import '../../../models/media/ResponseMediaInfoModel.dart';
 
 class RemoteMediaRepositoryImpl implements RemoteMediaRepository {
   RemoteMediaRepositoryImpl();
@@ -19,7 +20,7 @@ class RemoteMediaRepositoryImpl implements RemoteMediaRepository {
   }
 
   @override
-  Future<ApiResponse<ResponseMediaModel>> getMedia(String mediaId) {
+  Future<ApiResponse<ResponseMediaInfoModel>> getMedia(String mediaId) {
     return _remoteMediaApi.getMedia(mediaId);
   }
 

@@ -3,11 +3,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FilterButton.dart';
 import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -138,24 +141,40 @@ class _MediaContentList extends HookConsumerWidget {
           ),
           Expanded(
             child: items.isNotEmpty
-                ? Container(
-                    padding: const EdgeInsets.fromLTRB(24, 0, 12, 0),
-                    child: ListView.builder(
-                      controller: scrollController,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        return MediaItem(
-                          item: item,
-                          onRemove: () {
-                            mediaProvider.removeItem([item.mediaId]);
-                          },
-                          onRename: (newName) {
+                ? ListView.builder(
+                    controller: scrollController,
+                    itemCount: items.length,
+                    itemBuilder: (context, index) {
+                      final item = items[index];
+                      final isFolderType = item.type?.code.toLowerCase() == "folder";
+                      return ClickableScale(
+                        onPressed: () async {
+                          if (isFolderType) {
+                          } else {
+                            final newName = await Navigator.push(
+                              context,
+                              nextSlideHorizontalScreen(
+                                RoutingScreen.MediaInfo.route,
+                                parameter: item,
+                              ),
+                            );
                             mediaProvider.renameItem(item.mediaId, newName);
-                          },
-                        );
-                      },
-                    ),
+                          }
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(24, 0, 12, 0),
+                          child: MediaItem(
+                            item: item,
+                            onRemove: () {
+                              mediaProvider.removeItem([item.mediaId]);
+                            },
+                            onRename: (newName) {
+                              mediaProvider.renameItem(item.mediaId, newName);
+                            },
+                          ),
+                        ),
+                      );
+                    },
                   )
                 : BlankMessage(
                     type: BlankMessageType.UPLOAD_FILE,
@@ -167,4 +186,3 @@ class _MediaContentList extends HookConsumerWidget {
     );
   }
 }
-

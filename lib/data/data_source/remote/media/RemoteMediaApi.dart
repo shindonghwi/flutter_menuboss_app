@@ -7,6 +7,7 @@ import 'package:menuboss/data/models/media/ResponseMediaCreate.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../models/media/ResponseMediaInfoModel.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
 
@@ -45,7 +46,7 @@ class RemoteMediaApi {
   }
 
   /// 미디어 정보 조회
-  Future<ApiResponse<ResponseMediaModel>> getMedia(String mediaId) async {
+  Future<ApiResponse<ResponseMediaInfoModel>> getMedia(String mediaId) async {
     final response = await Service.getApi(
       type: ServiceType.Media,
       endPoint: mediaId,
@@ -61,7 +62,7 @@ class RemoteMediaApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-        (json) => ResponseMediaModel.fromJson(json),
+        (json) => ResponseMediaInfoModel.fromJson(json),
       );
     }
   }

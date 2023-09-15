@@ -4,7 +4,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 class ClickableScale extends HookWidget {
   final Widget child;
   final double borderRadius;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const ClickableScale({
     Key? key,
@@ -37,12 +37,14 @@ class ClickableScale extends HookWidget {
       color: Colors.transparent,
       child: InkWell(
         borderRadius: BorderRadius.circular(borderRadius),
-        onTap: () {
-          animationController.forward().then((_) {
-            animationController.reverse();
-          });
-          onPressed();
-        },
+        onTap: onPressed != null
+            ? () {
+                animationController.forward().then((_) {
+                  animationController.reverse();
+                });
+                onPressed?.call();
+              }
+            : null,
         onHighlightChanged: (highlighted) {
           if (highlighted) {
             animationController.forward();

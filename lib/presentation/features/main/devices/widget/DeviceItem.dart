@@ -106,11 +106,7 @@ class DeviceItem extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupDelete(
-                    onClicked: (isCompleted) {
-                      if (isCompleted) {
-                        deviceProvider.requestDelDevice(item.screenId, listKey);
-                      }
-                    },
+                    onClicked: () => deviceProvider.requestDelDevice(item.screenId, listKey),
                   ),
                 );
               }

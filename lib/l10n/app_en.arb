@@ -30,8 +30,9 @@
     "my_page_profile_full_name": "Full Name",
     "my_page_profile_business_name": "Business Name",
 
-    "media_info_title": "File name",
-    "media_info_menu": "Media Information",
+    "media_info_title": "Media Information",
+    "media_info_menu_input_title": "Title",
+    "media_info_menu_file_name": "File name",
     "media_info_menu_uploaded_data": "Uploaded date",
     "media_info_menu_file_size": "File size",
     "media_info_menu_file_type": "File type",

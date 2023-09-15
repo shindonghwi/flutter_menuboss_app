@@ -10,7 +10,7 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class PopupDelete extends HookWidget {
-  final Function(bool isCompleted)? onClicked;
+  final VoidCallback onClicked;
 
   const PopupDelete({
     super.key,
@@ -81,8 +81,8 @@ class PopupDelete extends HookWidget {
                   content: getAppLocalizations(context).common_delete,
                   isActivated: true,
                   onPressed: () {
-                    onClicked?.call(true);
                     Navigator.pop(context);
+                    onClicked.call();
                   },
                 ),
               ),
