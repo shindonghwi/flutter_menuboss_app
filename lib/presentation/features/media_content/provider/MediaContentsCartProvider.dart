@@ -1,5 +1,7 @@
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
+import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 
 final MediaContentsCartProvider = StateNotifierProvider<MediaContentsCartNotifier, List<SimpleMediaContentModel>>(
   (ref) => MediaContentsCartNotifier(),
@@ -8,18 +10,29 @@ final MediaContentsCartProvider = StateNotifierProvider<MediaContentsCartNotifie
 class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentModel>> {
   MediaContentsCartNotifier() : super([]);
 
+  final GetMediaUseCase _getMediaUseCase = GetIt.instance<GetMediaUseCase>();
+
   void addItem(SimpleMediaContentModel item) {
-    state = [...state, item];
+    if (item.type?.toLowerCase() == "folder") {
+      _getMediaUseCase.call(item.id.toString()).then((response) {
+        if (response.status == 200) {
+          // response.data
+          // state = [...state, ...response.data?.toList() ?? []];
+        }
+      });
+    } else {
+      state = [...state, item];
+    }
   }
 
   void removeItem(SimpleMediaContentModel item) {
     state = [...state]..remove(item);
   }
 
-  void changeDurationItem(String id, int duration) {
+  void changeDurationItem(SimpleMediaContentModel item, int duration) {
     state = [
-      ...state.map((item) {
-        return item.id == id ? item.copyWith(duration: duration) : item;
+      ...state.map((e) {
+        return e == item ? item.copyWith(duration: duration) : e;
       }).toList()
     ];
   }

@@ -1,7 +1,8 @@
 import 'dart:convert';
 
-class StringUtil{
+import 'dto/Triple.dart';
 
+class StringUtil {
   /// json map을 pretty json으로 변환하여 반환합니다.
   static String convertPrettyJson(Map<String, dynamic> jsonMap) {
     const JsonEncoder encoder = JsonEncoder.withIndent('  ');
@@ -26,6 +27,26 @@ class StringUtil{
     int remainingSeconds = seconds % 60;
 
     return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}";
+  }
+
+  /// "00:01:01"를 받아서 시간, 분, 초를 반환합니다
+  static Triple parseDuration(String duration) {
+    final durationSplit = duration.split(":");
+
+    if (durationSplit.length != 3) {
+      return Triple("00", "00", "00");
+    }
+
+    return Triple(
+      durationSplit[0].padLeft(2, '0'),
+      durationSplit[1].padLeft(2, '0'),
+      durationSplit[2].padLeft(2, '0'),
+    );
+  }
+
+  /// "00:01:01"를 받아서 초로 변환하여 반환합니다.
+  static int convertToSeconds(int hours, int minutes, int seconds) {
+    return hours * 3600 + minutes * 60 + seconds;
   }
 
 }

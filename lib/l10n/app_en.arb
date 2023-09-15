@@ -64,6 +64,7 @@
     "popup_apply_screen_title": "Apply to screens?",
     "popup_apply_screen_description": "Are you sure you want to apply it directly to the screens?",
     "popup_logout_description": "Are yor sure want to log out?",
+    "popup_change_duration_title": "Please enter the duration of the media",
 
     "common_email": "Email",
     "common_address": "Address",

@@ -23,11 +23,13 @@ class PlaylistTotalDuration extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        totalDuration.value = mediaCart.map((e) => e.duration ?? 0).reduce(
-          (value, element) {
-            return value + element;
-          },
-        );
+        totalDuration.value = mediaCart.isNotEmpty
+            ? mediaCart.map((e) => e.duration ?? 0).reduce(
+                (value, element) {
+                  return value + element;
+                },
+              )
+            : 0;
       });
       return null;
     }, [mediaCart]);

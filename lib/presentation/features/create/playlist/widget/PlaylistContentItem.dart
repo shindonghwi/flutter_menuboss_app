@@ -7,7 +7,9 @@ import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
+import 'package:menuboss/presentation/components/popup/PopupChangeDuration.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -123,6 +125,18 @@ class PlaylistContentItem extends HookConsumerWidget {
               ],
               onSelected: (type, text) {
                 if (type == ModifyType.ChangeDuration) {
+                  final duration = StringUtil.formatDuration(item.duration ?? 0);
+                  CommonPopup.showPopup(
+                    context,
+                    child: PopupChangeDuration(
+                      hour: StringUtil.parseDuration(duration).first,
+                      min: StringUtil.parseDuration(duration).second,
+                      sec: StringUtil.parseDuration(duration).third,
+                      onClicked: (duration) {
+                        mediaCartProvider.changeDurationItem(item, duration);
+                      },
+                    ),
+                  );
                 } else if (type == ModifyType.Delete) {
                   CommonPopup.showPopup(
                     context,
