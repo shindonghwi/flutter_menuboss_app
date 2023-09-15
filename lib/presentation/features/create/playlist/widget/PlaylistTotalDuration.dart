@@ -1,19 +1,37 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-class PlaylistTotalDuration extends StatelessWidget {
+class PlaylistTotalDuration extends HookConsumerWidget {
   const PlaylistTotalDuration({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaCart = ref.watch(MediaContentsCartProvider);
+    final totalDuration = useState<int>(0);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        totalDuration.value = mediaCart.map((e) => e.duration ?? 0).reduce(
+          (value, element) {
+            return value + element;
+          },
+        );
+      });
+      return null;
+    }, [mediaCart]);
+
     return Padding(
       padding: const EdgeInsets.fromLTRB(24, 2.5, 12, 2.5),
       child: Row(
@@ -30,7 +48,7 @@ class PlaylistTotalDuration extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
-                  "00:00:00",
+                  StringUtil.formatDuration(totalDuration.value),
                   style: getTextTheme(context).b3sb.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),

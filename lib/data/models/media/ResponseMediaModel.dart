@@ -79,9 +79,6 @@ class ResponseMediaModel {
       size: size ?? 0,
       count: count ?? 0,
     );
-
-    debugPrint("model: ${model.toString()}");
-
     return model;
   }
 

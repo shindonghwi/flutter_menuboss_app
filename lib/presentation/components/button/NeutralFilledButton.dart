@@ -26,11 +26,11 @@ class NeutralFilledButton extends HookWidget {
 
   const NeutralFilledButton.extraSmallRound100({
     Key? key,
-    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : borderRadius = 100,
+  })  : leftIcon = null,
+        borderRadius = 100,
         height = 40,
         super(key: key);
 
@@ -55,7 +55,6 @@ class NeutralFilledButton extends HookWidget {
         borderRadius = 100,
         height = 48,
         super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
