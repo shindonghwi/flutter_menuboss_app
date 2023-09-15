@@ -3,13 +3,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
-import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+
+import '../provider/PlaylistSettingInfoProvider/PlaylistSaveInfoProvider.dart';
 
 class PlaylistSettings extends HookWidget {
   const PlaylistSettings({
@@ -74,7 +76,10 @@ class PlaylistSettings extends HookWidget {
         AnimatedSize(
           duration: const Duration(milliseconds: 300),
           child: !isFolded.value
-              ? _SettingContents(directionType: directionType, scaleType: scaleType)
+              ? _SettingContents(
+                  directionType: directionType,
+                  scaleType: scaleType,
+                )
               : const SizedBox(height: 0),
         ),
       ],
@@ -82,7 +87,7 @@ class PlaylistSettings extends HookWidget {
   }
 }
 
-class _SettingContents extends StatelessWidget {
+class _SettingContents extends HookConsumerWidget {
   const _SettingContents({
     super.key,
     required this.directionType,
@@ -93,7 +98,9 @@ class _SettingContents extends StatelessWidget {
   final ValueNotifier<PlaylistSettingType> scaleType;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
@@ -108,14 +115,20 @@ class _SettingContents extends StatelessWidget {
                 _SettingSelectableIcon(
                   iconPath: "assets/imgs/icon_horizontal_line.svg",
                   iconText: getAppLocalizations(context).common_horizontal,
-                  onPressed: () => directionType.value = PlaylistSettingType.Horizontal,
+                  onPressed: () {
+                    saveProvider.changeDirection(PlaylistSettingType.Horizontal);
+                    directionType.value = PlaylistSettingType.Horizontal;
+                  },
                   isChecked: directionType.value == PlaylistSettingType.Horizontal,
                 ),
                 const SizedBox(height: 8),
                 _SettingSelectableIcon(
                   iconPath: "assets/imgs/icon_vertical_line.svg",
                   iconText: getAppLocalizations(context).common_vertical,
-                  onPressed: () => directionType.value = PlaylistSettingType.Vertical,
+                  onPressed: () {
+                    saveProvider.changeDirection(PlaylistSettingType.Vertical);
+                    directionType.value = PlaylistSettingType.Vertical;
+                  },
                   isChecked: directionType.value == PlaylistSettingType.Vertical,
                 ),
               ],
@@ -133,14 +146,20 @@ class _SettingContents extends StatelessWidget {
                 _SettingSelectableIcon(
                   iconPath: "assets/imgs/icon_fit.svg",
                   iconText: getAppLocalizations(context).common_fit,
-                  onPressed: () => scaleType.value = PlaylistSettingType.Fit,
+                  onPressed: () {
+                    saveProvider.changeDirection(PlaylistSettingType.Fit);
+                    directionType.value = PlaylistSettingType.Fit;
+                  },
                   isChecked: scaleType.value == PlaylistSettingType.Fit,
                 ),
                 const SizedBox(height: 8),
                 _SettingSelectableIcon(
                   iconPath: "assets/imgs/icon_fill.svg",
                   iconText: getAppLocalizations(context).common_fill,
-                  onPressed: () => scaleType.value = PlaylistSettingType.Fill,
+                  onPressed: () {
+                    saveProvider.changeDirection(PlaylistSettingType.Fill);
+                    directionType.value = PlaylistSettingType.Fill;
+                  },
                   isChecked: scaleType.value == PlaylistSettingType.Fill,
                 ),
               ],
@@ -169,9 +188,7 @@ class _SettingSelectableIcon extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return ClickableScale(
-      onPressed: () {
-        onPressed();
-      },
+      onPressed: () => onPressed.call(),
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 4.0),
         child: Row(
@@ -206,7 +223,7 @@ class _SettingSelectableIcon extends HookWidget {
                 height: 24,
                 child: BasicBorderRadioButton(
                   isChecked: isChecked,
-                  onChange: (value) => {},
+                  onChange: null,
                 ),
               ),
             )

@@ -9,6 +9,7 @@ part of 'RequestPlaylistUpdateInfoModel.dart';
 RequestPlaylistUpdateInfoModel _$RequestPlaylistUpdateInfoModelFromJson(
         Map<String, dynamic> json) =>
     RequestPlaylistUpdateInfoModel(
+      name: json['name'] as String,
       property: RequestPlaylistUpdateInfoProperty.fromJson(
           json['property'] as Map<String, dynamic>),
       contents: (json['contents'] as List<dynamic>)
@@ -20,6 +21,7 @@ RequestPlaylistUpdateInfoModel _$RequestPlaylistUpdateInfoModelFromJson(
 Map<String, dynamic> _$RequestPlaylistUpdateInfoModelToJson(
         RequestPlaylistUpdateInfoModel instance) =>
     <String, dynamic>{
+      'name': instance.name,
       'property': instance.property,
       'contents': instance.contents,
     };

@@ -15,7 +15,7 @@ SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
       type: json['type'] as String?,
       size: json['size'] as int? ?? 0,
       count: json['count'] as int? ?? 0,
-      duration: json['duration'] as int? ?? 0,
+      duration: json['duration'] as int? ?? 10,
       thumbnailUrl: json['thumbnailUrl'] as String?,
     );
 

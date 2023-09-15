@@ -8,11 +8,22 @@ class RequestPlaylistUpdateInfoProperty {
   final String fill;
 
   RequestPlaylistUpdateInfoProperty({
-    required this.direction,
-    required this.fill,
+    this.direction = "Horizontal",
+    this.fill = "Fit",
   });
 
-  factory RequestPlaylistUpdateInfoProperty.fromJson(Map<String, dynamic> json) => _$RequestPlaylistUpdateInfoPropertyFromJson(json);
+  factory RequestPlaylistUpdateInfoProperty.fromJson(Map<String, dynamic> json) =>
+      _$RequestPlaylistUpdateInfoPropertyFromJson(json);
+
+  RequestPlaylistUpdateInfoProperty copyWith({
+    String? direction,
+    String? fill,
+  }) {
+    return RequestPlaylistUpdateInfoProperty(
+      direction: direction ?? this.direction,
+      fill: fill ?? this.fill,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$RequestPlaylistUpdateInfoPropertyToJson(this);
 }

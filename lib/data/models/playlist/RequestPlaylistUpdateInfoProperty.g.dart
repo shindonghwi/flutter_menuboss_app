@@ -9,8 +9,8 @@ part of 'RequestPlaylistUpdateInfoProperty.dart';
 RequestPlaylistUpdateInfoProperty _$RequestPlaylistUpdateInfoPropertyFromJson(
         Map<String, dynamic> json) =>
     RequestPlaylistUpdateInfoProperty(
-      direction: json['direction'] as String,
-      fill: json['fill'] as String,
+      direction: json['direction'] as String? ?? "Horizontal",
+      fill: json['fill'] as String? ?? "Fit",
     );
 
 Map<String, dynamic> _$RequestPlaylistUpdateInfoPropertyToJson(

@@ -12,7 +12,18 @@ class RequestPlaylistUpdateInfoContents {
     required this.duration,
   });
 
-  factory RequestPlaylistUpdateInfoContents.fromJson(Map<String, dynamic> json) => _$RequestPlaylistUpdateInfoContentsFromJson(json);
+  factory RequestPlaylistUpdateInfoContents.fromJson(Map<String, dynamic> json) =>
+      _$RequestPlaylistUpdateInfoContentsFromJson(json);
+
+  RequestPlaylistUpdateInfoContents copyWith({
+    String? contentId,
+    int? duration,
+  }) {
+    return RequestPlaylistUpdateInfoContents(
+      contentId: contentId ?? this.contentId,
+      duration: duration ?? this.duration,
+    );
+  }
 
   Map<String, dynamic> toJson() => _$RequestPlaylistUpdateInfoContentsToJson(this);
 }

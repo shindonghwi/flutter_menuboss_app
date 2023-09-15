@@ -6,6 +6,7 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSettingInfoProvider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
@@ -16,12 +17,15 @@ class PlaylistContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
     final List<SimpleMediaContentModel> contentItems = ref.watch(MediaContentsCartProvider);
     final items = useState<List<SimpleMediaContentModel>>([]);
     //
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         items.value = [...contentItems];
+        saveProvider.changeContents(items.value);
+
       });
       return null;
     }, [contentItems]);

@@ -36,4 +36,8 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
       }).toList()
     ];
   }
+
+  void init(){
+    state = [];
+  }
 }
