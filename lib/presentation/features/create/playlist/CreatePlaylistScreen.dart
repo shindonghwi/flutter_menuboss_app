@@ -29,15 +29,26 @@ class CreatePlaylistScreen extends HookConsumerWidget {
     final mediaCartProvider = ref.read(MediaContentsCartProvider.notifier);
     final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
 
+    void initState() {
+      mediaCartProvider.init();
+      saveProvider.init();
+      playListRegisterProvider.init();
+    }
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        initState();
+      });
+      return null;
+    }, []);
+
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           playListRegisterState.when(
             success: (event) {
-              mediaCartProvider.init();
-              saveProvider.init();
-              playListRegisterProvider.init();
-              Navigator.of(context).pop(true) ;
+              initState();
+              Navigator.of(context).pop(true);
             },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
