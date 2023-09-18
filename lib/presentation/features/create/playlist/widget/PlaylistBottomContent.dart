@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
@@ -34,7 +36,12 @@ class PlaylistBottomContent extends HookConsumerWidget {
                       flex: 1,
                       child: NeutralLineButton.largeRound8(
                         onPressed: () {
-                          ToastUtil.successToast("작업중");
+                          Navigator.push(
+                            context,
+                            nextSlideVerticalScreen(
+                              RoutingScreen.PreviewPlaylist.route,
+                            ),
+                          );
                         },
                         content: getAppLocalizations(context).common_preview,
                         isActivated: true,

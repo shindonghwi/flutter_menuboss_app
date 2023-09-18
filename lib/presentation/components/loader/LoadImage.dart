@@ -7,12 +7,14 @@ class LoadImage extends StatelessWidget {
   final String? url;
   final ImagePlaceholderType type;
   final String? tag;
+  final BoxFit fit;
 
   const LoadImage({
     super.key,
     required this.url,
     required this.type,
     this.tag,
+    this.fit = BoxFit.cover,
   });
 
   @override
@@ -25,7 +27,7 @@ class LoadImage extends StatelessWidget {
                   imageUrl: url.toString(),
                   placeholder: (context, url) => ImagePlaceholder(type: type),
                   errorWidget: (context, url, error) => ImagePlaceholder(type: type),
-                  fit: BoxFit.cover,
+                  fit: fit,
                 )
               : Hero(
                   tag: tag.toString(),
@@ -33,7 +35,7 @@ class LoadImage extends StatelessWidget {
                     imageUrl: url.toString(),
                     placeholder: (context, url) => ImagePlaceholder(type: type),
                     errorWidget: (context, url, error) => ImagePlaceholder(type: type),
-                    fit: BoxFit.cover,
+                    fit: fit,
                   ),
                 )
           : ImagePlaceholder(type: type),

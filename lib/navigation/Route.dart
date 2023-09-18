@@ -7,6 +7,7 @@ import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
+import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
@@ -18,7 +19,9 @@ enum RoutingScreen {
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
   MediaInfo(route: "/media/info"), // 미디어 정보
   MediaContent(route: "/media/content"), // 미디어 콘텐츠 목록
+
   CreatePlaylist(route: "/create/playlist"), // 플레이리스트 만들기
+  PreviewPlaylist(route: "/preview/playlist"), // 플레이리스트 미리보기
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"); // 프로필 정보
@@ -34,10 +37,14 @@ enum RoutingScreen {
       RoutingScreen.Splash.route: (context) => const SplashScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
+
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
       RoutingScreen.MediaContent.route: (context) => const MediaContentScreen(),
+
       RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
+      RoutingScreen.PreviewPlaylist.route: (context) => const PreviewPlaylistScreen(),
+
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
     };
@@ -50,16 +57,25 @@ enum RoutingScreen {
       return const LoginScreen();
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
-    } else if (route == RoutingScreen.ScanQR.route) {
+    }
+
+    else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.MediaInfo.route) {
       ResponseMediaModel model = parameter;
       return MediaInformationScreen(item: model);
     } else if (route == RoutingScreen.MediaContent.route) {
       return const MediaContentScreen();
-    } else if (route == RoutingScreen.CreatePlaylist.route) {
+    }
+
+    else if (route == RoutingScreen.CreatePlaylist.route) {
       return const CreatePlaylistScreen();
-    } else if (route == RoutingScreen.ApplyDevice.route) {
+    }
+    else if (route == RoutingScreen.PreviewPlaylist.route) {
+      return const PreviewPlaylistScreen();
+    }
+
+    else if (route == RoutingScreen.ApplyDevice.route) {
       return const ApplyToDeviceScreen();
     } else if (route == RoutingScreen.MyProfile.route) {
       return const MyProfileScreen();
