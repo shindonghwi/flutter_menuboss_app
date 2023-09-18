@@ -53,7 +53,7 @@ class PlaylistSaveInfoProviderNotifier extends StateNotifier<RequestPlaylistUpda
     state = state.copyWith(
       contents: items
           .map((e) => RequestPlaylistUpdateInfoContents(
-                duration: e.duration,
+                duration: e.property?.duration,
                 contentId: e.id.toString(),
               ))
           .toList(),

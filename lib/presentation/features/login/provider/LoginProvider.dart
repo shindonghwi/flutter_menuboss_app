@@ -1,3 +1,4 @@
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
@@ -69,6 +70,8 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   Future<void> saveAccessToken(String accessToken) async {
     await _postLoginAccessToken.call(accessToken);
+    final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+    Service.addHeader(key: HeaderKey.TimeZone, value: timeZone);
     Service.addHeader(key: HeaderKey.Authorization, value: accessToken);
   }
 

@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
@@ -14,8 +16,6 @@ import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
-import 'package:menuboss/presentation/features/edit/playlist/provider/DelEditPlaylistProvider.dart';
-import 'package:menuboss/presentation/features/edit/playlist/provider/GetEditPlaylistProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -23,10 +23,13 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-class EditPlaylistScreen extends HookConsumerWidget {
+import 'provider/DelEditPlaylistProvider.dart';
+import 'provider/GetEditPlaylistProvider.dart';
+
+class DetailPlaylistScreen extends HookConsumerWidget {
   final ResponsePlaylistModel? item;
 
-  const EditPlaylistScreen({
+  const DetailPlaylistScreen({
     super.key,
     this.item,
   });
@@ -39,6 +42,7 @@ class EditPlaylistScreen extends HookConsumerWidget {
     final editPlaylistProvider = ref.read(GetEditPlaylistProvider.notifier);
     final delEditPlaylistProvider = ref.read(DelEditPlaylistProvider.notifier);
     final editPlaylist = useState<ResponsePlaylistModel?>(null);
+    ResponsePlaylistModel? playListInfo;
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -54,6 +58,7 @@ class EditPlaylistScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           editPlaylistState.when(
+            success: (event) => playListInfo = event.value,
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -85,7 +90,22 @@ class EditPlaylistScreen extends HookConsumerWidget {
         leadingIsShow: true,
         content: item?.name ?? "",
         suffixIcons: [
-          Pair("assets/imgs/icon_edit.svg", () {}),
+          Pair("assets/imgs/icon_edit.svg", () async {
+            try {
+              final isUpdated = await Navigator.push(
+                context,
+                nextSlideHorizontalScreen(
+                  RoutingScreen.CreatePlaylist.route,
+                  parameter: playListInfo,
+                ),
+              );
+              if (isUpdated) {
+                Navigator.of(context).pop(true);
+              }
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+          }),
           Pair("assets/imgs/icon_trash.svg", () {
             CommonPopup.showPopup(
               context,
@@ -109,7 +129,7 @@ class EditPlaylistScreen extends HookConsumerWidget {
                   : _PlaylistContent(item: editPlaylist.value!),
             ],
           ),
-          if (editPlaylistState is Loading) const LoadingView(),
+          if (editPlaylistState is Loading || delEditPlaylistState is Loading) const LoadingView(),
         ],
       ),
     );
@@ -152,7 +172,7 @@ class _PlaylistContent extends StatelessWidget {
                       width: 60,
                       height: 60,
                       child: LoadImage(
-                        url: data?.imageUrl,
+                        url: data?.property.imageUrl ?? "",
                         type: ImagePlaceholderType.Small,
                       ),
                     ),
@@ -172,7 +192,7 @@ class _PlaylistContent extends StatelessWidget {
                                   child: Padding(
                                     padding: const EdgeInsets.only(left: 4.0),
                                     child: Text(
-                                      data?.imageUrl ?? "",
+                                      data?.name ?? "",
                                       style: getTextTheme(context).b2sb.copyWith(
                                             color: getColorScheme(context).colorGray900,
                                           ),

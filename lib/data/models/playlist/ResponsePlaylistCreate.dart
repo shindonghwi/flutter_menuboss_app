@@ -1,9 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-import 'ResponsePlaylistContents.dart';
-import 'ResponsePlaylistProperty.dart';
-
 part 'ResponsePlaylistCreate.g.dart';
 
 @JsonSerializable()

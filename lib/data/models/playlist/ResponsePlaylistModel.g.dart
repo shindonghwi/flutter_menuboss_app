@@ -18,7 +18,7 @@ ResponsePlaylistModel _$ResponsePlaylistModelFromJson(
               json['property'] as Map<String, dynamic>),
       contents: (json['contents'] as List<dynamic>?)
           ?.map((e) =>
-              ResponsePlaylistContents.fromJson(e as Map<String, dynamic>))
+              ResponsePlaylistContent.fromJson(e as Map<String, dynamic>))
           .toList(),
       updatedAt: json['updatedAt'] as String,
     );

@@ -1,6 +1,8 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
+import 'ResponseMediaProperty.dart';
+
 part 'SimpleMediaContentModel.g.dart';
 
 @JsonSerializable()
@@ -9,21 +11,9 @@ class SimpleMediaContentModel {
   final String? id;
   final String? name;
   final String? type;
-  final int? size;
-  final int? count;
-  final int? duration;
-  final String? imageUrl;
+  final ResponseMediaProperty? property;
 
-  SimpleMediaContentModel({
-    this.object,
-    this.id,
-    this.name,
-    this.type,
-    this.size = 0,
-    this.count = 0,
-    this.duration = 10,
-    this.imageUrl,
-  });
+  SimpleMediaContentModel({this.object, this.id, this.name, this.type, this.property});
 
   factory SimpleMediaContentModel.fromJson(Map<String, dynamic> json) => _$SimpleMediaContentModelFromJson(json);
 
@@ -34,20 +24,14 @@ class SimpleMediaContentModel {
     String? id,
     String? name,
     String? type,
-    int? size,
-    int? count,
-    int? duration,
-    String? imageUrl,
+    ResponseMediaProperty? property,
   }) {
     return SimpleMediaContentModel(
       object: object ?? this.object,
       id: id ?? this.id,
       name: name ?? this.name,
       type: type ?? this.type,
-      size: size ?? this.size,
-      count: count ?? this.count,
-      duration: duration ?? this.duration,
-      imageUrl: imageUrl ?? this.imageUrl,
+      property: property ?? this.property,
     );
   }
 
@@ -63,10 +47,7 @@ class SimpleMediaContentModel {
         other.id == id &&
         other.name == name &&
         other.type == type &&
-        other.size == size &&
-        other.count == count &&
-        other.duration == duration &&
-        other.imageUrl == imageUrl;
+        other.property == property;
   }
 
   @override

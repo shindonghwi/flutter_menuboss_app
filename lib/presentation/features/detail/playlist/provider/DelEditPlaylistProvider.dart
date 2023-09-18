@@ -13,6 +13,7 @@ class DelEditPlaylistProviderNotifier extends StateNotifier<UIState<void>> {
   DelPlaylistUseCase get _delPlaylistUseCase => GetIt.instance<DelPlaylistUseCase>();
 
   void removePlaylist(int playlistId) {
+    state = Loading();
     _delPlaylistUseCase.call(playlistId).then((value) {
       if (value.status == 200) {
         state = Success(value.message);

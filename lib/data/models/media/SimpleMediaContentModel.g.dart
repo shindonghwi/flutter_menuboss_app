@@ -13,10 +13,10 @@ SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
       id: json['id'] as String?,
       name: json['name'] as String?,
       type: json['type'] as String?,
-      size: json['size'] as int? ?? 0,
-      count: json['count'] as int? ?? 0,
-      duration: json['duration'] as int? ?? 10,
-      imageUrl: json['imageUrl'] as String?,
+      property: json['property'] == null
+          ? null
+          : ResponseMediaProperty.fromJson(
+              json['property'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$SimpleMediaContentModelToJson(
@@ -26,8 +26,5 @@ Map<String, dynamic> _$SimpleMediaContentModelToJson(
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
-      'size': instance.size,
-      'count': instance.count,
-      'duration': instance.duration,
-      'imageUrl': instance.imageUrl,
+      'property': instance.property,
     };

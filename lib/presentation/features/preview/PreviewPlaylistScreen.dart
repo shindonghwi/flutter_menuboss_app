@@ -28,10 +28,10 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
     final playlistSaveInfo = ref.watch(PlaylistSaveInfoProvider);
 
     final currentPage = useState(0);
-    final isDirectionHorizontal = useState(playlistSaveInfo.property.direction == "Horizontal");
-    final isScaleFit = useState(playlistSaveInfo.property.fill == "Fit");
+    final isDirectionHorizontal = useState(playlistSaveInfo.property.direction.toLowerCase() == "horizontal");
+    final isScaleFit = useState(playlistSaveInfo.property.fill.toLowerCase() == "fit");
 
-    List<int?> durations = mediaContentsCart.map((e) => e.duration).toList();
+    List<int?> durations = mediaContentsCart.map((e) => e.property?.duration).toList();
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
@@ -101,7 +101,7 @@ class _ImageDisplay extends HookConsumerWidget {
                   aspectRatio: isDirectionHorizontal ? 16 / 9 : 9 / 16,
                   child: LoadImage(
                       tag: mediaContent.id.toString(),
-                      url: mediaContent.imageUrl,
+                      url: mediaContent.property?.imageUrl,
                       type: ImagePlaceholderType.AUTO_16x9,
                       fit: isScaleFit ? BoxFit.contain : BoxFit.cover),
                 ),

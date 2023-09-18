@@ -4,22 +4,29 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlayListRegisterProvider.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../provider/PlayListUpdateProvider.dart';
+
 class PlaylistBottomContent extends HookConsumerWidget {
+  final int? playlistId;
+  final bool isEditMode;
+
   const PlaylistBottomContent({
     super.key,
+    required this.playlistId,
+    required this.isEditMode,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaCart = ref.watch(MediaContentsCartProvider);
-    final playListRegisterProvider = ref.watch(PlayListRegisterProvider.notifier);
+    final playListUpdateProvider = ref.read(PlayListUpdateProvider.notifier);
+    final playListRegisterProvider = ref.read(PlayListRegisterProvider.notifier);
     final playlistSaveInfo = ref.watch(PlaylistSaveInfoProvider);
 
     return mediaCart.isNotEmpty
@@ -54,7 +61,13 @@ class PlaylistBottomContent extends HookConsumerWidget {
                       fit: FlexFit.tight,
                       flex: 1,
                       child: PrimaryFilledButton.largeRound8(
-                        onPressed: () => playListRegisterProvider.registerPlaylist(playlistSaveInfo),
+                        onPressed: () {
+                          if (isEditMode) {
+                            playListUpdateProvider.updatePlaylist(playlistId ?? -1, playlistSaveInfo);
+                          } else {
+                            playListRegisterProvider.registerPlaylist(playlistSaveInfo);
+                          }
+                        },
                         content: getAppLocalizations(context).common_save,
                         isActivated: playlistSaveInfo.isCreateAvailable(),
                       ),

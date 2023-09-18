@@ -63,7 +63,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                         width: 60,
                         height: 60,
                         child: LoadImage(
-                          url: item.imageUrl,
+                          url: item.property?.imageUrl,
                           type: ImagePlaceholderType.Small,
                         ),
                       ),
@@ -101,7 +101,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
-                                  StringUtil.formatDuration(item.duration ?? 0),
+                                  StringUtil.formatDuration(item.property?.duration ?? 0),
                                   style: getTextTheme(context).c1sb.copyWith(
                                         color: getColorScheme(context).colorGray500,
                                       ),
@@ -126,7 +126,7 @@ class PlaylistContentItem extends HookConsumerWidget {
               ],
               onSelected: (type, text) {
                 if (type == ModifyType.ChangeDuration) {
-                  final duration = StringUtil.formatDuration(item.duration ?? 0);
+                  final duration = StringUtil.formatDuration(item.property?.duration ?? 0);
                   CommonPopup.showPopup(
                     context,
                     child: PopupChangeDuration(

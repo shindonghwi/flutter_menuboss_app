@@ -113,7 +113,7 @@ class _PlaylistContentList extends HookConsumerWidget {
                             final isChanged = await Navigator.push(
                               context,
                               nextSlideHorizontalScreen(
-                                RoutingScreen.EditPlaylist.route,
+                                RoutingScreen.DetailPlaylist.route,
                                 parameter: item,
                               ),
                             );

@@ -24,7 +24,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         totalDuration.value = mediaCart.isNotEmpty
-            ? mediaCart.map((e) => e.duration ?? 0).reduce(
+            ? mediaCart.map((e) => e.property?.duration ?? 0).reduce(
                 (value, element) {
                   return value + element;
                 },

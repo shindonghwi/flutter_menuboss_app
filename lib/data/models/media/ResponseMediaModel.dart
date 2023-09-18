@@ -16,8 +16,6 @@ class ResponseMediaModel {
   final ResponseMediaPropertyInfo? type;
   final ResponseMediaProperty? property;
   final ResponseMediaFiles? files;
-  final int? size;
-  final int? count;
   final String? createdAt;
   final String? updatedAt;
 
@@ -28,8 +26,6 @@ class ResponseMediaModel {
     this.type,
     this.property,
     this.files,
-    this.size = 0,
-    this.count = 0,
     this.createdAt,
     this.updatedAt,
   });
@@ -45,8 +41,6 @@ class ResponseMediaModel {
     ResponseMediaPropertyInfo? type,
     ResponseMediaProperty? property,
     ResponseMediaFiles? files,
-    int? size,
-    int? count,
     String? createdAt,
     String? updatedAt,
   }) {
@@ -57,8 +51,6 @@ class ResponseMediaModel {
       type: type ?? this.type,
       property: property ?? this.property,
       files: files ?? this.files,
-      size: size ?? this.size,
-      count: count ?? this.count,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
     );
@@ -70,10 +62,11 @@ class ResponseMediaModel {
       id: mediaId,
       name: name ?? "",
       type: type?.code ?? "",
-      imageUrl: property?.imageUrl ?? "",
-      duration: property?.duration ?? 10,
-      size: property?.size ,
-      count: count,
+      property: ResponseMediaProperty(
+        size: property?.size ?? 0,
+        duration: property?.duration ?? 10,
+        imageUrl: property?.imageUrl ?? "",
+      )
     );
     return model;
   }

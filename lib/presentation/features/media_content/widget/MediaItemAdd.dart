@@ -7,7 +7,6 @@ import 'package:menuboss/presentation/components/button/NeutralFilledButton.dart
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
-import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -37,10 +36,10 @@ class MediaItemAdd extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        isAdded.value = mediaCartState.any((element) => element == item);
+        isAdded.value = mediaCartState.any((existingItem) => existingItem.id == item.id);
       });
       return null;
-    },[mediaCartState]);
+    }, [mediaCartState]);
 
     final code = item.type?.toLowerCase();
 
@@ -55,17 +54,17 @@ class MediaItemAdd extends HookConsumerWidget {
         iconWidget = SizedBox(
           width: 60,
           height: 60,
-          child: LoadImage(url: item.imageUrl, type: ImagePlaceholderType.Small),
+          child: LoadImage(url: item.property?.imageUrl, type: ImagePlaceholderType.Small),
         );
     }
 
     String content = "";
     if (code == "image" || code == "video") {
       isFolderType = false;
-      content = "$code - (${StringUtil.formatBytesToMegabytes(item.size ?? 0)})";
+      content = "$code - (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     } else if (code == "folder") {
       isFolderType = true;
-      content = "${item.count} File (${StringUtil.formatBytesToMegabytes(item.size ?? 0)})";
+      content = "${item.property?.count} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     }
 
     return ClickableScale(
@@ -109,17 +108,21 @@ class MediaItemAdd extends HookConsumerWidget {
                 ],
               ),
             ),
-            !isAdded.value
-                ? PrimaryFilledButton.extraSmallRound100(
+            isAdded.value
+                ? NeutralFilledButton.extraSmallRound100(
                     content: getAppLocalizations(context).common_add,
                     isActivated: true,
-                    onPressed: () => mediaCartProvider.addItem(item),
+                    onPressed: () {
+                      mediaCartProvider.removeItem(item);
+                    },
                   )
-                : NeutralFilledButton.extraSmallRound100(
+                : PrimaryFilledButton.extraSmallRound100(
                     content: getAppLocalizations(context).common_add,
                     isActivated: true,
-                    onPressed: () => mediaCartProvider.removeItem(item),
-                  ),
+                    onPressed: () {
+                      mediaCartProvider.addItem(item);
+                    },
+                  )
           ],
         ),
       ),

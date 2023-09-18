@@ -13,32 +13,40 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
   final GetMediaUseCase _getMediaUseCase = GetIt.instance<GetMediaUseCase>();
 
   void addItem(SimpleMediaContentModel item) {
-    switch(item.type?.toLowerCase()){
-      case "folder":
-        _getMediaUseCase.call(item.id.toString()).then((response) {
-          if (response.status == 200) {
-            // response.data
-            // state = [...state, ...response.data?.toList() ?? []];
-          }
-        });
-      default:
-        state = [...state, item];
+    if (!state.any((existingItem) => existingItem.id == item.id)) {
+      switch (item.type?.toLowerCase()) {
+        case "folder":
+          _getMediaUseCase.call(item.id.toString()).then((response) {
+            if (response.status == 200) {
+              // response.data
+              // state = [...state, ...response.data?.toList() ?? []];
+            }
+          });
+          break;
+        default:
+          state = [...state, item];
+      }
     }
   }
 
+  void addItems(List<SimpleMediaContentModel> items) {
+    var uniqueItems = items.where((item) => !state.any((existingItem) => existingItem.id == item.id)).toList();
+    state = [...state, ...uniqueItems];
+  }
+
   void removeItem(SimpleMediaContentModel item) {
-    state = [...state]..remove(item);
+    state = [...state.where((existingItem) => existingItem.id != item.id)];
   }
 
   void changeDurationItem(SimpleMediaContentModel item, int duration) {
     state = [
       ...state.map((e) {
-        return e == item ? item.copyWith(duration: duration) : e;
+        return e == item ? item.copyWith(property: item.property?.copyWith(duration: duration)) : e;
       }).toList()
     ];
   }
 
-  void init(){
+  void init() {
     state = [];
   }
 }

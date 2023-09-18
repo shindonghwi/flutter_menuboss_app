@@ -19,7 +19,7 @@ class ResponseMediaProperty {
     this.width,
     this.height,
     this.size,
-    this.duration,
+    this.duration = 10,
     this.rotation,
     this.imageUrl,
     this.videoUrl,
@@ -28,6 +28,28 @@ class ResponseMediaProperty {
   factory ResponseMediaProperty.fromJson(Map<String, dynamic> json) => _$ResponseMediaPropertyFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMediaPropertyToJson(this);
+
+  ResponseMediaProperty copyWith({
+    int? count,
+    int? width,
+    int? height,
+    int? size,
+    int? duration,
+    int? rotation,
+    String? imageUrl,
+    String? videoUrl,
+  }) {
+    return ResponseMediaProperty(
+      count: count ?? this.count,
+      width: width ?? this.width,
+      height: height ?? this.height,
+      size: size ?? this.size,
+      duration: duration ?? this.duration,
+      rotation: rotation ?? this.rotation,
+      imageUrl: imageUrl ?? this.imageUrl,
+      videoUrl: videoUrl ?? this.videoUrl,
+    );
+  }
 
   @override
   String toString() {

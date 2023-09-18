@@ -3,6 +3,8 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
+import '../media/ResponseMediaProperty.dart';
+
 part 'ResponseCanvasModel.g.dart';
 
 @JsonSerializable()
@@ -33,7 +35,11 @@ class ResponseCanvasModel {
       id: canvasId,
       name: name ?? "",
       type: "canvas",
-      imageUrl: imageUrl,
+      property: ResponseMediaProperty(
+        size: 0,
+        duration: 10,
+        imageUrl: imageUrl ?? "",
+      ),
     );
 
     debugPrint("model: ${model.toString()}");

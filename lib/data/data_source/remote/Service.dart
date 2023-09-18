@@ -20,6 +20,7 @@ class Service {
     HeaderKey.AcceptLanguage: 'en-US',
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
+    "Application-Time-Zone": 'Asia/Seoul',
   };
 
   static addHeader({

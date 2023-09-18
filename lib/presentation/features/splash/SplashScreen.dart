@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -46,6 +47,8 @@ class SplashScreen extends HookConsumerWidget {
     void runAutoLogin() async {
       final accessToken = await GetIt.instance<GetLoginAccessTokenUseCase>().call();
       if (!CollectionUtil.isNullEmptyFromString(accessToken)) {
+        final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+        Service.addHeader(key: HeaderKey.TimeZone, value: timeZone);
         Service.addHeader(key: HeaderKey.Authorization, value: accessToken);
         await GetIt.instance<GetMeInfoUseCase>().call().then((result) {
           if (result.status == 200 && result.data != null) {

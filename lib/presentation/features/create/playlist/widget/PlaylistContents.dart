@@ -52,7 +52,7 @@ class PlaylistContents extends HookConsumerWidget {
                 (item) {
                   final index = contentItems.indexOf(item);
                   return Container(
-                    key: ValueKey(item.hashCode),
+                    key: ValueKey(item.id),
                     child: PlaylistContentItem(index: index, item: item),
                   );
                 },

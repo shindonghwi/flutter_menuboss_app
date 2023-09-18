@@ -4,4 +4,5 @@ class HeaderKey{
   static const String Accept = 'Accept';
   static const String Connection = 'Connection';
   static const String Authorization = 'Authorization';
+  static const String TimeZone = 'Application-Time-Zone';
 }

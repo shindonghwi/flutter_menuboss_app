@@ -13,7 +13,7 @@ ResponseMediaProperty _$ResponseMediaPropertyFromJson(
       width: json['width'] as int?,
       height: json['height'] as int?,
       size: json['size'] as int?,
-      duration: json['duration'] as int?,
+      duration: json['duration'] as int? ?? 10,
       rotation: json['rotation'] as int?,
       imageUrl: json['imageUrl'] as String?,
       videoUrl: json['videoUrl'] as String?,

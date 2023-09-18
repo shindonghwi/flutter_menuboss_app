@@ -1,28 +1,29 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ResponsePlaylistContents.dart';
+part of 'ResponsePlaylistContent.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponsePlaylistContents _$ResponsePlaylistContentsFromJson(
+ResponsePlaylistContent _$ResponsePlaylistContentFromJson(
         Map<String, dynamic> json) =>
-    ResponsePlaylistContents(
+    ResponsePlaylistContent(
       contentId: json['contentId'] as String,
+      name: json['name'] as String,
       type: ResponsePlaylistPropertyInfo.fromJson(
           json['type'] as Map<String, dynamic>),
       duration: json['duration'] as int,
-      size: json['size'] as int,
-      imageUrl: json['imageUrl'] as String?,
+      property: ResponsePlaylistContentProperty.fromJson(
+          json['property'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ResponsePlaylistContentsToJson(
-        ResponsePlaylistContents instance) =>
+Map<String, dynamic> _$ResponsePlaylistContentToJson(
+        ResponsePlaylistContent instance) =>
     <String, dynamic>{
       'contentId': instance.contentId,
+      'name': instance.name,
       'type': instance.type,
       'duration': instance.duration,
-      'size': instance.size,
-      'imageUrl': instance.imageUrl,
+      'property': instance.property,
     };

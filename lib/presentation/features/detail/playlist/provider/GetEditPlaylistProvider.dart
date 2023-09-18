@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
@@ -15,7 +16,8 @@ class GetEditPlaylistProviderNotifier extends StateNotifier<UIState<ResponsePlay
   GetPlaylistUseCase get _getPlaylistUseCase => GetIt.instance<GetPlaylistUseCase>();
 
   void requestPlaylistInfo(int playlistId) {
-    _getPlaylistUseCase.call(playlistId).then((value) {
+    state = Loading();
+    _getPlaylistUseCase.call(playlistId).then((value) async{
       if (value.status == 200) {
         if (value.data != null) {
           state = Success(value.data!);

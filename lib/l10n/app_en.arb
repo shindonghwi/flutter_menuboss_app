@@ -19,7 +19,8 @@
     "apply_screen_title": "Apply to Screens",
 
     "create_playlist_title": "Create playlist",
-    "create_playlist_input_title": "Title",
+
+    "edit_playlist_title": "Edit playlist",
 
     "my_page_appbar_title": "My page",
     "my_page_setting_item": "Settings",
@@ -71,6 +72,7 @@
     "common_address": "Address",
     "common_password": "Password",
     "common_settings": "Settings",
+    "common_title": "Title",
     "common_total_duration": "Total duration",
     "common_add": "Add",
     "common_horizontal": "Horizontal",

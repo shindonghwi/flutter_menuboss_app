@@ -8,7 +8,12 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class PlaylistInputName extends HookConsumerWidget {
-  const PlaylistInputName({super.key});
+  final String initTitle;
+
+  const PlaylistInputName({
+    super.key,
+    required this.initTitle,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,7 +28,7 @@ class PlaylistInputName extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            getAppLocalizations(context).create_playlist_input_title,
+            getAppLocalizations(context).common_title,
             style: getTextTheme(context).b3b.copyWith(
                   color: getColorScheme(context).colorGray500,
                 ),
@@ -31,7 +36,7 @@ class PlaylistInputName extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.small(
-              controller: useTextEditingController(),
+              controller: useTextEditingController(text: initTitle),
               hint: getAppLocalizations(context).popup_rename_playlist_hint,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.text,

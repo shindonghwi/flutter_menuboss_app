@@ -14,14 +14,19 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import '../provider/PlaylistSaveInfoProvider.dart';
 
 class PlaylistSettings extends HookWidget {
+  final PlaylistSettingType direction;
+  final PlaylistSettingType scale;
+
   const PlaylistSettings({
     super.key,
+    required this.direction,
+    required this.scale,
   });
 
   @override
   Widget build(BuildContext context) {
-    final directionType = useState(PlaylistSettingType.Horizontal);
-    final scaleType = useState(PlaylistSettingType.Fit);
+    final directionType = useState(direction);
+    final scaleType = useState(scale);
     final isFolded = useState(false);
 
     final controller = useAnimationController(duration: const Duration(milliseconds: 300));

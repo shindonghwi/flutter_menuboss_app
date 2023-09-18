@@ -3,7 +3,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
-import 'package:menuboss/presentation/features/edit/playlist/EditPlaylistScreen.dart';
+import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
@@ -22,7 +22,7 @@ enum RoutingScreen {
   MediaInfo(route: "/media/info"), // 미디어 정보
   MediaContent(route: "/media/content"), // 미디어 콘텐츠 목록
 
-  EditPlaylist(route: "/edit/playlist"), // 플레이리스트 수정
+  DetailPlaylist(route: "/detail/playlist"), // 플레이리스트 상세
   CreatePlaylist(route: "/create/playlist"), // 플레이리스트 만들기
   PreviewPlaylist(route: "/preview/playlist"), // 플레이리스트 미리보기
 
@@ -45,7 +45,7 @@ enum RoutingScreen {
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
       RoutingScreen.MediaContent.route: (context) => const MediaContentScreen(),
 
-      RoutingScreen.EditPlaylist.route: (context) => const EditPlaylistScreen(),
+      RoutingScreen.DetailPlaylist.route: (context) => const DetailPlaylistScreen(),
       RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
       RoutingScreen.PreviewPlaylist.route: (context) => const PreviewPlaylistScreen(),
 
@@ -72,12 +72,13 @@ enum RoutingScreen {
       return const MediaContentScreen();
     }
 
-    else if (route == RoutingScreen.EditPlaylist.route) {
+    else if (route == RoutingScreen.DetailPlaylist.route) {
       ResponsePlaylistModel model = parameter;
-      return EditPlaylistScreen(item: model);
+      return DetailPlaylistScreen(item: model);
     }
     else if (route == RoutingScreen.CreatePlaylist.route) {
-      return const CreatePlaylistScreen();
+      ResponsePlaylistModel? model = parameter;
+      return CreatePlaylistScreen(item: model);
     }
     else if (route == RoutingScreen.PreviewPlaylist.route) {
       return const PreviewPlaylistScreen();

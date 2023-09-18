@@ -1,7 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-import 'ResponsePlaylistContents.dart';
+import 'ResponsePlaylistContent.dart';
 import 'ResponsePlaylistProperty.dart';
 
 part 'ResponsePlaylistModel.g.dart';
@@ -12,7 +12,7 @@ class ResponsePlaylistModel {
   final int playlistId;
   final String name;
   final ResponsePlaylistProperty? property;
-  final List<ResponsePlaylistContents>? contents;
+  final List<ResponsePlaylistContent>? contents;
   String updatedAt;
 
   ResponsePlaylistModel({
