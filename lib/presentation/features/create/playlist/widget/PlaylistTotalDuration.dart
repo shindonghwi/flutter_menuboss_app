@@ -42,7 +42,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                "Total duration",
+                getAppLocalizations(context).common_total_duration,
                 style: getTextTheme(context).b3sb.copyWith(
                       color: getColorScheme(context).colorGray500,
                     ),

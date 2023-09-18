@@ -13,7 +13,7 @@ abstract class RemotePlaylistRepository {
   Future<ApiListResponse<List<ResponsePlaylistModel>>> getPlaylists();
 
   /// 플레이 리스트 정보 조회
-  Future<ApiResponse<void>> getPlaylist(int playlistId);
+  Future<ApiResponse<ResponsePlaylistModel>> getPlaylist(int playlistId);
 
   /// 플레이 리스트 등록
   Future<ApiResponse<ResponsePlaylistCreate>> postPlaylist(RequestPlaylistUpdateInfoModel data);

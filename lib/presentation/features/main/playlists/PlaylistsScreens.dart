@@ -108,13 +108,22 @@ class _PlaylistContentList extends HookConsumerWidget {
                     final item = items[index];
                     return ClickableScale(
                         child: PlayListItem(item: item),
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            nextSlideHorizontalScreen(
-                              RoutingScreen.CreatePlaylist.route,
-                            ),
-                          );
+                        onPressed: () async {
+                          try {
+                            final isChanged = await Navigator.push(
+                              context,
+                              nextSlideHorizontalScreen(
+                                RoutingScreen.EditPlaylist.route,
+                                parameter: item,
+                              ),
+                            );
+
+                            if (isChanged) {
+                              playlistProvider.requestGetPlaylists();
+                            }
+                          } catch (e) {
+                            debugPrint(e.toString());
+                          }
                         });
                   },
                 ),

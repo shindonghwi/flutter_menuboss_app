@@ -19,7 +19,7 @@ class RemotePlaylistRepositoryImpl implements RemotePlaylistRepository {
   }
 
   @override
-  Future<ApiResponse<void>> getPlaylist(int playlistId) {
+  Future<ApiResponse<ResponsePlaylistModel>> getPlaylist(int playlistId) {
     return _remotePlaylistApi.getPlaylist(playlistId);
   }
 
