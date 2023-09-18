@@ -13,7 +13,7 @@ class ResponsePlaylistModel {
   final String name;
   final ResponsePlaylistProperty? property;
   final List<ResponsePlaylistContents>? contents;
-  final String updatedAt;
+  String updatedAt;
 
   ResponsePlaylistModel({
     required this.object,
@@ -27,6 +27,21 @@ class ResponsePlaylistModel {
   factory ResponsePlaylistModel.fromJson(Map<String, dynamic> json) => _$ResponsePlaylistModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponsePlaylistModelToJson(this);
+
+  ResponsePlaylistModel toUpDatedAtSimpleMapper() {
+    return ResponsePlaylistModel(
+      object: object,
+      playlistId: playlistId,
+      name: name,
+      property: property,
+      contents: contents,
+      updatedAt: _updatedAtMapper(updatedAt),
+    );
+  }
+
+  String _updatedAtMapper(String updatedAt) {
+    return StringUtil.formatSimpleDate(updatedAt);
+  }
 
   @override
   String toString() {

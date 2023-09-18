@@ -73,13 +73,17 @@ class _DeviceContentList extends HookConsumerWidget {
     final deviceProvider = ref.read(DeviceListProvider.notifier);
 
     void goToRegisterDevice() async {
-      final isAdded = await Navigator.push(
-        context,
-        nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
-      );
+      try {
+        final isAdded = await Navigator.push(
+          context,
+          nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
+        );
 
-      if (isAdded) {
-        deviceProvider.requestGetDevices();
+        if (isAdded) {
+          deviceProvider.requestGetDevices();
+        }
+      } catch (e) {
+        debugPrint(e.toString());
       }
     }
 

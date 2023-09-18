@@ -82,17 +82,17 @@ class _PlaylistContentList extends HookConsumerWidget {
     final scrollController = useScrollController(keepScrollOffset: true);
 
     void goToCreatePlaylist() async {
-      bool isRegistered = await Navigator.push(
-        context,
-        nextSlideVerticalScreen(
-          RoutingScreen.CreatePlaylist.route,
-        ),
-      );
-      try{
+      try {
+        bool isRegistered = await Navigator.push(
+          context,
+          nextSlideVerticalScreen(
+            RoutingScreen.CreatePlaylist.route,
+          ),
+        );
         if (isRegistered) {
           playlistProvider.requestGetPlaylists();
         }
-      }catch(e){
+      } catch (e) {
         debugPrint(e.toString());
       }
     }
@@ -107,16 +107,15 @@ class _PlaylistContentList extends HookConsumerWidget {
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return ClickableScale(
-                      child: PlayListItem(item: item),
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(
-                            RoutingScreen.CreatePlaylist.route,
-                          ),
-                        );
-                      }
-                    );
+                        child: PlayListItem(item: item),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            nextSlideHorizontalScreen(
+                              RoutingScreen.CreatePlaylist.route,
+                            ),
+                          );
+                        });
                   },
                 ),
                 Container(

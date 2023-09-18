@@ -152,16 +152,20 @@ class _MediaContentList extends HookConsumerWidget {
                         onPressed: () async {
                           if (isFolderType) {
                           } else {
-                            final newName = await Navigator.push(
-                              context,
-                              nextSlideHorizontalScreen(
-                                RoutingScreen.MediaInfo.route,
-                                parameter: item,
-                              ),
-                            );
+                            try {
+                              final newName = await Navigator.push(
+                                context,
+                                nextSlideHorizontalScreen(
+                                  RoutingScreen.MediaInfo.route,
+                                  parameter: item,
+                                ),
+                              );
 
-                            if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                              mediaProvider.renameItem(item.mediaId, newName);
+                              if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                                mediaProvider.renameItem(item.mediaId, newName);
+                              }
+                            } catch (e) {
+                              debugPrint(e.toString());
                             }
                           }
                         },
