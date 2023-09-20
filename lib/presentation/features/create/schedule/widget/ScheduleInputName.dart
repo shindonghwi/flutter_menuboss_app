@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
+import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -18,6 +19,8 @@ class ScheduleInputName extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
+    final saveProvider = ref.read(ScheduleSaveInfoProvider.notifier);
+    
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
@@ -41,7 +44,7 @@ class ScheduleInputName extends HookConsumerWidget {
               textInputType: TextInputType.text,
               showPwVisibleButton: false,
               showSuffixStatusIcon: false,
-              onChanged: (name) => {},
+              onChanged: (name) => saveProvider.changeName(name),
             ),
           ),
         ],

@@ -16,6 +16,16 @@ const defaultTextStyle = TextStyle(
 
 extension StyleText on TextTheme {
   TextStyle get h1b => defaultTextStyle.copyWith(
+      fontSize: 60,
+      fontWeight: FontWeight.w700,
+      height: 1.36
+  );
+  TextStyle get h2b => defaultTextStyle.copyWith(
+      fontSize: 48,
+      fontWeight: FontWeight.w700,
+      height: 1.375
+  );
+  TextStyle get h3b => defaultTextStyle.copyWith(
       fontSize: 32,
       fontWeight: FontWeight.w700,
       height: 1.375
@@ -23,6 +33,11 @@ extension StyleText on TextTheme {
   TextStyle get s1b => defaultTextStyle.copyWith(
       fontSize: 24,
       fontWeight: FontWeight.w700,
+      height: 1.375
+  );
+  TextStyle get s1sb => defaultTextStyle.copyWith(
+      fontSize: 24,
+      fontWeight: FontWeight.w600,
       height: 1.375
   );
   TextStyle get s2b => defaultTextStyle.copyWith(
@@ -35,8 +50,13 @@ extension StyleText on TextTheme {
       fontWeight: FontWeight.w600,
       height: 1.35
   );
+  TextStyle get b1b => defaultTextStyle.copyWith(
+      fontSize: 18,
+      fontWeight: FontWeight.w700,
+      height: 1.38
+  );
   TextStyle get b1sb => defaultTextStyle.copyWith(
-      fontSize: 16,
+      fontSize: 18,
       fontWeight: FontWeight.w600,
       height: 1.375
   );

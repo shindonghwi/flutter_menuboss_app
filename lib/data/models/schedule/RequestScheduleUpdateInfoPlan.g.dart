@@ -11,8 +11,8 @@ RequestScheduleUpdateInfoPlan _$RequestScheduleUpdateInfoPlanFromJson(
     RequestScheduleUpdateInfoPlan(
       playlistId: json['playlistId'] as int,
       type: json['type'] as String,
-      startTime: json['startTime'] as String,
-      endTime: json['endTime'] as String,
+      startTime: json['startTime'] as String?,
+      endTime: json['endTime'] as String?,
     );
 
 Map<String, dynamic> _$RequestScheduleUpdateInfoPlanToJson(

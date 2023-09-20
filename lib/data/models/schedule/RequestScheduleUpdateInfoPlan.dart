@@ -8,8 +8,8 @@ part 'RequestScheduleUpdateInfoPlan.g.dart';
 class RequestScheduleUpdateInfoPlan {
   final int playlistId;
   final String type;
-  final String startTime;
-  final String endTime;
+  final String? startTime;
+  final String? endTime;
 
   RequestScheduleUpdateInfoPlan({
     required this.playlistId,

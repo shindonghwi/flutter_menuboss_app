@@ -12,6 +12,7 @@ import 'package:menuboss/presentation/features/media_content/MediaContentScreen.
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
 import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
+import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
 enum RoutingScreen {
@@ -28,6 +29,8 @@ enum RoutingScreen {
   PreviewPlaylist(route: "/preview/playlist"), // 플레이리스트 미리보기
 
   CreateSchedule(route: "/create/schedule"), // 스케줄 만들기
+
+  SelectPlaylist(route: "/select/playlist"), // 플레이리스트 선택
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"); // 프로필 정보
@@ -53,6 +56,8 @@ enum RoutingScreen {
       RoutingScreen.PreviewPlaylist.route: (context) => const PreviewPlaylistScreen(),
 
       RoutingScreen.CreateSchedule.route: (context) => const CreateScheduleScreen(),
+
+      RoutingScreen.SelectPlaylist.route: (context) => const SelectPlaylistScreen(),
 
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
@@ -91,6 +96,11 @@ enum RoutingScreen {
 
     else if (route == RoutingScreen.CreateSchedule.route) {
       return const CreateScheduleScreen();
+    }
+
+    else if (route == RoutingScreen.SelectPlaylist.route) {
+      List<int> playlistIds = parameter;
+      return SelectPlaylistScreen(playlistIds: playlistIds);
     }
 
     else if (route == RoutingScreen.ApplyDevice.route) {

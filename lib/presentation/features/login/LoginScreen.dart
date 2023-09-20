@@ -187,7 +187,7 @@ class _Title extends StatelessWidget {
         children: [
           Text(
             getAppLocalizations(context).login_title,
-            style: getTextTheme(context).h1b.copyWith(
+            style: getTextTheme(context).h3b.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
@@ -195,7 +195,7 @@ class _Title extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               getAppLocalizations(context).login_welcome,
-              style: getTextTheme(context).b1sb.copyWith(
+              style: getTextTheme(context).b2sb.copyWith(
                     color: getColorScheme(context).colorGray700,
                   ),
             ),

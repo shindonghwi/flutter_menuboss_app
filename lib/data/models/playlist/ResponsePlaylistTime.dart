@@ -5,8 +5,8 @@ part 'ResponsePlaylistTime.g.dart';
 
 @JsonSerializable()
 class ResponsePlaylistTime {
-  final String start;
-  final String end;
+  final String? start;
+  final String? end;
 
   ResponsePlaylistTime({
     required this.start,

@@ -9,8 +9,8 @@ part 'RequestScheduleUpdateInfoModel.g.dart';
 @JsonSerializable()
 class RequestScheduleUpdateInfoModel {
   final String name;
-  final List<RequestScheduleUpdateInfoPlan>? plans;
   final List<RequestScheduleUpdateInfoPlaylist>? playlists;
+  final List<RequestScheduleUpdateInfoPlan>? plans;
 
   RequestScheduleUpdateInfoModel({
     required this.name,

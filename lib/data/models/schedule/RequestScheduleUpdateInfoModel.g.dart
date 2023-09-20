@@ -24,6 +24,6 @@ Map<String, dynamic> _$RequestScheduleUpdateInfoModelToJson(
         RequestScheduleUpdateInfoModel instance) =>
     <String, dynamic>{
       'name': instance.name,
-      'plans': instance.plans,
       'playlists': instance.playlists,
+      'plans': instance.plans,
     };

@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -16,6 +18,16 @@ class NeutralLineButton extends HookWidget {
   /// @author: 2023/09/05 3:13 PM donghwishin
   const NeutralLineButton.extraSmallRound4({
     Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 4,
+        height = 40,
+        super(key: key);
+
+  const NeutralLineButton.extraSmallRound4Icon({
+    Key? key,
     required this.leftIcon,
     required this.content,
     required this.isActivated,
@@ -23,6 +35,17 @@ class NeutralLineButton extends HookWidget {
   })  : borderRadius = 4,
         height = 40,
         super(key: key);
+
+  const NeutralLineButton.extraSmallRound100({
+    Key? key,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : leftIcon = null,
+        borderRadius = 100,
+        height = 40,
+        super(key: key);
+
 
   /// @feature: medium buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
@@ -118,13 +141,10 @@ class NeutralLineButton extends HookWidget {
 
     switch (height) {
       case 40:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
-        break;
-      case 52:
-        textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
         break;
     }
 

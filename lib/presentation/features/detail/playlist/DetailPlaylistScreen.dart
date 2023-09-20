@@ -42,7 +42,6 @@ class DetailPlaylistScreen extends HookConsumerWidget {
     final editPlaylistProvider = ref.read(GetEditPlaylistProvider.notifier);
     final delEditPlaylistProvider = ref.read(DelEditPlaylistProvider.notifier);
     final editPlaylist = useState<ResponsePlaylistModel?>(null);
-    ResponsePlaylistModel? playListInfo;
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -58,7 +57,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           editPlaylistState.when(
-            success: (event) => playListInfo = event.value,
+            success: (event) => editPlaylist.value = event.value,
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -96,7 +95,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
                 context,
                 nextSlideHorizontalScreen(
                   RoutingScreen.CreatePlaylist.route,
-                  parameter: playListInfo,
+                  parameter: editPlaylist.value,
                 ),
               );
               if (isUpdated) {
