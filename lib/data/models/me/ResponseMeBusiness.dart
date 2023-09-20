@@ -1,4 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/presentation/utils/StringUtil.dart';
+
+import 'ResponseMeBusinessPermissions.dart';
 
 part 'ResponseMeBusiness.g.dart';
 
@@ -6,7 +9,7 @@ part 'ResponseMeBusiness.g.dart';
 class ResponseMeBusiness {
   final String? title;
   final String? role;
-  final List<String>? permissions;
+  final List<ResponseMeBusinessPermissions>? permissions;
 
   ResponseMeBusiness({
     required this.title,
@@ -21,7 +24,7 @@ class ResponseMeBusiness {
   ResponseMeBusiness copyWith({
     String? title,
     String? role,
-    List<String>? permissions,
+    List<ResponseMeBusinessPermissions>? permissions,
   }) {
     return ResponseMeBusiness(
       title: title ?? this.title,
@@ -32,6 +35,6 @@ class ResponseMeBusiness {
 
   @override
   String toString() {
-    return '{"title": "$title", "role": "$role", "permissions": "$permissions"}';
+    return StringUtil.convertPrettyJson(toJson());
   }
 }

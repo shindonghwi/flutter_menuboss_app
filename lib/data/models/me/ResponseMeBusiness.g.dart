@@ -11,7 +11,8 @@ ResponseMeBusiness _$ResponseMeBusinessFromJson(Map<String, dynamic> json) =>
       title: json['title'] as String?,
       role: json['role'] as String?,
       permissions: (json['permissions'] as List<dynamic>?)
-          ?.map((e) => e as String)
+          ?.map((e) =>
+              ResponseMeBusinessPermissions.fromJson(e as Map<String, dynamic>))
           .toList(),
     );
 
