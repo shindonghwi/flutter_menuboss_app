@@ -34,11 +34,6 @@ class RemotePlaylistRepositoryImpl implements RemotePlaylistRepository {
   }
 
   @override
-  Future<ApiResponse<void>> patchPlaylistName(int playlistId, String name) {
-    return _remotePlaylistApi.patchPlaylistName(playlistId, name);
-  }
-
-  @override
   Future<ApiResponse<void>> delPlaylist(int playlistId) {
     return _remotePlaylistApi.delPlaylist(playlistId);
   }

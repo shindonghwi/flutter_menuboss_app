@@ -5,21 +5,24 @@ import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseScheduleCreate.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../models/playlist/ResponsePlaylistCreate.dart';
+import '../../../models/schedule/RequestScheduleUpdateInfoModel.dart';
+import '../../../models/schedule/ResponseScheduleModel.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
 
-class RemotePlaylistApi {
-  RemotePlaylistApi();
+class RemoteScheduleApi {
+  RemoteScheduleApi();
 
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
-  /// 플레이 리스트 목록 조회
-  Future<ApiListResponse<List<ResponsePlaylistModel>>> getPlaylists() async {
+  /// 스케줄 리스트 목록 조회
+  Future<ApiListResponse<List<ResponseScheduleModel>>> getSchedules() async {
     final response = await Service.getApi(
-      type: ServiceType.Playlist,
+      type: ServiceType.Schedule,
       endPoint: null,
     );
 
@@ -35,19 +38,19 @@ class RemotePlaylistApi {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
         (json) {
-          return List<ResponsePlaylistModel>.from(
-            json.map((item) => ResponsePlaylistModel.fromJson(item as Map<String, dynamic>)),
+          return List<ResponseScheduleModel>.from(
+            json.map((item) => ResponseScheduleModel.fromJson(item as Map<String, dynamic>)),
           );
         },
       );
     }
   }
 
-  /// 플레이 리스트 정보 조회
-  Future<ApiResponse<ResponsePlaylistModel>> getPlaylist(int playlistId) async {
+  /// 스케줄 정보 조회
+  Future<ApiResponse<ResponseScheduleModel>> getSchedule(int scheduleId) async {
     final response = await Service.getApi(
-      type: ServiceType.Playlist,
-      endPoint: "$playlistId",
+      type: ServiceType.Schedule,
+      endPoint: "$scheduleId",
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);
@@ -60,16 +63,16 @@ class RemotePlaylistApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-        (json) => ResponsePlaylistModel.fromJson(json),
+        (json) => ResponseScheduleModel.fromJson(json),
       );
     }
   }
 
-  /// 플레이 리스트 등록
-  /// return playlistId
-  Future<ApiResponse<ResponsePlaylistCreate>> postPlaylist(RequestPlaylistUpdateInfoModel data) async {
+  /// 스케줄 등록
+  /// return scheduleId
+  Future<ApiResponse<ResponseScheduleCreate>> postSchedule(RequestScheduleUpdateInfoModel data) async {
     final response = await Service.postApi(
-      type: ServiceType.Playlist,
+      type: ServiceType.Schedule,
       endPoint: null,
       jsonBody: data.toJson(),
     );
@@ -84,16 +87,16 @@ class RemotePlaylistApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-        (json) => ResponsePlaylistCreate.fromJson(json),
+        (json) => ResponseScheduleCreate.fromJson(json),
       );
     }
   }
 
-  /// 플레이 리스트 정보 업데이트
-  Future<ApiResponse<void>> patchPlaylist(int playlistId, RequestPlaylistUpdateInfoModel data) async {
+  /// 스케줄 정보 업데이트
+  Future<ApiResponse<void>> patchSchedule(int scheduleId, RequestScheduleUpdateInfoModel data) async {
     final response = await Service.patchApi(
-      type: ServiceType.Playlist,
-      endPoint: "$playlistId",
+      type: ServiceType.Schedule,
+      endPoint: "$scheduleId",
       jsonBody: data.toJson(),
     );
 
@@ -112,11 +115,11 @@ class RemotePlaylistApi {
     }
   }
 
-  /// 플레이 리스트 삭제
-  Future<ApiResponse<void>> delPlaylist(int playlistId) async {
+  /// 스케줄 삭제
+  Future<ApiResponse<void>> delSchedule(int scheduleId) async {
     final response = await Service.deleteApi(
-      type: ServiceType.Playlist,
-      endPoint: "$playlistId",
+      type: ServiceType.Schedule,
+      endPoint: "$scheduleId",
       jsonBody: null,
     );
 

@@ -6,6 +6,7 @@ import 'package:menuboss/data/data_source/remote/device/RemoteDeviceApi.dart';
 import 'package:menuboss/data/data_source/remote/me/RemoteMeApi.dart';
 import 'package:menuboss/data/data_source/remote/media/RemoteMediaApi.dart';
 import 'package:menuboss/data/data_source/remote/playlist/RemotePlaylistApi.dart';
+import 'package:menuboss/data/data_source/remote/schedule/RemoteScheduleApi.dart';
 import 'package:menuboss/data/repositories/local/app/LocalAppRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/auth/RemoteAuthRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/canvas/RemoteCanvasRepositoryImpl.dart';
@@ -13,6 +14,7 @@ import 'package:menuboss/data/repositories/remote/device/RemoteDeviceRepositoryI
 import 'package:menuboss/data/repositories/remote/me/RemoteMeRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/media/RemoteMediaRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/playlist/RemotePlaylistRepositoryImpl.dart';
+import 'package:menuboss/data/repositories/remote/schedule/RemoteScheduleRepositoryImpl.dart';
 import 'package:menuboss/domain/repositories/local/app/LocalAppRepository.dart';
 import 'package:menuboss/domain/repositories/remote/auth/RemoteAuthRepository.dart';
 import 'package:menuboss/domain/repositories/remote/canvas/RemoteCanvasRepository.dart';
@@ -20,6 +22,7 @@ import 'package:menuboss/domain/repositories/remote/device/RemoteDeviceRepositor
 import 'package:menuboss/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:menuboss/domain/repositories/remote/media/RemoteMediaRepository.dart';
 import 'package:menuboss/domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
+import 'package:menuboss/domain/repositories/remote/schedule/RemoteScheduleRepository.dart';
 import 'package:menuboss/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/GetMediaFilterTypeUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
@@ -46,9 +49,13 @@ import 'package:menuboss/domain/usecases/remote/media/PostMediaMoveUseCase.dart'
 import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistsUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/PostPlaylistUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/schedule/DelScheduleUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/schedule/GetScheduleUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/schedule/GetSchedulesUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/schedule/PatchScheduleUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/schedule/PostPlaylistUseCase.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 final serviceLocator = GetIt.instance;
@@ -92,8 +99,14 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<GetPlaylistUseCase>(() => GetPlaylistUseCase());
   GetIt.instance.registerLazySingleton<PostPlaylistUseCase>(() => PostPlaylistUseCase());
   GetIt.instance.registerLazySingleton<PatchPlaylistUseCase>(() => PatchPlaylistUseCase());
-  GetIt.instance.registerLazySingleton<PatchPlaylistNameUseCase>(() => PatchPlaylistNameUseCase());
   GetIt.instance.registerLazySingleton<DelPlaylistUseCase>(() => DelPlaylistUseCase());
+
+  // schedule
+  GetIt.instance.registerLazySingleton<GetSchedulesUseCase>(() => GetSchedulesUseCase());
+  GetIt.instance.registerLazySingleton<GetScheduleUseCase>(() => GetScheduleUseCase());
+  GetIt.instance.registerLazySingleton<PostScheduleUseCase>(() => PostScheduleUseCase());
+  GetIt.instance.registerLazySingleton<PatchScheduleUseCase>(() => PatchScheduleUseCase());
+  GetIt.instance.registerLazySingleton<DelScheduleUseCase>(() => DelScheduleUseCase());
 
   // media
   GetIt.instance.registerLazySingleton<GetMediasUseCase>(() => GetMediasUseCase());
@@ -116,6 +129,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemotePlaylistRepository>(() => RemotePlaylistRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteMediaRepository>(() => RemoteMediaRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteCanvasRepository>(() => RemoteCanvasRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
 
   /// -------
   /// api
@@ -127,4 +141,5 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemotePlaylistApi>(() => RemotePlaylistApi());
   GetIt.instance.registerLazySingleton<RemoteMediaApi>(() => RemoteMediaApi());
   GetIt.instance.registerLazySingleton<RemoteCanvasApi>(() => RemoteCanvasApi());
+  GetIt.instance.registerLazySingleton<RemoteScheduleApi>(() => RemoteScheduleApi());
 }

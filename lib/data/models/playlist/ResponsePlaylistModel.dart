@@ -3,6 +3,7 @@ import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponsePlaylistContent.dart';
 import 'ResponsePlaylistProperty.dart';
+import 'ResponsePlaylistTime.dart';
 
 part 'ResponsePlaylistModel.g.dart';
 
@@ -11,6 +12,7 @@ class ResponsePlaylistModel {
   final String object;
   final int playlistId;
   final String name;
+  final ResponsePlaylistTime? time;
   final ResponsePlaylistProperty? property;
   final List<ResponsePlaylistContent>? contents;
   String updatedAt;
@@ -19,6 +21,7 @@ class ResponsePlaylistModel {
     required this.object,
     required this.playlistId,
     required this.name,
+    required this.time,
     required this.property,
     required this.contents,
     required this.updatedAt,
@@ -33,6 +36,7 @@ class ResponsePlaylistModel {
       object: object,
       playlistId: playlistId,
       name: name,
+      time: time,
       property: property,
       contents: contents,
       updatedAt: _updatedAtMapper(updatedAt),

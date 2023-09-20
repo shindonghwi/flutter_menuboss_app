@@ -15,22 +15,24 @@ class CreateScheduleScreen extends StatelessWidget {
     return BaseScaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
-        child: TopBarNoneTitleIcon(content: getAppLocalizations(context).create_schedule_title),
+        child: TopBarNoneTitleIcon(
+          content: getAppLocalizations(context).create_schedule_title,
+        ),
       ),
       body: Container(
         color: getColorScheme(context).white,
         child: SafeArea(
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                ScheduleInputName(
-                  initTitle: "item?.name" ?? "",
-                ),
-                ScheduleContentItem()
-              ],
-            ),
-          )
-      ),),
+            child: SingleChildScrollView(
+          child: Column(
+            children: [
+              ScheduleInputName(
+                initTitle: "item?.name" ?? "",
+              ),
+              ScheduleContentItem()
+            ],
+          ),
+        )),
+      ),
     );
   }
 }
