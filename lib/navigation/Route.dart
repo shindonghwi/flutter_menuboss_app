@@ -3,6 +3,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
+import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
@@ -26,6 +27,8 @@ enum RoutingScreen {
   CreatePlaylist(route: "/create/playlist"), // 플레이리스트 만들기
   PreviewPlaylist(route: "/preview/playlist"), // 플레이리스트 미리보기
 
+  CreateSchedule(route: "/create/schedule"), // 스케줄 만들기
+
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"); // 프로필 정보
 
@@ -48,6 +51,8 @@ enum RoutingScreen {
       RoutingScreen.DetailPlaylist.route: (context) => const DetailPlaylistScreen(),
       RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
       RoutingScreen.PreviewPlaylist.route: (context) => const PreviewPlaylistScreen(),
+
+      RoutingScreen.CreateSchedule.route: (context) => const CreateScheduleScreen(),
 
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
@@ -82,6 +87,10 @@ enum RoutingScreen {
     }
     else if (route == RoutingScreen.PreviewPlaylist.route) {
       return const PreviewPlaylistScreen();
+    }
+
+    else if (route == RoutingScreen.CreateSchedule.route) {
+      return const CreateScheduleScreen();
     }
 
     else if (route == RoutingScreen.ApplyDevice.route) {

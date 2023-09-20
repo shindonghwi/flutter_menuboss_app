@@ -4,7 +4,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-// small: 60x60, normal: 80x80, large: 120x120
+// small: 60x60, normal: 80x80, large: 140x140
 enum ImagePlaceholderType { Small, Normal, Large, AUTO_16x9 }
 
 class ImagePlaceholder extends StatelessWidget {
@@ -28,7 +28,7 @@ class ImagePlaceholder extends StatelessWidget {
         containerSize = 80;
         imageSize = Pair(52, 26);
       case ImagePlaceholderType.Large:
-        containerSize = 120;
+        containerSize = 140;
         imageSize = Pair(72, 36);
       default:
         containerSize = 80;

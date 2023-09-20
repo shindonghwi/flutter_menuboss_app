@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
@@ -18,7 +20,14 @@ class SchedulesScreen extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
           child: BlankMessage(
             type: BlankMessageType.NEW_SCHEDULE,
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(
+                context,
+                nextSlideVerticalScreen(
+                  RoutingScreen.CreateSchedule.route,
+                ),
+              );
+            },
           ),
         ),
       ),
