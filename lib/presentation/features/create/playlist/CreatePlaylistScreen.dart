@@ -66,6 +66,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                 ? PlaylistSettingType.Horizontal
                 : PlaylistSettingType.Vertical,
           );
+
           saveProvider.changeFill(
             item?.property?.fill?.code.toLowerCase() == "fill" ? PlaylistSettingType.Fill : PlaylistSettingType.Fit,
           );
@@ -101,8 +102,6 @@ class CreatePlaylistScreen extends HookConsumerWidget {
       handleUiStateChange();
       return null;
     }, [playListRegisterState, playListUpdateState]);
-
-    debugPrint("item: ${item?.property?.fill?.code.toLowerCase()}");
 
     return BaseScaffold(
       appBar: PreferredSize(

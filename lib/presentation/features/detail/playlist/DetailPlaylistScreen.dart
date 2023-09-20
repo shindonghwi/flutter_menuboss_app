@@ -236,6 +236,10 @@ class _Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint("item.property?.direction?.name.toLowerCase() : ${item.property?.direction?.code.toLowerCase()}");
+    debugPrint("item.property?.direction?.name.toLowerCase() : ${item.property?.fill?.code.toLowerCase()}");
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
@@ -258,7 +262,7 @@ class _Settings extends StatelessWidget {
                   ? PlaylistSettingType.Horizontal
                   : PlaylistSettingType.Vertical,
               scaleType:
-                  item.property?.fill?.name.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
+                  item.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
             ),
           ),
         ],
@@ -344,8 +348,8 @@ class _SettingContents extends HookWidget {
         Expanded(
           child: _SettingSelectableIcon(
             iconPath:
-                directionType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
-            iconText: directionType == PlaylistSettingType.Horizontal
+                scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
+            iconText: scaleType == PlaylistSettingType.Fit
                 ? getAppLocalizations(context).common_fit
                 : getAppLocalizations(context).common_fill,
             isChecked: true,

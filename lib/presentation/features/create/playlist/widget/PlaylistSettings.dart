@@ -25,6 +25,9 @@ class PlaylistSettings extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint("PlaylistSettings build assad $direction $scale");
+
     final directionType = useState(direction);
     final scaleType = useState(scale);
     final isFolded = useState(false);
