@@ -125,9 +125,9 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                             initTitle: item?.name ?? "",
                           ),
                           PlaylistSettings(
-                            direction: item?.property?.direction?.code.toLowerCase() == "horizontal"
-                                ? PlaylistSettingType.Horizontal
-                                : PlaylistSettingType.Vertical,
+                            direction: item?.property?.direction?.code.toLowerCase() == "vertical"
+                                ? PlaylistSettingType.Vertical
+                                : PlaylistSettingType.Horizontal,
                             scale: item?.property?.fill?.code.toLowerCase() == "fill"
                                 ? PlaylistSettingType.Fill
                                 : PlaylistSettingType.Fit,
