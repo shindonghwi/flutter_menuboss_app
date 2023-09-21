@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/loading/LoadingView.dart';
@@ -8,6 +10,7 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleRegisterProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
+import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleUpdateProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/widget/ScheduleContentItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -18,17 +21,29 @@ import 'provider/ScheduleTimelineInfoProvider.dart';
 import 'widget/ScheduleInputName.dart';
 
 class CreateScheduleScreen extends HookConsumerWidget {
-  const CreateScheduleScreen({super.key});
+  final ResponseScheduleModel? item;
+
+  const CreateScheduleScreen({
+    super.key,
+    this.item,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final isEditMode = useState(item != null);
+
     final scheduleRegisterState = ref.watch(ScheduleRegisterProvider);
+    final scheduleUpdateState = ref.watch(ScheduleUpdateProvider);
     final scheduleRegisterProvider = ref.read(ScheduleRegisterProvider.notifier);
+    final scheduleUpdateProvider = ref.read(ScheduleUpdateProvider.notifier);
     final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
+    final saveProvider = ref.read(ScheduleSaveInfoProvider.notifier);
 
     void initState() {
       timelineProvider.init();
+      saveProvider.init();
       scheduleRegisterProvider.init();
+      scheduleUpdateProvider.init();
     }
 
     useEffect(() {
@@ -37,6 +52,23 @@ class CreateScheduleScreen extends HookConsumerWidget {
       });
       return null;
     }, []);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (isEditMode.value) {
+          saveProvider.changeName(item?.name ?? "");
+
+          final newPlaylistItems = item?.playlists?.asMap().entries.map((e) {
+                int index = e.key;
+                return e.value.toSimpleSchedulesModelMapper(isRequired: index == 0);
+              }).toList() ??
+              [];
+
+          timelineProvider.replaceItems(newPlaylistItems);
+        }
+      });
+      return null;
+    }, [isEditMode.value]);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -48,32 +80,37 @@ class CreateScheduleScreen extends HookConsumerWidget {
             },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
+          scheduleUpdateState.when(
+            success: (event) {
+              initState();
+              Navigator.of(context).pop(true);
+            },
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+          );
         });
       }
 
       handleUiStateChange();
       return null;
-    }, [scheduleRegisterState]);
+    }, [scheduleRegisterState, scheduleUpdateState]);
 
     return BaseScaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(56.0),
-        child: TopBarNoneTitleIcon(
-          content: getAppLocalizations(context).create_schedule_title,
-        ),
+        child: isEditMode.value
+            ? TopBarIconTitleNone(content: getAppLocalizations(context).edit_schedule_title)
+            : TopBarNoneTitleIcon(content: getAppLocalizations(context).create_schedule_title),
       ),
       body: Container(
         color: getColorScheme(context).white,
         child: SafeArea(
           child: Stack(
             children: [
-              const SingleChildScrollView(
+              SingleChildScrollView(
                 child: Column(
                   children: [
-                    ScheduleInputName(
-                      initTitle: "",
-                    ),
-                    ScheduleContentItem()
+                    ScheduleInputName(initTitle: item?.name ?? ""),
+                    ScheduleContentItem(playlists: item?.playlists),
                   ],
                 ),
               ),
@@ -82,19 +119,28 @@ class CreateScheduleScreen extends HookConsumerWidget {
           ),
         ),
       ),
-      bottomNavigationBar: const _SaveButton(),
+      bottomNavigationBar: _SaveButton(
+        scheduleId: item?.scheduleId,
+        isEditMode: isEditMode.value,
+      ),
     );
   }
 }
 
 class _SaveButton extends HookConsumerWidget {
+  final int? scheduleId;
+  final bool isEditMode;
+
   const _SaveButton({
     super.key,
+    required this.scheduleId,
+    required this.isEditMode,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final scheduleRegisterProvider = ref.read(ScheduleRegisterProvider.notifier);
+    final scheduleUpdateProvider = ref.read(ScheduleUpdateProvider.notifier);
     final saveState = ref.watch(ScheduleSaveInfoProvider);
     final timelineState = ref.watch(ScheduleTimelineInfoProvider);
     final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
@@ -111,10 +157,14 @@ class _SaveButton extends HookConsumerWidget {
           content: getAppLocalizations(context).common_save,
           isActivated: isSaveAvailable,
           onPressed: () {
-            if (timelineProvider.hasAnyOverlappingTimes()){
+            if (timelineProvider.hasAnyOverlappingTimes()) {
               ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_duplicated);
-            }else{
-              scheduleRegisterProvider.registerSchedule(saveState);
+            } else {
+              if (isEditMode) {
+                scheduleUpdateProvider.updateSchedule(scheduleId ?? -1, saveState);
+              } else {
+                scheduleRegisterProvider.registerSchedule(saveState);
+              }
             }
           },
         ),

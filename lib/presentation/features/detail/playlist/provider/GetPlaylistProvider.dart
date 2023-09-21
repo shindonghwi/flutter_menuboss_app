@@ -6,12 +6,12 @@ import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final GetEditPlaylistProvider = StateNotifierProvider<GetEditPlaylistProviderNotifier, UIState<ResponsePlaylistModel>>(
-  (ref) => GetEditPlaylistProviderNotifier(),
+final GetPlaylistProvider = StateNotifierProvider<GetPlaylistNotifier, UIState<ResponsePlaylistModel>>(
+  (ref) => GetPlaylistNotifier(),
 );
 
-class GetEditPlaylistProviderNotifier extends StateNotifier<UIState<ResponsePlaylistModel>> {
-  GetEditPlaylistProviderNotifier() : super(Idle());
+class GetPlaylistNotifier extends StateNotifier<UIState<ResponsePlaylistModel>> {
+  GetPlaylistNotifier() : super(Idle());
 
   GetPlaylistUseCase get _getPlaylistUseCase => GetIt.instance<GetPlaylistUseCase>();
 

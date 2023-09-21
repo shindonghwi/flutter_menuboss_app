@@ -97,29 +97,47 @@ class _ScheduleContentList extends HookConsumerWidget {
       }
     }
 
+    void goToDetailSchedule(ResponseScheduleModel item) async {
+      try {
+        final isUpdated = await Navigator.push(
+          context,
+          nextSlideHorizontalScreen(
+            RoutingScreen.DetailSchedule.route,
+            parameter: item,
+          ),
+        );
+
+        if (isUpdated) {
+          scheduleProvider.requestGetSchedules();
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+
     return items.isNotEmpty
         ? Stack(
-          children: [
-            ListView.builder(
-              controller: useScrollController(),
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                final item = items[index];
-                return ClickableScale(
-                  child: ScheduleItem(item: item),
-                  onPressed: () => goToCreateSchedule(),
-                );
-              },
-            ),
-            Container(
-              alignment: Alignment.bottomRight,
-              margin: const EdgeInsets.only(bottom: 32, right: 24),
-              child: FloatingPlusButton(
-                onPressed: () => goToCreateSchedule(),
+            children: [
+              ListView.builder(
+                controller: useScrollController(),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return ClickableScale(
+                    child: ScheduleItem(item: item),
+                    onPressed: () => goToDetailSchedule(item),
+                  );
+                },
               ),
-            )
-          ],
-        )
+              Container(
+                alignment: Alignment.bottomRight,
+                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                child: FloatingPlusButton(
+                  onPressed: () => goToCreateSchedule(),
+                ),
+              )
+            ],
+          )
         : Expanded(
             child: BlankMessage(
               type: BlankMessageType.NEW_SCHEDULE,

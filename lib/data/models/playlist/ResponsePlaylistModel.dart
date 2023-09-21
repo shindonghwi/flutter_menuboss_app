@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponsePlaylistContent.dart';
@@ -30,6 +31,21 @@ class ResponsePlaylistModel {
   factory ResponsePlaylistModel.fromJson(Map<String, dynamic> json) => _$ResponsePlaylistModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponsePlaylistModelToJson(this);
+
+  SimpleSchedulesModel toSimpleSchedulesModelMapper({
+    required bool isRequired,
+  }) {
+    return SimpleSchedulesModel(
+      isRequired: isRequired,
+      isAddButton: false,
+      imageUrl: property?.imageUrl ?? "",
+      playlistId: playlistId,
+      playListName: name,
+      start: time?.start,
+      end: time?.end,
+      timeIsDuplicate: false,
+    );
+  }
 
   ResponsePlaylistModel toUpDatedAtSimpleMapper() {
     return ResponsePlaylistModel(

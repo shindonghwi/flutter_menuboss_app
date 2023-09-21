@@ -20,7 +20,7 @@ class PlaylistContents extends HookConsumerWidget {
     final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
     final List<SimpleMediaContentModel> contentItems = ref.watch(MediaContentsCartProvider);
     final items = useState<List<SimpleMediaContentModel>>([]);
-    //
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         items.value = [...contentItems];

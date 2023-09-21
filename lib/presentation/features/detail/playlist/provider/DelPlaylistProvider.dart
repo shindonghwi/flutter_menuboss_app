@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final DelEditPlaylistProvider = StateNotifierProvider<DelEditPlaylistProviderNotifier, UIState<void>>(
-  (ref) => DelEditPlaylistProviderNotifier(),
+final DelPlaylistProvider = StateNotifierProvider<DelPlaylistrNotifier, UIState<String?>>(
+  (ref) => DelPlaylistrNotifier(),
 );
 
-class DelEditPlaylistProviderNotifier extends StateNotifier<UIState<void>> {
-  DelEditPlaylistProviderNotifier() : super(Idle());
+class DelPlaylistrNotifier extends StateNotifier<UIState<String?>> {
+  DelPlaylistrNotifier() : super(Idle());
 
   DelPlaylistUseCase get _delPlaylistUseCase => GetIt.instance<DelPlaylistUseCase>();
 

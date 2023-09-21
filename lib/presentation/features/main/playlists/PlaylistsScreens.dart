@@ -97,6 +97,24 @@ class _PlaylistContentList extends HookConsumerWidget {
       }
     }
 
+    void goToDetailPlaylist(ResponsePlaylistModel item) async {
+      try {
+        final isChanged = await Navigator.push(
+          context,
+          nextSlideHorizontalScreen(
+            RoutingScreen.DetailPlaylist.route,
+            parameter: item,
+          ),
+        );
+
+        if (isChanged) {
+          playlistProvider.requestGetPlaylists();
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+
     return items.isNotEmpty
         ? Expanded(
             child: Stack(
@@ -107,24 +125,9 @@ class _PlaylistContentList extends HookConsumerWidget {
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return ClickableScale(
-                        child: PlaylistItem(item: item),
-                        onPressed: () async {
-                          try {
-                            final isChanged = await Navigator.push(
-                              context,
-                              nextSlideHorizontalScreen(
-                                RoutingScreen.DetailPlaylist.route,
-                                parameter: item,
-                              ),
-                            );
-
-                            if (isChanged) {
-                              playlistProvider.requestGetPlaylists();
-                            }
-                          } catch (e) {
-                            debugPrint(e.toString());
-                          }
-                        });
+                      child: PlaylistItem(item: item),
+                      onPressed: () => goToDetailPlaylist(item),
+                    );
                   },
                 ),
                 Container(

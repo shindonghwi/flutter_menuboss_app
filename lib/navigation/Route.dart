@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
+import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
@@ -28,6 +30,7 @@ enum RoutingScreen {
   CreatePlaylist(route: "/create/playlist"), // 플레이리스트 만들기
   PreviewPlaylist(route: "/preview/playlist"), // 플레이리스트 미리보기
 
+  DetailSchedule(route: "/detail/schedule"), // 스케줄 상세
   CreateSchedule(route: "/create/schedule"), // 스케줄 만들기
 
   SelectPlaylist(route: "/select/playlist"), // 플레이리스트 선택
@@ -55,6 +58,7 @@ enum RoutingScreen {
       RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
       RoutingScreen.PreviewPlaylist.route: (context) => const PreviewPlaylistScreen(),
 
+      RoutingScreen.DetailSchedule.route: (context) => const DetailScheduleScreen(),
       RoutingScreen.CreateSchedule.route: (context) => const CreateScheduleScreen(),
 
       RoutingScreen.SelectPlaylist.route: (context) => const SelectPlaylistScreen(),
@@ -94,8 +98,13 @@ enum RoutingScreen {
       return const PreviewPlaylistScreen();
     }
 
+    else if (route == RoutingScreen.DetailSchedule.route) {
+      ResponseScheduleModel model = parameter;
+      return DetailScheduleScreen(item: model);
+    }
     else if (route == RoutingScreen.CreateSchedule.route) {
-      return const CreateScheduleScreen();
+      ResponseScheduleModel? model = parameter;
+      return CreateScheduleScreen(item: model);
     }
 
     else if (route == RoutingScreen.SelectPlaylist.route) {

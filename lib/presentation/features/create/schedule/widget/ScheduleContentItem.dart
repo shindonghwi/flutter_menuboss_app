@@ -23,7 +23,12 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import '../provider/ScheduleTimelineInfoProvider.dart';
 
 class ScheduleContentItem extends HookConsumerWidget {
-  const ScheduleContentItem({super.key});
+  final List<ResponsePlaylistModel>? playlists;
+
+  const ScheduleContentItem({
+    super.key,
+    required this.playlists,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

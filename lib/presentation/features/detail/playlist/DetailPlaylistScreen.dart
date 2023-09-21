@@ -23,8 +23,8 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-import 'provider/DelEditPlaylistProvider.dart';
-import 'provider/GetEditPlaylistProvider.dart';
+import 'provider/DelPlaylistProvider.dart';
+import 'provider/GetPlaylistProvider.dart';
 
 class DetailPlaylistScreen extends HookConsumerWidget {
   final ResponsePlaylistModel? item;
@@ -36,19 +36,19 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final editPlaylistState = ref.watch(GetEditPlaylistProvider);
-    final delEditPlaylistState = ref.watch(DelEditPlaylistProvider);
+    final playlistState = ref.watch(GetPlaylistProvider);
+    final delPlaylistState = ref.watch(DelPlaylistProvider);
 
-    final editPlaylistProvider = ref.read(GetEditPlaylistProvider.notifier);
-    final delEditPlaylistProvider = ref.read(DelEditPlaylistProvider.notifier);
-    final editPlaylist = useState<ResponsePlaylistModel?>(null);
+    final playlistProvider = ref.read(GetPlaylistProvider.notifier);
+    final delPlaylistProvider = ref.read(DelPlaylistProvider.notifier);
+    final playlistItem = useState<ResponsePlaylistModel?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        editPlaylistProvider.init();
-        delEditPlaylistProvider.init();
+        playlistProvider.init();
+        delPlaylistProvider.init();
         if (item?.playlistId == null) return;
-        editPlaylistProvider.requestPlaylistInfo(item?.playlistId ?? -1);
+        playlistProvider.requestPlaylistInfo(item?.playlistId ?? -1);
       });
       return null;
     }, []);
@@ -56,8 +56,8 @@ class DetailPlaylistScreen extends HookConsumerWidget {
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
-          editPlaylistState.when(
-            success: (event) => editPlaylist.value = event.value,
+          playlistState.when(
+            success: (event) => playlistItem.value = event.value,
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -65,14 +65,14 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
       handleUiStateChange();
       return null;
-    }, [editPlaylistState]);
+    }, [playlistState]);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
-          delEditPlaylistState.when(
+          delPlaylistState.when(
             success: (event) {
-              delEditPlaylistProvider.init();
+              delPlaylistProvider.init();
               Navigator.of(context).pop(true);
             },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
@@ -82,7 +82,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
       handleUiStateChange();
       return null;
-    }, [delEditPlaylistState]);
+    }, [delPlaylistState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
@@ -95,7 +95,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
                 context,
                 nextSlideHorizontalScreen(
                   RoutingScreen.CreatePlaylist.route,
-                  parameter: editPlaylist.value,
+                  parameter: playlistItem.value,
                 ),
               );
               if (isUpdated) {
@@ -110,7 +110,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
               context,
               child: PopupDelete(
                 onClicked: () {
-                  delEditPlaylistProvider.removePlaylist(item?.playlistId ?? -1);
+                  delPlaylistProvider.removePlaylist(item?.playlistId ?? -1);
                 },
               ),
             );
@@ -121,14 +121,14 @@ class DetailPlaylistScreen extends HookConsumerWidget {
         children: [
           Column(
             children: [
-              editPlaylist.value == null
-                  ? editPlaylistState is Success<ResponsePlaylistModel>
-                      ? _PlaylistContent(item: editPlaylistState.value)
+              playlistItem.value == null
+                  ? playlistState is Success<ResponsePlaylistModel>
+                      ? _PlaylistContent(item: playlistState.value)
                       : const SizedBox()
-                  : _PlaylistContent(item: editPlaylist.value!),
+                  : _PlaylistContent(item: playlistItem.value!),
             ],
           ),
-          if (editPlaylistState is Loading || delEditPlaylistState is Loading) const LoadingView(),
+          if (playlistState is Loading || delPlaylistState is Loading) const LoadingView(),
         ],
       ),
     );
