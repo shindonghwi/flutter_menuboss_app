@@ -5,11 +5,14 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetTimeSetting.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -139,7 +142,18 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                     leftIcon: SvgPicture.asset("assets/imgs/icon_time.svg"),
                                                     content: "${data.start} ~ ${data.end}",
                                                     isActivated: true,
-                                                    onPressed: () {},
+                                                    onPressed: () {
+                                                      CommonBottomSheet.showBottomSheet(
+                                                        context,
+                                                        child: BottomSheetTimeSetting(
+                                                          startTime: data.start.toString(),
+                                                          endTime: data.end.toString(),
+                                                          callback: (startTime, endTime) {
+                                                            ToastUtil.successToast("$startTime ~ $endTime");
+                                                          },
+                                                        ),
+                                                      );
+                                                    },
                                                   ),
                                                 ),
                                                 const SizedBox(
