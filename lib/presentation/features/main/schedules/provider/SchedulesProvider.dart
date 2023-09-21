@@ -23,4 +23,8 @@ class SchedulesNotifier extends StateNotifier<UIState<List<ResponseScheduleModel
       }
     });
   }
+
+  void init() {
+    state = Idle();
+  }
 }

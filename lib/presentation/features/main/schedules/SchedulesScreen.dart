@@ -6,25 +6,26 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
-import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
-import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/provider/SchedulesProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/widget/ScheduleItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../components/view_state/LoadingView.dart';
+
 class SchedulesScreen extends HookConsumerWidget {
   const SchedulesScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scheduleItems = useState<List<ResponseScheduleModel>?>(null);
     final schedulesState = ref.watch(SchedulesProvider);
     final schedulesProvider = ref.read(SchedulesProvider.notifier);
+    final scheduleList = useState<List<ResponseScheduleModel>?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,7 +39,8 @@ class SchedulesScreen extends HookConsumerWidget {
         await Future(() {
           schedulesState.when(
             success: (event) {
-              scheduleItems.value = event.value;
+              scheduleList.value = event.value;
+              schedulesProvider.init();
             },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
@@ -49,21 +51,26 @@ class SchedulesScreen extends HookConsumerWidget {
       return null;
     }, [schedulesState]);
 
-    return BaseScaffold(
-      appBar: TopBarTitle(
-        content: getAppLocalizations(context).main_navigation_menu_schedules,
-      ),
-      body: SafeArea(
-        child: Stack(
-          children: [
-            scheduleItems.value == null
-                ? schedulesState is Success<List<ResponseScheduleModel>>
-                    ? _ScheduleContentList(items: schedulesState.value)
-                    : const SizedBox()
-                : _ScheduleContentList(items: scheduleItems.value!),
-            if (schedulesState is Loading) const LoadingView(),
-          ],
-        ),
+    return SafeArea(
+      child: Column(
+        children: [
+          TopBarTitle(
+            content: getAppLocalizations(context).main_navigation_menu_schedules,
+          ),
+          Expanded(
+            child: Stack(
+              children: [
+                if (schedulesState is Failure)
+                  FailView(onPressed: () => schedulesProvider.requestGetSchedules())
+                else if (scheduleList.value != null)
+                  _ScheduleContentList(items: scheduleList.value!)
+                else if (schedulesState is Success<List<ResponseScheduleModel>>)
+                  _ScheduleContentList(items: schedulesState.value),
+                if (schedulesState is Loading) const LoadingView(),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -122,7 +129,9 @@ class _ScheduleContentList extends HookConsumerWidget {
         ? Stack(
             children: [
               ListView.builder(
-                controller: useScrollController(),
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
                 itemCount: items.length,
                 itemBuilder: (context, index) {
                   final item = items[index];
@@ -141,11 +150,9 @@ class _ScheduleContentList extends HookConsumerWidget {
               )
             ],
           )
-        : Expanded(
-            child: EmptyView(
-              type: BlankMessageType.NEW_SCHEDULE,
-              onPressed: () => goToCreateSchedule(),
-            ),
+        : EmptyView(
+            type: BlankMessageType.NEW_SCHEDULE,
+            onPressed: () => goToCreateSchedule(),
           );
   }
 }
