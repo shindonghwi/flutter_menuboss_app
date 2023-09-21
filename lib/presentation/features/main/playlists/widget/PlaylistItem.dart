@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/button/PrimaryLineButton.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -87,7 +88,7 @@ class PlaylistItem extends HookWidget {
               ],
             ),
           ),
-          PrimaryFilledButton.extraSmallRound100(
+          PrimaryLineButton.extraSmallRound100(
             content: getAppLocalizations(context).common_apply,
             isActivated: true,
             onPressed: () {
