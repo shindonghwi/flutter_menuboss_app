@@ -2,15 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
-import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
-import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/features/apply_screen/provider/PostApplyContentsToScreenProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
-import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
@@ -73,27 +71,28 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
     return BaseScaffold(
       appBar: TopBarIconTitleNone(content: getAppLocalizations(context).apply_screen_title),
       body: SafeArea(
-          child: !CollectionUtil.isNullorEmpty(deviceItems)
-              ? ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: deviceItems.length,
-                  itemBuilder: (context, index) {
-                    return ApplyDeviceItem(
-                      item: deviceItems[index],
-                      isChecked: checkListProvider.isExist(index),
-                      onPressed: () {
-                        checkListProvider.onChanged(index);
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox();
-                  },
-                )
-              : BlankMessage(
-                  type: BlankMessageType.ADD_SCREEN,
-                  onPressed: () {},
-                )),
+        child: !CollectionUtil.isNullorEmpty(deviceItems)
+            ? ListView.separated(
+                shrinkWrap: true,
+                itemCount: deviceItems.length,
+                itemBuilder: (context, index) {
+                  return ApplyDeviceItem(
+                    item: deviceItems[index],
+                    isChecked: checkListProvider.isExist(index),
+                    onPressed: () {
+                      checkListProvider.onChanged(index);
+                    },
+                  );
+                },
+                separatorBuilder: (context, index) {
+                  return const SizedBox();
+                },
+              )
+            : EmptyView(
+                type: BlankMessageType.ADD_SCREEN,
+                onPressed: () {},
+              ),
+      ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),

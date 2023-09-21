@@ -5,8 +5,8 @@ import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
-import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
@@ -142,7 +142,7 @@ class _ScheduleContentList extends HookConsumerWidget {
             ],
           )
         : Expanded(
-            child: BlankMessage(
+            child: EmptyView(
               type: BlankMessageType.NEW_SCHEDULE,
               onPressed: () => goToCreateSchedule(),
             ),

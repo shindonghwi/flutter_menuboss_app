@@ -4,8 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
-import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
@@ -32,7 +31,7 @@ class PlaylistContents extends HookConsumerWidget {
     return CollectionUtil.isNullorEmpty(contentItems)
         ? Padding(
             padding: const EdgeInsets.only(top: 60.0),
-            child: BlankMessage(
+            child: EmptyView(
               type: BlankMessageType.ADD_CONTENT,
               onPressed: () {
                 Navigator.push(

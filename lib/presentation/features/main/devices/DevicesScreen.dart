@@ -5,9 +5,9 @@ import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
-import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
@@ -124,11 +124,9 @@ class _DeviceContentList extends HookConsumerWidget {
               ),
             ],
           )
-        : BlankMessage(
+        : EmptyView(
             type: BlankMessageType.ADD_SCREEN,
-            onPressed: () {
-              goToRegisterDevice();
-            },
+            onPressed: () => goToRegisterDevice(),
           );
   }
 }

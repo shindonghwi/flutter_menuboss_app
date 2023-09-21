@@ -14,11 +14,11 @@ enum BlankMessageType {
   UPLOAD_FILE,
 }
 
-class BlankMessage extends HookWidget {
+class EmptyView extends HookWidget {
   final BlankMessageType type;
   final VoidCallback onPressed;
 
-  const BlankMessage({
+  const EmptyView({
     super.key,
     required this.type,
     required this.onPressed,
