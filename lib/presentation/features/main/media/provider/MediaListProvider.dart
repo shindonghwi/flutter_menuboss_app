@@ -64,6 +64,8 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
         }
         _isProcessing = false;
       });
+    }else{
+      init();
     }
   }
 
@@ -153,5 +155,9 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     _currentPage = 1;
     _hasNext = true;
     _isProcessing = false;
+  }
+
+  void init() {
+    state = Idle();
   }
 }

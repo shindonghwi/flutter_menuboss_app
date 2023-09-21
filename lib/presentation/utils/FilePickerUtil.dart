@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:image_picker/image_picker.dart';
 
 class FilePickerUtil {
@@ -25,6 +26,6 @@ class FilePickerUtil {
         return;
       }
     }
-    if (notAvailableFile != null) notAvailableFile();
+    if (notAvailableFile != null && xFile != null) notAvailableFile();
   }
 }

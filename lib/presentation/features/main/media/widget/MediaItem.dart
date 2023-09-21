@@ -71,7 +71,6 @@ class MediaItem extends HookWidget {
           MoreButton(
             items: const [ModifyType.Rename, ModifyType.Delete],
             onSelected: (type, text) {
-              debugPrint("type: $type, text: $text");
               if (type == ModifyType.Delete) {
                 CommonPopup.showPopup(
                   context,

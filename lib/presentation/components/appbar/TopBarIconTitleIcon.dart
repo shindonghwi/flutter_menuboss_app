@@ -53,15 +53,12 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
                           ),
                         ),
                       ),
-                    // BoxConstraints(
-                    //   maxWidth: getMediaQuery(context).size.width - (leadingIsShow ? 48 : 24) - 48,
-                    // )
                     ConstrainedBox(
                       constraints: BoxConstraints(
                         maxWidth: getMediaQuery(context).size.width * 0.5,
                       ),
                       child: Padding(
-                        padding: const EdgeInsets.all(8.0),
+                        padding: EdgeInsets.only(left: leadingIsShow ? 12 : 24),
                         child: Text(
                           content,
                           style: getTextTheme(context).s2b.copyWith(
