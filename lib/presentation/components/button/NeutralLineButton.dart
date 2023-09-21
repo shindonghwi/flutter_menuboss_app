@@ -137,7 +137,7 @@ class NeutralLineButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var textColor = isActivated ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
-    var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+    var textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
 
     switch (height) {
       case 40:

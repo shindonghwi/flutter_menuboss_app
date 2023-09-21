@@ -12,6 +12,7 @@ class SimpleSchedulesModel {
   final String playListName;
   final String? start;
   final String? end;
+  final bool timeIsDuplicate;
 
   SimpleSchedulesModel({
     required this.isRequired,
@@ -21,6 +22,7 @@ class SimpleSchedulesModel {
     required this.playListName,
     required this.start,
     required this.end,
+    required this.timeIsDuplicate,
   });
 
   factory SimpleSchedulesModel.fromJson(Map<String, dynamic> json) => _$SimpleSchedulesModelFromJson(json);
@@ -35,6 +37,7 @@ class SimpleSchedulesModel {
     String? playListName,
     String? start,
     String? end,
+    bool? timeIsDuplicate,
   }) {
     return SimpleSchedulesModel(
       isRequired: isRequired ?? this.isRequired,
@@ -44,6 +47,7 @@ class SimpleSchedulesModel {
       playListName: playListName ?? this.playListName,
       start: start ?? this.start,
       end: end ?? this.end,
+      timeIsDuplicate: timeIsDuplicate ?? this.timeIsDuplicate,
     );
   }
 
@@ -61,7 +65,8 @@ class SimpleSchedulesModel {
         other.playlistId == playlistId &&
         other.playListName == playListName &&
         other.start == start &&
-        other.end == end;
+        other.end == end&&
+        other.timeIsDuplicate == timeIsDuplicate;
   }
 
   @override

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -31,10 +32,7 @@ class BottomSheetTimeSetting extends HookWidget {
     final endHour = int.parse(endTime.split(':')[0]);
     final endMinute = int.parse(endTime.split(':')[1]);
 
-    final timeInfoState = [
-      Pair(useState(startHour), useState(startMinute)),
-      Pair(useState(endHour), useState(endMinute))
-    ];
+    final timeInfoState = [Pair(useState(startHour), useState(startMinute)), Pair(useState(endHour), useState(endMinute))];
 
     return Column(
       mainAxisSize: MainAxisSize.min,
@@ -52,16 +50,28 @@ class BottomSheetTimeSetting extends HookWidget {
         _TimeSelector(isFocusStartTime: isFocusStartTime, timeInfoState: timeInfoState),
         _NumberPickers(isFocusStartTime: isFocusStartTime, timeInfoState: timeInfoState),
         _ButtonGroups(onPressed: (isOkClick) {
-          Navigator.of(context).pop();
-          if (isOkClick) {
+          if (!isOkClick) {
+            Navigator.of(context).pop();
+            return;
+          } else {
             final startInfo = timeInfoState.first;
             final endInfo = timeInfoState.last;
 
-            final startTime =
-                "${startInfo.first.value.toString().padLeft(2, '0')}:${startInfo.second.value.toString().padLeft(2, '0')}";
-            final endTime =
-                "${endInfo.first.value.toString().padLeft(2, '0')}:${endInfo.second.value.toString().padLeft(2, '0')}";
-            callback.call(startTime, endTime);
+            // 시작 시간이 앞서는걸 방지
+            if (startInfo.first.value > endInfo.first.value) {
+              ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_precede);
+              return;
+            } else if ((startInfo.first.value == endInfo.first.value) && (startInfo.second.value >= endInfo.second.value)) {
+              ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_precede);
+              return;
+            }
+
+            if (isOkClick) {
+              Navigator.of(context).pop();
+              final startTime = "${startInfo.first.value.toString().padLeft(2, '0')}:${startInfo.second.value.toString().padLeft(2, '0')}";
+              final endTime = "${endInfo.first.value.toString().padLeft(2, '0')}:${endInfo.second.value.toString().padLeft(2, '0')}";
+              callback.call(startTime, endTime);
+            }
           }
         })
       ],
@@ -100,9 +110,7 @@ class _TimeSelector extends HookWidget {
                   Text(
                     "Start Time",
                     style: getTextTheme(context).b2b.copyWith(
-                          color: isFocusStartTime.value
-                              ? getColorScheme(context).colorPrimary500
-                              : getColorScheme(context).colorGray200,
+                          color: isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                         ),
                   ),
                   Padding(
@@ -110,9 +118,7 @@ class _TimeSelector extends HookWidget {
                     child: Text(
                       "${startInfo.first.value.toString().padLeft(2, '0')}:${startInfo.second.value.toString().padLeft(2, '0')}",
                       style: getTextTheme(context).b2b.copyWith(
-                            color: isFocusStartTime.value
-                                ? getColorScheme(context).colorPrimary500
-                                : getColorScheme(context).colorGray200,
+                            color: isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                           ),
                     ),
                   )
@@ -131,9 +137,7 @@ class _TimeSelector extends HookWidget {
                   Text(
                     "End Time",
                     style: getTextTheme(context).b2b.copyWith(
-                          color: !isFocusStartTime.value
-                              ? getColorScheme(context).colorPrimary500
-                              : getColorScheme(context).colorGray200,
+                          color: !isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                         ),
                   ),
                   Padding(
@@ -141,9 +145,7 @@ class _TimeSelector extends HookWidget {
                     child: Text(
                       "${endInfo.first.value.toString().padLeft(2, '0')}:${endInfo.second.value.toString().padLeft(2, '0')}",
                       style: getTextTheme(context).b2b.copyWith(
-                            color: !isFocusStartTime.value
-                                ? getColorScheme(context).colorPrimary500
-                                : getColorScheme(context).colorGray200,
+                            color: !isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                           ),
                     ),
                   )

@@ -3,16 +3,17 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetTimeSetting.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
+import 'package:menuboss/presentation/components/button/ErrorLineButton.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
-import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -36,6 +37,48 @@ class ScheduleContentItem extends HookConsumerWidget {
       });
       return null;
     }, [timelineState]);
+
+    void goToSelectPlaylist(SimpleSchedulesModel data) async {
+      try {
+        final playlistInfo = await Navigator.push(
+          context,
+          nextSlideHorizontalScreen(
+            RoutingScreen.SelectPlaylist.route,
+            parameter: timelineState.map((e) => e.playlistId!).toList(),
+          ),
+        );
+
+        if (playlistInfo is ResponsePlaylistModel) {
+          final updatedItem = data.copyWith(
+            playlistId: playlistInfo.playlistId,
+            playListName: playlistInfo.name,
+            imageUrl: playlistInfo.property?.imageUrl ?? "",
+          );
+          timelineProvider.updateItem(data.playlistId, updatedItem);
+        }
+      } catch (e) {
+        debugPrint(e.toString());
+      }
+    }
+
+    void showTimeSettingBottomSheet(SimpleSchedulesModel data) async {
+      CommonBottomSheet.showBottomSheet(
+        context,
+        child: BottomSheetTimeSetting(
+          startTime: data.start.toString(),
+          endTime: data.end.toString(),
+          callback: (startTime, endTime) {
+            timelineProvider.updateItem(
+              data.playlistId,
+              data.copyWith(
+                start: startTime,
+                end: endTime,
+              ),
+            );
+          },
+        ),
+      );
+    }
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -138,29 +181,27 @@ class ScheduleContentItem extends HookConsumerWidget {
                                               children: [
                                                 SizedBox(
                                                   width: double.infinity,
-                                                  child: NeutralLineButton.extraSmallRound4Icon(
-                                                    leftIcon: SvgPicture.asset("assets/imgs/icon_time.svg"),
-                                                    content: "${data.start} ~ ${data.end}",
-                                                    isActivated: true,
-                                                    onPressed: () {
-                                                      CommonBottomSheet.showBottomSheet(
-                                                        context,
-                                                        child: BottomSheetTimeSetting(
-                                                          startTime: data.start.toString(),
-                                                          endTime: data.end.toString(),
-                                                          callback: (startTime, endTime) {
-                                                            timelineProvider.updateItem(
-                                                              data.playlistId,
-                                                              data.copyWith(
-                                                                start: startTime,
-                                                                end: endTime,
-                                                              ),
-                                                            );
-                                                          },
+                                                  child: data.timeIsDuplicate
+                                                      ? ErrorLineButton.extraSmallRound4Icon(
+                                                          leftIcon: SvgPicture.asset(
+                                                            "assets/imgs/icon_time.svg",
+                                                            width: 20,
+                                                            height: 20,
+                                                            colorFilter: ColorFilter.mode(
+                                                              getColorScheme(context).colorGray900,
+                                                              BlendMode.srcIn,
+                                                            ),
+                                                          ),
+                                                          content: "${data.start} ~ ${data.end}",
+                                                          isActivated: true,
+                                                          onPressed: () => showTimeSettingBottomSheet(data),
+                                                        )
+                                                      : NeutralLineButton.extraSmallRound4Icon(
+                                                          leftIcon: SvgPicture.asset("assets/imgs/icon_time.svg"),
+                                                          content: "${data.start} ~ ${data.end}",
+                                                          isActivated: true,
+                                                          onPressed: () => showTimeSettingBottomSheet(data),
                                                         ),
-                                                      );
-                                                    },
-                                                  ),
                                                 ),
                                                 const SizedBox(
                                                   height: 4.0,
@@ -183,28 +224,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                         ? getAppLocalizations(context).create_schedule_add_playlist
                                                         : getAppLocalizations(context).create_schedule_change_playlist,
                                                     isActivated: true,
-                                                    onPressed: () async {
-                                                      try {
-                                                        final playlistInfo = await Navigator.push(
-                                                          context,
-                                                          nextSlideHorizontalScreen(
-                                                            RoutingScreen.SelectPlaylist.route,
-                                                            parameter: timelineState.map((e) => e.playlistId!).toList(),
-                                                          ),
-                                                        );
-
-                                                        if (playlistInfo is ResponsePlaylistModel) {
-                                                          final updatedItem = data.copyWith(
-                                                            playlistId: playlistInfo.playlistId,
-                                                            playListName: playlistInfo.name,
-                                                            imageUrl: playlistInfo.property?.imageUrl ?? "",
-                                                          );
-                                                          timelineProvider.updateItem(data.playlistId, updatedItem);
-                                                        }
-                                                      } catch (e) {
-                                                        debugPrint(e.toString());
-                                                      }
-                                                    },
+                                                    onPressed: () => goToSelectPlaylist(data),
                                                   ),
                                                 ),
                                               ],

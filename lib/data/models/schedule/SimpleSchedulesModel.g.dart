@@ -16,6 +16,7 @@ SimpleSchedulesModel _$SimpleSchedulesModelFromJson(
       playListName: json['playListName'] as String,
       start: json['start'] as String?,
       end: json['end'] as String?,
+      timeIsDuplicate: json['timeIsDuplicate'] as bool,
     );
 
 Map<String, dynamic> _$SimpleSchedulesModelToJson(
@@ -28,4 +29,5 @@ Map<String, dynamic> _$SimpleSchedulesModelToJson(
       'playListName': instance.playListName,
       'start': instance.start,
       'end': instance.end,
+      'timeIsDuplicate': instance.timeIsDuplicate,
     };
