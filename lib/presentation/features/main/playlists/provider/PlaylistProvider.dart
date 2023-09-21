@@ -23,4 +23,8 @@ class PlayListNotifier extends StateNotifier<UIState<List<ResponsePlaylistModel>
       }
     });
   }
+
+  void init() {
+    state = Idle();
+  }
 }

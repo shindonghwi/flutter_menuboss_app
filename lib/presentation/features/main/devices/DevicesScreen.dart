@@ -56,13 +56,12 @@ class DevicesScreen extends HookConsumerWidget {
           Expanded(
             child: Stack(
               children: [
-                deviceState is Failure
-                    ? FailView(onPressed: () => deviceProvider.requestGetDevices())
-                    : deviceList.value == null
-                        ? deviceState is Success<List<ResponseDeviceModel>>
-                            ? _DeviceContentList(items: deviceState.value)
-                            : const SizedBox()
-                        : _DeviceContentList(items: deviceList.value!),
+                if (deviceState is Failure)
+                  FailView(onPressed: () => deviceProvider.requestGetDevices())
+                else if (deviceList.value != null)
+                  _DeviceContentList(items: deviceList.value!)
+                else if (deviceState is Success<List<ResponseDeviceModel>>)
+                  _DeviceContentList(items: deviceState.value),
                 if (deviceState is Loading) const LoadingView(),
               ],
             ),

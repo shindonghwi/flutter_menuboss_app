@@ -7,23 +7,25 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
-import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+
+import '../../../components/view_state/LoadingView.dart';
 
 class PlaylistsScreens extends HookConsumerWidget {
   const PlaylistsScreens({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playlist = useState<List<ResponsePlaylistModel>?>(null);
     final playlistState = ref.watch(PlayListProvider);
     final playlistProvider = ref.read(PlayListProvider.notifier);
+    final playlist = useState<List<ResponsePlaylistModel>?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -38,6 +40,7 @@ class PlaylistsScreens extends HookConsumerWidget {
           playlistState.when(
             success: (event) {
               playlist.value = event.value;
+              playlistProvider.init();
             },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
@@ -49,19 +52,24 @@ class PlaylistsScreens extends HookConsumerWidget {
     }, [playlistState]);
 
     return SafeArea(
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            children: [
-              TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_playlists),
-              playlist.value == null
-                  ? playlistState is Success<List<ResponsePlaylistModel>>
-                      ? _PlaylistContentList(items: playlistState.value)
-                      : const SizedBox()
-                  : _PlaylistContentList(items: playlist.value!),
-            ],
+          TopBarTitle(
+            content: getAppLocalizations(context).main_navigation_menu_playlists,
           ),
-          if (playlistState is Loading) const LoadingView(),
+          Expanded(
+            child: Stack(
+              children: [
+                if (playlistState is Failure)
+                  FailView(onPressed: () => playlistProvider.requestGetPlaylists())
+                else if (playlist.value != null)
+                  _PlaylistContentList(items: playlist.value!)
+                else if (playlistState is Success<List<ResponsePlaylistModel>>)
+                  _PlaylistContentList(items: playlistState.value),
+                if (playlistState is Loading) const LoadingView(),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -79,7 +87,6 @@ class _PlaylistContentList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playlistProvider = ref.read(PlayListProvider.notifier);
-    final scrollController = useScrollController(keepScrollOffset: true);
 
     void goToCreatePlaylist() async {
       try {
@@ -116,37 +123,34 @@ class _PlaylistContentList extends HookConsumerWidget {
     }
 
     return items.isNotEmpty
-        ? Expanded(
-            child: Stack(
-              children: [
-                ListView.builder(
-                  controller: scrollController,
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    return ClickableScale(
-                      child: PlaylistItem(item: item),
-                      onPressed: () => goToDetailPlaylist(item),
-                    );
+        ? Stack(
+            children: [
+              ListView.builder(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                physics: const BouncingScrollPhysics(),
+                itemCount: items.length,
+                itemBuilder: (context, index) {
+                  final item = items[index];
+                  return ClickableScale(
+                    child: PlaylistItem(item: item),
+                    onPressed: () => goToDetailPlaylist(item),
+                  );
+                },
+              ),
+              Container(
+                alignment: Alignment.bottomRight,
+                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                child: FloatingPlusButton(
+                  onPressed: () {
+                    goToCreatePlaylist();
                   },
                 ),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  margin: const EdgeInsets.only(bottom: 32, right: 24),
-                  child: FloatingPlusButton(
-                    onPressed: () {
-                      goToCreatePlaylist();
-                    },
-                  ),
-                )
-              ],
-            ),
+              )
+            ],
           )
-        : Expanded(
-            child: EmptyView(
-              type: BlankMessageType.NEW_PLAYLIST,
-              onPressed: () => goToCreatePlaylist(),
-            ),
+        : EmptyView(
+            type: BlankMessageType.NEW_PLAYLIST,
+            onPressed: () => goToCreatePlaylist(),
           );
   }
 }
