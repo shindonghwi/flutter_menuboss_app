@@ -20,7 +20,7 @@ class Service {
     HeaderKey.AcceptLanguage: 'en-US',
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
-    "Application-Time-Zone": 'Asia/Seoul',
+    HeaderKey.TimeZone: 'Asia/Seoul',
   };
 
   static addHeader({
@@ -48,24 +48,28 @@ class Service {
     required String? endPoint,
     String? query,
   }) async {
-    if (await isNetworkAvailable()) {
-      final url = Uri.parse('$baseUrl/'
-          '${_ServiceTypeHelper.fromString(type)}'
-          '${endPoint == null ? "" : "/$endPoint"}'
-          '${query == null ? "" : "?$query"}');
-      debugPrint('\nrequest Url: $url');
-      debugPrint('request header: $headers\n');
+    try {
+      if (await isNetworkAvailable()) {
+        final url = Uri.parse('$baseUrl/'
+            '${_ServiceTypeHelper.fromString(type)}'
+            '${endPoint == null ? "" : "/$endPoint"}'
+            '${query == null ? "" : "?$query"}');
+        debugPrint('\nrequest Url: $url');
+        debugPrint('request header: $headers\n');
 
-      final res = await http.get(
-        url,
-        headers: headers,
-      );
-      debugPrint('\http response statusCode: ${res.statusCode}');
-      debugPrint('\http response method: ${res.request?.method.toString()}');
-      debugPrint('\http response body: ${res.body}');
-      return res;
-    } else {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+        final res = await http.get(
+          url,
+          headers: headers,
+        );
+        debugPrint('\http response statusCode: ${res.statusCode}');
+        debugPrint('\http response method: ${res.request?.method.toString()}');
+        debugPrint('\http response body: ${res.body}');
+        return res;
+      } else {
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+      }
+    } catch (e) {
+      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
 
@@ -74,23 +78,27 @@ class Service {
     required String? endPoint,
     required Map<String, dynamic>? jsonBody,
   }) async {
-    if (await isNetworkAvailable()) {
-      final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
-      debugPrint('\nrequest Url: $url');
-      debugPrint('request header: $headers');
-      debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+    try {
+      if (await isNetworkAvailable()) {
+        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        debugPrint('\nrequest Url: $url');
+        debugPrint('request header: $headers');
+        debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
 
-      final res = await http.post(
-        url,
-        headers: headers,
-        body: jsonEncode(jsonBody),
-      );
-      debugPrint('\http response statusCode: ${res.statusCode}');
-      debugPrint('\http response method: ${res.request?.method.toString()}');
-      debugPrint('\http response body: ${res.body}');
-      return res;
-    } else {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+        final res = await http.post(
+          url,
+          headers: headers,
+          body: jsonEncode(jsonBody),
+        );
+        debugPrint('\http response statusCode: ${res.statusCode}');
+        debugPrint('\http response method: ${res.request?.method.toString()}');
+        debugPrint('\http response body: ${res.body}');
+        return res;
+      } else {
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+      }
+    } catch (e) {
+      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
 
@@ -99,23 +107,27 @@ class Service {
     required String? endPoint,
     required Map<String, dynamic>? jsonBody,
   }) async {
-    if (await isNetworkAvailable()) {
-      final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
-      debugPrint('\nrequest Url: $url');
-      debugPrint('request header: $headers');
-      debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+    try {
+      if (await isNetworkAvailable()) {
+        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        debugPrint('\nrequest Url: $url');
+        debugPrint('request header: $headers');
+        debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
 
-      final res = await http.patch(
-        url,
-        headers: headers,
-        body: jsonEncode(jsonBody),
-      );
-      debugPrint('\http response statusCode: ${res.statusCode}');
-      debugPrint('\http response method: ${res.request?.method.toString()}');
-      debugPrint('\http response body: ${res.body}');
-      return res;
-    } else {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+        final res = await http.patch(
+          url,
+          headers: headers,
+          body: jsonEncode(jsonBody),
+        );
+        debugPrint('\http response statusCode: ${res.statusCode}');
+        debugPrint('\http response method: ${res.request?.method.toString()}');
+        debugPrint('\http response body: ${res.body}');
+        return res;
+      } else {
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+      }
+    } catch (e) {
+      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
 
@@ -124,23 +136,27 @@ class Service {
     required String? endPoint,
     required Map<String, dynamic>? jsonBody,
   }) async {
-    if (await isNetworkAvailable()) {
-      final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
-      debugPrint('\nrequest Url: $url');
-      debugPrint('request header: $headers');
-      debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+    try {
+      if (await isNetworkAvailable()) {
+        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        debugPrint('\nrequest Url: $url');
+        debugPrint('request header: $headers');
+        debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
 
-      final res = await http.delete(
-        url,
-        headers: headers,
-        body: jsonEncode(jsonBody),
-      );
-      debugPrint('\http response statusCode: ${res.statusCode}');
-      debugPrint('\http response method: ${res.request?.method.toString()}');
-      debugPrint('\http response body: ${res.body}');
-      return res;
-    } else {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+        final res = await http.delete(
+          url,
+          headers: headers,
+          body: jsonEncode(jsonBody),
+        );
+        debugPrint('\http response statusCode: ${res.statusCode}');
+        debugPrint('\http response method: ${res.request?.method.toString()}');
+        debugPrint('\http response body: ${res.body}');
+        return res;
+      } else {
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+      }
+    } catch (e) {
+      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
 }

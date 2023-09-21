@@ -7,7 +7,7 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
+import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';

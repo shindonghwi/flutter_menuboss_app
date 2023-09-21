@@ -5,7 +5,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
@@ -17,6 +16,7 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/RegUtil.dart';
 
+import '../../components/view_state/LoadingView.dart';
 import 'provider/MeInfoProvider.dart';
 
 class LoginScreen extends HookConsumerWidget {
@@ -24,14 +24,13 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final loginState = ref.watch(LoginProvider);
     final loginProvider = ref.read(LoginProvider.notifier);
     final meInfoProvider = ref.read(MeInfoProvider.notifier);
     final isEmailValid = useState(false);
     final isPwValid = useState(false);
 
-    void goToMainScreen(){
+    void goToMainScreen() {
       Navigator.pushReplacement(
         context,
         nextFadeInOutScreen(RoutingScreen.Main.route),
@@ -43,7 +42,7 @@ class LoginScreen extends HookConsumerWidget {
         loginState.when(
           success: (event) async {
             loginProvider.init();
-            if (loginProvider.meInfo != null){
+            if (loginProvider.meInfo != null) {
               meInfoProvider.updateMeInfo(loginProvider.meInfo);
             }
             goToMainScreen();
@@ -57,45 +56,44 @@ class LoginScreen extends HookConsumerWidget {
     }, [loginState]);
 
     return BaseScaffold(
-      backgroundColor: getColorScheme(context).white,
-      body: Stack(
-        children: [
-          SafeArea(
-            child: Container(
-              margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
-              child: SingleChildScrollView(
-                physics: const BouncingScrollPhysics(),
-                child: Column(
-                  children: [
-                    const _Title(),
-                    const SizedBox(height: 40),
-                    _InputEmail(
-                      onChanged: (text) {
-                        loginProvider.updateEmail(text);
-                        isEmailValid.value = RegUtil.checkEmail(text);
-                      },
-                    ),
-                    const SizedBox(height: 16),
-                    _InputPassword(
-                      onChanged: (text) {
-                        loginProvider.updatePassword(text);
-                        isPwValid.value = RegUtil.checkPw(text);
-                      },
-                    ),
-                    const SizedBox(height: 20),
-                    _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
-                    const SizedBox(height: 24),
-                    const _SocialLoginButtons(),
-                    const SizedBox(height: 40),
-                  ],
+        backgroundColor: getColorScheme(context).white,
+        body: Stack(
+          children: [
+            SafeArea(
+              child: Container(
+                margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
+                child: SingleChildScrollView(
+                  physics: const BouncingScrollPhysics(),
+                  child: Column(
+                    children: [
+                      const _Title(),
+                      const SizedBox(height: 40),
+                      _InputEmail(
+                        onChanged: (text) {
+                          loginProvider.updateEmail(text);
+                          isEmailValid.value = RegUtil.checkEmail(text);
+                        },
+                      ),
+                      const SizedBox(height: 16),
+                      _InputPassword(
+                        onChanged: (text) {
+                          loginProvider.updatePassword(text);
+                          isPwValid.value = RegUtil.checkPw(text);
+                        },
+                      ),
+                      const SizedBox(height: 20),
+                      _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
+                      const SizedBox(height: 24),
+                      const _SocialLoginButtons(),
+                      const SizedBox(height: 40),
+                    ],
+                  ),
                 ),
               ),
             ),
-          ),
-          if (loginState is Loading) const LoadingView(),
-        ],
-      )
-    );
+            if (loginState is Loading) const LoadingView(),
+          ],
+        ));
   }
 }
 
@@ -230,7 +228,7 @@ class _InputEmail extends HookWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: OutlineTextField.small(
-              controller: useTextEditingController(text:"test10@test.comm"),
+              controller: useTextEditingController(text: "test10@test.comm"),
               hint: getAppLocalizations(context).common_email,
               successMessage: getAppLocalizations(context).login_email_correct,
               errorMessage: getAppLocalizations(context).login_email_invalid,
@@ -270,7 +268,7 @@ class _InputPassword extends HookWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: OutlineTextField.small(
-              controller: useTextEditingController(text:"qwer12344"),
+              controller: useTextEditingController(text: "qwer12344"),
               hint: getAppLocalizations(context).common_password,
               errorMessage: getAppLocalizations(context).login_pw_invalid,
               checkRegList: const [

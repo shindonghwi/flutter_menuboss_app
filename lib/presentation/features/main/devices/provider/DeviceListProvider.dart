@@ -19,33 +19,35 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
 
   List<ResponseDeviceModel> currentDevices = [];
 
+  /// 디바이스 리스트 조회
   void requestGetDevices() {
     state = Loading();
-    _getDevicesUseCase.call().then((response) {
+    _getDevicesUseCase.call().then((response) async {
       if (response.status == 200) {
         currentDevices = response.list?.toList() ?? [];
         state = Success(currentDevices);
       } else {
         state = Failure(response.message);
       }
-    }).then((value) => Future.delayed(const Duration(milliseconds: 300), () => init()));
+    });
   }
 
+  /// 디바이스 삭제
   void requestDelDevice(int screenId) {
     state = Loading();
     _delDeviceUseCase.call(screenId).then((response) {
       if (response.status == 200) {
         final index = currentDevices.indexWhere((item) => item.screenId == screenId);
         if (index != -1) {
-          final itemToRemove = currentDevices[index];
-          state = Success([...currentDevices]..remove(itemToRemove));
+          state = Success([...currentDevices]..remove(currentDevices[index]));
         }
       } else {
         state = Failure(response.message);
       }
-    }).then((value) => Future.delayed(const Duration(milliseconds: 300), () => init()));
+    });
   }
 
+  /// 디바이스 이름 변경
   void requestPatchDeviceName(int screenId, String name) {
     state = Loading();
     _patchDeviceNameUseCase.call(screenId, name).then((response) {
@@ -64,8 +66,12 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
       } else {
         state = Failure(response.message);
       }
-    }).then((value) => Future.delayed(const Duration(milliseconds: 300), () => init()));
+    });
   }
 
-  void init() => state = Idle();
+  void init({
+    bool isDelayMode = false,
+  }) {
+    Future.delayed(Duration(milliseconds: isDelayMode ? 300 : 0), () => state = Idle());
+  }
 }

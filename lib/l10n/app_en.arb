@@ -86,6 +86,7 @@
     "common_address": "Address",
     "common_password": "Password",
     "common_settings": "Settings",
+    "common_refresh": "Refresh",
     "common_title": "Title",
     "common_total_duration": "Total duration",
     "common_add": "Add",
@@ -112,7 +113,7 @@
     "common_mode_all_day": "All day Mode",
     "common_mode_schedule": "Schedule Mode",
 
-    "message_server_error_5xx": "A server error has occurred\nPlease try again in a minute",
+    "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
     "message_network_required": "The network connection is unstable",
     "message_not_found_user": "User information not found",
     "message_api_success": "",

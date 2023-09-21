@@ -7,7 +7,7 @@ import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
+import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';

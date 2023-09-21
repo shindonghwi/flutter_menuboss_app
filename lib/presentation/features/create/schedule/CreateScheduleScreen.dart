@@ -5,7 +5,7 @@ import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
+import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleRegisterProvider.dart';

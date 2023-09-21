@@ -7,12 +7,14 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/blank/BlankMessage.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+
+import '../../../components/view_state/LoadingView.dart';
 
 class DevicesScreen extends HookConsumerWidget {
   const DevicesScreen({super.key});
@@ -34,7 +36,10 @@ class DevicesScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           deviceState.when(
-            success: (event) => deviceList.value = event.value,
+            success: (event) {
+              deviceList.value = event.value;
+              deviceProvider.init();
+            },
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -45,19 +50,23 @@ class DevicesScreen extends HookConsumerWidget {
     }, [deviceState]);
 
     return SafeArea(
-      child: Stack(
+      child: Column(
         children: [
-          Column(
-            children: [
-              TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_screens),
-              deviceList.value == null
-                  ? deviceState is Success<List<ResponseDeviceModel>>
-                      ? _DeviceContentList(items: deviceState.value)
-                      : const SizedBox()
-                  : _DeviceContentList(items: deviceList.value!),
-            ],
+          TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_screens),
+          Expanded(
+            child: Stack(
+              children: [
+                deviceState is Failure
+                    ? FailView(onPressed: () => deviceProvider.requestGetDevices())
+                    : deviceList.value == null
+                        ? deviceState is Success<List<ResponseDeviceModel>>
+                            ? _DeviceContentList(items: deviceState.value)
+                            : const SizedBox()
+                        : _DeviceContentList(items: deviceList.value!),
+                if (deviceState is Loading) const LoadingView(),
+              ],
+            ),
           ),
-          if (deviceState is Loading) const LoadingView(),
         ],
       ),
     );
@@ -92,37 +101,34 @@ class _DeviceContentList extends HookConsumerWidget {
     }
 
     return items.isNotEmpty
-        ? Expanded(
-            child: Stack(
-              children: [
-                ListView.separated(
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  separatorBuilder: (BuildContext context, int index) {
-                    return const SizedBox(height: 0);
-                  },
-                  itemBuilder: (BuildContext context, int index) {
-                    return DeviceItem(item: items[index]);
-                  },
-                  itemCount: items.length,
+        ? Stack(
+            children: [
+              ListView.separated(
+                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 0);
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  return DeviceItem(item: items[index]);
+                },
+                itemCount: items.length,
+              ),
+              Container(
+                alignment: Alignment.bottomRight,
+                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                child: FloatingPlusButton(
+                  onPressed: () => goToRegisterDevice(),
                 ),
-                Container(
-                  alignment: Alignment.bottomRight,
-                  margin: const EdgeInsets.only(bottom: 32, right: 24),
-                  child: FloatingPlusButton(
-                    onPressed: () => goToRegisterDevice(),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           )
-        : Expanded(
-            child: BlankMessage(
-              type: BlankMessageType.ADD_SCREEN,
-              onPressed: () {
-                goToRegisterDevice();
-              },
-            ),
+        : BlankMessage(
+            type: BlankMessageType.ADD_SCREEN,
+            onPressed: () {
+              goToRegisterDevice();
+            },
           );
   }
 }

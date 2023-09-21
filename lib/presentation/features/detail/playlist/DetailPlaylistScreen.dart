@@ -9,7 +9,7 @@ import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart
 import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
+import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';

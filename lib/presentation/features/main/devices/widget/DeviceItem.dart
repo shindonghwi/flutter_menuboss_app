@@ -29,7 +29,7 @@ class DeviceItem extends HookConsumerWidget {
 
     return Container(
       width: double.infinity,
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+      padding: const EdgeInsets.symmetric(vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -54,9 +54,7 @@ class DeviceItem extends HookConsumerWidget {
                       Row(
                         children: [
                           LabelText(
-                            content: item.isOnline
-                                ? getAppLocalizations(context).common_on
-                                : getAppLocalizations(context).common_off,
+                            content: item.isOnline ? getAppLocalizations(context).common_on : getAppLocalizations(context).common_off,
                             isOn: item.isOnline,
                           ),
                           Expanded(

@@ -7,7 +7,7 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
-import 'package:menuboss/presentation/components/loading/LoadingView.dart';
+import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupLogout.dart';
