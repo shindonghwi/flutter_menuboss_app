@@ -141,6 +141,14 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
     return TimeOfDay(hour: int.parse(parts[0]), minute: int.parse(parts[1]));
   }
 
+  /// timeIsDuplicate 속성이 true인 아이템이 하나라도 있는지 확인
+  bool hasAnyOverlappingTimes() {
+    // 첫 번째와 마지막 아이템을 제외한 리스트를 생성
+    List<SimpleSchedulesModel> filteredSchedules = state.sublist(1, state.length - 1);
+    return filteredSchedules.any((item) => item.timeIsDuplicate);
+  }
+
+
   void init() {
     state = _initialState();
   }

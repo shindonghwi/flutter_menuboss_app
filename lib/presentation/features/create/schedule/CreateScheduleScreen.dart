@@ -97,6 +97,7 @@ class _SaveButton extends HookConsumerWidget {
     final scheduleRegisterProvider = ref.read(ScheduleRegisterProvider.notifier);
     final saveState = ref.watch(ScheduleSaveInfoProvider);
     final timelineState = ref.watch(ScheduleTimelineInfoProvider);
+    final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
 
     final isSaveAvailable = timelineState.where((element) => !element.isAddButton).every(
               (element) => element.playlistId! > 0,
@@ -109,7 +110,13 @@ class _SaveButton extends HookConsumerWidget {
         child: PrimaryFilledButton.largeRound8(
           content: getAppLocalizations(context).common_save,
           isActivated: isSaveAvailable,
-          onPressed: () => scheduleRegisterProvider.registerSchedule(saveState),
+          onPressed: () {
+            if (timelineProvider.hasAnyOverlappingTimes()){
+              ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_duplicated);
+            }else{
+              scheduleRegisterProvider.registerSchedule(saveState);
+            }
+          },
         ),
       ),
     );

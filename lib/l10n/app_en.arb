@@ -116,6 +116,7 @@
     "message_api_success": "",
     "message_temp_login_fail": "A temporary failure has occurred\nPlease use a different login method",
     "message_time_setting_precede": "End time cannot precede start time",
+    "message_time_setting_duplicated": "Please correct the duplicate time",
 
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",
