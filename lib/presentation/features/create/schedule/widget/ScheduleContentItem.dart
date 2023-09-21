@@ -149,7 +149,13 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                           startTime: data.start.toString(),
                                                           endTime: data.end.toString(),
                                                           callback: (startTime, endTime) {
-                                                            ToastUtil.successToast("$startTime ~ $endTime");
+                                                            timelineProvider.updateItem(
+                                                              data.playlistId,
+                                                              data.copyWith(
+                                                                start: startTime,
+                                                                end: endTime,
+                                                              ),
+                                                            );
                                                           },
                                                         ),
                                                       );
