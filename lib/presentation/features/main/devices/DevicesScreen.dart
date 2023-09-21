@@ -21,6 +21,7 @@ class DevicesScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceState = ref.watch(DeviceListProvider);
     final deviceProvider = ref.read(DeviceListProvider.notifier);
+    final deviceList = useState<List<ResponseDeviceModel>?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -33,6 +34,7 @@ class DevicesScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           deviceState.when(
+            success: (event) => deviceList.value = event.value,
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -45,13 +47,16 @@ class DevicesScreen extends HookConsumerWidget {
     return SafeArea(
       child: Stack(
         children: [
-          if (deviceState is Success<List<ResponseDeviceModel>>)
-            Column(
-              children: [
-                TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_screens),
-                _DeviceContentList(items: deviceState.value)
-              ],
-            ),
+          Column(
+            children: [
+              TopBarTitle(content: getAppLocalizations(context).main_navigation_menu_screens),
+              deviceList.value == null
+                  ? deviceState is Success<List<ResponseDeviceModel>>
+                      ? _DeviceContentList(items: deviceState.value)
+                      : const SizedBox()
+                  : _DeviceContentList(items: deviceList.value!),
+            ],
+          ),
           if (deviceState is Loading) const LoadingView(),
         ],
       ),
@@ -69,7 +74,6 @@ class _DeviceContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final listKey = GlobalKey<AnimatedListState>();
     final deviceProvider = ref.read(DeviceListProvider.notifier);
 
     void goToRegisterDevice() async {
@@ -91,31 +95,22 @@ class _DeviceContentList extends HookConsumerWidget {
         ? Expanded(
             child: Stack(
               children: [
-                AnimatedList(
-                  key: listKey,
-                  initialItemCount: items.length,
-                  padding: const EdgeInsets.only(bottom: 80),
-                  itemBuilder: (context, index, animation) {
-                    final item = items[index];
-                    return SlideTransition(
-                      position: Tween<Offset>(
-                        begin: const Offset(0, -0.15),
-                        end: Offset.zero,
-                      ).animate(animation),
-                      child: FadeTransition(
-                        opacity: animation,
-                        child: DeviceItem(item: item, listKey: listKey),
-                      ),
-                    );
+                ListView.separated(
+                  physics: const NeverScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 0);
                   },
+                  itemBuilder: (BuildContext context, int index) {
+                    return DeviceItem(item: items[index]);
+                  },
+                  itemCount: items.length,
                 ),
                 Container(
                   alignment: Alignment.bottomRight,
                   margin: const EdgeInsets.only(bottom: 32, right: 24),
                   child: FloatingPlusButton(
-                    onPressed: () {
-                      goToRegisterDevice();
-                    },
+                    onPressed: () => goToRegisterDevice(),
                   ),
                 ),
               ],

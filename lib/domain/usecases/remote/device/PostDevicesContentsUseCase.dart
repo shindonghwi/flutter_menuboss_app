@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
+import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/domain/repositories/remote/device/RemoteDeviceRepository.dart';
 
 class PostDevicesContentsUseCase {
@@ -7,7 +8,7 @@ class PostDevicesContentsUseCase {
 
   final RemoteDeviceRepository _remoteDeviceRepository = GetIt.instance<RemoteDeviceRepository>();
 
-  Future<ApiResponse<void>> call(List<int> screenIds, String contentType, int contentId) async {
-    return await _remoteDeviceRepository.postDevicesContents(screenIds, contentType, contentId);
+  Future<ApiResponse<void>> call(RequestDeviceApplyContents model) async {
+    return await _remoteDeviceRepository.postDevicesContents(model);
   }
 }

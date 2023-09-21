@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -95,7 +96,13 @@ class ScheduleItem extends HookWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                nextSlideHorizontalScreen(RoutingScreen.ApplyDevice.route),
+                nextSlideHorizontalScreen(
+                    RoutingScreen.ApplyDevice.route,
+                    parameter: RequestDeviceApplyContents(
+                      contentType: "Schedule",
+                      contentId: item.scheduleId,
+                    )
+                ),
               );
             },
           )

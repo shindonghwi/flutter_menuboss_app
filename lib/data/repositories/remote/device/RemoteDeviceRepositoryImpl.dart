@@ -6,6 +6,7 @@ import '../../../../domain/repositories/remote/device/RemoteDeviceRepository.dar
 import '../../../../domain/repositories/remote/me/RemoteMeRepository.dart';
 import '../../../data_source/remote/me/RemoteMeApi.dart';
 import '../../../models/base/ApiResponse.dart';
+import '../../../models/device/RequestDeviceApplyContents.dart';
 import '../../../models/device/ResponseDeviceModel.dart';
 import '../../../models/me/ResponseMeInfoModel.dart';
 
@@ -35,8 +36,8 @@ class RemoteDeviceRepositoryImpl implements RemoteDeviceRepository {
   }
 
   @override
-  Future<ApiResponse<void>> postDevicesContents(List<int> screenIds, String contentType, int contentId) {
-    return _remoteDeviceApi.postDevicesContents(screenIds, contentType, contentId);
+  Future<ApiResponse<void>> postDevicesContents(RequestDeviceApplyContents model) {
+    return _remoteDeviceApi.postDevicesContents(model);
   }
 
 }

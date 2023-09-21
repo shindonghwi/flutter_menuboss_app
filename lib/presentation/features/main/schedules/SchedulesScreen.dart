@@ -11,6 +11,7 @@ import 'package:menuboss/presentation/components/loading/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/provider/SchedulesProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/widget/ScheduleItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -78,6 +79,7 @@ class _ScheduleContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final deviceProvider = ref.read(DeviceListProvider.notifier);
     final scheduleProvider = ref.read(SchedulesProvider.notifier);
 
     void goToCreateSchedule() async {
@@ -108,6 +110,7 @@ class _ScheduleContentList extends HookConsumerWidget {
         );
 
         if (isUpdated) {
+          deviceProvider.requestGetDevices();
           scheduleProvider.requestGetSchedules();
         }
       } catch (e) {

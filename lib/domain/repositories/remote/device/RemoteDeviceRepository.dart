@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 
+import '../../../../data/models/device/RequestDeviceApplyContents.dart';
 import '../../../../data/models/device/ResponseDeviceModel.dart';
 
 abstract class RemoteDeviceRepository {
@@ -19,6 +20,6 @@ abstract class RemoteDeviceRepository {
   Future<ApiResponse<void>> patchDeviceName(int screenId, String name);
 
   /// 스크린 목록에 콘텐츠 적용
-  Future<ApiResponse<void>> postDevicesContents(List<int> screenIds, String contentType, int contentId);
+  Future<ApiResponse<void>> postDevicesContents(RequestDeviceApplyContents model);
 
 }

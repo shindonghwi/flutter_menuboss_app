@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../models/device/RequestDeviceApplyContents.dart';
 import '../../../models/device/ResponseDeviceModel.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
@@ -110,12 +111,12 @@ class RemoteDeviceApi {
     }
   }
 
-  /// 스크린 이름 변경
-  Future<ApiResponse<void>> postDevicesContents(List<int> screenIds, String contentType, int contentId) async {
-    final response = await Service.patchApi(
+  /// 스크린 목록 적용
+  Future<ApiResponse<void>> postDevicesContents(RequestDeviceApplyContents model) async {
+    final response = await Service.postApi(
       type: ServiceType.Device,
       endPoint: "contents",
-      jsonBody: {"screenIds": screenIds, "contentType": contentType, "contentId": contentId},
+      jsonBody: model.toJson(),
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);

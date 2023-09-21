@@ -3,12 +3,12 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final DelPlaylistProvider = StateNotifierProvider<DelPlaylistrNotifier, UIState<String?>>(
-  (ref) => DelPlaylistrNotifier(),
+final DelPlaylistProvider = StateNotifierProvider<DelPlaylistNotifier, UIState<String?>>(
+  (ref) => DelPlaylistNotifier(),
 );
 
-class DelPlaylistrNotifier extends StateNotifier<UIState<String?>> {
-  DelPlaylistrNotifier() : super(Idle());
+class DelPlaylistNotifier extends StateNotifier<UIState<String?>> {
+  DelPlaylistNotifier() : super(Idle());
 
   DelPlaylistUseCase get _delPlaylistUseCase => GetIt.instance<DelPlaylistUseCase>();
 
@@ -20,10 +20,8 @@ class DelPlaylistrNotifier extends StateNotifier<UIState<String?>> {
       } else {
         state = Failure(value.message);
       }
-    });
+    }).then((value) => Future.delayed(const Duration(milliseconds: 300), () => init()));
   }
 
-  void init() {
-    state = Idle();
-  }
+  void init() => state = Idle();
 }

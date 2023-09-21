@@ -9,8 +9,8 @@ part of 'ResponsePlaylistTime.dart';
 ResponsePlaylistTime _$ResponsePlaylistTimeFromJson(
         Map<String, dynamic> json) =>
     ResponsePlaylistTime(
-      start: json['start'] as String,
-      end: json['end'] as String,
+      start: json['start'] as String?,
+      end: json['end'] as String?,
     );
 
 Map<String, dynamic> _$ResponsePlaylistTimeToJson(

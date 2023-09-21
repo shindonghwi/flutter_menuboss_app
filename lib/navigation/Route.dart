@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
@@ -113,7 +114,8 @@ enum RoutingScreen {
     }
 
     else if (route == RoutingScreen.ApplyDevice.route) {
-      return const ApplyToDeviceScreen();
+      RequestDeviceApplyContents model = parameter;
+      return ApplyToDeviceScreen(item: model);
     } else if (route == RoutingScreen.MyProfile.route) {
       return const MyProfileScreen();
     } else {

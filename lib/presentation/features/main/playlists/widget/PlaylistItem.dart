@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryLineButton.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
@@ -74,7 +74,7 @@ class PlaylistItem extends HookWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              "${item.property?.count} pages",
+                              "${item.property?.count ?? 0} pages",
                               style: getTextTheme(context).c1m.copyWith(
                                     color: getColorScheme(context).colorGray500,
                                   ),
@@ -94,7 +94,13 @@ class PlaylistItem extends HookWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                nextSlideHorizontalScreen(RoutingScreen.ApplyDevice.route),
+                nextSlideHorizontalScreen(
+                  RoutingScreen.ApplyDevice.route,
+                  parameter: RequestDeviceApplyContents(
+                    contentType: "Playlist",
+                    contentId: item.playlistId,
+                  )
+                ),
               );
             },
           )

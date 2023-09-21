@@ -60,21 +60,8 @@ class DetailPlaylistScreen extends HookConsumerWidget {
             success: (event) => playlistItem.value = event.value,
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
-        });
-      }
-
-      handleUiStateChange();
-      return null;
-    }, [playlistState]);
-
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
           delPlaylistState.when(
-            success: (event) {
-              delPlaylistProvider.init();
-              Navigator.of(context).pop(true);
-            },
+            success: (event) => Navigator.of(context).pop(true),
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
         });
@@ -82,7 +69,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
       handleUiStateChange();
       return null;
-    }, [delPlaylistState]);
+    }, [playlistState, delPlaylistState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
@@ -235,10 +222,6 @@ class _Settings extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    debugPrint("item.property?.direction?.name.toLowerCase() : ${item.property?.direction?.code.toLowerCase()}");
-    debugPrint("item.property?.direction?.name.toLowerCase() : ${item.property?.fill?.code.toLowerCase()}");
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
@@ -260,8 +243,7 @@ class _Settings extends StatelessWidget {
               directionType: item.property?.direction?.name.toLowerCase() == "horizontal"
                   ? PlaylistSettingType.Horizontal
                   : PlaylistSettingType.Vertical,
-              scaleType:
-                  item.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
+              scaleType: item.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
             ),
           ),
         ],
@@ -346,11 +328,9 @@ class _SettingContents extends HookWidget {
         ),
         Expanded(
           child: _SettingSelectableIcon(
-            iconPath:
-                scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
-            iconText: scaleType == PlaylistSettingType.Fit
-                ? getAppLocalizations(context).common_fit
-                : getAppLocalizations(context).common_fill,
+            iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
+            iconText:
+                scaleType == PlaylistSettingType.Fit ? getAppLocalizations(context).common_fit : getAppLocalizations(context).common_fill,
             isChecked: true,
           ),
         ),

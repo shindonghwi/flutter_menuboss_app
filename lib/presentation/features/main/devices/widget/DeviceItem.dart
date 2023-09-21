@@ -17,12 +17,10 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 class DeviceItem extends HookConsumerWidget {
   final ResponseDeviceModel item;
-  final GlobalKey<AnimatedListState> listKey;
 
   const DeviceItem({
     super.key,
     required this.item,
-    required this.listKey,
   });
 
   @override
@@ -104,7 +102,7 @@ class DeviceItem extends HookConsumerWidget {
                       hint: getAppLocalizations(context).popup_rename_screen_hint,
                       onClicked: (name) {
                         if (name.isNotEmpty) {
-                          deviceProvider.requestPatchDeviceName(item.screenId, name, listKey);
+                          deviceProvider.requestPatchDeviceName(item.screenId, name);
                           // deviceProvider.renameItem(item, name);
                         }
                       }),
@@ -113,7 +111,7 @@ class DeviceItem extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupDelete(
-                    onClicked: () => deviceProvider.requestDelDevice(item.screenId, listKey),
+                    onClicked: () => deviceProvider.requestDelDevice(item.screenId),
                   ),
                 );
               }
