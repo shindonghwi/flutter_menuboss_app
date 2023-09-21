@@ -107,7 +107,7 @@ class _PlaylistContentList extends HookConsumerWidget {
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return ClickableScale(
-                        child: PlayListItem(item: item),
+                        child: PlaylistItem(item: item),
                         onPressed: () async {
                           try {
                             final isChanged = await Navigator.push(

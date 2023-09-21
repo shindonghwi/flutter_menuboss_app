@@ -39,7 +39,7 @@ class ScheduleInputName extends HookConsumerWidget {
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.small(
               controller: useTextEditingController(text: initTitle),
-              hint: getAppLocalizations(context).popup_rename_playlist_hint,
+              hint: getAppLocalizations(context).popup_rename_schedule_hint,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.text,
               showPwVisibleButton: false,

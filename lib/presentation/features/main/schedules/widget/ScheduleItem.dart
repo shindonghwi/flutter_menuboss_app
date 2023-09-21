@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -11,10 +11,11 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class PlaylistItem extends HookWidget {
-  final ResponsePlaylistModel item;
 
-  const PlaylistItem({
+class ScheduleItem extends HookWidget {
+  final ResponseScheduleModel item;
+
+  const ScheduleItem({
     super.key,
     required this.item,
   });
@@ -48,16 +49,16 @@ class PlaylistItem extends HookWidget {
                       Text(
                         item.name,
                         style: getTextTheme(context).b2sb.copyWith(
-                              color: getColorScheme(context).colorGray900,
-                            ),
+                          color: getColorScheme(context).colorGray900,
+                        ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
                           "Updated: ${item.updatedAt}",
                           style: getTextTheme(context).c1m.copyWith(
-                                color: getColorScheme(context).colorGray500,
-                              ),
+                            color: getColorScheme(context).colorGray500,
+                          ),
                         ),
                       ),
                       Row(
@@ -75,8 +76,8 @@ class PlaylistItem extends HookWidget {
                             child: Text(
                               "${item.property?.count} pages",
                               style: getTextTheme(context).c1m.copyWith(
-                                    color: getColorScheme(context).colorGray500,
-                                  ),
+                                color: getColorScheme(context).colorGray500,
+                              ),
                             ),
                           )
                         ],

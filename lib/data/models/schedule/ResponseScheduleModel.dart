@@ -28,6 +28,21 @@ class ResponseScheduleModel {
 
   Map<String, dynamic> toJson() => _$ResponseScheduleModelToJson(this);
 
+  ResponseScheduleModel toUpDatedAtSimpleMapper() {
+    return ResponseScheduleModel(
+      object: object,
+      scheduleId: scheduleId,
+      name: name,
+      property: property,
+      playlists: playlists,
+      updatedAt: _updatedAtMapper(updatedAt),
+    );
+  }
+
+  String _updatedAtMapper(String updatedAt) {
+    return StringUtil.formatSimpleDate(updatedAt);
+  }
+
   @override
   String toString() {
     return StringUtil.convertPrettyJson(toJson());

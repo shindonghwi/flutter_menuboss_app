@@ -6,7 +6,7 @@ class ApiListResponse<T> {
   final String message;
   final PageResponse? page;
   final T? list;
-  final int count;
+  final int? count;
 
   ApiListResponse({
     required this.status,
@@ -28,7 +28,7 @@ class ApiListResponse<T> {
         message: json['message'] as String,
         page: json['page'] == null ? null : PageResponse.fromJson(json['page']),
         list: fromJsonT(json['list']),
-        count: json['count'] as int,
+        count: json['count'] as int?,
       );
     } catch (e) {
       debugPrint('Error parsing JSON: ${e.toString()}}');
@@ -37,7 +37,7 @@ class ApiListResponse<T> {
         message: json['message'] as String,
         page: json['page'] == null ? null : PageResponse.fromJson(json['page']),
         list: null,
-        count: json['count'] as int,
+        count: json['count'] as int?,
       );
     }
   }
