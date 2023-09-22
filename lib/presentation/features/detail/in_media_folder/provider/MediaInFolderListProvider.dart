@@ -24,7 +24,6 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
 
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
   final DelMediaUseCase _delMediaUseCase = GetIt.instance<DelMediaUseCase>();
-  final PostCreateMediaFolderUseCase _createMediaFolderUseCase = GetIt.instance<PostCreateMediaFolderUseCase>();
   final PatchMediaNameUseCase _mediaNameUseCase = GetIt.instance<PatchMediaNameUseCase>();
   final PostMediaFilterTypeUseCase _filterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
 
@@ -43,7 +42,6 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
         try {
           if (response.status == 200) {
             final responseItems = response.list?.where((e) => e.type?.code.toLowerCase() != "folder").toList() ?? [];
-
             List<ResponseMediaModel> updateItems = [];
             if (_currentPage == 1) {
               updateItems = responseItems;
@@ -55,15 +53,15 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
             _currentPage = response.page!.currentPage + 1;
             state = Success([...updateItems]);
           } else {
+            initPageInfo();
             state = Failure(response.message);
           }
         } catch (e) {
+          initPageInfo();
           state = Failure(response.message);
         }
         _isProcessing = false;
       });
-    } else {
-      init();
     }
   }
 
@@ -120,6 +118,7 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
   }
 
   void init() {
+    initPageInfo();
     state = Idle();
   }
 }

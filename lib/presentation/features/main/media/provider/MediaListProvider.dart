@@ -157,7 +157,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   }
 
   void init() {
-    state = Idle();
     initPageInfo();
+    state = Idle();
   }
 }
