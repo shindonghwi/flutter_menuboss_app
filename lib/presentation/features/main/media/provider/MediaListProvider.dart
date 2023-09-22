@@ -1,4 +1,4 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -136,6 +136,20 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
         state = Failure(response.message);
       }
     });
+  }
+
+  /// 폴더의 count 감소
+  void changeFolderCount(String folderId, bool isIncrement) {
+    debugPrint("decrementFolderCount: $folderId");
+    // 현재 아이템 중 해당 folderId를 가진 아이템을 찾습니다.
+    ResponseMediaModel? folderItem = _currentItems.firstWhere((item) => item.mediaId == folderId);
+
+    if ((folderItem.property?.count ?? 0) > 0) {
+      int updatedCount = folderItem.property!.count! + (isIncrement ? 1 : -1);
+      int index = _currentItems.indexOf(folderItem);
+      _currentItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount));
+      state = Success([..._currentItems]);
+    }
   }
 
   /// 미디어 정렬 순서 변경

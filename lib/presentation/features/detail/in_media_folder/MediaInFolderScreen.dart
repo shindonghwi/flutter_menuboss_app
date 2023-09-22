@@ -13,9 +13,10 @@ import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/detail/in_media_folder/provider/MediaInFolderListProvider.dart';
+import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
-import 'package:menuboss/presentation/features/media_info/provider/MediaNameChangeProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 class MediaInFolderScreen extends HookConsumerWidget {
@@ -70,14 +71,16 @@ class MediaInFolderScreen extends HookConsumerWidget {
             FailView(onPressed: () => mediaProvider.requestGetMedias(mediaId: item!.mediaId))
           else if (mediaList.value != null)
             _MediaContentList(
+              folderId: item!.mediaId,
               items: mediaList.value!,
               onMediaUpload: () {},
             )
           else if (mediaState is Success<List<ResponseMediaModel>>)
-              _MediaContentList(
-                items: mediaState.value,
-                onMediaUpload: () {},
-              ),
+            _MediaContentList(
+              folderId: item!.mediaId,
+              items: mediaState.value,
+              onMediaUpload: () {},
+            ),
           if (mediaState is Loading) const LoadingView(),
         ],
       ),
@@ -86,6 +89,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
 }
 
 class _MediaContentList extends HookConsumerWidget {
+  final String folderId;
   final List<ResponseMediaModel> items;
   final VoidCallback onMediaUpload;
 
@@ -93,10 +97,13 @@ class _MediaContentList extends HookConsumerWidget {
     super.key,
     required this.items,
     required this.onMediaUpload,
+    required this.folderId,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mediaProvider = ref.read(MediaInFolderListProvider.notifier);
+    final rootMediaProvider = ref.read(MediaListProvider.notifier);
 
     return items.isNotEmpty
         ? Stack(
@@ -119,9 +126,9 @@ class _MediaContentList extends HookConsumerWidget {
                           ),
                         );
 
-                        // if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                        //   mediaProvider.renameItem(item.mediaId, newName);
-                        // }
+                        if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                          mediaProvider.renameItem(item.mediaId, newName);
+                        }
                       } catch (e) {
                         debugPrint(e.toString());
                       }
@@ -129,10 +136,11 @@ class _MediaContentList extends HookConsumerWidget {
                     child: MediaItem(
                       item: item,
                       onRemove: () {
-                        // mediaProvider.removeItem([item.mediaId]);
+                        mediaProvider.removeItem([item.mediaId]);
+                        rootMediaProvider.decrementFolderCount(folderId);
                       },
                       onRename: (newName) {
-                        // mediaProvider.renameItem(item.mediaId, newName);
+                        mediaProvider.renameItem(item.mediaId, newName);
                       },
                     ),
                   );

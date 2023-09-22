@@ -5,7 +5,6 @@ import 'package:menuboss/domain/usecases/local/app/PostMediaFilterTypeUseCase.da
 import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/PatchMediaNameUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/media/PostCreateMediaFolderUseCase.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
