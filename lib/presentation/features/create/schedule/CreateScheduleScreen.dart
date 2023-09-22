@@ -145,9 +145,8 @@ class _SaveButton extends HookConsumerWidget {
     final timelineState = ref.watch(ScheduleTimelineInfoProvider);
     final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
 
-    final isSaveAvailable = timelineState.where((element) => !element.isAddButton).every(
-              (element) => element.playlistId! > 0,
-            ) &&
+    final isSaveAvailable = timelineState.where((element) => !element.isAddButton)
+        .every((element) => element.playlistId! > 0 && !element.timeIsDuplicate) &&
         !CollectionUtil.isNullEmptyFromString(saveState.name);
 
     return SafeArea(

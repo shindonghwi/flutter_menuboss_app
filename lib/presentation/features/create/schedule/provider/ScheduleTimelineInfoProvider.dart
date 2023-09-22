@@ -14,7 +14,7 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
   static List<SimpleSchedulesModel> _initialState() {
     return [
       _createScheduleItem(
-          -1, true, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_basic, "00:00", "24:00"),
+          -1, true, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_basic, "00:00", "23:59"),
       _createScheduleItem(
           -2, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_dawn, "00:00", "06:00"),
       _createScheduleItem(
@@ -22,7 +22,7 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
       _createScheduleItem(
           -4, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_lunch, "11:00", "15:00"),
       _createScheduleItem(
-          -5, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_dinner, "15:00", "24:00"),
+          -5, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_dinner, "15:00", "23:59"),
       _createScheduleItem(-6, false, true, "", null, null),
     ];
   }

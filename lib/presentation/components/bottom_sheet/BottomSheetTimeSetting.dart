@@ -174,85 +174,120 @@ class _NumberPickers extends StatelessWidget {
     final startInfo = timeInfoState.first;
     final endInfo = timeInfoState.last;
 
-    return SizedBox(
-      width: double.infinity,
-      height: 210,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: NumberPicker(
-              infiniteLoop: true,
-              value: isFocusStartTime.value ? startInfo.first.value : endInfo.first.value,
-              minValue: 0,
-              maxValue: 23,
-              itemCount: 5,
-              selectedTextStyle: getTextTheme(context).b2sb.copyWith(
+    final layerTransparentList = [
+      // 상단에서 포지션, 투명도
+      Pair(0, 0.6), // 1번 아이템
+      Pair(0.1, 0.5),
+
+      Pair(0.2, 0.3), // 2번 아이템
+      Pair(0.3, 0.2),
+
+      Pair(0.4, 0), // 3번 아이템
+      Pair(0.5, 0),
+
+      Pair(0.6, 0.2), // 4번 아이템
+      Pair(0.7, 0.3),
+
+      Pair(0.8, 0.5), // 5번 아이템
+      Pair(0.9, 0.6),
+    ];
+
+    return Stack(
+      children: [
+        SizedBox(
+          width: double.infinity,
+          height: 210,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: NumberPicker(
+                  infiniteLoop: true,
+                  value: isFocusStartTime.value ? startInfo.first.value : endInfo.first.value,
+                  minValue: 0,
+                  maxValue: 23,
+                  itemCount: 5,
+                  selectedTextStyle: getTextTheme(context).b2sb.copyWith(
                     color: getColorScheme(context).colorGray900,
                   ),
-              textStyle: getTextTheme(context).b2m.copyWith(
+                  textStyle: getTextTheme(context).b2m.copyWith(
                     color: getColorScheme(context).colorGray900.withOpacity(0.5),
                   ),
-              zeroPad: true,
-              decoration: BoxDecoration(
-                border: Border.symmetric(
-                  horizontal: BorderSide(
-                    color: getColorScheme(context).colorGray300,
-                    width: 1.5,
+                  zeroPad: true,
+                  decoration: BoxDecoration(
+                    border: Border.symmetric(
+                      horizontal: BorderSide(
+                        color: getColorScheme(context).colorGray300,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
+                  itemWidth: getMediaQuery(context).size.width * 0.18,
+                  itemHeight: getMediaQuery(context).size.height * 0.045,
+                  onChanged: (int value) {
+                    if (isFocusStartTime.value) {
+                      startInfo.first.value = value;
+                    } else {
+                      endInfo.first.value = value;
+                    }
+                  },
                 ),
               ),
-              itemWidth: getMediaQuery(context).size.width * 0.18,
-              itemHeight: getMediaQuery(context).size.height * 0.045,
-              onChanged: (int value) {
-                if (isFocusStartTime.value) {
-                  startInfo.first.value = value;
-                } else {
-                  endInfo.first.value = value;
-                }
-              },
-            ),
-          ),
-          const SizedBox(
-            width: 24,
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: NumberPicker(
-              infiniteLoop: true,
-              value: isFocusStartTime.value ? startInfo.second.value : endInfo.second.value,
-              minValue: 0,
-              maxValue: 59,
-              itemCount: 5,
-              selectedTextStyle: getTextTheme(context).b2sb.copyWith(
+              const SizedBox(
+                width: 24,
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0),
+                child: NumberPicker(
+                  infiniteLoop: true,
+                  value: isFocusStartTime.value ? startInfo.second.value : endInfo.second.value,
+                  minValue: 0,
+                  maxValue: 59,
+                  itemCount: 5,
+                  selectedTextStyle: getTextTheme(context).b2sb.copyWith(
                     color: getColorScheme(context).colorGray900,
                   ),
-              textStyle: getTextTheme(context).b2m.copyWith(
+                  textStyle: getTextTheme(context).b2m.copyWith(
                     color: getColorScheme(context).colorGray900.withOpacity(0.5),
                   ),
-              zeroPad: true,
-              decoration: BoxDecoration(
-                border: Border.symmetric(
-                  horizontal: BorderSide(
-                    color: getColorScheme(context).colorGray300,
-                    width: 1.5,
+                  zeroPad: true,
+                  decoration: BoxDecoration(
+                    border: Border.symmetric(
+                      horizontal: BorderSide(
+                        color: getColorScheme(context).colorGray300,
+                        width: 1.5,
+                      ),
+                    ),
                   ),
+                  itemWidth: getMediaQuery(context).size.width * 0.18,
+                  itemHeight: getMediaQuery(context).size.height * 0.045,
+                  onChanged: (int value) {
+                    if (isFocusStartTime.value) {
+                      startInfo.second.value = value;
+                    } else {
+                      endInfo.second.value = value;
+                    }
+                  },
                 ),
               ),
-              itemWidth: getMediaQuery(context).size.width * 0.18,
-              itemHeight: getMediaQuery(context).size.height * 0.045,
-              onChanged: (int value) {
-                if (isFocusStartTime.value) {
-                  startInfo.second.value = value;
-                } else {
-                  endInfo.second.value = value;
-                }
-              },
-            ),
+            ],
           ),
-        ],
-      ),
+        ),
+        ...layerTransparentList.map((element) {
+          return Positioned(
+            top: 210 * element.first.toDouble(), // 포지션
+            left: 0,
+            right: 0,
+            child: IgnorePointer(
+              child: Container(
+                height: 210 * 0.2, // 전체 높이의 20%
+                color: getColorScheme(context).white.withOpacity(element.second.toDouble()), // 투명도
+              ),
+            ),
+          );
+        }).toList(),
+      ],
     );
   }
 }
