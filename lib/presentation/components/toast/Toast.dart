@@ -159,7 +159,7 @@ class _ToastState extends State<Toast> with SingleTickerProviderStateMixin {
                       Flexible(
                         child: Text(
                           widget.message.toString(),
-                          style: getTextTheme(context).b1sb.copyWith(color: getColorScheme(context).white),
+                          style: getTextTheme(context).b2sb.copyWith(color: getColorScheme(context).white),
                           textAlign: TextAlign.center,
                           maxLines: 5,
                         ),
