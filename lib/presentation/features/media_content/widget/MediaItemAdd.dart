@@ -64,7 +64,7 @@ class MediaItemAdd extends HookConsumerWidget {
       content = "$code - (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     } else if (code == "folder") {
       isFolderType = true;
-      content = "${item.property?.count} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "${item.property?.count ?? 0} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     }
 
     return ClickableScale(

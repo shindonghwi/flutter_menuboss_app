@@ -1,9 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-import 'ResponseMediaFiles.dart';
 import 'ResponseMediaProperty.dart';
-import 'ResponseMediaPropertyInfo.dart';
 
 part 'ResponseMediaInfoModel.g.dart';
 

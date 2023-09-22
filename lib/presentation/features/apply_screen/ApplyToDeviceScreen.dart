@@ -64,12 +64,12 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
         await Future(() {
           applyScreenState.when(
             success: (event) async {
-              ToastUtil.successToast("스크린에 적용완료");
+              Toast.showSuccess(context, "스크린에 적용완료");
               deviceProvider.requestGetDevices();
               applyScreenProvider.init();
               Navigator.of(context).pop();
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

@@ -42,7 +42,7 @@ class PlaylistsScreens extends HookConsumerWidget {
               playlist.value = event.value;
               playlistProvider.init();
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

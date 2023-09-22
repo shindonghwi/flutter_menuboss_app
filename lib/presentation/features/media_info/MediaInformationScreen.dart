@@ -43,7 +43,7 @@ class MediaInformationScreen extends HookConsumerWidget {
               mediaNameChangeProvider.init();
               Navigator.of(context).pop(fileName.value);
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
@@ -187,12 +187,12 @@ class _MediaInformation extends HookWidget {
             fileSize.value = "${data?.property?.width} X ${data?.property?.height}";
 
             // file uploaded date
-            fileUploadedDate.value = data?.updatedAt;
+            fileUploadedDate.value = StringUtil.formatSimpleDate(data?.updatedAt.toString() ?? "");
 
             // file capacity
             fileCapacity.value = StringUtil.formatBytesToMegabytes(data?.property?.size ?? 0);
           } else {
-            ToastUtil.errorToast(response.message);
+            Toast.showError(context, response.message);
           }
         });
       }

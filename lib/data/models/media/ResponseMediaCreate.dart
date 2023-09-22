@@ -1,9 +1,7 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-import 'ResponseMediaFiles.dart';
 import 'ResponseMediaProperty.dart';
-import 'ResponseMediaPropertyInfo.dart';
 
 part 'ResponseMediaCreate.g.dart';
 
@@ -14,7 +12,6 @@ class ResponseMediaCreate {
   final String? type;
   final String? name;
   final ResponseMediaProperty? property;
-  final List<ResponseMediaFiles>? files;
   final String? updatedAt;
   final String? createdAt;
 
@@ -24,7 +21,6 @@ class ResponseMediaCreate {
     this.name,
     this.type,
     this.property,
-    this.files,
     this.updatedAt,
     this.createdAt,
   });

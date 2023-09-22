@@ -78,14 +78,14 @@ class CreateScheduleScreen extends HookConsumerWidget {
               initState();
               Navigator.of(context).pop(true);
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
           scheduleUpdateState.when(
             success: (event) {
               initState();
               Navigator.of(context).pop(true);
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
@@ -157,7 +157,7 @@ class _SaveButton extends HookConsumerWidget {
           isActivated: isSaveAvailable,
           onPressed: () {
             if (timelineProvider.hasAnyOverlappingTimes()) {
-              ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_duplicated);
+              Toast.showError(context, getAppLocalizations(context).message_time_setting_duplicated);
             } else {
               if (isEditMode) {
                 scheduleUpdateProvider.updateSchedule(scheduleId ?? -1, saveState);

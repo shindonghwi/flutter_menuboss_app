@@ -100,7 +100,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
       if (response.status == 200) {
         Navigator.of(context).pop(true);
       } else {
-        ToastUtil.errorToast(response.message ?? "");
+        Toast.showError(context, response.message ?? "");
         await Future.delayed(const Duration(seconds: 2));
         isProcessing = false;
       }

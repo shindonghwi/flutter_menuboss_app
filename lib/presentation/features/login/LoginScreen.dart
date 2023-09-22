@@ -48,7 +48,7 @@ class LoginScreen extends HookConsumerWidget {
             goToMainScreen();
           },
           failure: (event) {
-            ToastUtil.errorToast(event.errorMessage);
+            Toast.showError(context, event.errorMessage);
           },
         );
       });

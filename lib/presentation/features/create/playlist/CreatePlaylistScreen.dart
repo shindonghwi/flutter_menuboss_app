@@ -86,14 +86,14 @@ class CreatePlaylistScreen extends HookConsumerWidget {
               initState();
               Navigator.of(context).pop(true);
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
           playListUpdateState.when(
             success: (event) {
               initState();
               Navigator.of(context).pop(true);
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

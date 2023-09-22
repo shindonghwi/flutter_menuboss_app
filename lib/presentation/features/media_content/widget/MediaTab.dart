@@ -30,7 +30,7 @@ class MediaTab extends HookConsumerWidget {
             success: (event) {
               mediaContents.value = event.value;
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

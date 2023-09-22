@@ -50,7 +50,7 @@ class SelectPlaylistScreen extends HookConsumerWidget {
         await Future(() {
           playlistState.when(
             success: (event) => playlistItems.value = event.value,
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

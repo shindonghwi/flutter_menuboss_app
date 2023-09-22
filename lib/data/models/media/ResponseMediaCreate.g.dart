@@ -16,9 +16,6 @@ ResponseMediaCreate _$ResponseMediaCreateFromJson(Map<String, dynamic> json) =>
           ? null
           : ResponseMediaProperty.fromJson(
               json['property'] as Map<String, dynamic>),
-      files: (json['files'] as List<dynamic>?)
-          ?.map((e) => ResponseMediaFiles.fromJson(e as Map<String, dynamic>))
-          .toList(),
       updatedAt: json['updatedAt'] as String?,
       createdAt: json['createdAt'] as String?,
     );
@@ -31,7 +28,6 @@ Map<String, dynamic> _$ResponseMediaCreateToJson(
       'type': instance.type,
       'name': instance.name,
       'property': instance.property,
-      'files': instance.files,
       'updatedAt': instance.updatedAt,
       'createdAt': instance.createdAt,
     };

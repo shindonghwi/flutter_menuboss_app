@@ -59,10 +59,10 @@ class BottomSheetTimeSetting extends HookWidget {
 
             // 시작 시간이 앞서는걸 방지
             if (startInfo.first.value > endInfo.first.value) {
-              ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_precede);
+              Toast.showError(context, getAppLocalizations(context).message_time_setting_precede);
               return;
             } else if ((startInfo.first.value == endInfo.first.value) && (startInfo.second.value >= endInfo.second.value)) {
-              ToastUtil.errorToast(getAppLocalizations(context).message_time_setting_precede);
+              Toast.showError(context, getAppLocalizations(context).message_time_setting_precede);
               return;
             }
 
@@ -209,11 +209,11 @@ class _NumberPickers extends StatelessWidget {
                   maxValue: 23,
                   itemCount: 5,
                   selectedTextStyle: getTextTheme(context).b2sb.copyWith(
-                    color: getColorScheme(context).colorGray900,
-                  ),
+                        color: getColorScheme(context).colorGray900,
+                      ),
                   textStyle: getTextTheme(context).b2m.copyWith(
-                    color: getColorScheme(context).colorGray900.withOpacity(0.5),
-                  ),
+                        color: getColorScheme(context).colorGray900.withOpacity(0.5),
+                      ),
                   zeroPad: true,
                   decoration: BoxDecoration(
                     border: Border.symmetric(
@@ -246,11 +246,11 @@ class _NumberPickers extends StatelessWidget {
                   maxValue: 59,
                   itemCount: 5,
                   selectedTextStyle: getTextTheme(context).b2sb.copyWith(
-                    color: getColorScheme(context).colorGray900,
-                  ),
+                        color: getColorScheme(context).colorGray900,
+                      ),
                   textStyle: getTextTheme(context).b2m.copyWith(
-                    color: getColorScheme(context).colorGray900.withOpacity(0.5),
-                  ),
+                        color: getColorScheme(context).colorGray900.withOpacity(0.5),
+                      ),
                   zeroPad: true,
                   decoration: BoxDecoration(
                     border: Border.symmetric(

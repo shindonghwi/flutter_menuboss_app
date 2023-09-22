@@ -42,7 +42,7 @@ class SchedulesScreen extends HookConsumerWidget {
               scheduleList.value = event.value;
               schedulesProvider.init();
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

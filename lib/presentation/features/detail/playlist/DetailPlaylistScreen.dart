@@ -61,11 +61,11 @@ class DetailPlaylistScreen extends HookConsumerWidget {
         await Future(() {
           playlistState.when(
             success: (event) => playlistItem.value = event.value,
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
           delPlaylistState.when(
             success: (event) => Navigator.of(context).pop(true),
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }

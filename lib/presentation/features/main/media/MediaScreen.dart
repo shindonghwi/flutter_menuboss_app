@@ -46,7 +46,7 @@ class MediaScreen extends HookConsumerWidget {
               mediaList.value = event.value;
               mediaProvider.init();
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
@@ -58,13 +58,13 @@ class MediaScreen extends HookConsumerWidget {
     void goToUploadGallery() {
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) {
-          ToastUtil.successToast("이미지 업로드 진행해야함");
+          Toast.showSuccess(context, "이미지 업로드 진행해야함");
         },
         onVideoSelected: (XFile xFile) {
-          ToastUtil.successToast("비디오 업로드 진행해야함");
+          Toast.showSuccess(context, "비디오 업로드 진행해야함");
         },
         notAvailableFile: () {
-          ToastUtil.successToast("업로드 불가능한 파일");
+          Toast.showSuccess(context, "업로드 불가능한 파일");
         },
       );
     }
@@ -163,6 +163,13 @@ class _MediaContentList extends HookConsumerWidget {
                         return ClickableScale(
                           onPressed: () async {
                             if (isFolderType) {
+                              Navigator.push(
+                                context,
+                                nextSlideHorizontalScreen(
+                                  RoutingScreen.MediaDetailInFolder.route,
+                                  parameter: item,
+                                ),
+                              );
                             } else {
                               try {
                                 final newName = await Navigator.push(
@@ -174,7 +181,7 @@ class _MediaContentList extends HookConsumerWidget {
                                 );
 
                                 if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                                  mediaProvider.renameItem(item.mediaId, newName);
+                                  mediaProvider.renameItem(item.mediaId ?? "", newName);
                                 }
                               } catch (e) {
                                 debugPrint(e.toString());
@@ -184,10 +191,10 @@ class _MediaContentList extends HookConsumerWidget {
                           child: MediaItem(
                             item: item,
                             onRemove: () {
-                              mediaProvider.removeItem([item.mediaId]);
+                              mediaProvider.removeItem([item.mediaId ?? ""]);
                             },
                             onRename: (newName) {
-                              mediaProvider.renameItem(item.mediaId, newName);
+                              mediaProvider.renameItem(item.mediaId ?? "", newName);
                             },
                           ),
                         );

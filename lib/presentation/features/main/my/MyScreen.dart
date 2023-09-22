@@ -50,7 +50,7 @@ class MyScreen extends HookConsumerWidget {
             goToLogin();
           },
           failure: (event) {
-            ToastUtil.errorToast(event.errorMessage);
+            Toast.showError(context, event.errorMessage);
           },
         );
       });

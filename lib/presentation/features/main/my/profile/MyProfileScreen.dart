@@ -34,7 +34,7 @@ class MyProfileScreen extends HookConsumerWidget {
             Navigator.of(context).pop();
           },
           failure: (event) {
-            ToastUtil.errorToast(event.errorMessage);
+            Toast.showError(context, event.errorMessage);
           },
         );
       });

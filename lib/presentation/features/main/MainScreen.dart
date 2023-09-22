@@ -77,7 +77,7 @@ class _BottomNavigationBar extends HookWidget {
                   ),
                 ),
               ),
-              height: 80,
+              height: 72,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: ClipRRect(

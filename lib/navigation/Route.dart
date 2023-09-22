@@ -6,6 +6,7 @@ import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
+import 'package:menuboss/presentation/features/detail/in_media_folder/MediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
@@ -25,6 +26,7 @@ enum RoutingScreen {
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
   MediaInfo(route: "/media/info"), // 미디어 정보
+  MediaDetailInFolder(route: "/media/detail/folder"), // 미디어 폴더 내부 정보
   MediaContent(route: "/media/content"), // 미디어 콘텐츠 목록
 
   DetailPlaylist(route: "/detail/playlist"), // 플레이리스트 상세
@@ -53,6 +55,7 @@ enum RoutingScreen {
 
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
+      RoutingScreen.MediaDetailInFolder.route: (context) => const MediaInFolderScreen(),
       RoutingScreen.MediaContent.route: (context) => const MediaContentScreen(),
 
       RoutingScreen.DetailPlaylist.route: (context) => const DetailPlaylistScreen(),
@@ -85,6 +88,9 @@ enum RoutingScreen {
       return MediaInformationScreen(item: model);
     } else if (route == RoutingScreen.MediaContent.route) {
       return const MediaContentScreen();
+    }else if (route == RoutingScreen.MediaDetailInFolder.route) {
+      ResponseMediaModel mediaInfo = parameter;
+      return MediaInFolderScreen(item: mediaInfo);
     }
 
     else if (route == RoutingScreen.DetailPlaylist.route) {

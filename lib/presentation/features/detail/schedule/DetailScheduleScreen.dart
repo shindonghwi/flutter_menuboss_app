@@ -59,14 +59,14 @@ class DetailScheduleScreen extends HookConsumerWidget {
         await Future(() {
           scheduleState.when(
             success: (event) => scheduleItem.value = event.value,
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
           delScheduleState.when(
             success: (event) {
               delScheduleProvider.init();
               Navigator.of(context).pop(true);
             },
-            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+            failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
