@@ -9,12 +9,13 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/detail/schedule/provider/DelScheduleProvider.dart';
 import 'package:menuboss/presentation/features/detail/schedule/provider/GetScheduleProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -23,6 +24,8 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
+
+import '../../../components/view_state/LoadingView.dart';
 
 class DetailScheduleScreen extends HookConsumerWidget {
   final ResponseScheduleModel? item;
@@ -58,16 +61,6 @@ class DetailScheduleScreen extends HookConsumerWidget {
             success: (event) => scheduleItem.value = event.value,
             failure: (event) => ToastUtil.errorToast(event.errorMessage),
           );
-        });
-      }
-
-      handleUiStateChange();
-      return null;
-    }, [scheduleState]);
-
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
           delScheduleState.when(
             success: (event) {
               delScheduleProvider.init();
@@ -80,7 +73,7 @@ class DetailScheduleScreen extends HookConsumerWidget {
 
       handleUiStateChange();
       return null;
-    }, [delScheduleState]);
+    }, [scheduleState, delScheduleState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
@@ -117,15 +110,12 @@ class DetailScheduleScreen extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              scheduleItem.value == null
-                  ? scheduleState is Success<ResponseScheduleModel>
-                      ? _ScheduleContent(items: scheduleState.value.playlists)
-                      : const SizedBox()
-                  : _ScheduleContent(items: scheduleItem.value?.playlists),
-            ],
-          ),
+          if (scheduleState is Failure)
+            FailView(onPressed: () => scheduleProvider.requestScheduleInfo(item?.scheduleId ?? -1))
+          else if (scheduleItem.value?.playlists != null)
+            _ScheduleContent(items: scheduleItem.value?.playlists)
+          else if (scheduleState is Success<ResponseScheduleModel>)
+            _ScheduleContent(items: scheduleState.value.playlists),
           if (scheduleState is Loading || delScheduleState is Loading) const LoadingView(),
         ],
       ),
@@ -241,7 +231,10 @@ class _ScheduleContent extends StatelessWidget {
             },
             itemCount: items!.length,
           )
-        : const SizedBox();
+        : EmptyView(
+            type: BlankMessageType.NEW_SCHEDULE,
+            onPressed: null,
+          );
   }
 }
 

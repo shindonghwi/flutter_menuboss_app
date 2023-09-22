@@ -178,61 +178,76 @@ class ScheduleContentItem extends HookConsumerWidget {
                                               )
                                             ],
                                           ),
-                                          ConstrainedBox(
-                                            constraints: const BoxConstraints(
-                                              minWidth: 180,
-                                            ),
-                                            child: Column(
-                                              children: [
-                                                SizedBox(
-                                                  width: double.infinity,
-                                                  child: data.timeIsDuplicate
-                                                      ? ErrorLineButton.extraSmallRound4Icon(
-                                                          leftIcon: SvgPicture.asset(
-                                                            "assets/imgs/icon_time.svg",
-                                                            width: 20,
-                                                            height: 20,
-                                                            colorFilter: ColorFilter.mode(
-                                                              getColorScheme(context).colorGray900,
-                                                              BlendMode.srcIn,
-                                                            ),
+                                          Expanded(
+                                            child: ConstrainedBox(
+                                              constraints: const BoxConstraints(
+                                                minWidth: 180,
+                                              ),
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisAlignment: MainAxisAlignment.end,
+                                                children: [
+                                                  data.start == null && data.end == null || index == 0
+                                                      ? Padding(
+                                                          padding: const EdgeInsets.only(bottom: 14.5),
+                                                          child: Text(
+                                                            "${getAppLocalizations(context).common_time} 00:00 ~ 24:00",
+                                                            style: getTextTheme(context).b3sb.copyWith(
+                                                                  color: getColorScheme(context).colorGray900,
+                                                                ),
                                                           ),
-                                                          content: "${data.start} ~ ${data.end}",
-                                                          isActivated: true,
-                                                          onPressed: () => showTimeSettingBottomSheet(data),
                                                         )
-                                                      : NeutralLineButton.extraSmallRound4Icon(
-                                                          leftIcon: SvgPicture.asset("assets/imgs/icon_time.svg"),
-                                                          content: "${data.start} ~ ${data.end}",
-                                                          isActivated: true,
-                                                          onPressed: () => showTimeSettingBottomSheet(data),
+                                                      : Padding(
+                                                          padding: const EdgeInsets.only(bottom: 4.0),
+                                                          child: SizedBox(
+                                                            width: double.infinity,
+                                                            child: data.timeIsDuplicate
+                                                                ? ErrorLineButton.extraSmallRound4Icon(
+                                                                    leftIcon: SvgPicture.asset(
+                                                                      "assets/imgs/icon_time.svg",
+                                                                      width: 20,
+                                                                      height: 20,
+                                                                      colorFilter: ColorFilter.mode(
+                                                                        getColorScheme(context).colorGray900,
+                                                                        BlendMode.srcIn,
+                                                                      ),
+                                                                    ),
+                                                                    content: "${data.start} ~ ${data.end}",
+                                                                    isActivated: true,
+                                                                    onPressed: () => showTimeSettingBottomSheet(data),
+                                                                  )
+                                                                : NeutralLineButton.extraSmallRound4Icon(
+                                                                    leftIcon: SvgPicture.asset("assets/imgs/icon_time.svg"),
+                                                                    content: "${data.start} ~ ${data.end}",
+                                                                    isActivated: true,
+                                                                    onPressed: () => showTimeSettingBottomSheet(data),
+                                                                  ),
+                                                          ),
                                                         ),
-                                                ),
-                                                const SizedBox(
-                                                  height: 4.0,
-                                                ),
-                                                SizedBox(
-                                                  width: double.infinity,
-                                                  child: NeutralLineButton.extraSmallRound4Icon(
-                                                    leftIcon: SvgPicture.asset(
-                                                      data.playlistId == null || data.playlistId! < 0
-                                                          ? "assets/imgs/icon_plus.svg"
-                                                          : "assets/imgs/icon_edit.svg",
-                                                      width: 20,
-                                                      height: 20,
-                                                      colorFilter: ColorFilter.mode(
-                                                        getColorScheme(context).colorGray900,
-                                                        BlendMode.srcIn,
+                                                  SizedBox(
+                                                    width: double.infinity,
+                                                    child: NeutralLineButton.extraSmallRound4Icon(
+                                                      leftIcon: SvgPicture.asset(
+                                                        data.playlistId == null || data.playlistId! < 0
+                                                            ? "assets/imgs/icon_plus.svg"
+                                                            : "assets/imgs/icon_edit.svg",
+                                                        width: 20,
+                                                        height: 20,
+                                                        colorFilter: ColorFilter.mode(
+                                                          getColorScheme(context).colorGray900,
+                                                          BlendMode.srcIn,
+                                                        ),
                                                       ),
+                                                      content: data.playlistId == null || data.playlistId! < 0
+                                                          ? getAppLocalizations(context).create_schedule_add_playlist
+                                                          : getAppLocalizations(context).create_schedule_change_playlist,
+                                                      isActivated: true,
+                                                      onPressed: () => goToSelectPlaylist(data),
                                                     ),
-                                                    content: data.playlistId == null || data.playlistId! < 0
-                                                        ? getAppLocalizations(context).create_schedule_add_playlist
-                                                        : getAppLocalizations(context).create_schedule_change_playlist,
-                                                    isActivated: true,
-                                                    onPressed: () => goToSelectPlaylist(data),
                                                   ),
-                                                ),
-                                              ],
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ],
