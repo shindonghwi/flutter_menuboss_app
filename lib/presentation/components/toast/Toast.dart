@@ -81,7 +81,7 @@ class _ToastWidget extends HookWidget {
 
     useEffect(() {
       animationController.forward().whenComplete(() {
-        Timer(const Duration(seconds: 3), () {
+        Timer(const Duration(seconds: 2), () {
           if (animationController.status == AnimationStatus.completed) {
             animationController.reverse().whenComplete(onDismissed);
           }
@@ -101,7 +101,7 @@ class _ToastWidget extends HookWidget {
     return Positioned(
       left: 0,
       right: 0,
-      bottom: 84,
+      top: 52,
       child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24),
