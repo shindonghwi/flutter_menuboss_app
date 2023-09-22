@@ -38,8 +38,10 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
     _delDeviceUseCase.call(screenId).then((response) {
       if (response.status == 200) {
         final index = currentDevices.indexWhere((item) => item.screenId == screenId);
+        final updateCurrentDevices = [...currentDevices]..remove(currentDevices[index]);
+        currentDevices = updateCurrentDevices;
         if (index != -1) {
-          state = Success([...currentDevices]..remove(currentDevices[index]));
+          state = Success(currentDevices);
         }
       } else {
         state = Failure(response.message);
@@ -57,11 +59,13 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
         if (index != -1) {
           final itemToUpdate = currentDevices[index];
           final updatedItem = itemToUpdate.copyWith(name: name);
-          state = Success([
+          final updateCurrentDevices = [
             ...currentDevices.sublist(0, index),
             updatedItem,
             ...currentDevices.sublist(index + 1),
-          ]);
+          ];
+
+          state = Success(updateCurrentDevices);
         }
       } else {
         state = Failure(response.message);

@@ -9,20 +9,23 @@ import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart
 import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
+import '../../../components/view_state/LoadingView.dart';
 import 'provider/DelPlaylistProvider.dart';
 import 'provider/GetPlaylistProvider.dart';
 
@@ -106,15 +109,12 @@ class DetailPlaylistScreen extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          Column(
-            children: [
-              playlistItem.value == null
-                  ? playlistState is Success<ResponsePlaylistModel>
-                      ? _PlaylistContent(item: playlistState.value)
-                      : const SizedBox()
-                  : _PlaylistContent(item: playlistItem.value!),
-            ],
-          ),
+          if (playlistState is Failure)
+            FailView(onPressed: () => playlistProvider.requestPlaylistInfo(item?.playlistId ?? -1))
+          else if (playlistItem.value != null)
+            _PlaylistContent(item: playlistItem.value!)
+          else if (playlistState is Success<ResponsePlaylistModel>)
+            _PlaylistContent(item: playlistState.value),
           if (playlistState is Loading || delPlaylistState is Loading) const LoadingView(),
         ],
       ),
@@ -132,83 +132,88 @@ class _PlaylistContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        _Settings(item: item),
-        const DividerVertical(marginVertical: 0),
-        _TotalDuration(item: item),
-        ListView.separated(
-          physics: const NeverScrollableScrollPhysics(),
-          shrinkWrap: true,
-          separatorBuilder: (BuildContext context, int index) {
-            return const SizedBox(height: 0);
-          },
-          itemBuilder: (BuildContext context, int index) {
-            final data = item.contents?[index];
-            return SizedBox(
-              width: double.infinity,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SizedBox(
-                      width: 60,
-                      height: 60,
-                      child: LoadImage(
-                        url: data?.property.imageUrl ?? "",
-                        type: ImagePlaceholderType.Small,
-                      ),
-                    ),
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.only(left: 16.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                _ContentTypeImage(
-                                  code: data?.type.code ?? "",
-                                ),
-                                Expanded(
-                                  child: Padding(
-                                    padding: const EdgeInsets.only(left: 4.0),
+    return !CollectionUtil.isNullorEmpty(item.contents)
+        ? Column(
+            children: [
+              _Settings(item: item),
+              const DividerVertical(marginVertical: 0),
+              _TotalDuration(item: item),
+              ListView.separated(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                separatorBuilder: (BuildContext context, int index) {
+                  return const SizedBox(height: 0);
+                },
+                itemBuilder: (BuildContext context, int index) {
+                  final data = item.contents?[index];
+                  return SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SizedBox(
+                            width: 60,
+                            height: 60,
+                            child: LoadImage(
+                              url: data?.property.imageUrl ?? "",
+                              type: ImagePlaceholderType.Small,
+                            ),
+                          ),
+                          Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 16.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      _ContentTypeImage(
+                                        code: data?.type.code ?? "",
+                                      ),
+                                      Expanded(
+                                        child: Padding(
+                                          padding: const EdgeInsets.only(left: 4.0),
+                                          child: Text(
+                                            data?.name ?? "",
+                                            style: getTextTheme(context).b2sb.copyWith(
+                                                  color: getColorScheme(context).colorGray900,
+                                                ),
+                                          ),
+                                        ),
+                                      )
+                                    ],
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.only(top: 4.0),
                                     child: Text(
-                                      data?.name ?? "",
-                                      style: getTextTheme(context).b2sb.copyWith(
-                                            color: getColorScheme(context).colorGray900,
+                                      StringUtil.formatDuration(data?.duration ?? 0),
+                                      style: getTextTheme(context).c1m.copyWith(
+                                            color: getColorScheme(context).colorGray500,
                                           ),
                                     ),
                                   ),
-                                )
-                              ],
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.only(top: 4.0),
-                              child: Text(
-                                StringUtil.formatDuration(data?.duration ?? 0),
-                                style: getTextTheme(context).c1m.copyWith(
-                                      color: getColorScheme(context).colorGray500,
-                                    ),
+                                ],
                               ),
                             ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
-                    )
-                  ],
-                ),
+                    ),
+                  );
+                },
+                itemCount: item.contents?.length ?? 0,
               ),
-            );
-          },
-          itemCount: item.contents?.length ?? 0,
-        ),
-      ],
-    );
+            ],
+          )
+        : const EmptyView(
+            type: BlankMessageType.NEW_PLAYLIST,
+            onPressed: null,
+          );
   }
 }
 

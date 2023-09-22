@@ -231,7 +231,7 @@ class _ScheduleContent extends StatelessWidget {
             },
             itemCount: items!.length,
           )
-        : EmptyView(
+        : const EmptyView(
             type: BlankMessageType.NEW_SCHEDULE,
             onPressed: null,
           );

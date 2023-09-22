@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
@@ -27,8 +29,9 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final applyScreenState = ref.watch(PostApplyContentsToScreenProvider);
     final applyScreenProvider = ref.read(PostApplyContentsToScreenProvider.notifier);
+    final deviceState = ref.watch(DeviceListProvider);
     final deviceProvider = ref.read(DeviceListProvider.notifier);
-    final deviceItems = ref.read(DeviceListProvider.notifier).currentDevices;
+    final deviceItems = useState([]);
 
     final checkList = ref.watch(ApplyScreenCheckListProvider);
     final checkListProvider = ref.read(ApplyScreenCheckListProvider.notifier);
@@ -43,7 +46,14 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        final deviceIds = deviceItems.map((e) => e.screenId).toList();
+        deviceItems.value = deviceProvider.currentDevices;
+      });
+      return null;
+    }, [deviceState]);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        final deviceIds = deviceProvider.currentDevices.map((e) => e.screenId).toList();
         applyItem.value = applyItem.value.copyWith(screenIds: deviceIds);
       });
       return null;
@@ -53,7 +63,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           applyScreenState.when(
-            success: (event) {
+            success: (event) async {
               ToastUtil.successToast("스크린에 적용완료");
               deviceProvider.requestGetDevices();
               applyScreenProvider.init();
@@ -71,37 +81,60 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
     return BaseScaffold(
       appBar: TopBarIconTitleNone(content: getAppLocalizations(context).apply_screen_title),
       body: SafeArea(
-        child: !CollectionUtil.isNullorEmpty(deviceItems)
-            ? ListView.separated(
-                shrinkWrap: true,
-                itemCount: deviceItems.length,
-                itemBuilder: (context, index) {
-                  return ApplyDeviceItem(
-                    item: deviceItems[index],
-                    isChecked: checkListProvider.isExist(index),
-                    onPressed: () {
-                      checkListProvider.onChanged(index);
+        child: !CollectionUtil.isNullorEmpty(deviceItems.value)
+            ? Stack(
+                children: [
+                  ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: deviceItems.value.length,
+                    itemBuilder: (context, index) {
+                      return ApplyDeviceItem(
+                        item: deviceItems.value[index],
+                        isChecked: checkListProvider.isExist(index),
+                        onPressed: () {
+                          checkListProvider.onChanged(index);
+                        },
+                      );
                     },
-                  );
-                },
-                separatorBuilder: (context, index) {
-                  return const SizedBox();
-                },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox();
+                    },
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      width: getMediaQuery(context).size.width,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
+                        child: PrimaryFilledButton.largeRound8(
+                          content: getAppLocalizations(context).common_done,
+                          isActivated: checkList.isNotEmpty,
+                          onPressed: () => applyScreenProvider.applyToScreen(applyItem.value),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
               )
             : EmptyView(
                 type: BlankMessageType.ADD_SCREEN,
-                onPressed: () {},
+                onPressed: () async{
+                  // void goToRegisterDevice() async {
+                    try {
+                      final isAdded = await Navigator.push(
+                        context,
+                        nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
+                      );
+
+                      if (isAdded) {
+                        deviceProvider.requestGetDevices();
+                      }
+                    } catch (e) {
+                      debugPrint(e.toString());
+                    }
+                  }
+                // },
               ),
-      ),
-      bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
-          child: PrimaryFilledButton.largeRound8(
-            content: getAppLocalizations(context).common_done,
-            isActivated: checkList.isNotEmpty,
-            onPressed: () => applyScreenProvider.applyToScreen(applyItem.value),
-          ),
-        ),
       ),
     );
   }
