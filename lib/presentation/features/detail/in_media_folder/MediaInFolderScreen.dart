@@ -137,7 +137,7 @@ class _MediaContentList extends HookConsumerWidget {
                       item: item,
                       onRemove: () {
                         mediaProvider.removeItem([item.mediaId]);
-                        rootMediaProvider.decrementFolderCount(folderId);
+                        rootMediaProvider.changeFolderCount(folderId, isIncrement: false);
                       },
                       onRename: (newName) {
                         mediaProvider.renameItem(item.mediaId, newName);

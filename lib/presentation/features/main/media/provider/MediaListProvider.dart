@@ -139,7 +139,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   }
 
   /// 폴더의 count 감소
-  void changeFolderCount(String folderId, bool isIncrement) {
+  void changeFolderCount(String folderId, {required bool isIncrement}) {
     debugPrint("decrementFolderCount: $folderId");
     // 현재 아이템 중 해당 folderId를 가진 아이템을 찾습니다.
     ResponseMediaModel? folderItem = _currentItems.firstWhere((item) => item.mediaId == folderId);
