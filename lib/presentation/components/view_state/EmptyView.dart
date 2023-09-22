@@ -16,7 +16,7 @@ enum BlankMessageType {
 
 class EmptyView extends HookWidget {
   final BlankMessageType type;
-  final VoidCallback onPressed;
+  final VoidCallback? onPressed;
 
   const EmptyView({
     super.key,
@@ -125,23 +125,23 @@ class EmptyView extends HookWidget {
                   ),
               textAlign: TextAlign.center,
             ),
-          const SizedBox(
-            height: 20,
-          ),
-          if (buttonIconPath != null)
-            PrimaryFilledButton.mediumRound100Icon(
-              leftIcon: SvgPicture.asset(
-                buttonIconPath,
-                width: 20,
-                height: 20,
-                colorFilter: ColorFilter.mode(
-                  getColorScheme(context).white,
-                  BlendMode.srcIn,
+          if (buttonIconPath != null && onPressed != null)
+            Padding(
+              padding: const EdgeInsets.only(top: 20.0),
+              child: PrimaryFilledButton.mediumRound100Icon(
+                leftIcon: SvgPicture.asset(
+                  buttonIconPath,
+                  width: 20,
+                  height: 20,
+                  colorFilter: ColorFilter.mode(
+                    getColorScheme(context).white,
+                    BlendMode.srcIn,
+                  ),
                 ),
+                content: content.toString(),
+                isActivated: true,
+                onPressed: () => onPressed?.call(),
               ),
-              content: content.toString(),
-              isActivated: true,
-              onPressed: () => onPressed.call(),
             )
         ],
       ),
