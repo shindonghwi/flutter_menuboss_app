@@ -8,6 +8,7 @@ class PageResponse {
   final int offsetTime;
   final int size;
   final int totalItems;
+  final String? mediaId;
   final int totalPages;
   final int currentPage;
   final String? q;
@@ -23,6 +24,7 @@ class PageResponse {
     required this.offsetTime,
     required this.size,
     required this.totalItems,
+    required this.mediaId,
     required this.currentPage,
     required this.totalPages,
     required this.isFirst,

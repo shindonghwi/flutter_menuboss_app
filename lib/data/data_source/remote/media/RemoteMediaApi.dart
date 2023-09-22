@@ -17,12 +17,17 @@ class RemoteMediaApi {
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   /// 미디어 목록 조회
-  Future<ApiListResponse<List<ResponseMediaModel>>> getMedias(
-      {String q = "", int page = 1, int size = 10, String sort = "name_asc"}) async {
+  Future<ApiListResponse<List<ResponseMediaModel>>> getMedias({
+    String q = "",
+    int page = 1,
+    int size = 10,
+    String sort = "name_asc",
+    String? mediaId,
+  }) async {
     final response = await Service.getApi(
       type: ServiceType.Media,
       endPoint: null,
-      query: "q=$q&page=$page&size=$size&sort=$sort",
+      query: "q=$q&page=$page&size=$size&sort=$sort&mediaId=$mediaId",
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);

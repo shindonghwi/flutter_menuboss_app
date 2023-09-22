@@ -12,6 +12,7 @@ import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
+import 'package:menuboss/presentation/features/detail/in_media_folder/provider/MediaInFolderListProvider.dart';
 import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
 import 'package:menuboss/presentation/features/media_info/provider/MediaNameChangeProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -27,62 +28,60 @@ class MediaInFolderScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    // final mediaFolderInfoState = ref.watch(GetMediaFolderInfoProvider);
-    // final mediaFolderInfoProvider = ref.read(GetMediaFolderInfoProvider.notifier);
-    // final mediaList = useState<List<ResponseMediaModel>?>(null);
+    final mediaState = ref.watch(MediaInFolderListProvider);
+    final mediaProvider = ref.read(MediaInFolderListProvider.notifier);
+    final mediaList = useState<List<ResponseMediaModel>?>(null);
 
-    return Container();
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        mediaProvider.requestGetMedias(mediaId: item!.mediaId);
+      });
+      return null;
+    }, []);
 
-    // useEffect(() {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     mediaFolderInfoProvider.requestMediaInfo(item?.mediaId ?? "");
-    //   });
-    //   return null;
-    // }, []);
-    //
-    // useEffect(() {
-    //   void handleUiStateChange() async {
-    //     await Future(() {
-    //       mediaFolderInfoState.when(
-    //         success: (event) {
-    //           mediaList.value = event.value;
-    //           mediaFolderInfoProvider.init();
-    //         },
-    //         failure: (event) => Toast.showError(context, event.errorMessage),
-    //       );
-    //     });
-    //   }
-    //
-    //   handleUiStateChange();
-    //   return null;
-    // }, [mediaFolderInfoState]);
-    //
-    // return BaseScaffold(
-    //   appBar: TopBarIconTitleIcon(
-    //     leadingIsShow: true,
-    //     content: item?.name ?? "",
-    //     suffixIcons: [
-    //       Pair("assets/imgs/icon_check_round.svg", () {}),
-    //     ],
-    //   ),
-    //   body: Stack(
-    //     children: [
-    //       if (mediaFolderInfoState is Failure)
-    //         FailView(onPressed: () => mediaFolderInfoProvider.requestMediaInfo(item?.mediaId ?? ""))
-    //       else if (mediaList.value != null)
-    //         _MediaContentList(
-    //           items: mediaList.value!,
-    //           onMediaUpload: () {},
-    //         )
-    //       else if (mediaFolderInfoState is Success<List<ResponseMediaModel>>)
-    //         _MediaContentList(
-    //           items: mediaFolderInfoState.value,
-    //           onMediaUpload: () {},
-    //         ),
-    //       if (mediaFolderInfoState is Loading) const LoadingView(),
-    //     ],
-    //   ),
-    // );
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          mediaState.when(
+            success: (event) {
+              mediaList.value = event.value;
+              mediaProvider.init();
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [mediaState]);
+
+    return BaseScaffold(
+      appBar: TopBarIconTitleIcon(
+        leadingIsShow: true,
+        content: item?.name ?? "",
+        suffixIcons: [
+          Pair("assets/imgs/icon_check_round.svg", () {}),
+        ],
+      ),
+      body: Stack(
+        children: [
+          if (mediaState is Failure)
+            FailView(onPressed: () => mediaProvider.requestGetMedias(mediaId: item!.mediaId))
+          else if (mediaList.value != null)
+            _MediaContentList(
+              items: mediaList.value!,
+              onMediaUpload: () {},
+            )
+          else if (mediaState is Success<List<ResponseMediaModel>>)
+              _MediaContentList(
+                items: mediaState.value,
+                onMediaUpload: () {},
+              ),
+          if (mediaState is Loading) const LoadingView(),
+        ],
+      ),
+    );
   }
 }
 

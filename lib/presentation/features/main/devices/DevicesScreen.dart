@@ -58,7 +58,7 @@ class DevicesScreen extends HookConsumerWidget {
           Expanded(
             child: Stack(
               children: [
-                if (deviceState is Failure)
+                if (deviceState is Failure && deviceList.value == null)
                   FailView(onPressed: () => deviceProvider.requestGetDevices())
                 else if (deviceList.value != null)
                   _DeviceContentList(items: deviceList.value!)

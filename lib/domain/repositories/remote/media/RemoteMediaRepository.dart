@@ -14,6 +14,7 @@ abstract class RemoteMediaRepository {
     int page = 1,
     int size = 10,
     String sort = "name_asc",
+    String? mediaId,
   });
 
   /// 미디어 정보 조회

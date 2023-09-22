@@ -91,7 +91,7 @@ class MediaScreen extends HookConsumerWidget {
           Expanded(
             child: Stack(
               children: [
-                if (mediaState is Failure)
+                if (mediaState is Failure && mediaList.value == null)
                   FailView(onPressed: () => mediaProvider.requestGetMedias())
                 else if (mediaList.value != null)
                   _MediaContentList(

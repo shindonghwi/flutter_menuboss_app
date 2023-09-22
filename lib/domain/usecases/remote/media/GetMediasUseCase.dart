@@ -13,7 +13,8 @@ class GetMediasUseCase {
     int page = 1,
     int size = 10,
     String sort = "created_desc",
+    String? mediaId,
   }) async {
-    return await _remoteMediaRepository.getMedias(q: q, page: page, size: size, sort: sort);
+    return await _remoteMediaRepository.getMedias(q: q, page: page, size: size, sort: sort, mediaId: mediaId);
   }
 }

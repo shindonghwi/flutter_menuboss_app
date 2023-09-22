@@ -14,9 +14,14 @@ class RemoteMediaRepositoryImpl implements RemoteMediaRepository {
   final RemoteMediaApi _remoteMediaApi = GetIt.instance<RemoteMediaApi>();
 
   @override
-  Future<ApiListResponse<List<ResponseMediaModel>>> getMedias(
-      {String q = "", int page = 1, int size = 10, String sort = "name_asc"}) {
-    return _remoteMediaApi.getMedias(q: q, page: page, size: size, sort: sort);
+  Future<ApiListResponse<List<ResponseMediaModel>>> getMedias({
+    String q = "",
+    int page = 1,
+    int size = 10,
+    String sort = "name_asc",
+    String? mediaId,
+  }) {
+    return _remoteMediaApi.getMedias(q: q, page: page, size: size, sort: sort, mediaId: mediaId);
   }
 
   @override
