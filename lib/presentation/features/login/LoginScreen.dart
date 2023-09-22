@@ -107,20 +107,22 @@ class _SocialLoginButtons extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray500)),
+              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray300)),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   getAppLocalizations(context).common_or,
-                  style: getTextTheme(context).b2m.copyWith(
+                  style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).colorGray500,
                       ),
+                  textAlign: TextAlign.center,
                 ),
               ),
-              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray500)),
+              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray300)),
             ],
           ),
         ),
@@ -221,12 +223,12 @@ class _InputEmail extends HookWidget {
         children: [
           Text(
             "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
-            style: getTextTheme(context).b2sb.copyWith(
-                  color: getColorScheme(context).colorGray900,
+            style: getTextTheme(context).b3sb.copyWith(
+                  color: getColorScheme(context).colorGray800,
                 ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.small(
               controller: useTextEditingController(text: "test10@test.comm"),
               hint: getAppLocalizations(context).common_email,
@@ -261,12 +263,12 @@ class _InputPassword extends HookWidget {
         children: [
           Text(
             getAppLocalizations(context).common_password,
-            style: getTextTheme(context).b2sb.copyWith(
-                  color: getColorScheme(context).colorGray900,
+            style: getTextTheme(context).b3sb.copyWith(
+                  color: getColorScheme(context).colorGray800,
                 ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 8.0),
+            padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.small(
               controller: useTextEditingController(text: "qwer12344"),
               hint: getAppLocalizations(context).common_password,
