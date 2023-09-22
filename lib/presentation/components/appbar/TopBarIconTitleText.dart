@@ -67,15 +67,13 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                   child: Container(
                     margin: const EdgeInsets.only(right: 12.0),
                     child: Clickable(
-                      onPressed: () => rightIconOnPressed?.call(),
+                      onPressed: rightTextActivated! ? () => rightIconOnPressed?.call() : null,
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           rightText ?? "",
                           style: getTextTheme(context).b1sb.copyWith(
-                                color: rightTextActivated!
-                                    ? getColorScheme(context).colorPrimary500
-                                    : getColorScheme(context).colorGray400,
+                                color: rightTextActivated! ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray400,
                               ),
                         ),
                       ),

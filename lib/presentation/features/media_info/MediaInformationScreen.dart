@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/media/PatchMediaNameUseCase.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
@@ -11,13 +11,17 @@ import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.da
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-class MediaInformationScreen extends HookWidget {
+import 'provider/MediaNameChangeProvider.dart';
+
+class MediaInformationScreen extends HookConsumerWidget {
   final ResponseMediaModel? item;
 
   const MediaInformationScreen({
@@ -26,38 +30,50 @@ class MediaInformationScreen extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaNameChangeState = ref.watch(MediaNameChangeProvider);
+    final mediaNameChangeProvider = ref.read(MediaNameChangeProvider.notifier);
     final fileName = useState<String>(item?.name ?? "");
 
-    void requestFileNameChange() {
-      GetIt.instance<PatchMediaNameUseCase>().call(item!.mediaId, fileName.value).then((response) {
-        if (response.status == 200) {
-          Navigator.of(context).pop(fileName.value);
-        } else {
-          ToastUtil.errorToast(response.message);
-        }
-      });
-    }
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          mediaNameChangeState.when(
+            success: (event) {
+              mediaNameChangeProvider.init();
+              Navigator.of(context).pop(fileName.value);
+            },
+            failure: (event) => ToastUtil.errorToast(event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [mediaNameChangeState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleText(
         content: getAppLocalizations(context).media_info_title,
         rightText: getAppLocalizations(context).common_save,
         rightTextActivated: fileName.value.isNotEmpty,
-        rightIconOnPressed: () => requestFileNameChange(),
+        rightIconOnPressed: () => mediaNameChangeProvider.requestChangeMediaName(item!.mediaId, fileName.value),
       ),
       body: SingleChildScrollView(
-        child: Column(
+        child: Stack(
           children: [
-            _InputFileName(
-              item: item,
-              onChanged: (text) {
-                fileName.value = text;
-              },
+            Column(
+              children: [
+                _InputFileName(
+                  item: item,
+                  onChanged: (text) => fileName.value = text,
+                ),
+                _FileImage(item: item),
+                const DividerVertical(marginVertical: 16),
+                _MediaInformation(item: item),
+              ],
             ),
-            _FileImage(item: item),
-            const DividerVertical(marginVertical: 16),
-            _MediaInformation(item: item),
+            if (mediaNameChangeState is Loading) const LoadingView(),
           ],
         ),
       ),

@@ -76,11 +76,14 @@ class MediaScreen extends HookConsumerWidget {
             leadingIsShow: false,
             content: getAppLocalizations(context).main_navigation_menu_media,
             suffixIcons: [
-              Pair("assets/imgs/icon_new_folder.svg", () {
-                mediaProvider.createFolder();
-              }),
               Pair(
-                "assets/imgs/icon_upload.svg",
+                "assets/imgs/icon_new_folder.svg",
+                () {
+                  mediaProvider.createFolder();
+                },
+              ),
+              Pair(
+                "assets/imgs/icon_check_round.svg",
                 () => goToUploadGallery(),
               ),
             ],
@@ -139,15 +142,12 @@ class _MediaContentList extends HookConsumerWidget {
             children: [
               Column(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(24, 16, 24, 0),
-                    child: Align(
-                      alignment: Alignment.centerLeft,
-                      child: FilterButton(
-                        onSelected: (type, text) {
-                          mediaProvider.changeFilterType(type);
-                        },
-                      ),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: FilterButton(
+                      onSelected: (type, text) {
+                        mediaProvider.changeFilterType(type);
+                      },
                     ),
                   ),
                   Expanded(
