@@ -6,7 +6,7 @@ class RegUtil{
   }
 
   static bool checkPw(String pw){
-    final regex = RegExp(r'^[a-zA-Z0-9]{4,}$');
+    final regex = RegExp(r'^[a-zA-Z0-9]{8,20}$');
     return regex.hasMatch(pw);
   }
 

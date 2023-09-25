@@ -44,7 +44,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        debugPrint("SelectMediaFileScreen addPostFrameCallback ${mediaProvider.currentItems}");
+        checkListProvider.init();
         if (!CollectionUtil.isNullorEmpty(mediaProvider.currentItems)) {
           mediaProvider.updateCurrentItems(mediaProvider.currentItems, isUiUpdate: true);
         }
@@ -75,8 +75,6 @@ class SelectMediaFileScreen extends HookConsumerWidget {
       return null;
     }, [mediaState]);
 
-    debugPrint("SelectMediaFileScreen build called ${mediaState}");
-
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
         content: getAppLocalizations(context).select_media_file_title(checkListState.length),
@@ -101,7 +99,8 @@ class SelectMediaFileScreen extends HookConsumerWidget {
       bottomNavigationBar: SelectMediaBottomContent(
         onMovedClick: () {},
         onDeleteClick: () {
-          // selectMediaDeleteProvider.removeItem(selectMediaState);
+          mediaProvider.removeItem(checkListState);
+          Navigator.of(context).pop();
         },
       ),
     );

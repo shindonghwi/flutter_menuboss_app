@@ -23,7 +23,6 @@ import '../../main/media/widget/MediaItem.dart';
 
 class MediaInFolderScreen extends HookConsumerWidget {
   final ResponseMediaModel? item;
-
   const MediaInFolderScreen({
     super.key,
     this.item,
@@ -37,6 +36,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        mediaProvider.initPageInfo();
         mediaProvider.requestGetMedias(mediaId: item!.mediaId);
       });
       return null;
@@ -57,6 +57,8 @@ class MediaInFolderScreen extends HookConsumerWidget {
       handleUiStateChange();
       return null;
     }, [mediaState]);
+
+    debugPrint("MediaInFolderScreen build ${mediaState}");
 
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(

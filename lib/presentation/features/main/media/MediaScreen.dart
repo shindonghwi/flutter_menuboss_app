@@ -18,6 +18,7 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
+
 import '../../../components/view_state/LoadingView.dart';
 import 'widget/MediaItem.dart';
 
@@ -82,22 +83,13 @@ class MediaScreen extends HookConsumerWidget {
               ),
               Pair(
                 "assets/imgs/icon_check_round.svg",
-                () async {
-                  try {
-                    final isUpdated = await Navigator.push(
-                      context,
-                      nextSlideHorizontalScreen(
-                        RoutingScreen.SelectMediaFile.route,
-                      ),
-                    );
-                    if (isUpdated) {
-                      mediaProvider.initPageInfo();
-                      mediaProvider.requestGetMedias();
-                    }
-                  } catch (e) {
-                    debugPrint(e.toString());
-                  }
-
+                () {
+                  Navigator.push(
+                    context,
+                    nextSlideHorizontalScreen(
+                      RoutingScreen.SelectMediaFile.route,
+                    ),
+                  );
                 },
               ),
             ],

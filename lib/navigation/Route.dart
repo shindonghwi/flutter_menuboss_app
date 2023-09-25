@@ -11,7 +11,6 @@ import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScr
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
-import 'package:menuboss/presentation/features/main/media/MediaScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
@@ -26,8 +25,6 @@ enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
   Login(route: "/login"), // 로그인
   Main(route: "/main"), // 메인
-  MainMedia(route: "/main/media"), // 메인 미디어
-
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
   MediaInfo(route: "/media/info"), // 미디어 정보
@@ -60,8 +57,6 @@ enum RoutingScreen {
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
 
-      MainMedia.route: (context) => const MediaScreen(),
-
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
       RoutingScreen.MediaDetailInFolder.route: (context) => const MediaInFolderScreen(),
@@ -90,8 +85,6 @@ enum RoutingScreen {
       return const LoginScreen();
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
-    } else if (route == RoutingScreen.MainMedia.route) {
-      return const MediaScreen();
     }
 
     else if (route == RoutingScreen.ScanQR.route) {
