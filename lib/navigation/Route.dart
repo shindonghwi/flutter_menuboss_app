@@ -17,7 +17,7 @@ import 'package:menuboss/presentation/features/media_info/MediaInformationScreen
 import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
 import 'package:menuboss/presentation/features/select/media_file/SelectMediaFileScreen.dart';
-import 'package:menuboss/presentation/features/select/media_file/in_select_media_folder/SelectMediaInFolderScreen.dart';
+import 'package:menuboss/presentation/features/select/media_file/in_folder/SelectMediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
