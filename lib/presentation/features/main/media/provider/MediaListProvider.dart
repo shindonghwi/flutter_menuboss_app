@@ -134,10 +134,22 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   }
 
   /// 미디어 삭제
-  void removeItem(List<String> mediaIds) {
+  void removeItem(List<String> mediaIds, {String? folderId}) {
     _delMediaUseCase.call(mediaIds).then((response) {
       if (response.status == 200) {
         List<ResponseMediaModel> updateItems = currentItems.where((item) => !mediaIds.contains(item.mediaId)).toList();
+
+        // folderId가 제공되었으면 폴더의 count를 감소시킵니다.
+        if (folderId != null) {
+          ResponseMediaModel? folderItem = updateItems.firstWhere((item) => item.mediaId == folderId);
+
+          if ((folderItem.property?.count ?? 0) > 0) {
+            int updatedCount = folderItem.property!.count! - 1;
+            int index = updateItems.indexOf(folderItem);
+            updateItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount));
+          }
+        }
+
         updateCurrentItems(updateItems);
         state = Success(updateItems);
       } else {
@@ -147,7 +159,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   }
 
   /// 폴더의 count 감소
-  void changeFolderCount(String folderId, {required bool isIncrement}) {
+  List<ResponseMediaModel> changeFolderCount(String folderId, {required bool isIncrement, bool isUiUpdate = false}) {
     debugPrint("decrementFolderCount: $folderId");
     // 현재 아이템 중 해당 folderId를 가진 아이템을 찾습니다.
     ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
@@ -156,8 +168,12 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       int updatedCount = folderItem.property!.count! + (isIncrement ? 1 : -1);
       int index = currentItems.indexOf(folderItem);
       currentItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount));
-      state = Success([...currentItems]);
+      if (isUiUpdate) {
+        state = Success([...currentItems]);
+      }
     }
+
+    return currentItems;
   }
 
   /// 미디어 정렬 순서 변경

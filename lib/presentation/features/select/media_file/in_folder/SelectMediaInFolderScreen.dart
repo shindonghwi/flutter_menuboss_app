@@ -83,11 +83,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
       bottomNavigationBar: SelectMediaBottomContent(
         onMovedClick: () {},
         onDeleteClick: () {
-          mediaProvider.removeItem(checkListState);
-          int count = mediaList.value!.where((element) => checkListState.contains(element.mediaId)).length;
-          for (int i = 0; i < count; i++) {
-            mediaProvider.changeFolderCount(item!.mediaId, isIncrement: false);
-          }
+          mediaProvider.removeItem(checkListState, folderId: item!.mediaId);
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         },
