@@ -116,7 +116,8 @@ enum RoutingScreen {
       ResponseMediaModel mediaInfo = parameter;
       return SelectMediaInFolderScreen(item: mediaInfo);
     } else if (route == RoutingScreen.SelectDestinationFolder.route) {
-      return const DestinationFolderScreen();
+      List<String> mediaIds = parameter;
+      return DestinationFolderScreen(mediaIds: mediaIds);
     } else if (route == RoutingScreen.ApplyDevice.route) {
       RequestDeviceApplyContents model = parameter;
       return ApplyToDeviceScreen(item: model);

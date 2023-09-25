@@ -26,21 +26,8 @@ class SelectMediaFileScreen extends HookConsumerWidget {
     final mediaState = ref.watch(MediaListProvider);
     final mediaProvider = ref.read(MediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
-
-    // final selectMediaState = ref.watch(SelectMediaFileProvider);
-    // final selectMediaProvider = ref.read(SelectMediaFileProvider.notifier);
-    // final selectMediaDeleteState = ref.watch(SelectMediaDeleteProvider);
-    // final selectMediaDeleteProvider = ref.read(SelectMediaDeleteProvider.notifier);
     final checkListState = ref.watch(SelectMediaCheckListProvider);
     final checkListProvider = ref.read(SelectMediaCheckListProvider.notifier);
-    // final mediaList = useState<List<ResponseMediaModel>?>(null);
-
-    void initState() {
-      // selectMediaProvider.init();
-      // selectMediaListProvider.init();
-      // selectMediaListProvider.initPageInfo();
-      // selectMediaDeleteProvider.init();
-    }
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -51,29 +38,6 @@ class SelectMediaFileScreen extends HookConsumerWidget {
       });
       return null;
     }, []);
-
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
-          // selectMediaListState.when(
-          //   success: (event) {
-          //     mediaList.value = event.value;
-          //   },
-          //   failure: (event) => Toast.showError(context, event.errorMessage),
-          // );
-          // selectMediaDeleteState.when(
-          //   success: (event) {
-          //     initState();
-          //     Navigator.of(context).pop(true);
-          //   },
-          //   failure: (event) => Toast.showError(context, event.errorMessage),
-          // );
-        });
-      }
-
-      handleUiStateChange();
-      return null;
-    }, [mediaState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
@@ -102,6 +66,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
             context,
             nextSlideVerticalScreen(
               RoutingScreen.SelectDestinationFolder.route,
+              parameter: checkListState,
             ),
           );
         },

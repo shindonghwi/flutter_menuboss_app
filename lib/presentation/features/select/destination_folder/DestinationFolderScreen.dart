@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
@@ -16,17 +17,24 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import 'provider/DestinationFolderListProvider.dart';
+import 'provider/FileMoveProvider.dart';
 
 class DestinationFolderScreen extends HookConsumerWidget {
-  const DestinationFolderScreen({super.key});
+  final List<String> mediaIds;
+
+  const DestinationFolderScreen({
+    super.key,
+    this.mediaIds = const [],
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaListProvider = ref.read(MediaListProvider.notifier);
+    final fileMoveState = ref.watch(FileMoveProvider);
+    final fileMoveProvider = ref.read(FileMoveProvider.notifier);
     final destinationFolderState = ref.watch(DestinationFolderListProvider);
     final destinationFolderProvider = ref.read(DestinationFolderListProvider.notifier);
-
-    final isSelectFolderIndex = useState(0);
+    final ValueNotifier<String?> isSelectFolderId = useState(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -34,6 +42,25 @@ class DestinationFolderScreen extends HookConsumerWidget {
       });
       return null;
     }, []);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          fileMoveState.when(
+            success: (event) async {
+              mediaListProvider.initPageInfo();
+              await mediaListProvider.requestGetMedias();
+              fileMoveProvider.init();
+              Navigator.of(context).pop();
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [fileMoveState]);
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
@@ -55,13 +82,13 @@ class DestinationFolderScreen extends HookConsumerWidget {
                   final inRoot = index == 0;
                   final item = destinationFolderState.value[index];
                   return Container(
-                    color: isSelectFolderIndex.value == index
+                    color: isSelectFolderId.value == item?.mediaId
                         ? getColorScheme(context).colorGray50
                         : getColorScheme(context).white,
                     child: Clickable(
                       key: ValueKey(item?.mediaId ?? index),
                       onPressed: () async {
-                        isSelectFolderIndex.value = index;
+                        isSelectFolderId.value = item?.mediaId;
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -92,7 +119,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
                   );
                 },
               ),
-            if (destinationFolderState is Loading) const LoadingView(),
+            if (destinationFolderState is Loading || fileMoveState is Loading) const LoadingView(),
           ],
         ),
       ),
@@ -106,7 +133,9 @@ class DestinationFolderScreen extends HookConsumerWidget {
             );
           }
         },
-        onMoveHereClick: () {},
+        onMoveHereClick: () {
+          fileMoveProvider.requestFileMove(mediaIds, isSelectFolderId.value);
+        },
       ),
     );
   }
