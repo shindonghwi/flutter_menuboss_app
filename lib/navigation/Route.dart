@@ -6,11 +6,11 @@ import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
-import 'package:menuboss/presentation/features/detail/in_media_folder/MediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
+import 'package:menuboss/presentation/features/main/media/in_folder/MediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
@@ -56,23 +56,18 @@ enum RoutingScreen {
       RoutingScreen.Splash.route: (context) => const SplashScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
-
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
       RoutingScreen.MediaDetailInFolder.route: (context) => const MediaInFolderScreen(),
       RoutingScreen.MediaContent.route: (context) => const MediaContentScreen(),
-
       RoutingScreen.DetailPlaylist.route: (context) => const DetailPlaylistScreen(),
       RoutingScreen.CreatePlaylist.route: (context) => const CreatePlaylistScreen(),
       RoutingScreen.PreviewPlaylist.route: (context) => const PreviewPlaylistScreen(),
-
       RoutingScreen.DetailSchedule.route: (context) => const DetailScheduleScreen(),
       RoutingScreen.CreateSchedule.route: (context) => const CreateScheduleScreen(),
-
       RoutingScreen.SelectPlaylist.route: (context) => const SelectPlaylistScreen(),
       RoutingScreen.SelectMediaFile.route: (context) => const SelectMediaFileScreen(),
       RoutingScreen.SelectMediaInFolder.route: (context) => const SelectMediaInFolderScreen(),
-
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
     };
@@ -85,54 +80,39 @@ enum RoutingScreen {
       return const LoginScreen();
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
-    }
-
-    else if (route == RoutingScreen.ScanQR.route) {
+    } else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.MediaInfo.route) {
       ResponseMediaModel model = parameter;
       return MediaInformationScreen(item: model);
     } else if (route == RoutingScreen.MediaContent.route) {
       return const MediaContentScreen();
-    }else if (route == RoutingScreen.MediaDetailInFolder.route) {
+    } else if (route == RoutingScreen.MediaDetailInFolder.route) {
       ResponseMediaModel mediaInfo = parameter;
       return MediaInFolderScreen(item: mediaInfo);
-    }
-
-    else if (route == RoutingScreen.DetailPlaylist.route) {
+    } else if (route == RoutingScreen.DetailPlaylist.route) {
       ResponsePlaylistModel model = parameter;
       return DetailPlaylistScreen(item: model);
-    }
-    else if (route == RoutingScreen.CreatePlaylist.route) {
+    } else if (route == RoutingScreen.CreatePlaylist.route) {
       ResponsePlaylistModel? model = parameter;
       return CreatePlaylistScreen(item: model);
-    }
-    else if (route == RoutingScreen.PreviewPlaylist.route) {
+    } else if (route == RoutingScreen.PreviewPlaylist.route) {
       return const PreviewPlaylistScreen();
-    }
-
-    else if (route == RoutingScreen.DetailSchedule.route) {
+    } else if (route == RoutingScreen.DetailSchedule.route) {
       ResponseScheduleModel model = parameter;
       return DetailScheduleScreen(item: model);
-    }
-    else if (route == RoutingScreen.CreateSchedule.route) {
+    } else if (route == RoutingScreen.CreateSchedule.route) {
       ResponseScheduleModel? model = parameter;
       return CreateScheduleScreen(item: model);
-    }
-
-    else if (route == RoutingScreen.SelectPlaylist.route) {
+    } else if (route == RoutingScreen.SelectPlaylist.route) {
       List<int> playlistIds = parameter;
       return SelectPlaylistScreen(playlistIds: playlistIds);
-    }
-    else if (route == RoutingScreen.SelectMediaFile.route) {
+    } else if (route == RoutingScreen.SelectMediaFile.route) {
       return SelectMediaFileScreen();
-    }
-    else if (route == RoutingScreen.SelectMediaInFolder.route) {
+    } else if (route == RoutingScreen.SelectMediaInFolder.route) {
       ResponseMediaModel mediaInfo = parameter;
       return SelectMediaInFolderScreen(item: mediaInfo);
-    }
-
-    else if (route == RoutingScreen.ApplyDevice.route) {
+    } else if (route == RoutingScreen.ApplyDevice.route) {
       RequestDeviceApplyContents model = parameter;
       return ApplyToDeviceScreen(item: model);
     } else if (route == RoutingScreen.MyProfile.route) {

@@ -12,17 +12,17 @@ import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
-import 'package:menuboss/presentation/features/detail/in_media_folder/provider/MediaInFolderListProvider.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
-import 'package:menuboss/presentation/features/select/media_file/widget/SelectMediaItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-import '../../main/media/widget/MediaItem.dart';
+import '../widget/MediaItem.dart';
+import 'provider/MediaInFolderListProvider.dart';
 
 class MediaInFolderScreen extends HookConsumerWidget {
   final ResponseMediaModel? item;
+
   const MediaInFolderScreen({
     super.key,
     this.item,
