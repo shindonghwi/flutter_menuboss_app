@@ -142,20 +142,13 @@ class _MediaList extends HookConsumerWidget {
         return ClickableScale(
           onPressed: () async {
             if (isFolderType) {
-              try {
-                final isUpdated = await Navigator.push(
-                  context,
-                  nextSlideHorizontalScreen(
-                    RoutingScreen.SelectMediaInFolder.route,
-                    parameter: item,
-                  ),
-                );
-                if (isUpdated) {
-                  Navigator.of(context).pop();
-                }
-              } catch (e) {
-                debugPrint(e.toString());
-              }
+              Navigator.push(
+                context,
+                nextSlideHorizontalScreen(
+                  RoutingScreen.SelectMediaInFolder.route,
+                  parameter: item,
+                ),
+              );
             } else {
               checkListProvider.onChanged(item.mediaId);
             }

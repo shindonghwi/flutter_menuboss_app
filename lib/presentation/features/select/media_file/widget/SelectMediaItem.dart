@@ -40,7 +40,6 @@ class SelectMediaItem extends HookConsumerWidget {
         width: 60,
         height: 60,
         child: LoadImage(
-          tag: item.mediaId.toString(),
           url: item.property?.imageUrl,
           type: ImagePlaceholderType.Small,
         ),
