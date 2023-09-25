@@ -97,7 +97,14 @@ class SelectMediaFileScreen extends HookConsumerWidget {
         ),
       ),
       bottomNavigationBar: SelectMediaBottomContent(
-        onMovedClick: () {},
+        onMovedClick: () {
+          Navigator.pushReplacement(
+            context,
+            nextSlideVerticalScreen(
+              RoutingScreen.SelectDestinationFolder.route,
+            ),
+          );
+        },
         onDeleteClick: () {
           mediaProvider.removeItem(checkListState);
           Navigator.of(context).pop();

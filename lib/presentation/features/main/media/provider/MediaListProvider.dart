@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:intl/intl.dart';
+import 'package:menuboss/data/models/media/ResponseMediaCreate.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/media/ResponseMediaProperty.dart';
 import 'package:menuboss/data/models/media/ResponseMediaPropertyInfo.dart';
@@ -81,25 +82,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (response.status == 200) {
         initPageInfo();
         final item = response.data;
-
-        DateTime now = DateTime.now();
-        String formattedDate = DateFormat('MMM dd, y, hh:mm a').format(now);
-
-        final newFolder = ResponseMediaModel(
-          object: item?.object ?? "",
-          mediaId: item?.mediaId ?? "",
-          name: item?.name ?? "",
-          type: ResponseMediaPropertyInfo(
-            code: 'folder',
-            name: 'folder',
-          ),
-          property: ResponseMediaProperty(
-            count: 0,
-            size: 0,
-          ),
-          createdAt: formattedDate,
-          updatedAt: formattedDate,
-        );
+        final newFolder = generateNewFolder(item);
 
         List<ResponseMediaModel> updateItems = [newFolder, ...currentItems];
         updateCurrentItems(updateItems);
@@ -108,6 +91,27 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
         state = Failure(response.message);
       }
     });
+  }
+
+  ResponseMediaModel generateNewFolder(ResponseMediaCreate? item) {
+    DateTime now = DateTime.now();
+    String formattedDate = DateFormat('MMM dd, y, hh:mm a').format(now);
+
+    return ResponseMediaModel(
+      object: item?.object ?? "",
+      mediaId: item?.mediaId ?? "",
+      name: item?.name ?? "",
+      type: ResponseMediaPropertyInfo(
+        code: 'folder',
+        name: 'folder',
+      ),
+      property: ResponseMediaProperty(
+        count: 0,
+        size: 0,
+      ),
+      createdAt: formattedDate,
+      updatedAt: formattedDate,
+    );
   }
 
   /// 미디어 이름 변경

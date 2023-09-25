@@ -2,25 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
-import 'package:menuboss/presentation/features/select/media_file/provider/SelectMediaCheckListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class SelectMediaBottomContent extends HookConsumerWidget {
-  final VoidCallback onMovedClick;
-  final VoidCallback onDeleteClick;
+class DestinationFolderBottomContent extends HookConsumerWidget {
+  final VoidCallback onNewFolderClick;
+  final VoidCallback onMoveHereClick;
 
-  const SelectMediaBottomContent({
+  const DestinationFolderBottomContent({
     super.key,
-    required this.onMovedClick,
-    required this.onDeleteClick,
+    required this.onNewFolderClick,
+    required this.onMoveHereClick,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkListState = ref.watch(SelectMediaCheckListProvider);
-
     return Container(
       color: getColorScheme(context).colorGray50,
       child: SafeArea(
@@ -34,34 +31,26 @@ class SelectMediaBottomContent extends HookConsumerWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: Clickable(
-                  onPressed: () {
-                    if (checkListState.isNotEmpty) {
-                      onMovedClick.call();
-                    }
-                  },
+                  onPressed: () => onNewFolderClick.call(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        "assets/imgs/icon_move.svg",
+                        "assets/imgs/icon_new_folder.svg",
                         width: 24,
                         height: 24,
                         colorFilter: ColorFilter.mode(
-                          checkListState.isNotEmpty
-                              ? getColorScheme(context).colorGray900
-                              : getColorScheme(context).colorGray400,
+                          getColorScheme(context).colorGray900,
                           BlendMode.srcIn,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
-                          getAppLocalizations(context).common_move,
+                          getAppLocalizations(context).common_new_folder,
                           style: getTextTheme(context).c1sb.copyWith(
-                            color: checkListState.isNotEmpty
-                                ? getColorScheme(context).colorGray900
-                                : getColorScheme(context).colorGray400,
-                          ),
+                                color: getColorScheme(context).colorGray900,
+                              ),
                         ),
                       ),
                     ],
@@ -72,11 +61,7 @@ class SelectMediaBottomContent extends HookConsumerWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: Clickable(
-                  onPressed: () {
-                    if (checkListState.isNotEmpty) {
-                      onDeleteClick.call();
-                    }
-                  },
+                  onPressed: () => onMoveHereClick.call(),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
@@ -85,21 +70,17 @@ class SelectMediaBottomContent extends HookConsumerWidget {
                         width: 24,
                         height: 24,
                         colorFilter: ColorFilter.mode(
-                          checkListState.isNotEmpty
-                              ? getColorScheme(context).colorGray900
-                              : getColorScheme(context).colorGray400,
+                          getColorScheme(context).colorGray900,
                           BlendMode.srcIn,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
-                          getAppLocalizations(context).common_delete,
+                          getAppLocalizations(context).common_move_here,
                           style: getTextTheme(context).c1sb.copyWith(
-                            color: checkListState.isNotEmpty
-                                ? getColorScheme(context).colorGray900
-                                : getColorScheme(context).colorGray400,
-                          ),
+                                color: getColorScheme(context).colorGray900,
+                              ),
                         ),
                       ),
                     ],

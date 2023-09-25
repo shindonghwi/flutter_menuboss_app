@@ -16,6 +16,7 @@ import 'package:menuboss/presentation/features/media_content/MediaContentScreen.
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
 import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
+import 'package:menuboss/presentation/features/select/destination_folder/DestinationFolderScreen.dart';
 import 'package:menuboss/presentation/features/select/media_file/SelectMediaFileScreen.dart';
 import 'package:menuboss/presentation/features/select/media_file/in_folder/SelectMediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScreen.dart';
@@ -41,6 +42,7 @@ enum RoutingScreen {
   SelectPlaylist(route: "/select/playlist"), // 플레이리스트 선택
   SelectMediaFile(route: "/select/media"), // 미디어 선택
   SelectMediaInFolder(route: "/select/media/folder"), // 미디어 선택 폴더 내부 정보
+  SelectDestinationFolder(route: "/select/destination/folder"), // 폴더 선택
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"); // 프로필 정보
@@ -68,6 +70,7 @@ enum RoutingScreen {
       RoutingScreen.SelectPlaylist.route: (context) => const SelectPlaylistScreen(),
       RoutingScreen.SelectMediaFile.route: (context) => const SelectMediaFileScreen(),
       RoutingScreen.SelectMediaInFolder.route: (context) => const SelectMediaInFolderScreen(),
+      RoutingScreen.SelectDestinationFolder.route: (context) => const DestinationFolderScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
     };
@@ -108,10 +111,12 @@ enum RoutingScreen {
       List<int> playlistIds = parameter;
       return SelectPlaylistScreen(playlistIds: playlistIds);
     } else if (route == RoutingScreen.SelectMediaFile.route) {
-      return SelectMediaFileScreen();
+      return const SelectMediaFileScreen();
     } else if (route == RoutingScreen.SelectMediaInFolder.route) {
       ResponseMediaModel mediaInfo = parameter;
       return SelectMediaInFolderScreen(item: mediaInfo);
+    } else if (route == RoutingScreen.SelectDestinationFolder.route) {
+      return const DestinationFolderScreen();
     } else if (route == RoutingScreen.ApplyDevice.route) {
       RequestDeviceApplyContents model = parameter;
       return ApplyToDeviceScreen(item: model);

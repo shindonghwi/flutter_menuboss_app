@@ -22,6 +22,8 @@
 
     "select_playlist_title": "Playlist",
 
+    "destination_folder_title": "Select destination folder",
+
     "select_media_file_title": "Select file({count})",
     "@select_media_file_title":{
         "placeholders": {
@@ -116,6 +118,8 @@
     "common_cancel": "Cancel",
     "common_preview": "Preview",
     "common_move": "Move",
+    "common_new_folder": "New folder",
+    "common_move_here": "Move here",
     "common_delete": "Delete",
     "common_save": "Save",
     "common_time": "Time",
