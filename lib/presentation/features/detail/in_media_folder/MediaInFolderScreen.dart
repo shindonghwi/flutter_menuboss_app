@@ -19,6 +19,8 @@ import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
+import '../../main/media/widget/MediaItem.dart';
+
 class MediaInFolderScreen extends HookConsumerWidget {
   final ResponseMediaModel? item;
 
@@ -46,7 +48,6 @@ class MediaInFolderScreen extends HookConsumerWidget {
           mediaState.when(
             success: (event) {
               mediaList.value = event.value;
-              mediaProvider.init();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
@@ -133,8 +134,15 @@ class _MediaContentList extends HookConsumerWidget {
                         debugPrint(e.toString());
                       }
                     },
-                    child: SelectMediaItem(
+                    child: MediaItem(
                       item: item,
+                      onRemove: () {
+                        mediaProvider.removeItem([item.mediaId]);
+                        rootMediaProvider.changeFolderCount(folderId, isIncrement: false);
+                      },
+                      onRename: (newName) {
+                        mediaProvider.renameItem(item.mediaId, newName);
+                      },
                     ),
                   );
                 },
