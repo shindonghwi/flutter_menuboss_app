@@ -18,7 +18,6 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
-
 import '../../../components/view_state/LoadingView.dart';
 import 'widget/MediaItem.dart';
 
@@ -44,7 +43,6 @@ class MediaScreen extends HookConsumerWidget {
           mediaState.when(
             success: (event) {
               mediaList.value = event.value;
-              mediaProvider.init();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
@@ -84,7 +82,23 @@ class MediaScreen extends HookConsumerWidget {
               ),
               Pair(
                 "assets/imgs/icon_check_round.svg",
-                () => goToUploadGallery(),
+                () async {
+                  try {
+                    final isUpdated = await Navigator.push(
+                      context,
+                      nextSlideHorizontalScreen(
+                        RoutingScreen.SelectMediaFile.route,
+                      ),
+                    );
+                    if (isUpdated) {
+                      mediaProvider.initPageInfo();
+                      mediaProvider.requestGetMedias();
+                    }
+                  } catch (e) {
+                    debugPrint(e.toString());
+                  }
+
+                },
               ),
             ],
           ),
@@ -191,10 +205,10 @@ class _MediaContentList extends HookConsumerWidget {
                           child: MediaItem(
                             item: item,
                             onRemove: () {
-                              mediaProvider.removeItem([item.mediaId ?? ""]);
+                              mediaProvider.removeItem([item.mediaId]);
                             },
                             onRename: (newName) {
-                              mediaProvider.renameItem(item.mediaId ?? "", newName);
+                              mediaProvider.renameItem(item.mediaId, newName);
                             },
                           ),
                         );

@@ -11,11 +11,14 @@ import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScr
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
+import 'package:menuboss/presentation/features/main/media/MediaScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
 import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
+import 'package:menuboss/presentation/features/select/media_file/SelectMediaFileScreen.dart';
+import 'package:menuboss/presentation/features/select/media_file/in_select_media_folder/SelectMediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
@@ -23,6 +26,8 @@ enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
   Login(route: "/login"), // 로그인
   Main(route: "/main"), // 메인
+  MainMedia(route: "/main/media"), // 메인 미디어
+
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
   MediaInfo(route: "/media/info"), // 미디어 정보
@@ -37,6 +42,8 @@ enum RoutingScreen {
   CreateSchedule(route: "/create/schedule"), // 스케줄 만들기
 
   SelectPlaylist(route: "/select/playlist"), // 플레이리스트 선택
+  SelectMediaFile(route: "/select/media"), // 미디어 선택
+  SelectMediaInFolder(route: "/select/media/folder"), // 미디어 선택 폴더 내부 정보
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"); // 프로필 정보
@@ -53,6 +60,8 @@ enum RoutingScreen {
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
 
+      MainMedia.route: (context) => const MediaScreen(),
+
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
       RoutingScreen.MediaDetailInFolder.route: (context) => const MediaInFolderScreen(),
@@ -66,6 +75,8 @@ enum RoutingScreen {
       RoutingScreen.CreateSchedule.route: (context) => const CreateScheduleScreen(),
 
       RoutingScreen.SelectPlaylist.route: (context) => const SelectPlaylistScreen(),
+      RoutingScreen.SelectMediaFile.route: (context) => const SelectMediaFileScreen(),
+      RoutingScreen.SelectMediaInFolder.route: (context) => const SelectMediaInFolderScreen(),
 
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
@@ -79,6 +90,8 @@ enum RoutingScreen {
       return const LoginScreen();
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
+    } else if (route == RoutingScreen.MainMedia.route) {
+      return const MediaScreen();
     }
 
     else if (route == RoutingScreen.ScanQR.route) {
@@ -117,6 +130,13 @@ enum RoutingScreen {
     else if (route == RoutingScreen.SelectPlaylist.route) {
       List<int> playlistIds = parameter;
       return SelectPlaylistScreen(playlistIds: playlistIds);
+    }
+    else if (route == RoutingScreen.SelectMediaFile.route) {
+      return SelectMediaFileScreen();
+    }
+    else if (route == RoutingScreen.SelectMediaInFolder.route) {
+      ResponseMediaModel mediaInfo = parameter;
+      return SelectMediaInFolderScreen(item: mediaInfo);
     }
 
     else if (route == RoutingScreen.ApplyDevice.route) {

@@ -117,7 +117,6 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
   }
 
   void init() {
-    initPageInfo();
     state = Idle();
   }
 }

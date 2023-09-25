@@ -14,7 +14,7 @@ import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/detail/in_media_folder/provider/MediaInFolderListProvider.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
-import 'package:menuboss/presentation/features/main/media/widget/MediaItem.dart';
+import 'package:menuboss/presentation/features/select/media_file/widget/SelectMediaItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
@@ -133,15 +133,8 @@ class _MediaContentList extends HookConsumerWidget {
                         debugPrint(e.toString());
                       }
                     },
-                    child: MediaItem(
+                    child: SelectMediaItem(
                       item: item,
-                      onRemove: () {
-                        mediaProvider.removeItem([item.mediaId]);
-                        rootMediaProvider.changeFolderCount(folderId, isIncrement: false);
-                      },
-                      onRename: (newName) {
-                        mediaProvider.renameItem(item.mediaId, newName);
-                      },
                     ),
                   );
                 },
