@@ -6,6 +6,9 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
+import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
+import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
@@ -15,6 +18,7 @@ import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 import '../widget/MediaItem.dart';
@@ -31,11 +35,15 @@ class MediaInFolderScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaState = ref.watch(MediaInFolderListProvider);
+    final rootMediaProvider = ref.read(MediaListProvider.notifier);
     final mediaProvider = ref.read(MediaInFolderListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
+    final folderName = useState(item?.name ?? "");
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        mediaList.value?.clear();
+        await mediaProvider.init();
         mediaProvider.initPageInfo();
         mediaProvider.requestGetMedias(mediaId: item!.mediaId);
       });
@@ -53,19 +61,39 @@ class MediaInFolderScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        mediaProvider.init();
         handleUiStateChange();
       });
       return null;
     }, [mediaState]);
 
-
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
         leadingIsShow: true,
-        content: item?.name ?? "",
+        content: folderName.value,
         suffixIcons: [
-          Pair("assets/imgs/icon_check_round.svg", () {}),
+          Pair("assets/imgs/icon_edit.svg", () {
+            CommonPopup.showPopup(
+              context,
+              child: PopupRename(
+                hint: getAppLocalizations(context).popup_rename_media_hint,
+                onClicked: (name) {
+                  folderName.value = name;
+                  rootMediaProvider.renameItem(item?.mediaId ?? "", name);
+                },
+              ),
+            );
+          }),
+          Pair("assets/imgs/icon_trash.svg", () {
+            CommonPopup.showPopup(
+              context,
+              child: PopupDelete(onClicked: () async {
+                final isRemoved = await rootMediaProvider.removeItem([item?.mediaId ?? ""]);
+                if (isRemoved){
+                  Navigator.of(context).pop();
+                }
+              }),
+            );
+          }),
         ],
       ),
       body: Stack(

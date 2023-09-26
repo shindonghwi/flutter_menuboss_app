@@ -118,7 +118,7 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
     _isProcessing = false;
   }
 
-  void init() {
-    state = Idle();
+  Future<Idle<List<ResponseMediaModel>>> init() {
+    return Future(() => state = Idle());
   }
 }
