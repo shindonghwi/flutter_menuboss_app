@@ -124,6 +124,43 @@ class Service {
     }
   }
 
+  static Future<Response> postUploadApi({
+    required ServiceType type,
+    required String? endPoint,
+    required File file,
+    required Map<String, dynamic> jsonBody,
+  }) async {
+
+    try {
+      if (await isNetworkAvailable()) {
+        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+
+        debugPrint('\nrequest Url: $url');
+        debugPrint('request header: $headers');
+
+        var request = http.MultipartRequest('POST', url)
+          ..headers.addAll(headers)
+          ..files.add(await http.MultipartFile.fromPath('file', file.path));
+
+        jsonBody.forEach((key, value) {
+          request.fields[key] = value.toString();
+        });
+
+        var streamedResponse = await request.send();
+        var response = await http.Response.fromStream(streamedResponse);
+
+        debugPrint('\http response statusCode: ${response.statusCode}');
+        debugPrint('\http response method: ${response.request?.method.toString()}');
+        debugPrint('\http response body: ${response.body}');
+        return response;
+      } else {
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+      }
+    } catch (e) {
+      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+    }
+  }
+
   static Future<Response> patchApi({
     required ServiceType type,
     required String? endPoint,
@@ -192,6 +229,7 @@ enum ServiceType {
   Payment,
   Playlist,
   Device,
+  File,
   Schedule,
   Validation,
 }
@@ -206,6 +244,7 @@ class _ServiceTypeHelper {
     ServiceType.Payment: "payments",
     ServiceType.Playlist: "playlists",
     ServiceType.Device: "screens",
+    ServiceType.File: "files",
     ServiceType.Schedule: "schedules",
     ServiceType.Validation: "validation"
   };

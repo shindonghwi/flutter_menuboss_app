@@ -3,6 +3,7 @@ import 'package:menuboss/data/data_source/local/app/LocalAppApi.dart';
 import 'package:menuboss/data/data_source/remote/auth/RemoteAuthApi.dart';
 import 'package:menuboss/data/data_source/remote/canvas/RemoteCanvasApi.dart';
 import 'package:menuboss/data/data_source/remote/device/RemoteDeviceApi.dart';
+import 'package:menuboss/data/data_source/remote/file/RemoteFileApi.dart';
 import 'package:menuboss/data/data_source/remote/me/RemoteMeApi.dart';
 import 'package:menuboss/data/data_source/remote/media/RemoteMediaApi.dart';
 import 'package:menuboss/data/data_source/remote/playlist/RemotePlaylistApi.dart';
@@ -11,6 +12,7 @@ import 'package:menuboss/data/repositories/local/app/LocalAppRepositoryImpl.dart
 import 'package:menuboss/data/repositories/remote/auth/RemoteAuthRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/canvas/RemoteCanvasRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/device/RemoteDeviceRepositoryImpl.dart';
+import 'package:menuboss/data/repositories/remote/file/RemoteFileRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/me/RemoteMeRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/media/RemoteMediaRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/playlist/RemotePlaylistRepositoryImpl.dart';
@@ -19,6 +21,7 @@ import 'package:menuboss/domain/repositories/local/app/LocalAppRepository.dart';
 import 'package:menuboss/domain/repositories/remote/auth/RemoteAuthRepository.dart';
 import 'package:menuboss/domain/repositories/remote/canvas/RemoteCanvasRepository.dart';
 import 'package:menuboss/domain/repositories/remote/device/RemoteDeviceRepository.dart';
+import 'package:menuboss/domain/repositories/remote/file/RemoteFileRepository.dart';
 import 'package:menuboss/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:menuboss/domain/repositories/remote/media/RemoteMediaRepository.dart';
 import 'package:menuboss/domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
@@ -38,6 +41,9 @@ import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDevicesContentsUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadProfileImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
@@ -119,6 +125,11 @@ void initServiceLocator() {
   // canvas
   GetIt.instance.registerLazySingleton<GetCanvasesUseCase>(() => GetCanvasesUseCase());
 
+  // file
+  GetIt.instance.registerLazySingleton<PostUploadMediaImageUseCase>(() => PostUploadMediaImageUseCase());
+  GetIt.instance.registerLazySingleton<PostUploadMediaVideoUseCase>(() => PostUploadMediaVideoUseCase());
+  GetIt.instance.registerLazySingleton<PostUploadProfileImageUseCase>(() => PostUploadProfileImageUseCase());
+
   /// -------
   /// repository
   /// -------
@@ -130,6 +141,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteMediaRepository>(() => RemoteMediaRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteCanvasRepository>(() => RemoteCanvasRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteFileRepository>(() => RemoteFileRepositoryImpl());
 
   /// -------
   /// api
@@ -142,4 +154,5 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteMediaApi>(() => RemoteMediaApi());
   GetIt.instance.registerLazySingleton<RemoteCanvasApi>(() => RemoteCanvasApi());
   GetIt.instance.registerLazySingleton<RemoteScheduleApi>(() => RemoteScheduleApi());
+  GetIt.instance.registerLazySingleton<RemoteFileApi>(() => RemoteFileApi());
 }
