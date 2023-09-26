@@ -30,6 +30,7 @@ class MyScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final logoutState = ref.watch(LogoutProvider);
+    final meInfo = ref.watch(MeInfoProvider);
     final meInfoProvider = ref.read(MeInfoProvider.notifier);
     final logoutProvider = ref.read(LogoutProvider.notifier);
 
@@ -65,10 +66,10 @@ class MyScreen extends HookConsumerWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            const Column(
+            Column(
               children: [
                 SizedBox(height: 24),
-                _UserProfile(),
+                _UserProfile(role: meInfo?.business?.role, name: meInfo?.name),
                 SizedBox(height: 24),
                 _UserPlanScreenInfo(),
                 DividerVertical(marginVertical: 12),
@@ -84,7 +85,14 @@ class MyScreen extends HookConsumerWidget {
 }
 
 class _UserProfile extends HookWidget {
-  const _UserProfile({super.key});
+  final String? role;
+  final String? name;
+
+  const _UserProfile({
+    super.key,
+    required this.role,
+    required this.name,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -119,7 +127,7 @@ class _UserProfile extends HookWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         child: Text(
-                          'Owner',
+                          role ?? "",
                           style: getTextTheme(context).c2m.copyWith(
                                 color: getColorScheme(context).white,
                               ),
@@ -128,7 +136,7 @@ class _UserProfile extends HookWidget {
                       ),
                     ),
                     Text(
-                      'Admin MenuBoss',
+                      name ?? "",
                       style: getTextTheme(context).b2sb.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
@@ -141,13 +149,13 @@ class _UserProfile extends HookWidget {
                     Text(
                       'MenuBoss',
                       style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray900,
+                            color: getColorScheme(context).colorGray700,
                           ),
                     ),
                     Text(
                       'admin@menuboss.com',
                       style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray900,
+                            color: getColorScheme(context).colorGray700,
                           ),
                     ),
                   ],
