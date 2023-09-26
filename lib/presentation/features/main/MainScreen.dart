@@ -6,6 +6,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
+import 'package:menuboss/presentation/utils/dto/Triple.dart';
 
 import 'devices/DevicesScreen.dart';
 import 'media/MediaScreen.dart';
@@ -20,12 +21,17 @@ class MainScreen extends HookWidget {
   Widget build(BuildContext context) {
     final currentIndex = useState(2);
 
-    List<Pair> iconList = [
-      Pair('assets/imgs/icon_schedules.svg', getAppLocalizations(context).main_navigation_menu_schedules),
-      Pair('assets/imgs/icon_playlists.svg', getAppLocalizations(context).main_navigation_menu_playlists),
-      Pair('assets/imgs/icon_screens.svg', getAppLocalizations(context).main_navigation_menu_screens),
-      Pair('assets/imgs/icon_media.svg', getAppLocalizations(context).main_navigation_menu_media),
-      Pair('assets/imgs/icon_my.svg', getAppLocalizations(context).main_navigation_menu_my),
+    List<Triple> iconList = [
+      Triple('assets/imgs/icon_schedules_line.svg', 'assets/imgs/icon_schedules_filled.svg',
+          getAppLocalizations(context).main_navigation_menu_schedules),
+      Triple('assets/imgs/icon_playlists_line.svg', 'assets/imgs/icon_playlists_filled.svg',
+          getAppLocalizations(context).main_navigation_menu_playlists),
+      Triple('assets/imgs/icon_screens_line.svg', 'assets/imgs/icon_screens_filled.svg',
+          getAppLocalizations(context).main_navigation_menu_screens),
+      Triple('assets/imgs/icon_media_line.svg', 'assets/imgs/icon_media_filled.svg',
+          getAppLocalizations(context).main_navigation_menu_media),
+      Triple('assets/imgs/icon_my_line.svg', 'assets/imgs/icon_my_filled.svg',
+          getAppLocalizations(context).main_navigation_menu_my),
     ];
 
     return BaseScaffold(
@@ -54,7 +60,7 @@ class MainScreen extends HookWidget {
 
 class _BottomNavigationBar extends HookWidget {
   final ValueNotifier<int> currentIndex;
-  final List<Pair> iconList;
+  final List<Triple> iconList;
 
   const _BottomNavigationBar({
     required this.currentIndex,
@@ -88,8 +94,8 @@ class _BottomNavigationBar extends HookWidget {
                   child: BottomNavigationBar(
                     type: BottomNavigationBarType.fixed,
                     backgroundColor: getColorScheme(context).white,
-                    selectedItemColor: getColorScheme(context).colorPrimary500,
-                    unselectedItemColor: getColorScheme(context).colorGray300,
+                    selectedItemColor: getColorScheme(context).colorPrimary900,
+                    unselectedItemColor: getColorScheme(context).colorGray400,
                     currentIndex: currentIndex.value,
                     onTap: (index) => currentIndex.value = index,
                     items: iconList.map((data) {
@@ -101,7 +107,7 @@ class _BottomNavigationBar extends HookWidget {
                               width: 24,
                               height: 24,
                               colorFilter: ColorFilter.mode(
-                                getColorScheme(context).colorGray300,
+                                getColorScheme(context).colorGray400,
                                 BlendMode.srcIn,
                               ),
                             ),
@@ -113,11 +119,11 @@ class _BottomNavigationBar extends HookWidget {
                         activeIcon: Column(
                           children: [
                             SvgPicture.asset(
-                              data.first,
+                              data.second,
                               width: 24,
                               height: 24,
                               colorFilter: ColorFilter.mode(
-                                getColorScheme(context).colorPrimary500,
+                                getColorScheme(context).colorPrimary900,
                                 BlendMode.srcIn,
                               ),
                             ),
@@ -126,7 +132,7 @@ class _BottomNavigationBar extends HookWidget {
                             )
                           ],
                         ),
-                        label: data.second,
+                        label: data.third,
                       );
                     }).toList(),
                     selectedLabelStyle: getTextTheme(context).c1sb,

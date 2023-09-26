@@ -71,7 +71,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
             child: Padding(
               padding: const EdgeInsets.all(12.0),
               child: SvgPicture.asset(
-                "assets/imgs/icon_upload.svg",
+                "assets/imgs/icon_upload_01.svg",
                 width: 24,
                 height: 24,
                 colorFilter: ColorFilter.mode(

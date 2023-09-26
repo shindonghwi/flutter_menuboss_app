@@ -34,7 +34,7 @@ class FloatingPlusButton extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(14),
           child: SvgPicture.asset(
-            "assets/imgs/icon_plus.svg",
+            "assets/imgs/icon_plus_1.svg",
             width: 32,
             height: 32,
             colorFilter: const ColorFilter.mode(

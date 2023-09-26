@@ -63,15 +63,15 @@ class EmptyView extends HookWidget {
     String? getIconPath() {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
-          return "assets/imgs/icon_blank_device.svg";
+          return "assets/imgs/image_blank_device.svg";
         case BlankMessageType.ADD_CONTENT:
-          return "assets/imgs/icon_blank_folder.svg";
+          return "assets/imgs/image_blank_upload.svg";
         case BlankMessageType.NEW_SCHEDULE:
-          return "assets/imgs/icon_blank_schedule.svg";
+          return "assets/imgs/image_blank_schedule.svg";
         case BlankMessageType.NEW_PLAYLIST:
-          return "assets/imgs/icon_blank_playlist.svg";
+          return "assets/imgs/image_blank_playlist.svg";
         case BlankMessageType.UPLOAD_FILE:
-          return "assets/imgs/icon_blank_folder.svg";
+          return "assets/imgs/image_blank_upload.svg";
         default:
           return null;
       }
@@ -80,15 +80,15 @@ class EmptyView extends HookWidget {
     String? getButtonIconPath() {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
-          return "assets/imgs/icon_plus.svg";
+          return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.ADD_CONTENT:
-          return "assets/imgs/icon_plus.svg";
+          return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.NEW_SCHEDULE:
-          return "assets/imgs/icon_plus.svg";
+          return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.NEW_PLAYLIST:
-          return "assets/imgs/icon_plus.svg";
+          return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.UPLOAD_FILE:
-          return "assets/imgs/icon_upload.svg";
+          return "assets/imgs/icon_upload_01.svg";
         default:
           return null;
       }

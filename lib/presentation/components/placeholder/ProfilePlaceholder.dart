@@ -40,7 +40,7 @@ class ProfilePlaceholder extends StatelessWidget {
       ),
       child: Center(
         child: SvgPicture.asset(
-          "assets/imgs/icon_logo_text.svg",
+          "assets/imgs/image_logo_text.svg",
           width: imageSize.first,
           height: imageSize.second,
           colorFilter: ColorFilter.mode(

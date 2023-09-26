@@ -43,7 +43,7 @@ class ImagePlaceholder extends StatelessWidget {
                 aspectRatio: 16 / 9,
                 child: Center(
                   child: SvgPicture.asset(
-                    "assets/imgs/icon_logo_text.svg",
+                    "assets/imgs/image_logo_text.svg",
                     width: constraints.maxWidth * 0.28,
                     height: constraints.maxHeight * 0.24,
                     colorFilter: ColorFilter.mode(
@@ -63,7 +63,7 @@ class ImagePlaceholder extends StatelessWidget {
               color: getColorScheme(context).colorGray100,
             ),
             child: Center(
-              child: SvgPicture.asset("assets/imgs/icon_logo_text.svg",
+              child: SvgPicture.asset("assets/imgs/image_logo_text.svg",
                   width: imageSize.first,
                   height: imageSize.second,
                   colorFilter: ColorFilter.mode(

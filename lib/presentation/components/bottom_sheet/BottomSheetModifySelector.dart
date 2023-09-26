@@ -38,7 +38,7 @@ class BottomSheetModifySelector extends HookWidget {
         case ModifyType.Delete:
           return "assets/imgs/icon_trash.svg";
         case ModifyType.ChangeDuration:
-          return "assets/imgs/icon_time.svg";
+          return "assets/imgs/icon_time_edit.svg";
         default:
           return null;
       }
