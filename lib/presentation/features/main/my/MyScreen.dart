@@ -7,7 +7,6 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupLogout.dart';
@@ -23,12 +22,13 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
+import '../../../components/view_state/LoadingView.dart';
+
 class MyScreen extends HookConsumerWidget {
   const MyScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final logoutState = ref.watch(LogoutProvider);
     final meInfoProvider = ref.read(MeInfoProvider.notifier);
     final logoutProvider = ref.read(LogoutProvider.notifier);
@@ -38,7 +38,7 @@ class MyScreen extends HookConsumerWidget {
       Navigator.pushAndRemoveUntil(
         context,
         nextFadeInOutScreen(RoutingScreen.Login.route),
-            (route) => false,
+        (route) => false,
       );
     }
 
@@ -298,16 +298,15 @@ class _SettingItems extends HookConsumerWidget {
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),
-                        if (item.first != getAppLocalizations(context).my_page_setting_items_log_out)
-                          SvgPicture.asset(
-                            "assets/imgs/icon_next.svg",
-                            colorFilter: ColorFilter.mode(
-                              getColorScheme(context).colorGray400,
-                              BlendMode.srcIn,
-                            ),
-                            width: 24,
-                            height: 24,
-                          )
+                        SvgPicture.asset(
+                          "assets/imgs/icon_next.svg",
+                          colorFilter: ColorFilter.mode(
+                            getColorScheme(context).colorGray400,
+                            BlendMode.srcIn,
+                          ),
+                          width: 24,
+                          height: 24,
+                        )
                       ],
                     ),
                   ),
