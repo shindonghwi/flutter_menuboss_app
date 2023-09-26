@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
+import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/di/locator.dart';
 
 enum BuildType { dev, prod }
@@ -42,6 +43,7 @@ class Environment {
     ));
 
     initServiceLocator();
+    Service.initializeHeaders();
 
     runApp(const ProviderScope(child: MenuBossApp()));
   }

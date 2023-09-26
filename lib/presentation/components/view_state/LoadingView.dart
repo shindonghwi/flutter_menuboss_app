@@ -14,21 +14,12 @@ class LoadingView extends HookWidget {
       width: getMediaQuery(context).size.width,
       height: getMediaQuery(context).size.height,
       child: Center(
-        // child: RiveAnimation.asset(
-        //   'assets/motions/loading.riv',
-        // ),
-
         child: Lottie.asset(
-          'assets/motions/data.json',
+          'assets/motions/loading.json',
           width: 48,
           height: 48,
           fit: BoxFit.fill,
         )
-
-        // child: CircularProgressIndicator(
-        //   strokeWidth: 2,
-        //   color: getColorScheme(context).colorPrimary500,
-        // ),
       ),
     );
   }

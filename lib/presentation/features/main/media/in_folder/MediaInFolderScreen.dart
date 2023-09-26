@@ -42,23 +42,23 @@ class MediaInFolderScreen extends HookConsumerWidget {
       return null;
     }, []);
 
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
-          mediaState.when(
-            success: (event) {
-              mediaList.value = event.value;
-            },
-            failure: (event) => Toast.showError(context, event.errorMessage),
-          );
-        });
-      }
+    void handleUiStateChange() {
+      mediaState.when(
+        success: (event) {
+          mediaList.value = event.value;
+        },
+        failure: (event) => Toast.showError(context, event.errorMessage),
+      );
+    }
 
-      handleUiStateChange();
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        mediaProvider.init();
+        handleUiStateChange();
+      });
       return null;
     }, [mediaState]);
 
-    debugPrint("MediaInFolderScreen build ${mediaState}");
 
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
@@ -70,7 +70,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
       ),
       body: Stack(
         children: [
-          if (mediaState is Failure)
+          if (mediaState is Failure && mediaList.value == null)
             FailView(onPressed: () => mediaProvider.requestGetMedias(mediaId: item!.mediaId))
           else if (mediaList.value != null)
             _MediaContentList(
@@ -138,13 +138,15 @@ class _MediaContentList extends HookConsumerWidget {
                     },
                     child: MediaItem(
                       item: item,
-                      onRemove: () {
-                        mediaProvider.removeItem([item.mediaId]);
-                        rootMediaProvider.changeFolderCount(
-                          folderId,
-                          isIncrement: false,
-                          isUiUpdate: true,
-                        );
+                      onRemove: () async {
+                        final isRemoved = await mediaProvider.removeItem([item.mediaId]);
+                        if (isRemoved) {
+                          rootMediaProvider.changeFolderCount(
+                            folderId,
+                            isIncrement: false,
+                            isUiUpdate: true,
+                          );
+                        }
                       },
                       onRename: (newName) {
                         mediaProvider.renameItem(item.mediaId, newName);

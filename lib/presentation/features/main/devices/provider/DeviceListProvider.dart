@@ -73,9 +73,9 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
     });
   }
 
-  void init({
+  Future<Idle<List<ResponseDeviceModel>>> init({
     bool isDelayMode = false,
   }) {
-    Future.delayed(Duration(milliseconds: isDelayMode ? 300 : 0), () => state = Idle());
+    return Future.delayed(Duration(milliseconds: isDelayMode ? 300 : 0), () => state = Idle());
   }
 }

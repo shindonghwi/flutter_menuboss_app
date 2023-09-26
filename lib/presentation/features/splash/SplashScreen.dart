@@ -48,7 +48,7 @@ class SplashScreen extends HookConsumerWidget {
       final accessToken = await GetIt.instance<GetLoginAccessTokenUseCase>().call();
       if (!CollectionUtil.isNullEmptyFromString(accessToken)) {
         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-        Service.addHeader(key: HeaderKey.TimeZone, value: timeZone);
+        Service.addHeader(key: HeaderKey.ApplicationTimeZone, value: timeZone);
         Service.addHeader(key: HeaderKey.Authorization, value: accessToken);
         await GetIt.instance<GetMeInfoUseCase>().call().then((result) {
           if (result.status == 200 && result.data != null) {

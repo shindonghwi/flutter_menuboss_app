@@ -1,10 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:uuid/uuid.dart';
 
 import '../../../app/env/Environment.dart';
 import '../../../presentation/utils/Common.dart';
@@ -20,8 +24,28 @@ class Service {
     HeaderKey.AcceptLanguage: 'en-US',
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
-    HeaderKey.TimeZone: 'Asia/Seoul',
+    HeaderKey.ApplicationTimeZone: 'Asia/Seoul',
   };
+
+
+  static Future<void> initializeHeaders() async {
+
+    // app version
+    addHeader(key: HeaderKey.XAppVersion, value: (await PackageInfo.fromPlatform()).version);
+
+    // unique id
+    addHeader(key: HeaderKey.XUniqueId, value: const Uuid().v4());
+
+    // device model
+    final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
+    if (Platform.isAndroid) {
+      final androidInfo = await deviceInfoPlugin.androidInfo;
+      addHeader(key: HeaderKey.XDeviceModel, value: androidInfo.model);
+    } else if (Platform.isIOS) {
+      final iosInfo = await deviceInfoPlugin.iosInfo;
+      addHeader(key: HeaderKey.XDeviceModel, value: iosInfo.utsname.machine);
+    }
+  }
 
   static addHeader({
     required String key,

@@ -71,7 +71,7 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   Future<void> saveAccessToken(String accessToken) async {
     await _postLoginAccessToken.call(accessToken);
     final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
-    Service.addHeader(key: HeaderKey.TimeZone, value: timeZone);
+    Service.addHeader(key: HeaderKey.ApplicationTimeZone, value: timeZone);
     Service.addHeader(key: HeaderKey.Authorization, value: accessToken);
   }
 

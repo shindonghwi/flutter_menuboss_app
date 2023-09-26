@@ -28,7 +28,8 @@ class DevicesScreen extends HookConsumerWidget {
     final deviceList = useState<List<ResponseDeviceModel>?>(null);
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async{
+        await deviceProvider.init();
         deviceProvider.requestGetDevices();
       });
       return null;
@@ -40,13 +41,11 @@ class DevicesScreen extends HookConsumerWidget {
           deviceState.when(
             success: (event) {
               deviceList.value = event.value;
-              deviceProvider.init();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
-
       handleUiStateChange();
       return null;
     }, [deviceState]);

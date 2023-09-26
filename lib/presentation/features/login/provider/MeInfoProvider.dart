@@ -1,5 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
+import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/me/ResponseMeInfoModel.dart';
 import 'package:riverpod/riverpod.dart';
 
@@ -14,6 +16,7 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     if (meInfo == null) {
       FirebaseAuth.instance.signOut();
     }
+    Service.addHeader(key: HeaderKey.XUserId, value: meInfo?.memberId.toString() ?? "");
     debugPrint("updateMeInfo : $meInfo");
     state = meInfo;
   }

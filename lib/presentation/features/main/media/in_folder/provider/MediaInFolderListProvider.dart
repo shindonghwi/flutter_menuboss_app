@@ -85,15 +85,17 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
   }
 
   /// 미디어 삭제
-  void removeItem(List<String> mediaIds) {
+  Future<bool> removeItem(List<String> mediaIds) async{
     state = Loading();
-    _delMediaUseCase.call(mediaIds).then((response) {
+    return await _delMediaUseCase.call(mediaIds).then((response) {
       if (response.status == 200) {
         List<ResponseMediaModel> updateItems = _currentItems.where((item) => !mediaIds.contains(item.mediaId)).toList();
         updateCurrentItems(updateItems);
         state = Success(updateItems);
+        return Future(() => true);
       } else {
         state = Failure(response.message);
+        return Future(() => false);
       }
     });
   }

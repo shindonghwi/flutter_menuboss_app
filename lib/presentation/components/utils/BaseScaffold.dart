@@ -25,7 +25,7 @@ class BaseScaffold extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    final content = Scaffold(
       appBar: appBar,
       backgroundColor: backgroundColor ?? getColorScheme(context).white,
       body: GestureDetector(
@@ -38,5 +38,7 @@ class BaseScaffold extends HookWidget {
       floatingActionButtonLocation: floatingActionButtonLocation,
       bottomNavigationBar: bottomNavigationBar,
     );
+
+    return content;
   }
 }
