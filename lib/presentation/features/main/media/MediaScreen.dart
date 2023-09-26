@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
@@ -20,7 +22,9 @@ import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 import '../../../components/view_state/LoadingView.dart';
+import 'provider/MediaUploadProvider.dart';
 import 'widget/MediaItem.dart';
+import 'widget/MediaUploadProgress.dart';
 
 class MediaScreen extends HookConsumerWidget {
   const MediaScreen({super.key});
@@ -55,9 +59,18 @@ class MediaScreen extends HookConsumerWidget {
     }, [mediaState]);
 
     void goToUploadGallery() {
+      final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
+
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) {
-          Toast.showSuccess(context, "이미지 업로드 진행해야함");
+          final controller = uploadProgressProvider.uploadStart(xFile.path);
+          GetIt.instance<PostUploadMediaImageUseCase>().call(xFile.path, streamController: controller).then((response) {
+            if (response.status == 200) {
+              // ref.read(mediaListProvider.notifier).uploadMedia();
+            } else {
+              Toast.showError(context, "이미지 업로드 에러 : ${response.message}");
+            }
+          });
         },
         onVideoSelected: (XFile xFile) {
           Toast.showSuccess(context, "비디오 업로드 진행해야함");
@@ -95,21 +108,28 @@ class MediaScreen extends HookConsumerWidget {
             ],
           ),
           Expanded(
-            child: Stack(
+            child: Column(
               children: [
-                if (mediaState is Failure && mediaList.value == null)
-                  FailView(onPressed: () => mediaProvider.requestGetMedias())
-                else if (mediaList.value != null)
-                  _MediaContentList(
-                    items: mediaList.value!,
-                    onMediaUpload: () => goToUploadGallery(),
-                  )
-                else if (mediaState is Success<List<ResponseMediaModel>>)
-                  _MediaContentList(
-                    items: mediaState.value,
-                    onMediaUpload: () => goToUploadGallery(),
+                MediaUploadProgress(),
+                Expanded(
+                  child: Stack(
+                    children: [
+                      if (mediaState is Failure && mediaList.value == null)
+                        FailView(onPressed: () => mediaProvider.requestGetMedias())
+                      else if (mediaList.value != null)
+                        _MediaContentList(
+                          items: mediaList.value!,
+                          onMediaUpload: () => goToUploadGallery(),
+                        )
+                      else if (mediaState is Success<List<ResponseMediaModel>>)
+                        _MediaContentList(
+                          items: mediaState.value,
+                          onMediaUpload: () => goToUploadGallery(),
+                        ),
+                      if (mediaState is Loading) const LoadingView(),
+                    ],
                   ),
-                if (mediaState is Loading) const LoadingView(),
+                ),
               ],
             ),
           ),

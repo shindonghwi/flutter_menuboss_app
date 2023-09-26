@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -124,13 +125,14 @@ class Service {
     }
   }
 
-  static Future<Response> postUploadApi({
+  static Future<http.Response> postUploadApi({
     required ServiceType type,
     required String? endPoint,
     required File file,
     required Map<String, dynamic> jsonBody,
+    StreamController<double>? uploadProgressController,
   }) async {
-
+    var completer = Completer<http.Response>();
     try {
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
@@ -140,26 +142,38 @@ class Service {
 
         var request = http.MultipartRequest('POST', url)
           ..headers.addAll(headers)
-          ..files.add(await http.MultipartFile.fromPath('file', file.path));
+          ..fields.addAll(jsonBody.map((key, value) => MapEntry(key, value.toString())))
+          ..files.add(http.MultipartFile('file', file.openRead(), file.lengthSync(), filename: file.path.split('/').last));
 
-        jsonBody.forEach((key, value) {
-          request.fields[key] = value.toString();
-        });
+        var client = http.Client();
 
-        var streamedResponse = await request.send();
-        var response = await http.Response.fromStream(streamedResponse);
+        var totalByteLength = file.lengthSync();
+        int bytesUploaded = 0;
+        file.openRead().listen((data) {
+          bytesUploaded += data.length;
+          uploadProgressController?.sink.add(bytesUploaded / totalByteLength);
+        })
+          .onDone(() async {
+            var streamedResponse = await client.send(request);
+            var response = await http.Response.fromStream(streamedResponse);
+            debugPrint('http response statusCode: ${response.statusCode}');
+            debugPrint('http response method: ${response.request?.method.toString()}');
+            debugPrint('http response body: ${response.body}');
+            uploadProgressController?.close();
+            completer.complete(response);  // Completing the Future
+          });
 
-        debugPrint('\http response statusCode: ${response.statusCode}');
-        debugPrint('\http response method: ${response.request?.method.toString()}');
-        debugPrint('\http response body: ${response.body}');
-        return response;
+        return completer.future;
       } else {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
+      debugPrint('http response error: $e');
       return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
+
+
 
   static Future<Response> patchApi({
     required ServiceType type,

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
@@ -18,7 +19,11 @@ class RemoteFileApi {
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   /// 미디어 이미지 등록
-  Future<ApiResponse<ResponseFileModel>> postMediaImageUpload(String filePath, {String? folderId}) async {
+  Future<ApiResponse<ResponseFileModel>> postMediaImageUpload(
+    String filePath, {
+    String? folderId,
+    StreamController<double>? streamController,
+  }) async {
     final file = File(filePath);
 
     if (!file.existsSync()) {
@@ -42,6 +47,7 @@ class RemoteFileApi {
       jsonBody: {
         if (folderId != null) "folderId": folderId,
       },
+      uploadProgressController: streamController,
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);
@@ -60,7 +66,11 @@ class RemoteFileApi {
   }
 
   /// 미디어 비디오 등록
-  Future<ApiResponse<ResponseFileModel>> postMediaVideoUpload(String filePath, {String? folderId}) async {
+  Future<ApiResponse<ResponseFileModel>> postMediaVideoUpload(
+    String filePath, {
+    String? folderId,
+    StreamController<double>? streamController,
+  }) async {
     final file = File(filePath);
     if (!file.existsSync()) {
       return ApiResponse(
@@ -83,6 +93,7 @@ class RemoteFileApi {
       jsonBody: {
         if (folderId != null) "folderId": folderId,
       },
+      uploadProgressController: streamController,
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);
@@ -101,7 +112,10 @@ class RemoteFileApi {
   }
 
   /// 프로필 이미지 등록
-  Future<ApiResponse<ResponseFileModel>> postProfileImageUpload(String filePath) async {
+  Future<ApiResponse<ResponseFileModel>> postProfileImageUpload(
+    String filePath, {
+    StreamController<double>? streamController,
+  }) async {
     final file = File(filePath);
 
     if (!file.existsSync()) {
@@ -123,6 +137,7 @@ class RemoteFileApi {
       endPoint: "upload/profile/images",
       file: file,
       jsonBody: {},
+      uploadProgressController: streamController,
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);
