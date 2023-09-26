@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
+import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
@@ -183,6 +184,7 @@ class RemoteAuthApi {
   Future<ApiResponse<ResponseLoginModel>> postSocialLogin({
     required RequestSocialLoginModel requestSocialLoginModel,
   }) async {
+    Service.addHeader(key: HeaderKey.Authorization, value: "");
     final response = await Service.postApi(
       type: ServiceType.Auth,
       endPoint: 'social/login',
@@ -209,6 +211,7 @@ class RemoteAuthApi {
   Future<ApiResponse<ResponseLoginModel>> postEmailLogin({
     required RequestEmailLoginModel requestEmailLoginModel,
   }) async {
+    Service.addHeader(key: HeaderKey.Authorization, value: "");
     final response = await Service.postApi(
       type: ServiceType.Auth,
       endPoint: 'login',

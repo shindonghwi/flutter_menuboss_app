@@ -37,30 +37,33 @@ class DestinationFolderScreen extends HookConsumerWidget {
     final ValueNotifier<String?> isSelectFolderId = useState(null);
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         destinationFolderProvider.requestGetFolders();
       });
       return null;
     }, []);
 
     useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
-          fileMoveState.when(
-            success: (event) async {
-              mediaListProvider.initPageInfo();
-              await mediaListProvider.requestGetMedias();
-              fileMoveProvider.init();
-              Navigator.of(context).pop();
-            },
-            failure: (event) => Toast.showError(context, event.errorMessage),
-          );
-        });
+      void handleUiStateChange() {
+        fileMoveState.when(
+          success: (event) async {
+            mediaListProvider.initPageInfo();
+            mediaListProvider.requestGetMedias();
+            Navigator.of(context).pop();
+          },
+          failure: (event) => Toast.showError(context, event.errorMessage),
+        );
+        destinationFolderState.when(
+          failure: (event) => Toast.showError(context, event.errorMessage),
+        );
       }
 
-      handleUiStateChange();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        await fileMoveProvider.init();
+        handleUiStateChange();
+      });
       return null;
-    }, [fileMoveState]);
+    }, [fileMoveState, destinationFolderState]);
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(

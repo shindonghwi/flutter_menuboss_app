@@ -42,8 +42,6 @@ class MediaInFolderScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        mediaList.value?.clear();
-        await mediaProvider.init();
         mediaProvider.initPageInfo();
         mediaProvider.requestGetMedias(mediaId: item!.mediaId);
       });
@@ -60,7 +58,8 @@ class MediaInFolderScreen extends HookConsumerWidget {
     }
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
+      WidgetsBinding.instance.addPostFrameCallback((_) async{
+        await mediaProvider.init();
         handleUiStateChange();
       });
       return null;
@@ -169,8 +168,9 @@ class _MediaContentList extends HookConsumerWidget {
                       onRemove: () async {
                         final isRemoved = await mediaProvider.removeItem([item.mediaId]);
                         if (isRemoved) {
-                          rootMediaProvider.changeFolderCount(
+                          rootMediaProvider.updateFolderCountAndSize(
                             folderId,
+                            item.property?.size ?? 0,
                             isIncrement: false,
                             isUiUpdate: true,
                           );

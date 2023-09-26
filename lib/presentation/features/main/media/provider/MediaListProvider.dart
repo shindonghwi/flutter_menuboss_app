@@ -34,7 +34,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   final PostMediaFilterTypeUseCase _filterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
 
   /// 미디어 리스트 요청
-  Future<void> requestGetMedias({int? delayed}) async {
+  void requestGetMedias({int? delayed}) async {
     if (_hasNext) {
       if (_currentPage == 1) {
         state = Loading();
@@ -139,19 +139,38 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (response.status == 200) {
         List<ResponseMediaModel> updateItems = currentItems.where((item) => !mediaIds.contains(item.mediaId)).toList();
 
-        // folderId가 제공되었으면 폴더의 count를 감소시킵니다.
         if (folderId != null) {
           ResponseMediaModel? folderItem = updateItems.firstWhere((item) => item.mediaId == folderId);
 
-          if ((folderItem.property?.count ?? 0) > 0) {
-            int updatedCount = folderItem.property!.count! - 1;
-            int index = updateItems.indexOf(folderItem);
-            updateItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount));
+          if (folderItem.property != null) {
+            int updatedCount = (folderItem.property?.count ?? 0) - 1;
+            int updatedSize = (folderItem.property?.size ?? 0);
+
+            // Calculate the total size of removed media items
+            int removedSize = 0;
+            for (String mediaId in mediaIds) {
+              ResponseMediaModel? mediaItem = currentItems.firstWhere((item) => item.mediaId == mediaId);
+              if (mediaItem.property != null) {
+                removedSize += (mediaItem.property?.size ?? 0);
+              }
+            }
+            updatedSize -= removedSize;
+
+            debugPrint("updatedCount: $updatedCount / updatedSize: $updatedSize / removedSize: $removedSize");
+
+            if (updatedCount >= 0 && updatedSize >= 0) {
+              int index = updateItems.indexOf(folderItem);
+              updateItems[index] = folderItem.copyWith(
+                property: folderItem.property?.copyWith(
+                  count: updatedCount,
+                  size: updatedSize,
+                ),
+              );
+            }
           }
         }
 
-        updateCurrentItems(updateItems);
-        state = Success(updateItems);
+        updateCurrentItems(updateItems, isUiUpdate: true);
         return Future(() => true);
       } else {
         state = Failure(response.message);
@@ -160,16 +179,24 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     });
   }
 
-  /// 폴더의 count 감소
-  List<ResponseMediaModel> changeFolderCount(String folderId, {required bool isIncrement, bool isUiUpdate = false}) {
-    debugPrint("decrementFolderCount: $folderId");
-    // 현재 아이템 중 해당 folderId를 가진 아이템을 찾습니다.
+
+
+  /// 업데이트 folder count and size
+  List<ResponseMediaModel> updateFolderCountAndSize(String folderId, int sizeChange, {bool isIncrement = false, bool isUiUpdate = false}) {
+    debugPrint("updateFolderCountAndSize: $folderId");
     ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
 
     if ((folderItem.property?.count ?? 0) > 0) {
       int updatedCount = folderItem.property!.count! + (isIncrement ? 1 : -1);
-      int index = currentItems.indexOf(folderItem);
-      currentItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount));
+      int updatedSize = folderItem.property!.size ?? 0;
+
+      updatedSize = isIncrement ? updatedSize + sizeChange : updatedSize - sizeChange;;
+
+      if (updatedCount >= 0 && updatedSize >= 0) {
+        int index = currentItems.indexOf(folderItem);
+        currentItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount, size: updatedSize));
+      }
+
       if (isUiUpdate) {
         state = Success([...currentItems]);
       }
@@ -177,6 +204,9 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
 
     return currentItems;
   }
+
+
+
 
   /// 미디어 정렬 순서 변경
   void changeFilterType(FilterType type) async {

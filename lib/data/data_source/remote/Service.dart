@@ -27,9 +27,7 @@ class Service {
     HeaderKey.ApplicationTimeZone: 'Asia/Seoul',
   };
 
-
   static Future<void> initializeHeaders() async {
-
     // app version
     addHeader(key: HeaderKey.XAppVersion, value: (await PackageInfo.fromPlatform()).version);
 
@@ -52,7 +50,7 @@ class Service {
     required String value,
   }) {
     if (key == HeaderKey.Authorization) {
-      headers[key] = "Bearer $value";
+      value.isNotEmpty ? headers[key] = "Bearer $value" : headers.remove(key);
     } else {
       headers[key] = value;
     }

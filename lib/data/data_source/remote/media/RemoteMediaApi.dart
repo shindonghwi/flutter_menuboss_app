@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/media/ResponseMediaCreate.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../models/media/ResponseMediaInfoModel.dart';
@@ -123,7 +124,10 @@ class RemoteMediaApi {
     final response = await Service.postApi(
       type: ServiceType.Media,
       endPoint: "move",
-      jsonBody: {"mediaIds": mediaIds, "folderId": folderId},
+      jsonBody: {
+        "mediaIds": mediaIds,
+        if (!CollectionUtil.isNullEmptyFromString(folderId)) "folderId": folderId,
+      },
     );
 
     final errorResponse = BaseApiUtil.isErrorStatusCode(response);

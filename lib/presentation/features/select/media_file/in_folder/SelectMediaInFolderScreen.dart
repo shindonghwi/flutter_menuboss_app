@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
@@ -81,7 +82,16 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
         ],
       ),
       bottomNavigationBar: SelectMediaBottomContent(
-        onMovedClick: () {},
+        onMovedClick: () {
+          Navigator.of(context).pop();
+          Navigator.pushReplacement(
+            context,
+            nextSlideVerticalScreen(
+              RoutingScreen.SelectDestinationFolder.route,
+              parameter: checkListState,
+            ),
+          );
+        },
         onDeleteClick: () {
           mediaProvider.removeItem(checkListState, folderId: item!.mediaId);
           Navigator.of(context).pop();

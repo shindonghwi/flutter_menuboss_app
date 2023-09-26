@@ -24,7 +24,7 @@ class FileMoveNotifier extends StateNotifier<UIState<String?>> {
     });
   }
 
-  void init() {
-    state = Idle();
+  Future<Idle<String?>> init() {
+    return Future(() => state = Idle());
   }
 }
