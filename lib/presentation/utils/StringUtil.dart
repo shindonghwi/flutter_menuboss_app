@@ -27,8 +27,6 @@ class StringUtil {
     }
   }
 
-
-
   /// url에서 파일 확장자를 추출하여 반환합니다.
   static String? extractFileExtensionFromUrl(String? url) {
     return url?.split('.').last;
@@ -68,6 +66,5 @@ class StringUtil {
     DateTime parsedDate = DateFormat('MMM d, y, h:mm a').parse(input);
     return DateFormat('MMM d, y').format(parsedDate);
   }
-
 
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -97,13 +98,14 @@ class LoginScreen extends HookConsumerWidget {
   }
 }
 
-class _SocialLoginButtons extends StatelessWidget {
+class _SocialLoginButtons extends HookConsumerWidget {
   const _SocialLoginButtons({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final loginProvider = ref.read(LoginProvider.notifier);
     return Column(
       children: [
         Padding(
@@ -132,13 +134,13 @@ class _SocialLoginButtons extends StatelessWidget {
           children: [
             Clickable(
               borderRadius: 8,
-              onPressed: () {},
+              onPressed: () => loginProvider.doGoogleLogin(),
               child: SvgPicture.asset("assets/imgs/icon_google.svg", width: 64, height: 64),
             ),
             const SizedBox(width: 32),
             Clickable(
               borderRadius: 8,
-              onPressed: () {},
+              onPressed: () => loginProvider.doAppleLogin(),
               child: SvgPicture.asset("assets/imgs/icon_apple.svg", width: 64, height: 64),
             )
           ],

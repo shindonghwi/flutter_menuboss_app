@@ -7,11 +7,13 @@ import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
+import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 import '../../../../domain/models/auth/LoginPlatform.dart';
@@ -34,76 +36,76 @@ class RemoteAuthApi {
   /// @feature: 애플 로그인
   /// @author: 2023/09/11 6:31 PM donghwishin
   Future<ApiResponse<SocialLoginModel>> doAppleLogin() async {
-    return ApiResponse<SocialLoginModel>(
-      status: 500,
-      message: "아직 지원하지 않는 기능입니다",
-      data: null,
-    );
-    // if (await Service.isNetworkAvailable()) {
-    //   final rawNonce = generateNonce();
-    //
-    //   final redirectURL = Environment.buildType == BuildType.dev
-    //       ? "https://app-ody-dev.glitch.me/callbacks/sign_in_with_apple"
-    //       : "https://app-ody.glitch.me/callbacks/sign_in_with_apple";
-    //   final clientID = Environment.buildType == BuildType.dev ? "dev.ody.orot.com" : "ody.orot.com";
-    //
-    //   print("redirectURL: ${redirectURL}");
-    //   print("clientID: ${clientID}");
-    //
-    //   final nonce = _sha256ofString(rawNonce);
-    //   try {
-    //     final appleIdCredential = await SignInWithApple.getAppleIDCredential(
-    //       scopes: [
-    //         AppleIDAuthorizationScopes.email,
-    //         AppleIDAuthorizationScopes.fullName,
-    //       ],
-    //       webAuthenticationOptions: WebAuthenticationOptions(
-    //         clientId: clientID,
-    //         redirectUri: Uri.parse(redirectURL),
-    //       ),
-    //       nonce: nonce,
-    //     );
-    //     final oAuthProvider = OAuthProvider('apple.com');
-    //     final credential = oAuthProvider.credential(
-    //       idToken: appleIdCredential.identityToken,
-    //       accessToken: appleIdCredential.authorizationCode,
-    //       rawNonce: rawNonce,
-    //     );
-    //
-    //     final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-    //
-    //     final User? user = userCredential.user;
-    //
-    //     if (user != null) {
-    //       return ApiResponse<SocialLoginModel>(
-    //         status: 200,
-    //         message: _getAppLocalization.get().message_api_success,
-    //         data: SocialLoginModel(
-    //           LoginPlatform.Apple,
-    //           appleIdCredential.identityToken,
-    //         ),
-    //       );
-    //     } else {
-    //       return ApiResponse<SocialLoginModel>(
-    //         status: 404,
-    //         message: _getAppLocalization.get().message_not_found_user,
-    //         data: null,
-    //       );
-    //     }
-    //   } catch (e) {
-    //     return ApiResponse<SocialLoginModel>(
-    //       status: 400,
-    //       message: "",
-    //       data: null,
-    //     );
-    //   }
-    // } else {
-    //   return ApiResponse<SocialLoginModel>(
-    //     status: 406,
-    //     message: _getAppLocalization.get().message_network_required,
-    //     data: null,
-    //   );
-    // }
+    if (await Service.isNetworkAvailable()) {
+      final rawNonce = generateNonce();
+
+      final packageInfo = await PackageInfo.fromPlatform();
+
+      final redirectURL = Environment.buildType == BuildType.dev
+          ? "https://dev-app-api.themenuboss.com/v1/external/apple/callback"
+          : "https://dev-app-api.themenuboss.com/v1/external/apple/callback";
+      final clientID = packageInfo.packageName.split(".").reversed.join(".");
+
+      debugPrint("redirectURL: $redirectURL");
+      debugPrint("clientID: $clientID");
+
+      final nonce = _sha256ofString(rawNonce);
+      try {
+        final appleIdCredential = await SignInWithApple.getAppleIDCredential(
+          scopes: [
+            AppleIDAuthorizationScopes.email,
+            AppleIDAuthorizationScopes.fullName,
+          ],
+          webAuthenticationOptions: WebAuthenticationOptions(
+            clientId: clientID,
+            redirectUri: Uri.parse(redirectURL),
+          ),
+          nonce: nonce,
+        );
+
+        final oAuthProvider = OAuthProvider('apple.com');
+        final credential = oAuthProvider.credential(
+          idToken: appleIdCredential.identityToken,
+          accessToken: appleIdCredential.authorizationCode,
+          rawNonce: rawNonce,
+        );
+
+        final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
+
+        final User? user = userCredential.user;
+
+        if (user != null) {
+          return ApiResponse<SocialLoginModel>(
+            status: 200,
+            message: _getAppLocalization.get().message_api_success,
+            data: SocialLoginModel(
+              LoginPlatform.Apple,
+              appleIdCredential.identityToken,
+            ),
+          );
+        } else {
+          return ApiResponse<SocialLoginModel>(
+            status: 404,
+            message: _getAppLocalization.get().message_not_found_user,
+            data: null,
+          );
+        }
+      } catch (e) {
+        debugPrint("doAppleLogin: 400 :${_getAppLocalization.get().message_temp_login_fail} ${e.toString()}");
+        return ApiResponse<SocialLoginModel>(
+          status: 400,
+          message: "",
+          data: null,
+        );
+      }
+    } else {
+      debugPrint("doAppleLogin: 406 :${_getAppLocalization.get().message_network_required} ${e}");
+      return ApiResponse<SocialLoginModel>(
+        status: 406,
+        message: _getAppLocalization.get().message_network_required,
+        data: null,
+      );
+    }
   }
 
   /// @feature: 구글 로그인

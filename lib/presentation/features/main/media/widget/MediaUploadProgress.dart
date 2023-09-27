@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -59,13 +60,13 @@ class MediaUploadProgress extends HookConsumerWidget {
                                 Text(
                                   " / ${StringUtil.formatBytesToMegabytes(mediaUploadState.getFileSize())}",
                                   style: getTextTheme(context).c2m.copyWith(
-                                    color: mediaUploadState.isUploading == UploadState.SUCCESS ||
-                                        mediaUploadState.isUploading == UploadState.UPLOADING
-                                        ? getColorScheme(context).colorGreen500
-                                        : mediaUploadState.isUploading == UploadState.FAIL
-                                        ? getColorScheme(context).colorRed500
-                                        : getColorScheme(context).colorGray500,
-                                  ),
+                                        color: mediaUploadState.isUploading == UploadState.SUCCESS ||
+                                                mediaUploadState.isUploading == UploadState.UPLOADING
+                                            ? getColorScheme(context).colorGreen500
+                                            : mediaUploadState.isUploading == UploadState.FAIL
+                                                ? getColorScheme(context).colorRed500
+                                                : getColorScheme(context).colorGray500,
+                                      ),
                                 ),
                               ],
                             ),
@@ -119,15 +120,18 @@ class _SuffixSuccess extends StatelessWidget {
             BlendMode.srcIn,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SvgPicture.asset(
-            "assets/imgs/icon_close_line.svg",
-            width: 28,
-            height: 28,
-            colorFilter: ColorFilter.mode(
-              getColorScheme(context).colorGray500,
-              BlendMode.srcIn,
+        Clickable(
+          onPressed: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SvgPicture.asset(
+              "assets/imgs/icon_close_line.svg",
+              width: 20,
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).colorGray500,
+                BlendMode.srcIn,
+              ),
             ),
           ),
         )
@@ -152,15 +156,18 @@ class _SuffixFail extends StatelessWidget {
             BlendMode.srcIn,
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: SvgPicture.asset(
-            "assets/imgs/icon_refresh.svg",
-            width: 28,
-            height: 28,
-            colorFilter: ColorFilter.mode(
-              getColorScheme(context).colorGray500,
-              BlendMode.srcIn,
+        Clickable(
+          onPressed: () {},
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: SvgPicture.asset(
+              "assets/imgs/icon_close_line.svg",
+              width: 20,
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).colorGray500,
+                BlendMode.srcIn,
+              ),
             ),
           ),
         )

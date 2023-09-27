@@ -122,6 +122,7 @@ class _ToastWidget extends HookWidget {
                           color: getColorScheme(context).white,
                           overflow: TextOverflow.visible,
                         ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
               ),
