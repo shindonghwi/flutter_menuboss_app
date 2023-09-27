@@ -4,6 +4,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:video_thumbnail/video_thumbnail.dart';
 
 final mediaUploadProgressProvider = ChangeNotifierProvider((ref) => MediaUploadProgressNotifier());
 
@@ -17,6 +19,8 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
 
   StreamController<double>? uploadProgressController;
   File? currentFile;
+  File? thumbnailFile;
+  // String? thumbnailFilePath;
 
   void setSmoothUploadProgress(double targetProgress) {
     final totalBytes = currentFile!.lengthSync().toDouble();
@@ -36,15 +40,23 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
       currentProgressByte = StringUtil.formatBytesToMegabytes((uploadProgress * totalBytes).toInt());
       final formattedTotalSize = StringUtil.formatBytesToMegabytes(totalBytes.toInt());
 
-      debugPrint("uploadProgressController : $currentProgressByte / $formattedTotalSize");
+      debugPrint("uploadProgressController : $isUploading $currentProgressByte / $formattedTotalSize");
 
       notifyListeners();
     });
   }
 
-  StreamController<double> uploadStart(String filePath) {
+  Future<StreamController<double>> uploadStart(String filePath, {bool isVideo = false}) async {
     uploadProgress = 0.0;
-    currentFile = File(filePath);
+
+    if (isVideo == true) {
+      String? thumbnailFilePath = await generateThumbnail(filePath);
+      currentFile = File(filePath);
+      thumbnailFile = thumbnailFilePath == null ? null : File(thumbnailFilePath);
+    }else{
+      currentFile = File(filePath);
+      thumbnailFile = File(filePath);
+    }
 
     uploadProgressController = StreamController<double>.broadcast();
     uploadStatusChange(UploadState.UPLOADING);
@@ -53,6 +65,13 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
     });
     notifyListeners();
     return uploadProgressController!;
+  }
+
+  void uploadIdle() {
+    isUploading = UploadState.IDLE;
+    _timer?.cancel();
+    uploadProgress = 0.0;
+    notifyListeners();
   }
 
   void uploadFail() {
@@ -76,6 +95,21 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   int getFileSize() {
     if (currentFile == null) return 0;
     return currentFile!.lengthSync();
+  }
+
+  Future<String?> generateThumbnail(String videoPath) async {
+    try{
+      return await VideoThumbnail.thumbnailFile(
+        video: videoPath,
+        thumbnailPath: (await getTemporaryDirectory()).path,
+        imageFormat: ImageFormat.PNG,
+        quality: 25,
+      );
+    }catch(e){
+      debugPrint("generateThumbnail error : $e");
+    }
+
+    return Future(() => null);
   }
 
   @override

@@ -45,7 +45,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (!_isProcessing) {
         _isProcessing = true;
         try {
-          final response = await _getMediasUseCase.call(page: _currentPage, size: 50, sort: filterParams[_filterType]!);
+          final response = await _getMediasUseCase.call(page: _currentPage, size: 30, sort: filterParams[_filterType]!);
 
           if (response.status == 200) {
             final responseItems = response.list?.toList() ?? [];
@@ -138,38 +138,6 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     return _delMediaUseCase.call(mediaIds).then((response) async {
       if (response.status == 200) {
         List<ResponseMediaModel> updateItems = currentItems.where((item) => !mediaIds.contains(item.mediaId)).toList();
-
-        if (folderId != null) {
-          ResponseMediaModel? folderItem = updateItems.firstWhere((item) => item.mediaId == folderId);
-
-          if (folderItem.property != null) {
-            int updatedCount = (folderItem.property?.count ?? 0) - 1;
-            int updatedSize = (folderItem.property?.size ?? 0);
-
-            // Calculate the total size of removed media items
-            int removedSize = 0;
-            for (String mediaId in mediaIds) {
-              ResponseMediaModel? mediaItem = currentItems.firstWhere((item) => item.mediaId == mediaId);
-              if (mediaItem.property != null) {
-                removedSize += (mediaItem.property?.size ?? 0);
-              }
-            }
-            updatedSize -= removedSize;
-
-            debugPrint("updatedCount: $updatedCount / updatedSize: $updatedSize / removedSize: $removedSize");
-
-            if (updatedCount >= 0 && updatedSize >= 0) {
-              int index = updateItems.indexOf(folderItem);
-              updateItems[index] = folderItem.copyWith(
-                property: folderItem.property?.copyWith(
-                  count: updatedCount,
-                  size: updatedSize,
-                ),
-              );
-            }
-          }
-        }
-
         updateCurrentItems(updateItems, isUiUpdate: true);
         return Future(() => true);
       } else {
@@ -179,10 +147,9 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     });
   }
 
-
-
   /// 업데이트 folder count and size
-  List<ResponseMediaModel> updateFolderCountAndSize(String folderId, int sizeChange, {bool isIncrement = false, bool isUiUpdate = false}) {
+  List<ResponseMediaModel> updateFolderCountAndSize(String folderId, int sizeChange,
+      {bool isIncrement = false, bool isUiUpdate = false}) {
     debugPrint("updateFolderCountAndSize: $folderId");
     ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
 
@@ -190,11 +157,12 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       int updatedCount = folderItem.property!.count! + (isIncrement ? 1 : -1);
       int updatedSize = folderItem.property!.size ?? 0;
 
-      updatedSize = isIncrement ? updatedSize + sizeChange : updatedSize - sizeChange;;
+      updatedSize = isIncrement ? updatedSize + sizeChange : updatedSize - sizeChange;
 
       if (updatedCount >= 0 && updatedSize >= 0) {
         int index = currentItems.indexOf(folderItem);
-        currentItems[index] = folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount, size: updatedSize));
+        currentItems[index] =
+            folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount, size: updatedSize));
       }
 
       if (isUiUpdate) {
@@ -205,8 +173,26 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     return currentItems;
   }
 
+  /// 업데이트 카운트, 사이즈 일괄 변경 folder count and size
+  List<ResponseMediaModel> updateLumpFolderCountAndSize(String folderId, int count, int size,
+      {bool isUiUpdate = false}) {
+    debugPrint("updateFolderCountAndSize: $folderId");
+    ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
 
+    int index = currentItems.indexOf(folderItem);
+    currentItems[index] = folderItem.copyWith(
+      property: folderItem.property?.copyWith(
+        count: count,
+        size: size,
+      ),
+    );
 
+    if (isUiUpdate) {
+      state = Success([...currentItems]);
+    }
+
+    return currentItems;
+  }
 
   /// 미디어 정렬 순서 변경
   void changeFilterType(FilterType type) async {

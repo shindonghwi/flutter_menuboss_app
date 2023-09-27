@@ -29,7 +29,7 @@ dependencies:
   firebase_analytics: ^10.4.3
   package_info_plus: ^4.0.2
   url_launcher: ^6.1.12
-  permission_handler: ^10.4.1
+  permission_handler: ^11.0.0
   sign_in_with_apple: ^4.3.0
   visibility_detector: ^0.4.0+2
   qr_code_scanner: ^1.0.1
@@ -47,6 +47,8 @@ dependencies:
   device_info_plus: ^9.0.3
   uuid: ^4.1.0
   flutter_image_compress: ^2.0.4
+  video_thumbnail: ^0.5.3
+  path_provider: ^2.1.1
 
 dev_dependencies:
   flutter_test:

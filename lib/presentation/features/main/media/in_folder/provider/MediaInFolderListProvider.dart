@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
@@ -37,7 +38,7 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
     if (_hasNext) {
       if (_isProcessing) return;
       _isProcessing = true;
-      _getMediasUseCase.call(page: _currentPage, size: 50, sort: filterParams[_filterType]!, mediaId: mediaId).then((response) {
+      _getMediasUseCase.call(page: _currentPage, size: 30, sort: filterParams[_filterType]!, mediaId: mediaId).then((response) {
         try {
           if (response.status == 200) {
             final responseItems = response.list?.where((e) => e.type?.code.toLowerCase() != "folder").toList() ?? [];

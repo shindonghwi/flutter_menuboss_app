@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 enum ToastType { Success, Error, Warning }
@@ -17,6 +18,7 @@ class Toast {
     String message, {
     Duration autoCloseTime = const Duration(seconds: 5),
   }) {
+    if (CollectionUtil.isNullEmptyFromString(message)) return;
     _removeExistingToast();
     _addOverlayEntry(context, ToastType.Error, message);
     _cancelTimer(autoCloseTime);
@@ -27,6 +29,7 @@ class Toast {
     String message, {
     Duration autoCloseTime = const Duration(seconds: 5),
   }) {
+    if (CollectionUtil.isNullEmptyFromString(message)) return;
     _removeExistingToast();
     _addOverlayEntry(context, ToastType.Success, message);
     _cancelTimer(autoCloseTime);
@@ -37,6 +40,7 @@ class Toast {
     String message, {
     Duration autoCloseTime = const Duration(seconds: 5),
   }) {
+    if (CollectionUtil.isNullEmptyFromString(message)) return;
     _removeExistingToast();
     _addOverlayEntry(context, ToastType.Warning, message);
     _cancelTimer(autoCloseTime);

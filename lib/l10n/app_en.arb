@@ -129,6 +129,7 @@
     "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
     "message_file_not_found_404": "File not found\nPlease use it again",
     "message_file_not_allow_404": "File extension you do not allowed\nPlease use it again",
+    "message_permission_error_photos": "You need photo and video permissions to upload media files",
     "message_network_required": "The network connection is unstable",
     "message_not_found_user": "User information not found",
     "message_api_success": "",

@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
@@ -19,9 +23,12 @@ import 'package:menuboss/presentation/features/main/media/provider/MediaListProv
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
+import '../provider/MediaUploadProvider.dart';
 import '../widget/MediaItem.dart';
+import '../widget/MediaUploadProgress.dart';
 import 'provider/MediaInFolderListProvider.dart';
 
 class MediaInFolderScreen extends HookConsumerWidget {
@@ -35,15 +42,20 @@ class MediaInFolderScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaState = ref.watch(MediaInFolderListProvider);
-    final rootMediaProvider = ref.read(MediaListProvider.notifier);
     final mediaProvider = ref.read(MediaInFolderListProvider.notifier);
+    final rootMediaProvider = ref.read(MediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
     final folderName = useState(item?.name ?? "");
 
+    void requestMedias() {
+      mediaProvider.initPageInfo();
+      mediaProvider.requestGetMedias(mediaId: item!.mediaId);
+    }
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        mediaProvider.initPageInfo();
-        mediaProvider.requestGetMedias(mediaId: item!.mediaId);
+        await mediaProvider.init();
+        requestMedias();
       });
       return null;
     }, []);
@@ -52,18 +64,75 @@ class MediaInFolderScreen extends HookConsumerWidget {
       mediaState.when(
         success: (event) {
           mediaList.value = event.value;
+
+          final count = mediaList.value?.length ?? 0;
+          final size = mediaList.value?.map((e) => e.property?.size ?? 0).reduce(
+                (value, element) => value + element,
+              );
+
+          debugPrint("count: $count, size: $size");
+
+          rootMediaProvider.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
         },
         failure: (event) => Toast.showError(context, event.errorMessage),
       );
     }
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async{
-        await mediaProvider.init();
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         handleUiStateChange();
       });
       return null;
     }, [mediaState]);
+
+    void doMediaUploadAction() {
+      final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
+
+      FilePickerUtil.pickFile(
+        onImageSelected: (XFile xFile) async {
+          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
+          GetIt.instance<PostUploadMediaImageUseCase>()
+              .call(
+            xFile.path,
+            folderId: item!.mediaId,
+            streamController: controller,
+          )
+              .then((response) {
+            if (response.status == 200) {
+              requestMedias();
+              uploadProgressProvider.uploadSuccess();
+            } else {
+              Toast.showError(context, response.message);
+              uploadProgressProvider.uploadFail();
+            }
+          });
+        },
+        onVideoSelected: (XFile xFile) async {
+          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
+          GetIt.instance<PostUploadMediaVideoUseCase>()
+              .call(
+            xFile.path,
+            folderId: item!.mediaId,
+            streamController: controller,
+          )
+              .then((response) {
+            if (response.status == 200) {
+              requestMedias();
+              uploadProgressProvider.uploadSuccess();
+            } else {
+              Toast.showError(context, response.message);
+              uploadProgressProvider.uploadFail();
+            }
+          });
+        },
+        notAvailableFile: () {
+          Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);
+        },
+        onError: (message) {
+          Toast.showError(context, message);
+        },
+      );
+    }
 
     return BaseScaffold(
       appBar: TopBarIconTitleIcon(
@@ -87,7 +156,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
               context,
               child: PopupDelete(onClicked: () async {
                 final isRemoved = await rootMediaProvider.removeItem([item?.mediaId ?? ""]);
-                if (isRemoved){
+                if (isRemoved) {
                   Navigator.of(context).pop();
                 }
               }),
@@ -95,23 +164,30 @@ class MediaInFolderScreen extends HookConsumerWidget {
           }),
         ],
       ),
-      body: Stack(
+      body: Column(
         children: [
-          if (mediaState is Failure && mediaList.value == null)
-            FailView(onPressed: () => mediaProvider.requestGetMedias(mediaId: item!.mediaId))
-          else if (mediaList.value != null)
-            _MediaContentList(
-              folderId: item!.mediaId,
-              items: mediaList.value!,
-              onMediaUpload: () {},
-            )
-          else if (mediaState is Success<List<ResponseMediaModel>>)
-            _MediaContentList(
-              folderId: item!.mediaId,
-              items: mediaState.value,
-              onMediaUpload: () {},
+          const MediaUploadProgress(),
+          Expanded(
+            child: Stack(
+              children: [
+                if (mediaState is Failure && mediaList.value == null)
+                  FailView(onPressed: () => mediaProvider.requestGetMedias(mediaId: item!.mediaId))
+                else if (mediaList.value != null)
+                  _MediaContentList(
+                    folderId: item!.mediaId,
+                    items: mediaList.value!,
+                    onMediaUpload: () => doMediaUploadAction(),
+                  )
+                else if (mediaState is Success<List<ResponseMediaModel>>)
+                  _MediaContentList(
+                    folderId: item!.mediaId,
+                    items: mediaState.value,
+                    onMediaUpload: () => doMediaUploadAction(),
+                  ),
+                if (mediaState is Loading) const LoadingView(),
+              ],
             ),
-          if (mediaState is Loading) const LoadingView(),
+          ),
         ],
       ),
     );

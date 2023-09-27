@@ -5,6 +5,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
@@ -58,25 +59,41 @@ class MediaScreen extends HookConsumerWidget {
       return null;
     }, [mediaState]);
 
-    void goToUploadGallery() {
+    void doMediaUploadAction() {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
 
       FilePickerUtil.pickFile(
-        onImageSelected: (XFile xFile) {
-          final controller = uploadProgressProvider.uploadStart(xFile.path);
+        onImageSelected: (XFile xFile) async {
+          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
           GetIt.instance<PostUploadMediaImageUseCase>().call(xFile.path, streamController: controller).then((response) {
             if (response.status == 200) {
+              mediaProvider.initPageInfo();
+              mediaProvider.requestGetMedias();
               uploadProgressProvider.uploadSuccess();
             } else {
+              Toast.showError(context, response.message);
               uploadProgressProvider.uploadFail();
             }
           });
         },
-        onVideoSelected: (XFile xFile) {
-          Toast.showSuccess(context, "비디오 업로드 진행해야함");
+        onVideoSelected: (XFile xFile) async {
+          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
+          GetIt.instance<PostUploadMediaVideoUseCase>().call(xFile.path, streamController: controller).then((response) {
+            if (response.status == 200) {
+              mediaProvider.initPageInfo();
+              mediaProvider.requestGetMedias();
+              uploadProgressProvider.uploadSuccess();
+            } else {
+              Toast.showError(context, response.message);
+              uploadProgressProvider.uploadFail();
+            }
+          });
         },
         notAvailableFile: () {
-          Toast.showSuccess(context, "업로드 불가능한 파일");
+          Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);
+        },
+        onError: (message) {
+          Toast.showError(context, message);
         },
       );
     }
@@ -110,21 +127,21 @@ class MediaScreen extends HookConsumerWidget {
           Expanded(
             child: Column(
               children: [
-                MediaUploadProgress(),
+                const MediaUploadProgress(),
                 Expanded(
                   child: Stack(
                     children: [
                       if (mediaState is Failure && mediaList.value == null)
                         FailView(onPressed: () => mediaProvider.requestGetMedias())
-                      else if (mediaList.value != null)
-                        _MediaContentList(
-                          items: mediaList.value!,
-                          onMediaUpload: () => goToUploadGallery(),
-                        )
+                      // else if (mediaList.value != null)
+                      //   _MediaContentList(
+                      //     items: mediaList.value!,
+                      //     onMediaUpload: () => doMediaUploadAction(),
+                      //   )
                       else if (mediaState is Success<List<ResponseMediaModel>>)
                         _MediaContentList(
                           items: mediaState.value,
-                          onMediaUpload: () => goToUploadGallery(),
+                          onMediaUpload: () => doMediaUploadAction(),
                         ),
                       if (mediaState is Loading) const LoadingView(),
                     ],

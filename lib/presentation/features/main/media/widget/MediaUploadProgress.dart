@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:lottie/lottie.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -15,6 +19,7 @@ class MediaUploadProgress extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaUploadState = ref.watch(mediaUploadProgressProvider);
+    final mediaUploadProvider = ref.read(mediaUploadProgressProvider.notifier);
 
     return mediaUploadState.isUploading != UploadState.IDLE
         ? Padding(
@@ -25,12 +30,31 @@ class MediaUploadProgress extends HookConsumerWidget {
                   children: [
                     ClipRRect(
                       borderRadius: BorderRadius.circular(4),
-                      child: Image.file(
-                        mediaUploadState.currentFile!,
-                        width: 32,
-                        height: 32,
-                        fit: BoxFit.cover,
-                      ),
+                      child: mediaUploadProvider.thumbnailFile != null
+                          ? Image.file(
+                              mediaUploadState.thumbnailFile!,
+                              width: 32,
+                              height: 32,
+                              fit: BoxFit.cover,
+                            )
+                          : Container(
+                              width: 32,
+                              height: 32,
+                              color: getColorScheme(context).colorGray100,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: SvgPicture.asset(
+                                  "assets/imgs/image_logo_text.svg",
+                                  width: 20,
+                                  height: 10,
+                                  colorFilter: ColorFilter.mode(
+                                    getColorScheme(context).colorGray400,
+                                    BlendMode.srcIn,
+                                  ),
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                            ),
                     ),
                     Expanded(
                       child: Padding(
@@ -75,7 +99,8 @@ class MediaUploadProgress extends HookConsumerWidget {
                       ),
                     ),
                     if (mediaUploadState.isUploading == UploadState.SUCCESS) const _SuffixSuccess(),
-                    if (mediaUploadState.isUploading == UploadState.FAIL) const _SuffixFail()
+                    if (mediaUploadState.isUploading == UploadState.FAIL) const _SuffixFail(),
+                    if (mediaUploadState.isUploading == UploadState.UPLOADING) const _SuffixLoading()
                   ],
                 ),
                 Container(
@@ -104,11 +129,13 @@ class MediaUploadProgress extends HookConsumerWidget {
   }
 }
 
-class _SuffixSuccess extends StatelessWidget {
+class _SuffixSuccess extends HookConsumerWidget {
   const _SuffixSuccess({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaUploadProvider = ref.read(mediaUploadProgressProvider.notifier);
+
     return Row(
       children: [
         SvgPicture.asset(
@@ -121,7 +148,7 @@ class _SuffixSuccess extends StatelessWidget {
           ),
         ),
         Clickable(
-          onPressed: () {},
+          onPressed: () => mediaUploadProvider.uploadIdle(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(
@@ -140,11 +167,13 @@ class _SuffixSuccess extends StatelessWidget {
   }
 }
 
-class _SuffixFail extends StatelessWidget {
+class _SuffixFail extends HookConsumerWidget {
   const _SuffixFail({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaUploadProvider = ref.read(mediaUploadProgressProvider.notifier);
+
     return Row(
       children: [
         SvgPicture.asset(
@@ -157,7 +186,7 @@ class _SuffixFail extends StatelessWidget {
           ),
         ),
         Clickable(
-          onPressed: () {},
+          onPressed: () => mediaUploadProvider.uploadIdle(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(
@@ -169,6 +198,27 @@ class _SuffixFail extends StatelessWidget {
                 BlendMode.srcIn,
               ),
             ),
+          ),
+        )
+      ],
+    );
+  }
+}
+
+class _SuffixLoading extends HookWidget {
+  const _SuffixLoading({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Lottie.asset(
+            'assets/motions/loading.json',
+            width: 24,
+            height: 24,
+            fit: BoxFit.fill,
           ),
         )
       ],

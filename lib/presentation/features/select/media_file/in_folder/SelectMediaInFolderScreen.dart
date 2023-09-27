@@ -92,8 +92,12 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
             ),
           );
         },
-        onDeleteClick: () {
-          mediaProvider.removeItem(checkListState, folderId: item!.mediaId);
+        onDeleteClick: () async{
+          final isSuccess = await mediaProvider.removeItem(checkListState, folderId: item!.mediaId);
+          if (isSuccess) {
+            mediaProvider.initPageInfo();
+            mediaProvider.requestGetMedias();
+          }
           Navigator.of(context).pop();
           Navigator.of(context).pop();
         },

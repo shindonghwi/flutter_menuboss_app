@@ -1,5 +1,9 @@
 import 'package:flutter/cupertino.dart';
+import 'package:get_it/get_it.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
+
+import 'Common.dart';
 
 class FilePickerUtil {
   static final _picker = ImagePicker();
@@ -12,24 +16,31 @@ class FilePickerUtil {
     required Function(XFile)? onImageSelected,
     required Function(XFile)? onVideoSelected,
     required Function()? notAvailableFile,
+    required Function(String message) onError,
   }) async {
     try {
-      XFile? xFile = await _picker.pickImage(source: ImageSource.gallery);
+      var status = await Permission.photos.request();
+      if (status.isGranted) {
+        XFile? xFile = await _picker.pickMedia();
 
-      final String? extension = xFile?.path.split('.').last;
+        final String? extension = xFile?.path.split('.').last;
 
-      if (xFile != null) {
-        if (allowedExtensionsImage.contains(extension?.toLowerCase())) {
-          if (onImageSelected != null) onImageSelected(xFile);
-          return;
-        } else if (allowedExtensionsVideo.contains(extension?.toLowerCase())) {
-          if (onVideoSelected != null) onVideoSelected(xFile);
-          return;
+        if (xFile != null) {
+          if (allowedExtensionsImage.contains(extension?.toLowerCase())) {
+            if (onImageSelected != null) onImageSelected(xFile);
+            return;
+          } else if (allowedExtensionsVideo.contains(extension?.toLowerCase())) {
+            if (onVideoSelected != null) onVideoSelected(xFile);
+            return;
+          }
         }
+        if (notAvailableFile != null && xFile != null) notAvailableFile();
+      } else if (status.isPermanentlyDenied) {
+        onError.call(GetIt.instance<AppLocalization>().get().message_permission_error_photos);
+        openAppSettings();
+        return;
       }
-      if (notAvailableFile != null && xFile != null) notAvailableFile();
     } catch (e) {
-      // Handle the exception, log it, or provide an error message as needed.
       debugPrint('Error in pickFile: $e');
       if (notAvailableFile != null) notAvailableFile();
     }
