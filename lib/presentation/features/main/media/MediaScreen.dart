@@ -66,9 +66,9 @@ class MediaScreen extends HookConsumerWidget {
           final controller = uploadProgressProvider.uploadStart(xFile.path);
           GetIt.instance<PostUploadMediaImageUseCase>().call(xFile.path, streamController: controller).then((response) {
             if (response.status == 200) {
-              // ref.read(mediaListProvider.notifier).uploadMedia();
+              uploadProgressProvider.uploadSuccess();
             } else {
-              Toast.showError(context, "이미지 업로드 에러 : ${response.message}");
+              uploadProgressProvider.uploadFail();
             }
           });
         },

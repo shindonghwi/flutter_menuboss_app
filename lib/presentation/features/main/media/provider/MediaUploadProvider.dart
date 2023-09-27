@@ -43,6 +43,7 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   }
 
   StreamController<double> uploadStart(String filePath) {
+    uploadProgress = 0.0;
     currentFile = File(filePath);
 
     uploadProgressController = StreamController<double>.broadcast();
@@ -57,13 +58,14 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   void uploadFail() {
     isUploading = UploadState.FAIL;
     _timer?.cancel();
+    uploadProgress = 1.0;
     notifyListeners();
   }
 
   void uploadSuccess() {
     isUploading = UploadState.SUCCESS;
     _timer?.cancel();
-    uploadProgress = 0.0;
+    uploadProgress = 1.0;
     notifyListeners();
   }
 
