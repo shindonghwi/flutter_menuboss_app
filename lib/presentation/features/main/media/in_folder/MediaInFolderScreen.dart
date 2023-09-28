@@ -53,37 +53,34 @@ class MediaInFolderScreen extends HookConsumerWidget {
     }
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        await mediaProvider.init();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
         requestMedias();
       });
-      return null;
-    }, []);
-
-    void handleUiStateChange() {
-      mediaState.when(
-        success: (event) {
-          mediaList.value = event.value;
-
-          final count = mediaList.value?.length ?? 0;
-          final size = mediaList.value?.map((e) => e.property?.size ?? 0).reduce(
-                (value, element) => value + element,
-              );
-
-          debugPrint("count: $count, size: $size");
-
-          rootMediaProvider.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
-        },
-        failure: (event) => Toast.showError(context, event.errorMessage),
-      );
-    }
+      return () {
+        mediaProvider.init();
+      };
+    }, []);  // 의존성 배열을 빈 배열로 설정하여 이 useEffect가 한 번만 실행되도록 합니다.
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        handleUiStateChange();
+      // mediaState가 변경될 때마다 실행될 로직
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        mediaState.when(
+          success: (event) {
+            mediaList.value = event.value;
+            final count = mediaList.value?.length ?? 0;
+            final size = mediaList.value?.map((e) => e.property?.size ?? 0).reduce(
+                  (value, element) => value + element,
+            );
+            debugPrint("count: $count, size: $size");
+            rootMediaProvider.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
+          },
+          failure: (event) => Toast.showError(context, event.errorMessage),
+        );
       });
       return null;
     }, [mediaState]);
+
+    debugPrint("MediaInFolderScreen build ${mediaState}");
 
     void doMediaUploadAction() {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
