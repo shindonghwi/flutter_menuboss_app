@@ -3,13 +3,15 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
+import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
 import 'MediaItemAdd.dart';
 
 class MediaTab extends HookConsumerWidget {
-  final VoidCallback onFolderTap;
+  final Function(String) onFolderTap;
 
   const MediaTab({
     super.key,
@@ -22,6 +24,14 @@ class MediaTab extends HookConsumerWidget {
 
     final mediaContents = useState<List<SimpleMediaContentModel>?>(null);
     final mediaContentsState = ref.watch(MediaContentsProvider);
+    final mediaContentsProvider = ref.read(MediaContentsProvider.notifier);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        mediaContentsProvider.requestGetMedias(); // 미디어 목록 호출
+      });
+      return null;
+    },[]);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -41,22 +51,36 @@ class MediaTab extends HookConsumerWidget {
 
     return Stack(
       children: [
-        mediaContents.value == null
-            ? mediaContentsState is Success<List<SimpleMediaContentModel>>
-                ? _SimpleMediaList(items: mediaContentsState.value)
-                : const SizedBox()
-            : _SimpleMediaList(items: mediaContents.value!)
+        if (mediaContentsState is Failure)
+          FailView(onPressed: () => mediaContentsProvider.requestGetMedias())
+        else if (mediaContents.value != null)
+          _SimpleMediaList(
+            items: mediaContents.value!,
+            onFolderTap: (folderId) {
+              onFolderTap.call(folderId);
+            },
+          )
+        else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
+          _SimpleMediaList(
+            items: mediaContentsState.value,
+            onFolderTap: (folderId) {
+              onFolderTap.call(folderId);
+            },
+          ),
+        if (mediaContentsState is Loading) const LoadingView(),
       ],
     );
   }
 }
 
 class _SimpleMediaList extends HookConsumerWidget {
+  final Function(String) onFolderTap;
   final List<SimpleMediaContentModel> items;
 
   const _SimpleMediaList({
     super.key,
     required this.items,
+    required this.onFolderTap,
   });
 
   @override
@@ -73,15 +97,14 @@ class _SimpleMediaList extends HookConsumerWidget {
       return null;
     }, []);
 
-    return SafeArea(
-      child: ListView.builder(
-        controller: scrollController,
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return MediaItemAdd(item: items[index], onFolderTap: () {});
-        },
-      ),
+    return ListView.builder(
+      controller: scrollController,
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        debugPrint("index: ${items[index].id} ${items[index].property}}");
+        return MediaItemAdd(item: items[index], onFolderTap: () => onFolderTap.call(items[index].id ?? ""));
+      },
     );
   }
 }

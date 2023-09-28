@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
@@ -6,12 +7,12 @@ import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final MediaContentsProvider = StateNotifierProvider<MediaContentsNotifier, UIState<List<SimpleMediaContentModel>>>(
-  (ref) => MediaContentsNotifier(),
+final MediaContentsInFolderProvider = StateNotifierProvider<MediaContentsInFolderNotifier, UIState<List<SimpleMediaContentModel>>>(
+  (ref) => MediaContentsInFolderNotifier(),
 );
 
-class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaContentModel>>> {
-  MediaContentsNotifier() : super(Idle());
+class MediaContentsInFolderNotifier extends StateNotifier<UIState<List<SimpleMediaContentModel>>> {
+  MediaContentsInFolderNotifier() : super(Idle());
 
   int _currentPage = 1;
   bool _hasNext = true;
@@ -21,7 +22,7 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
 
   /// 미디어 리스트 요청
-  Future<void> requestGetMedias() async {
+  Future<void> requestGetMedias(String folderId) async {
     if (_currentPage == 1) {
       state = Loading();
     }
@@ -30,11 +31,12 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
       if (_isProcessing) return;
       _isProcessing = true;
       _getMediasUseCase
-          .call(page: _currentPage, size: 50, sort: filterParams[FilterType.NewestFirst]!)
+          .call(page: _currentPage, size: 50, sort: filterParams[FilterType.NewestFirst]!, mediaId: folderId)
           .then((response) {
         try {
           if (response.status == 200) {
-            final responseItems = response.list?.toList() ?? [];
+            final responseItems = response.list?.where((e) => e.type?.code.toLowerCase() != "folder").toList() ?? [];
+
             List<SimpleMediaContentModel> updateItems = [];
             if (_currentPage == 1) {
               updateItems = responseItems.map((e) => e.toMapperMediaContentModel()).toList();
@@ -67,5 +69,9 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
     _currentPage = 1;
     _hasNext = true;
     _isProcessing = false;
+  }
+
+  void init() {
+    state = Idle();
   }
 }

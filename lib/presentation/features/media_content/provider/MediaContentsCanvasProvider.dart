@@ -18,7 +18,8 @@ class MediaContentsCanvasNotifier extends StateNotifier<UIState<List<SimpleMedia
   final GetCanvasesUseCase _getCanvasesUseCase = GetIt.instance<GetCanvasesUseCase>();
 
   /// 캔버스 리스트 요청
-  Future<void> requestGetCanvases({int? delayed}) async {
+  void requestGetCanvases({int? delayed}) {
+    state = Loading();
     _getCanvasesUseCase.call().then((response) {
       try {
         if (response.status == 200) {

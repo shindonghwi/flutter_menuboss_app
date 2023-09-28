@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/view_state/FailView.dart';
+import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCanvasProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
@@ -46,11 +48,17 @@ class MediaTabCanvas extends HookConsumerWidget {
 
     return Stack(
       children: [
-        mediaContents.value == null
-            ? mediaContentsState is Success<List<SimpleMediaContentModel>>
-                ? _SimpleMediaList(items: mediaContentsState.value)
-                : const SizedBox()
-            : _SimpleMediaList(items: mediaContents.value!)
+        if (mediaContentsState is Failure)
+          FailView(onPressed: () => mediaContentsProvider.requestGetCanvases())
+        else if (mediaContents.value != null)
+          _SimpleMediaList(
+            items: mediaContents.value!,
+          )
+        else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
+            _SimpleMediaList(
+              items: mediaContentsState.value,
+            ),
+        if (mediaContentsState is Loading) const LoadingView(),
       ],
     );
   }
@@ -66,14 +74,12 @@ class _SimpleMediaList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return SafeArea(
-      child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-        itemCount: items.length,
-        itemBuilder: (context, index) {
-          return MediaItemAdd(item: items[index], onFolderTap: () {});
-        },
-      ),
+    return ListView.builder(
+      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        return MediaItemAdd(item: items[index], onFolderTap: () {});
+      },
     );
   }
 }

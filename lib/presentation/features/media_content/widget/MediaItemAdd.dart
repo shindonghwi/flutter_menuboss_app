@@ -108,20 +108,29 @@ class MediaItemAdd extends HookConsumerWidget {
                 ],
               ),
             ),
-            isAdded.value
-                ? NeutralFilledButton.extraSmallRound100(
-                    content: getAppLocalizations(context).common_add,
-                    isActivated: true,
-                    onPressed: () {
-                      mediaCartProvider.removeItem(item);
-                    },
-                  )
-                : PrimaryFilledButton.extraSmallRound100(
-                    content: getAppLocalizations(context).common_add,
-                    isActivated: true,
-                    onPressed: () {
-                      mediaCartProvider.addItem(item);
-                    },
+            !isFolderType
+                ? isAdded.value
+                    ? NeutralFilledButton.extraSmallRound100(
+                        content: getAppLocalizations(context).common_add,
+                        isActivated: true,
+                        onPressed: () {
+                          mediaCartProvider.removeItem(item);
+                        },
+                      )
+                    : PrimaryFilledButton.extraSmallRound100(
+                        content: getAppLocalizations(context).common_add,
+                        isActivated: true,
+                        onPressed: () {
+                          mediaCartProvider.addItem(item);
+                        },
+                      )
+                : Container(
+                    margin: const EdgeInsets.only(right: 18),
+                    child: SvgPicture.asset(
+                      "assets/imgs/icon_arrow_right.svg",
+                      width: 24,
+                      height: 24,
+                    ),
                   )
           ],
         ),

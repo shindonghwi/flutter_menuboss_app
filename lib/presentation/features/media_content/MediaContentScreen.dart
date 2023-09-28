@@ -18,6 +18,7 @@ class MediaContentScreen extends HookWidget {
     final currentIndex = useState<int>(0);
     final isRootLevel = useState<bool>(true);
     final pageController = usePageController(initialPage: currentIndex.value);
+    final selectFolderId = useState<String?>(null);
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(content: getAppLocalizations(context).media_content_title),
@@ -58,7 +59,8 @@ class MediaContentScreen extends HookWidget {
                 },
                 children: [
                   MediaTab(
-                    onFolderTap: () {
+                    onFolderTap: (folderId) {
+                      selectFolderId.value = folderId;
                       currentIndex.value = 1;
                       pageController.animateToPage(
                         1,
@@ -68,6 +70,7 @@ class MediaContentScreen extends HookWidget {
                     },
                   ),
                   MediaTabFolder(
+                    folderId: selectFolderId.value ?? "",
                     pageController: pageController,
                     onPressed: () {
                       currentIndex.value = 0;

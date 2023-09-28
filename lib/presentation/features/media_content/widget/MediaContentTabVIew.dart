@@ -20,20 +20,10 @@ class MediaContentTabView extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final mediaContentsProvider = ref.read(MediaContentsProvider.notifier);
-
     final mediaTabTextColor = currentIndex <= 1 ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
     final mediaTabDividerColor = currentIndex <= 1 ? getColorScheme(context).colorGray900 : Colors.transparent;
     final canvasTabTextColor = currentIndex > 1 ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400;
     final canvasTabDividerColor = currentIndex > 1 ? getColorScheme(context).colorGray900 : Colors.transparent;
-
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        mediaContentsProvider.requestGetMedias(); // 미디어 목록 호출
-      });
-      return null;
-    },[]);
 
     return Row(
       children: [

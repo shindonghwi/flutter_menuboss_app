@@ -58,9 +58,14 @@ class ResponseMediaModel {
       name: name ?? "",
       type: type?.code ?? "",
       property: ResponseMediaProperty(
+        count: property?.count ?? 0,
+        width: property?.width ?? 0,
+        height: property?.height ?? 0,
         size: property?.size ?? 0,
         duration: property?.duration ?? 10,
+        rotation: property?.rotation ?? 0,
         imageUrl: property?.imageUrl ?? "",
+        videoUrl: property?.videoUrl ?? "",
       )
     );
     return model;
