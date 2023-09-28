@@ -76,6 +76,7 @@ class _SimpleMediaList extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     return ListView.builder(
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+      physics: const BouncingScrollPhysics(),
       itemCount: items.length,
       itemBuilder: (context, index) {
         return MediaItemAdd(item: items[index], onFolderTap: () {});

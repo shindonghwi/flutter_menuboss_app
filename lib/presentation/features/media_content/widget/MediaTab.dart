@@ -99,6 +99,7 @@ class _SimpleMediaList extends HookConsumerWidget {
 
     return ListView.builder(
       controller: scrollController,
+      physics: const BouncingScrollPhysics(),
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       itemCount: items.length,
       itemBuilder: (context, index) {

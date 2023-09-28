@@ -115,6 +115,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
           child: Stack(
             children: [
               NestedScrollView(
+                physics: const BouncingScrollPhysics(),
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverToBoxAdapter(
