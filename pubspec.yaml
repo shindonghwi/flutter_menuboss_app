@@ -25,7 +25,7 @@ dependencies:
   json_annotation: ^4.8.1
   firebase_auth: ^4.6.1
   flutter_launcher_icons: ^0.13.1
-  firebase_crashlytics: ^3.3.3
+  firebase_crashlytics: ^3.3.6
   firebase_analytics: ^10.4.3
   package_info_plus: ^4.0.2
   url_launcher: ^6.1.12

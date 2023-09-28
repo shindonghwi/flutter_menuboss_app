@@ -50,21 +50,19 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDwoRAQrDWb0x5BjxYAXd-lrybmifVDKbA',
-    appId: '1:845007593508:android:21c9e9daf65df1023bb8b1',
-    messagingSenderId: '845007593508',
-    projectId: 'orotcode-menuboss',
-    storageBucket: 'orotcode-menuboss.appspot.com',
+    apiKey: 'AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo',
+    appId: '1:1060430673784:android:181cc6ce54a9a67eb9ba8d',
+    messagingSenderId: '1060430673784',
+    projectId: 'menuboss-app-prod',
+    storageBucket: 'menuboss-app-prod.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBtJjJn6AkK241UrtM5aMUfP_8ctiRLLYc',
-    appId: '1:845007593508:ios:3a5889b396b604da3bb8b1',
-    messagingSenderId: '845007593508',
-    projectId: 'orotcode-menuboss',
-    storageBucket: 'orotcode-menuboss.appspot.com',
-    androidClientId: '845007593508-fdsp665ba4s33opll2g75fc9gfs21aob.apps.googleusercontent.com',
-    iosClientId: '845007593508-mpc74g4d1d5mf9hgeqd333tqqq05agku.apps.googleusercontent.com',
+    apiKey: 'AIzaSyC87AZARqM0hdv9Lb94a4WFThbpXeWhfwQ',
+    appId: '1:1060430673784:ios:a6379ecc51741a29b9ba8d',
+    messagingSenderId: '1060430673784',
+    projectId: 'menuboss-app-prod',
+    storageBucket: 'menuboss-app-prod.appspot.com',
     iosBundleId: 'com.orot.menuboss',
   );
 }

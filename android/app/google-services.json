@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1060430673784",
+    "project_id": "menuboss-app-prod",
+    "storage_bucket": "menuboss-app-prod.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060430673784:android:181cc6ce54a9a67eb9ba8d",
+        "android_client_info": {
+          "package_name": "com.orot.menuboss"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
