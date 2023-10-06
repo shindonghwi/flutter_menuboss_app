@@ -23,8 +23,8 @@ class SelectMediaFileScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaState = ref.watch(MediaListProvider);
-    final mediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaState = ref.watch(mediaListProvider);
+    final mediaManager = ref.read(mediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
     final checkListState = ref.watch(SelectMediaCheckListProvider);
     final checkListProvider = ref.read(SelectMediaCheckListProvider.notifier);
@@ -32,8 +32,8 @@ class SelectMediaFileScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         checkListProvider.init();
-        if (!CollectionUtil.isNullorEmpty(mediaProvider.currentItems)) {
-          mediaProvider.updateCurrentItems(mediaProvider.currentItems, isUiUpdate: true);
+        if (!CollectionUtil.isNullorEmpty(mediaManager.currentItems)) {
+          mediaManager.updateCurrentItems(mediaManager.currentItems, isUiUpdate: true);
         }
       });
       return null;
@@ -47,7 +47,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             if (mediaState is Failure && mediaList.value == null)
-              FailView(onPressed: () => mediaProvider.requestGetMedias())
+              FailView(onPressed: () => mediaManager.requestGetMedias())
             else if (mediaList.value != null)
               _MediaList(
                 items: mediaList.value!,
@@ -71,7 +71,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
           );
         },
         onDeleteClick: () {
-          mediaProvider.removeItem(checkListState);
+          mediaManager.removeItem(checkListState);
           Navigator.of(context).pop();
         },
       ),
@@ -90,13 +90,13 @@ class _MediaList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final checkListProvider = ref.read(SelectMediaCheckListProvider.notifier);
-    final mediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaManager = ref.read(mediaListProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
     useEffect(() {
       scrollController.addListener(() {
         if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
-          mediaProvider.requestGetMedias();
+          mediaManager.requestGetMedias();
         }
       });
       return null;

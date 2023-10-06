@@ -11,6 +11,7 @@ import 'package:menuboss/presentation/utils/dto/Triple.dart';
 import 'devices/DevicesScreen.dart';
 import 'devices/provider/DeviceListProvider.dart';
 import 'media/MediaScreen.dart';
+import 'media/provider/MediaListProvider.dart';
 import 'my/MyScreen.dart';
 import 'playlists/PlaylistsScreens.dart';
 import 'playlists/provider/PlaylistProvider.dart';
@@ -56,6 +57,7 @@ class MainScreen extends HookConsumerWidget {
               ref.read(deviceListProvider.notifier).requestGetDevices();
               break;
             case 3:
+              ref.read(mediaListProvider.notifier).requestGetMedias();
               break;
             case 4:
               break;

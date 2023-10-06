@@ -29,7 +29,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaListProvider = ref.read(MediaListProvider.notifier);
+    final mediaListManager = ref.read(mediaListProvider.notifier);
     final fileMoveState = ref.watch(FileMoveProvider);
     final fileMoveProvider = ref.read(FileMoveProvider.notifier);
     final destinationFolderState = ref.watch(DestinationFolderListProvider);
@@ -47,8 +47,8 @@ class DestinationFolderScreen extends HookConsumerWidget {
       void handleUiStateChange() {
         fileMoveState.when(
           success: (event) async {
-            mediaListProvider.initPageInfo();
-            mediaListProvider.requestGetMedias();
+            mediaListManager.initPageInfo();
+            mediaListManager.requestGetMedias();
             Navigator.of(context).pop();
           },
           failure: (event) => Toast.showError(context, event.errorMessage),
@@ -130,8 +130,8 @@ class DestinationFolderScreen extends HookConsumerWidget {
         onNewFolderClick: () async {
           ResponseMediaModel? newFolder = await destinationFolderProvider.createFolder();
           if (newFolder != null) {
-            mediaListProvider.updateCurrentItems(
-              [newFolder, ...mediaListProvider.currentItems],
+            mediaListManager.updateCurrentItems(
+              [newFolder, ...mediaListManager.currentItems],
               isUiUpdate: true,
             );
           }

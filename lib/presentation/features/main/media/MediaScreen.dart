@@ -32,16 +32,9 @@ class MediaScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaState = ref.watch(MediaListProvider);
-    final mediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaState = ref.watch(mediaListProvider);
+    final mediaManager = ref.read(mediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
-
-    // useEffect(() {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     mediaProvider.requestGetMedias();
-    //   });
-    //   return null;
-    // }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
@@ -67,8 +60,8 @@ class MediaScreen extends HookConsumerWidget {
           final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
           GetIt.instance<PostUploadMediaImageUseCase>().call(xFile.path, streamController: controller).then((response) {
             if (response.status == 200) {
-              mediaProvider.initPageInfo();
-              mediaProvider.requestGetMedias();
+              mediaManager.initPageInfo();
+              mediaManager.requestGetMedias();
               uploadProgressProvider.uploadSuccess();
             } else {
               Toast.showError(context, response.message);
@@ -80,8 +73,8 @@ class MediaScreen extends HookConsumerWidget {
           final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
           GetIt.instance<PostUploadMediaVideoUseCase>().call(xFile.path, streamController: controller).then((response) {
             if (response.status == 200) {
-              mediaProvider.initPageInfo();
-              mediaProvider.requestGetMedias();
+              mediaManager.initPageInfo();
+              mediaManager.requestGetMedias();
               uploadProgressProvider.uploadSuccess();
             } else {
               Toast.showError(context, response.message);
@@ -108,7 +101,7 @@ class MediaScreen extends HookConsumerWidget {
               Pair(
                 "assets/imgs/icon_new_folder.svg",
                 () {
-                  mediaProvider.createFolder();
+                  mediaManager.createFolder();
                 },
               ),
               Pair(
@@ -132,7 +125,7 @@ class MediaScreen extends HookConsumerWidget {
                   child: Stack(
                     children: [
                       if (mediaState is Failure && mediaList.value == null)
-                        FailView(onPressed: () => mediaProvider.requestGetMedias())
+                        FailView(onPressed: () => mediaManager.requestGetMedias())
                       else if (mediaList.value != null)
                         _MediaContentList(
                           items: mediaList.value!,
@@ -168,13 +161,13 @@ class _MediaContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaManager = ref.read(mediaListProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
     useEffect(() {
       scrollController.addListener(() {
         if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
-          mediaProvider.requestGetMedias();
+          mediaManager.requestGetMedias();
         }
       });
       return null;
@@ -189,7 +182,7 @@ class _MediaContentList extends HookConsumerWidget {
                     alignment: Alignment.centerLeft,
                     child: FilterButton(
                       onSelected: (type, text) {
-                        mediaProvider.changeFilterType(type);
+                        mediaManager.changeFilterType(type);
                       },
                     ),
                   ),
@@ -224,7 +217,7 @@ class _MediaContentList extends HookConsumerWidget {
                                 );
 
                                 if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                                  mediaProvider.renameItem(item.mediaId ?? "", newName);
+                                  mediaManager.renameItem(item.mediaId ?? "", newName);
                                 }
                               } catch (e) {
                                 debugPrint(e.toString());
@@ -234,10 +227,10 @@ class _MediaContentList extends HookConsumerWidget {
                           child: MediaItem(
                             item: item,
                             onRemove: () {
-                              mediaProvider.removeItem([item.mediaId]);
+                              mediaManager.removeItem([item.mediaId]);
                             },
                             onRename: (newName) {
-                              mediaProvider.renameItem(item.mediaId, newName);
+                              mediaManager.renameItem(item.mediaId, newName);
                             },
                           ),
                         );

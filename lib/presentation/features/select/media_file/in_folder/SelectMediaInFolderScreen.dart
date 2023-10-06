@@ -32,7 +32,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final selectMediaState = ref.watch(SelectMediaInFolderListProvider);
     final selectMediaListProvider = ref.read(SelectMediaInFolderListProvider.notifier);
-    final mediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaProvider = ref.read(mediaListProvider.notifier);
     final checkListState = ref.watch(SelectMediaCheckListProvider);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
     //

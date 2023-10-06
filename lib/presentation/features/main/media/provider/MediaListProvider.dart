@@ -14,7 +14,7 @@ import 'package:menuboss/domain/usecases/remote/media/PostCreateMediaFolderUseCa
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final MediaListProvider = StateNotifierProvider<MediaListNotifier, UIState<List<ResponseMediaModel>>>(
+final mediaListProvider = StateNotifierProvider<MediaListNotifier, UIState<List<ResponseMediaModel>>>(
   (ref) => MediaListNotifier(),
 );
 

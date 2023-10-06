@@ -42,14 +42,14 @@ class MediaInFolderScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaState = ref.watch(MediaInFolderListProvider);
-    final mediaProvider = ref.read(MediaInFolderListProvider.notifier);
-    final rootMediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaManager = ref.read(MediaInFolderListProvider.notifier);
+    final rootMediaManager = ref.read(mediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
     final folderName = useState(item?.name ?? "");
 
     void requestMedias() {
-      mediaProvider.initPageInfo();
-      mediaProvider.requestGetMedias(mediaId: item!.mediaId);
+      mediaManager.initPageInfo();
+      mediaManager.requestGetMedias(mediaId: item!.mediaId);
     }
 
     useEffect(() {
@@ -57,7 +57,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
         requestMedias();
       });
       return () {
-        mediaProvider.init();
+        mediaManager.init();
       };
     }, []);  // 의존성 배열을 빈 배열로 설정하여 이 useEffect가 한 번만 실행되도록 합니다.
 
@@ -72,7 +72,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
                   (value, element) => value + element,
             );
             debugPrint("count: $count, size: $size");
-            rootMediaProvider.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
+            rootMediaManager.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
           },
           failure: (event) => Toast.showError(context, event.errorMessage),
         );
@@ -143,7 +143,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
                 hint: getAppLocalizations(context).popup_rename_media_hint,
                 onClicked: (name) {
                   folderName.value = name;
-                  rootMediaProvider.renameItem(item?.mediaId ?? "", name);
+                  rootMediaManager.renameItem(item?.mediaId ?? "", name);
                 },
               ),
             );
@@ -152,7 +152,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
             CommonPopup.showPopup(
               context,
               child: PopupDelete(onClicked: () async {
-                final isRemoved = await rootMediaProvider.removeItem([item?.mediaId ?? ""]);
+                final isRemoved = await rootMediaManager.removeItem([item?.mediaId ?? ""]);
                 if (isRemoved) {
                   Navigator.of(context).pop();
                 }
@@ -168,7 +168,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
             child: Stack(
               children: [
                 if (mediaState is Failure && mediaList.value == null)
-                  FailView(onPressed: () => mediaProvider.requestGetMedias(mediaId: item!.mediaId))
+                  FailView(onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId))
                 else if (mediaList.value != null)
                   _MediaContentList(
                     folderId: item!.mediaId,
@@ -205,8 +205,8 @@ class _MediaContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaProvider = ref.read(MediaInFolderListProvider.notifier);
-    final rootMediaProvider = ref.read(MediaListProvider.notifier);
+    final mediaManager = ref.read(MediaInFolderListProvider.notifier);
+    final rootMediaManager = ref.read(mediaListProvider.notifier);
 
     return items.isNotEmpty
         ? Stack(
@@ -230,7 +230,7 @@ class _MediaContentList extends HookConsumerWidget {
                         );
 
                         if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                          mediaProvider.renameItem(item.mediaId, newName);
+                          mediaManager.renameItem(item.mediaId, newName);
                         }
                       } catch (e) {
                         debugPrint(e.toString());
@@ -239,9 +239,9 @@ class _MediaContentList extends HookConsumerWidget {
                     child: MediaItem(
                       item: item,
                       onRemove: () async {
-                        final isRemoved = await mediaProvider.removeItem([item.mediaId]);
+                        final isRemoved = await mediaManager.removeItem([item.mediaId]);
                         if (isRemoved) {
-                          rootMediaProvider.updateFolderCountAndSize(
+                          rootMediaManager.updateFolderCountAndSize(
                             folderId,
                             item.property?.size ?? 0,
                             isIncrement: false,
@@ -250,7 +250,7 @@ class _MediaContentList extends HookConsumerWidget {
                         }
                       },
                       onRename: (newName) {
-                        mediaProvider.renameItem(item.mediaId, newName);
+                        mediaManager.renameItem(item.mediaId, newName);
                       },
                     ),
                   );
