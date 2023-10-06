@@ -1,22 +1,22 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
-part 'ResponseSchedulePropertyInfo.g.dart';
+part 'ResponseSchedulesPropertyInfo.g.dart';
 
 @JsonSerializable()
-class ResponseSchedulePropertyInfo {
+class ResponseSchedulesPropertyInfo {
   final String code;
   final String name;
 
-  ResponseSchedulePropertyInfo({
+  ResponseSchedulesPropertyInfo({
     required this.code,
     required this.name,
   });
 
-  factory ResponseSchedulePropertyInfo.fromJson(Map<String, dynamic> json) =>
-      _$ResponseSchedulePropertyInfoFromJson(json);
+  factory ResponseSchedulesPropertyInfo.fromJson(Map<String, dynamic> json) =>
+      _$ResponseSchedulesPropertyInfoFromJson(json);
 
-  Map<String, dynamic> toJson() => _$ResponseSchedulePropertyInfoToJson(this);
+  Map<String, dynamic> toJson() => _$ResponseSchedulesPropertyInfoToJson(this);
 
   @override
   String toString() {

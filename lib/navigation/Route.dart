@@ -4,6 +4,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
@@ -103,7 +104,7 @@ enum RoutingScreen {
     } else if (route == RoutingScreen.PreviewPlaylist.route) {
       return const PreviewPlaylistScreen();
     } else if (route == RoutingScreen.DetailSchedule.route) {
-      ResponseScheduleModel model = parameter;
+      ResponseSchedulesModel model = parameter;
       return DetailScheduleScreen(item: model);
     } else if (route == RoutingScreen.CreateSchedule.route) {
       ResponseScheduleModel? model = parameter;

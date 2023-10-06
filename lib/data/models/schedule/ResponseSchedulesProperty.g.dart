@@ -1,32 +1,32 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'ResponseScheduleProperty.dart';
+part of 'ResponseSchedulesProperty.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-ResponseScheduleProperty _$ResponseSchedulePropertyFromJson(
+ResponseSchedulesProperty _$ResponseSchedulesPropertyFromJson(
         Map<String, dynamic> json) =>
-    ResponseScheduleProperty(
+    ResponseSchedulesProperty(
       count: json['count'] as int?,
       imageUrl: json['imageUrl'] as String?,
       contentTypes: (json['contentTypes'] as List<dynamic>?)
           ?.map((e) =>
-              ResponseSchedulePropertyInfo.fromJson(e as Map<String, dynamic>))
+              ResponseSchedulesPropertyInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
       direction: json['direction'] == null
           ? null
-          : ResponseSchedulePropertyInfo.fromJson(
+          : ResponseSchedulesPropertyInfo.fromJson(
               json['direction'] as Map<String, dynamic>),
       fill: json['fill'] == null
           ? null
-          : ResponseSchedulePropertyInfo.fromJson(
+          : ResponseSchedulesPropertyInfo.fromJson(
               json['fill'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$ResponseSchedulePropertyToJson(
-        ResponseScheduleProperty instance) =>
+Map<String, dynamic> _$ResponseSchedulesPropertyToJson(
+        ResponseSchedulesProperty instance) =>
     <String, dynamic>{
       'count': instance.count,
       'imageUrl': instance.imageUrl,

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
-import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -15,7 +15,7 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 
 class ScheduleItem extends HookWidget {
-  final ResponseScheduleModel item;
+  final ResponseSchedulesModel item;
 
   const ScheduleItem({
     super.key,

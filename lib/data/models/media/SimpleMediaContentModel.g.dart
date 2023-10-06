@@ -9,6 +9,7 @@ part of 'SimpleMediaContentModel.dart';
 SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
         Map<String, dynamic> json) =>
     SimpleMediaContentModel(
+      index: json['index'] as int?,
       object: json['object'] as String?,
       id: json['id'] as String?,
       name: json['name'] as String?,
@@ -22,6 +23,7 @@ SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
 Map<String, dynamic> _$SimpleMediaContentModelToJson(
         SimpleMediaContentModel instance) =>
     <String, dynamic>{
+      'index': instance.index,
       'object': instance.object,
       'id': instance.id,
       'name': instance.name,

@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/domain/usecases/remote/schedule/DelScheduleUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final DelScheduleProvider = StateNotifierProvider<DelScheduleNotifier, UIState<String?>>(
+final delScheduleProvider = StateNotifierProvider<DelScheduleNotifier, UIState<String?>>(
   (ref) => DelScheduleNotifier(),
 );
 

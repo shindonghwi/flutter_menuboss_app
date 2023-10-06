@@ -1,8 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
-import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 

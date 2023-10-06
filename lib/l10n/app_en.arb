@@ -142,6 +142,9 @@
     "message_register_playlist_success": "Playlist registered successfully",
     "message_update_playlist_success": "Playlist information has been changed",
     "message_add_media_in_playlist_success": "Successfully Add Media to Playlist",
+    "message_remove_schedule_success": "Schedule deleted successfully",
+    "message_register_schedule_success": "Schedule registered successfully",
+    "message_update_schedule_success": "Schedule information has been changed",
 
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",

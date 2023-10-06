@@ -14,7 +14,6 @@ class SimpleMediaContentModel {
   final String? name;
   final String? type;
   final ResponseMediaProperty? property;
-  final UniqueKey? uniqueKey;
 
   SimpleMediaContentModel({
     this.index,
@@ -23,7 +22,6 @@ class SimpleMediaContentModel {
     this.name,
     this.type,
     this.property,
-    this.uniqueKey,
   });
 
   factory SimpleMediaContentModel.fromJson(Map<String, dynamic> json) => _$SimpleMediaContentModelFromJson(json);
@@ -37,7 +35,6 @@ class SimpleMediaContentModel {
     String? name,
     String? type,
     ResponseMediaProperty? property,
-    UniqueKey? uniqueKey,
   }) {
     return SimpleMediaContentModel(
       index: index ?? this.index,
@@ -46,7 +43,6 @@ class SimpleMediaContentModel {
       name: name ?? this.name,
       type: type ?? this.type,
       property: property ?? this.property,
-      uniqueKey: uniqueKey ?? this.uniqueKey,
     );
   }
 
@@ -62,8 +58,7 @@ class SimpleMediaContentModel {
         other.id == id &&
         other.name == name &&
         other.type == type &&
-        other.property == property &&
-        other.uniqueKey == uniqueKey;
+        other.property == property;
   }
 
   @override

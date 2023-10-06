@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -11,11 +11,13 @@ import 'package:menuboss/presentation/features/create/schedule/provider/Schedule
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleUpdateProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/widget/ScheduleContentItem.dart';
+import 'package:menuboss/presentation/features/main/schedules/provider/SchedulesProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../../data/models/schedule/ResponseScheduleModel.dart';
 import '../../../components/view_state/LoadingView.dart';
 import 'provider/ScheduleTimelineInfoProvider.dart';
 import 'widget/ScheduleInputName.dart';
@@ -31,6 +33,8 @@ class CreateScheduleScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = useState(item != null);
+
+    final schedulesManager = ref.read(schedulesProvider.notifier);
 
     final scheduleUpdateState = ref.watch(scheduleUpdateProvider);
     final scheduleUpdateManager = ref.read(scheduleUpdateProvider.notifier);
@@ -74,13 +78,18 @@ class CreateScheduleScreen extends HookConsumerWidget {
         await Future(() {
           scheduleRegisterState.when(
             success: (event) {
-              Navigator.of(context).pop(true);
+              Toast.showSuccess(context, getAppLocalizations(context).message_register_schedule_success);
+              schedulesManager.requestGetSchedules();
+              Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
           scheduleUpdateState.when(
             success: (event) {
-              Navigator.of(context).pop(true);
+              Toast.showSuccess(context, getAppLocalizations(context).message_update_schedule_success);
+              schedulesManager.requestGetSchedules();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );

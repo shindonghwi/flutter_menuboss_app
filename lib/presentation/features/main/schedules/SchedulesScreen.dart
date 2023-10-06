@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
@@ -52,7 +52,7 @@ class SchedulesScreen extends HookConsumerWidget {
               children: [
                 if (schedulesState is Failure)
                   FailView(onPressed: () => schedulesManager.requestGetSchedules())
-                else if (schedulesState is Success<List<ResponseScheduleModel>>)
+                else if (schedulesState is Success<List<ResponseSchedulesModel>>)
                   _ScheduleContentList(items: schedulesState.value),
                 if (schedulesState is Loading) const LoadingView(),
               ],
@@ -65,7 +65,7 @@ class SchedulesScreen extends HookConsumerWidget {
 }
 
 class _ScheduleContentList extends HookConsumerWidget {
-  final List<ResponseScheduleModel> items;
+  final List<ResponseSchedulesModel> items;
 
   const _ScheduleContentList({
     super.key,
@@ -74,43 +74,24 @@ class _ScheduleContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceManager = ref.read(deviceListProvider.notifier);
-    final scheduleProvider = ref.read(schedulesProvider.notifier);
 
-    void goToCreateSchedule() async {
-      try {
-        final isUpdated = await Navigator.push(
-          context,
-          nextSlideVerticalScreen(
-            RoutingScreen.CreateSchedule.route,
-          ),
-        );
-
-        if (isUpdated) {
-          scheduleProvider.requestGetSchedules();
-        }
-      } catch (e) {
-        debugPrint(e.toString());
-      }
+    void goToCreateSchedule() {
+      Navigator.push(
+        context,
+        nextSlideVerticalScreen(
+          RoutingScreen.CreateSchedule.route,
+        ),
+      );
     }
 
-    void goToDetailSchedule(ResponseScheduleModel item) async {
-      try {
-        final isUpdated = await Navigator.push(
-          context,
-          nextSlideHorizontalScreen(
-            RoutingScreen.DetailSchedule.route,
-            parameter: item,
-          ),
-        );
-
-        if (isUpdated) {
-          deviceManager.requestGetDevices();
-          scheduleProvider.requestGetSchedules();
-        }
-      } catch (e) {
-        debugPrint(e.toString());
-      }
+    void goToDetailSchedule(ResponseSchedulesModel item) {
+      Navigator.push(
+        context,
+        nextSlideHorizontalScreen(
+          RoutingScreen.DetailSchedule.route,
+          parameter: item,
+        ),
+      );
     }
 
     return items.isNotEmpty

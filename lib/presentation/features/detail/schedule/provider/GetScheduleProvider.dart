@@ -1,10 +1,11 @@
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/domain/usecases/remote/schedule/GetScheduleUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final GetScheduleProvider = StateNotifierProvider<GetScheduleNotifier, UIState<ResponseScheduleModel>>(
+import '../../../../../data/models/schedule/ResponseScheduleModel.dart';
+
+final getScheduleProvider = StateNotifierProvider<GetScheduleNotifier, UIState<ResponseScheduleModel>>(
   (ref) => GetScheduleNotifier(),
 );
 

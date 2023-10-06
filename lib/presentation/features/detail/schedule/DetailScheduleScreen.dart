@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
+import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
@@ -25,10 +26,12 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
+import '../../../../data/models/playlist/ResponsePlaylistsModel.dart';
 import '../../../components/view_state/LoadingView.dart';
+import '../../main/schedules/provider/SchedulesProvider.dart';
 
 class DetailScheduleScreen extends HookConsumerWidget {
-  final ResponseScheduleModel? item;
+  final ResponseSchedulesModel? item;
 
   const DetailScheduleScreen({
     super.key,
@@ -37,34 +40,38 @@ class DetailScheduleScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scheduleState = ref.watch(GetScheduleProvider);
-    final delScheduleState = ref.watch(DelScheduleProvider);
 
-    final scheduleProvider = ref.read(GetScheduleProvider.notifier);
-    final delScheduleProvider = ref.read(DelScheduleProvider.notifier);
-    final scheduleItem = useState<ResponseScheduleModel?>(null);
+    final schedulesManager = ref.read(schedulesProvider.notifier);
+
+    final scheduleState = ref.watch(getScheduleProvider);
+    final scheduleManager = ref.read(getScheduleProvider.notifier);
+
+    final delScheduleState = ref.watch(delScheduleProvider);
+    final delScheduleManager = ref.read(delScheduleProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        scheduleProvider.init();
-        delScheduleProvider.init();
-        if (item?.scheduleId == null) return;
-        scheduleProvider.requestScheduleInfo(item?.scheduleId ?? -1);
+        scheduleManager.requestScheduleInfo(item?.scheduleId ?? -1);
       });
-      return null;
+      return () {
+        Future(() {
+          scheduleManager.init();
+          delScheduleManager.init();
+        });
+      };
     }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           scheduleState.when(
-            success: (event) => scheduleItem.value = event.value,
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
           delScheduleState.when(
             success: (event) {
-              delScheduleProvider.init();
-              Navigator.of(context).pop(true);
+              Toast.showSuccess(context, getAppLocalizations(context).message_remove_schedule_success);
+              schedulesManager.requestGetSchedules();
+              Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
@@ -80,20 +87,15 @@ class DetailScheduleScreen extends HookConsumerWidget {
         leadingIsShow: true,
         content: item?.name ?? "",
         suffixIcons: [
-          Pair("assets/imgs/icon_edit.svg", () async {
-            try {
-              final isUpdated = await Navigator.push(
+          Pair("assets/imgs/icon_edit.svg", () {
+            if (scheduleState is Success<ResponseScheduleModel>) {
+              Navigator.push(
                 context,
                 nextSlideHorizontalScreen(
                   RoutingScreen.CreateSchedule.route,
-                  parameter: scheduleItem.value,
+                  parameter: scheduleState.value,
                 ),
               );
-              if (isUpdated) {
-                Navigator.of(context).pop(true);
-              }
-            } catch (e) {
-              debugPrint(e.toString());
             }
           }),
           Pair("assets/imgs/icon_trash.svg", () {
@@ -101,7 +103,7 @@ class DetailScheduleScreen extends HookConsumerWidget {
               context,
               child: PopupDelete(
                 onClicked: () {
-                  delScheduleProvider.removeSchedule(item?.scheduleId ?? -1);
+                  delScheduleManager.removeSchedule(item?.scheduleId ?? -1);
                 },
               ),
             );
@@ -111,9 +113,7 @@ class DetailScheduleScreen extends HookConsumerWidget {
       body: Stack(
         children: [
           if (scheduleState is Failure)
-            FailView(onPressed: () => scheduleProvider.requestScheduleInfo(item?.scheduleId ?? -1))
-          else if (scheduleItem.value?.playlists != null)
-            _ScheduleContent(items: scheduleItem.value?.playlists)
+            FailView(onPressed: () => scheduleManager.requestScheduleInfo(item?.scheduleId ?? -1))
           else if (scheduleState is Success<ResponseScheduleModel>)
             _ScheduleContent(items: scheduleState.value.playlists),
           if (scheduleState is Loading || delScheduleState is Loading) const LoadingView(),
@@ -124,7 +124,7 @@ class DetailScheduleScreen extends HookConsumerWidget {
 }
 
 class _ScheduleContent extends StatelessWidget {
-  final List<ResponsePlaylistModel>? items;
+  final List<ResponsePlaylistsModel>? items;
 
   const _ScheduleContent({
     super.key,

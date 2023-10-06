@@ -7,6 +7,7 @@ import '../../../models/base/ApiResponse.dart';
 import '../../../models/schedule/RequestScheduleUpdateInfoModel.dart';
 import '../../../models/schedule/ResponseScheduleCreate.dart';
 import '../../../models/schedule/ResponseScheduleModel.dart';
+import '../../../models/schedule/ResponseSchedulesModel.dart';
 
 class RemoteScheduleRepositoryImpl implements RemoteScheduleRepository {
   RemoteScheduleRepositoryImpl();
@@ -14,7 +15,7 @@ class RemoteScheduleRepositoryImpl implements RemoteScheduleRepository {
   final RemoteScheduleApi _remoteScheduleApi = GetIt.instance<RemoteScheduleApi>();
 
   @override
-  Future<ApiListResponse<List<ResponseScheduleModel>>> getSchedules() {
+  Future<ApiListResponse<List<ResponseSchedulesModel>>> getSchedules() {
     return _remoteScheduleApi.getSchedules();
   }
 

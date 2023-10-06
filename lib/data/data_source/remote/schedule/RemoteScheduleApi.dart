@@ -3,14 +3,12 @@ import 'dart:convert';
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
-import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
-import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleCreate.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-import '../../../models/playlist/ResponsePlaylistCreate.dart';
 import '../../../models/schedule/RequestScheduleUpdateInfoModel.dart';
 import '../../../models/schedule/ResponseScheduleModel.dart';
+import '../../../models/schedule/ResponseSchedulesModel.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
 
@@ -20,7 +18,7 @@ class RemoteScheduleApi {
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   /// 스케줄 리스트 목록 조회
-  Future<ApiListResponse<List<ResponseScheduleModel>>> getSchedules() async {
+  Future<ApiListResponse<List<ResponseSchedulesModel>>> getSchedules() async {
     final response = await Service.getApi(
       type: ServiceType.Schedule,
       endPoint: null,
@@ -38,8 +36,8 @@ class RemoteScheduleApi {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
         (json) {
-          return List<ResponseScheduleModel>.from(
-            json.map((item) => ResponseScheduleModel.fromJson(item as Map<String, dynamic>)),
+          return List<ResponseSchedulesModel>.from(
+            json.map((item) => ResponseSchedulesModel.fromJson(item as Map<String, dynamic>)),
           );
         },
       );
@@ -110,7 +108,7 @@ class RemoteScheduleApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) {},
+        (json) {},
       );
     }
   }
@@ -133,7 +131,7 @@ class RemoteScheduleApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) {},
+        (json) {},
       );
     }
   }

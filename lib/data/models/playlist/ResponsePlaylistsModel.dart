@@ -14,6 +14,7 @@ class ResponsePlaylistsModel {
   final String object;
   final int playlistId;
   final String name;
+  final ResponsePlaylistTime? time;
   final ResponsePlaylistsProperty? property;
   String updatedAt;
 
@@ -21,6 +22,7 @@ class ResponsePlaylistsModel {
     required this.object,
     required this.playlistId,
     required this.name,
+    required this.time,
     required this.property,
     required this.updatedAt,
   });
@@ -29,11 +31,27 @@ class ResponsePlaylistsModel {
 
   Map<String, dynamic> toJson() => _$ResponsePlaylistsModelToJson(this);
 
+  SimpleSchedulesModel toSimpleSchedulesModelMapper({
+    required bool isRequired,
+  }) {
+    return SimpleSchedulesModel(
+      isRequired: isRequired,
+      isAddButton: false,
+      imageUrl: property?.imageUrl ?? "",
+      playlistId: playlistId,
+      playListName: name,
+      start: time?.start,
+      end: time?.end,
+      timeIsDuplicate: false,
+    );
+  }
+
   ResponsePlaylistsModel toUpDatedAtSimpleMapper() {
     return ResponsePlaylistsModel(
       object: object,
       playlistId: playlistId,
       name: name,
+      time: time,
       property: property,
       updatedAt: _updatedAtMapper(updatedAt),
     );

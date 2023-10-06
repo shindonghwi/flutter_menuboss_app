@@ -2,7 +2,11 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import '../playlist/ResponsePlaylistModel.dart';
-import 'ResponseScheduleProperty.dart';
+import '../playlist/ResponsePlaylistProperty.dart';
+import '../playlist/ResponsePlaylistTime.dart';
+import '../playlist/ResponsePlaylistsModel.dart';
+import 'ResponseSchedulesProperty.dart';
+import 'SimpleSchedulesModel.dart';
 
 part 'ResponseScheduleModel.g.dart';
 
@@ -11,15 +15,13 @@ class ResponseScheduleModel {
   final String object;
   final int scheduleId;
   final String name;
-  final ResponseScheduleProperty? property;
-  final List<ResponsePlaylistModel>? playlists;
+  final List<ResponsePlaylistsModel>? playlists;
   String updatedAt;
 
   ResponseScheduleModel({
     required this.object,
     required this.scheduleId,
     required this.name,
-    required this.property,
     required this.playlists,
     required this.updatedAt,
   });
@@ -33,7 +35,6 @@ class ResponseScheduleModel {
       object: object,
       scheduleId: scheduleId,
       name: name,
-      property: property,
       playlists: playlists,
       updatedAt: _updatedAtMapper(updatedAt),
     );

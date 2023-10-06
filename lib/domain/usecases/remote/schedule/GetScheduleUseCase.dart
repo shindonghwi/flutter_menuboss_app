@@ -1,7 +1,8 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
-import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/domain/repositories/remote/schedule/RemoteScheduleRepository.dart';
+
+import '../../../../data/models/schedule/ResponseScheduleModel.dart';
 
 class GetScheduleUseCase {
   GetScheduleUseCase();
