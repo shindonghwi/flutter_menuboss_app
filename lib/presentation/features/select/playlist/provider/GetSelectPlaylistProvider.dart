@@ -6,7 +6,7 @@ import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistsUseCase.dar
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
-final GetSelectPlaylistProvider =
+final getSelectPlaylistProvider =
     StateNotifierProvider<GetSelectPlaylistProviderNotifier, UIState<List<ResponsePlaylistsModel>>>(
   (ref) => GetSelectPlaylistProviderNotifier(),
 );
@@ -23,8 +23,7 @@ class GetSelectPlaylistProviderNotifier extends StateNotifier<UIState<List<Respo
     _playListsUseCase.call().then((response) async {
       if (response.status == 200) {
         List<ResponsePlaylistsModel> filteredList = response.list
-                ?.where((e) => !addedPlaylistIds.contains(e.playlistId))
-                .map((e) => e.toUpDatedAtSimpleMapper())
+                ?.map((e) => e.toUpDatedAtSimpleMapper())
                 .toList() ??
             [];
         state = Success(filteredList);

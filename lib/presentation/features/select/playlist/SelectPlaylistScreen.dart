@@ -2,18 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
-import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
+import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -33,9 +32,9 @@ class SelectPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playlistItems = useState<List<ResponsePlaylistsModel>?>(null);
-    final playlistState = ref.watch(GetSelectPlaylistProvider);
-    final playlistProvider = ref.read(GetSelectPlaylistProvider.notifier);
+    final playlistManager = ref.read(playListProvider.notifier);
+    final playlistState = ref.watch(getSelectPlaylistProvider);
+    final playlistProvider = ref.read(getSelectPlaylistProvider.notifier);
     ValueNotifier<ResponsePlaylistsModel?> selectedPlaylist = useState(null);
 
     useEffect(() {
@@ -46,20 +45,6 @@ class SelectPlaylistScreen extends HookConsumerWidget {
       return null;
     }, []);
 
-    useEffect(() {
-      void handleUiStateChange() async {
-        await Future(() {
-          playlistState.when(
-            success: (event) => playlistItems.value = event.value,
-            failure: (event) => Toast.showError(context, event.errorMessage),
-          );
-        });
-      }
-
-      handleUiStateChange();
-      return null;
-    }, [playlistState]);
-
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
         content: getAppLocalizations(context).select_playlist_title,
@@ -68,9 +53,7 @@ class SelectPlaylistScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             if (playlistState is Failure)
-              FailView(onPressed: () => playlistProvider.requestPlaylists())
-            else if (playlistItems.value != null)
-              _PlaylistContent(items: playlistItems.value!, selectedPlaylist: selectedPlaylist)
+              FailView(onPressed: () => playlistManager.requestGetPlaylists())
             else if (playlistState is Success<List<ResponsePlaylistsModel>>)
               _PlaylistContent(items: playlistState.value, selectedPlaylist: selectedPlaylist),
             if (playlistState is Loading) const LoadingView(),
@@ -202,7 +185,6 @@ class _PlaylistContent extends HookWidget {
                     content: getAppLocalizations(context).common_done,
                     isActivated: selectedPlaylist.value != null,
                     onPressed: () {
-                      items.removeWhere((element) => selectedPlaylist.value?.playlistId == element.playlistId);
                       Navigator.of(context).pop(selectedPlaylist.value);
                     },
                   ),

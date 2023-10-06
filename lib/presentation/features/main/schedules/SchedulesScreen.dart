@@ -25,15 +25,11 @@ class SchedulesScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final schedulesState = ref.watch(schedulesProvider);
     final schedulesManager = ref.read(schedulesProvider.notifier);
-    // final scheduleList = useState<List<ResponseScheduleModel>?>(null);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           schedulesState.when(
-            // success: (event) {
-            //   scheduleList.value = event.value;
-            // },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -56,8 +52,6 @@ class SchedulesScreen extends HookConsumerWidget {
               children: [
                 if (schedulesState is Failure)
                   FailView(onPressed: () => schedulesManager.requestGetSchedules())
-                // else if (scheduleList.value != null)
-                //   _ScheduleContentList(items: scheduleList.value!)
                 else if (schedulesState is Success<List<ResponseScheduleModel>>)
                   _ScheduleContentList(items: schedulesState.value),
                 if (schedulesState is Loading) const LoadingView(),

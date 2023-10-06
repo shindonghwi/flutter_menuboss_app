@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -32,8 +33,8 @@ class ScheduleContentItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final timelineState = ref.watch(ScheduleTimelineInfoProvider);
-    final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
+    final timelineState = ref.watch(scheduleTimelineInfoProvider);
+    final timelineProvider = ref.read(scheduleTimelineInfoProvider.notifier);
     final saveProvider = ref.read(ScheduleSaveInfoProvider.notifier);
 
     useEffect(() {
@@ -53,7 +54,7 @@ class ScheduleContentItem extends HookConsumerWidget {
           ),
         );
 
-        if (playlistInfo is ResponsePlaylistModel) {
+        if (playlistInfo is ResponsePlaylistsModel) {
           final updatedItem = data.copyWith(
             playlistId: playlistInfo.playlistId,
             playListName: playlistInfo.name,

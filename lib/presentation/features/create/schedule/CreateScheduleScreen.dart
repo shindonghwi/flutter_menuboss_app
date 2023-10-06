@@ -5,7 +5,6 @@ import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleRegisterProvider.dart';
@@ -17,6 +16,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../components/view_state/LoadingView.dart';
 import 'provider/ScheduleTimelineInfoProvider.dart';
 import 'widget/ScheduleInputName.dart';
 
@@ -32,31 +32,30 @@ class CreateScheduleScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = useState(item != null);
 
-    final scheduleRegisterState = ref.watch(ScheduleRegisterProvider);
-    final scheduleUpdateState = ref.watch(ScheduleUpdateProvider);
-    final scheduleRegisterProvider = ref.read(ScheduleRegisterProvider.notifier);
-    final scheduleUpdateProvider = ref.read(ScheduleUpdateProvider.notifier);
-    final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
-    final saveProvider = ref.read(ScheduleSaveInfoProvider.notifier);
+    final scheduleUpdateState = ref.watch(scheduleUpdateProvider);
+    final scheduleUpdateManager = ref.read(scheduleUpdateProvider.notifier);
 
-    void initState() {
-      timelineProvider.init();
-      saveProvider.init();
-      scheduleRegisterProvider.init();
-      scheduleUpdateProvider.init();
-    }
+    final scheduleRegisterState = ref.watch(scheduleRegisterProvider);
+    final scheduleRegisterManager = ref.read(scheduleRegisterProvider.notifier);
+
+    final timelineManager = ref.read(scheduleTimelineInfoProvider.notifier);
+    final saveManager = ref.read(ScheduleSaveInfoProvider.notifier);
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        initState();
-      });
-      return null;
+      return () {
+        Future(() {
+          timelineManager.init();
+          saveManager.init();
+          scheduleRegisterManager.init();
+          scheduleUpdateManager.init();
+        });
+      };
     }, []);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (isEditMode.value) {
-          saveProvider.changeName(item?.name ?? "");
+          saveManager.changeName(item?.name ?? "");
 
           final newPlaylistItems = item?.playlists?.asMap().entries.map((e) {
                 int index = e.key;
@@ -64,7 +63,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
               }).toList() ??
               [];
 
-          timelineProvider.replaceItems(newPlaylistItems);
+          timelineManager.replaceItems(newPlaylistItems);
         }
       });
       return null;
@@ -75,14 +74,12 @@ class CreateScheduleScreen extends HookConsumerWidget {
         await Future(() {
           scheduleRegisterState.when(
             success: (event) {
-              initState();
               Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
           scheduleUpdateState.when(
             success: (event) {
-              initState();
               Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
@@ -139,14 +136,15 @@ class _SaveButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final scheduleRegisterProvider = ref.read(ScheduleRegisterProvider.notifier);
-    final scheduleUpdateProvider = ref.read(ScheduleUpdateProvider.notifier);
+    final scheduleUpdateManager = ref.read(scheduleUpdateProvider.notifier);
+    final scheduleRegisterManager = ref.read(scheduleRegisterProvider.notifier);
     final saveState = ref.watch(ScheduleSaveInfoProvider);
-    final timelineState = ref.watch(ScheduleTimelineInfoProvider);
-    final timelineProvider = ref.read(ScheduleTimelineInfoProvider.notifier);
+    final timelineState = ref.watch(scheduleTimelineInfoProvider);
+    final timelineManager = ref.read(scheduleTimelineInfoProvider.notifier);
 
-    final isSaveAvailable = timelineState.where((element) => !element.isAddButton)
-        .every((element) => element.playlistId! > 0 && !element.timeIsDuplicate) &&
+    final isSaveAvailable = timelineState
+            .where((element) => !element.isAddButton)
+            .every((element) => element.playlistId! > 0 && !element.timeIsDuplicate) &&
         !CollectionUtil.isNullEmptyFromString(saveState.name);
 
     return SafeArea(
@@ -156,13 +154,13 @@ class _SaveButton extends HookConsumerWidget {
           content: getAppLocalizations(context).common_save,
           isActivated: isSaveAvailable,
           onPressed: () {
-            if (timelineProvider.hasAnyOverlappingTimes()) {
+            if (timelineManager.hasAnyOverlappingTimes()) {
               Toast.showError(context, getAppLocalizations(context).message_time_setting_duplicated);
             } else {
               if (isEditMode) {
-                scheduleUpdateProvider.updateSchedule(scheduleId ?? -1, saveState);
+                scheduleUpdateManager.updateSchedule(scheduleId ?? -1, saveState);
               } else {
-                scheduleRegisterProvider.registerSchedule(saveState);
+                scheduleRegisterManager.registerSchedule(saveState);
               }
             }
           },

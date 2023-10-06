@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-final ScheduleTimelineInfoProvider = StateNotifierProvider<ScheduleTimelineInfoProviderNotifier, List<SimpleSchedulesModel>>(
+final scheduleTimelineInfoProvider = StateNotifierProvider<ScheduleTimelineInfoProviderNotifier, List<SimpleSchedulesModel>>(
   (ref) => ScheduleTimelineInfoProviderNotifier(),
 );
 

@@ -8,7 +8,7 @@ import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/domain/usecases/remote/schedule/PostPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final ScheduleRegisterProvider = StateNotifierProvider<ScheduleRegisterProviderNotifier, UIState<String?>>(
+final scheduleRegisterProvider = StateNotifierProvider<ScheduleRegisterProviderNotifier, UIState<String?>>(
   (ref) => ScheduleRegisterProviderNotifier(),
 );
 

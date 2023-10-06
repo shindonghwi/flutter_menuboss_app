@@ -6,7 +6,7 @@ import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistUseCase.da
 import 'package:menuboss/domain/usecases/remote/schedule/PatchScheduleUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final ScheduleUpdateProvider = StateNotifierProvider<ScheduleUpdate, UIState<String?>>(
+final scheduleUpdateProvider = StateNotifierProvider<ScheduleUpdate, UIState<String?>>(
   (ref) => ScheduleUpdate(),
 );
 
