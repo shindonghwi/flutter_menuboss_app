@@ -29,9 +29,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final applyScreenState = ref.watch(PostApplyContentsToScreenProvider);
     final applyScreenProvider = ref.read(PostApplyContentsToScreenProvider.notifier);
-    final deviceState = ref.watch(DeviceListProvider);
-    final deviceProvider = ref.read(DeviceListProvider.notifier);
-    final deviceItems = useState([]);
+    final deviceManager = ref.read(deviceListProvider.notifier);
 
     final checkList = ref.watch(ApplyScreenCheckListProvider);
     final checkListProvider = ref.read(ApplyScreenCheckListProvider.notifier);
@@ -46,14 +44,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        deviceItems.value = deviceProvider.currentDevices;
-      });
-      return null;
-    }, [deviceState]);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        final deviceIds = deviceProvider.currentDevices.map((e) => e.screenId).toList();
+        final deviceIds = deviceManager.currentDevices.map((e) => e.screenId).toList();
         applyItem.value = applyItem.value.copyWith(screenIds: deviceIds);
       });
       return null;
@@ -64,8 +55,8 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
         await Future(() {
           applyScreenState.when(
             success: (event) async {
-              Toast.showSuccess(context, "스크린에 적용완료");
-              deviceProvider.requestGetDevices();
+              Toast.showSuccess(context, getAppLocalizations(context).message_apply_screen_success);
+              deviceManager.requestGetDevices();
               applyScreenProvider.init();
               Navigator.of(context).pop();
             },
@@ -81,15 +72,15 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
     return BaseScaffold(
       appBar: TopBarIconTitleNone(content: getAppLocalizations(context).apply_screen_title),
       body: SafeArea(
-        child: !CollectionUtil.isNullorEmpty(deviceItems.value)
+        child: !CollectionUtil.isNullorEmpty(deviceManager.currentDevices)
             ? Stack(
                 children: [
                   ListView.separated(
                     shrinkWrap: true,
-                    itemCount: deviceItems.value.length,
+                    itemCount: deviceManager.currentDevices.length,
                     itemBuilder: (context, index) {
                       return ApplyDeviceItem(
-                        item: deviceItems.value[index],
+                        item: deviceManager.currentDevices[index],
                         isChecked: checkListProvider.isExist(index),
                         onPressed: () {
                           checkListProvider.onChanged(index);
@@ -118,23 +109,20 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
               )
             : EmptyView(
                 type: BlankMessageType.ADD_SCREEN,
-                onPressed: () async{
-                  // void goToRegisterDevice() async {
-                    try {
-                      final isAdded = await Navigator.push(
-                        context,
-                        nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
-                      );
+                onPressed: () async {
+                  try {
+                    final isAdded = await Navigator.push(
+                      context,
+                      nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
+                    );
 
-                      if (isAdded) {
-                        deviceProvider.requestGetDevices();
-                      }
-                    } catch (e) {
-                      debugPrint(e.toString());
+                    if (isAdded) {
+                      deviceManager.requestGetDevices();
                     }
+                  } catch (e) {
+                    debugPrint(e.toString());
                   }
-                // },
-              ),
+                }),
       ),
     );
   }

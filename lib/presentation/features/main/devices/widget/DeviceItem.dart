@@ -25,7 +25,7 @@ class DeviceItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceProvider = ref.read(DeviceListProvider.notifier);
+    final deviceManager = ref.read(deviceListProvider.notifier);
 
     return Container(
       width: double.infinity,
@@ -54,7 +54,9 @@ class DeviceItem extends HookConsumerWidget {
                       Row(
                         children: [
                           LabelText(
-                            content: item.isOnline ? getAppLocalizations(context).common_on : getAppLocalizations(context).common_off,
+                            content: item.isOnline
+                                ? getAppLocalizations(context).common_on
+                                : getAppLocalizations(context).common_off,
                             isOn: item.isOnline,
                           ),
                           Expanded(
@@ -97,19 +99,21 @@ class DeviceItem extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
-                      hint: getAppLocalizations(context).popup_rename_screen_hint,
-                      onClicked: (name) {
-                        if (name.isNotEmpty) {
-                          deviceProvider.requestPatchDeviceName(item.screenId, name);
-                          // deviceProvider.renameItem(item, name);
-                        }
-                      }),
+                    hint: getAppLocalizations(context).popup_rename_screen_hint,
+                    onClicked: (name) {
+                      if (name.isNotEmpty) {
+                        deviceManager.requestPatchDeviceName(item.screenId, name);
+                      }
+                    },
+                  ),
                 );
               } else if (type == ModifyType.Delete) {
                 CommonPopup.showPopup(
                   context,
                   child: PopupDelete(
-                    onClicked: () => deviceProvider.requestDelDevice(item.screenId),
+                    onClicked: () {
+                      deviceManager.requestDelDevice(item.screenId);
+                    },
                   ),
                 );
               }

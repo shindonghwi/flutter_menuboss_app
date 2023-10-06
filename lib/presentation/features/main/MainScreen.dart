@@ -1,25 +1,49 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/presentation/utils/dto/Pair.dart';
 import 'package:menuboss/presentation/utils/dto/Triple.dart';
 
 import 'devices/DevicesScreen.dart';
+import 'devices/provider/DeviceListProvider.dart';
 import 'media/MediaScreen.dart';
 import 'my/MyScreen.dart';
 import 'playlists/PlaylistsScreens.dart';
 import 'schedules/SchedulesScreen.dart';
+import 'schedules/provider/SchedulesProvider.dart';
 
-class MainScreen extends HookWidget {
+final currentIndexProvider = StateProvider<int>((ref) => 2);
+
+class MainScreen extends HookConsumerWidget {
   const MainScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final currentIndex = useState(2);
+  Widget build(BuildContext context, WidgetRef ref) {
+
+    final currentIndex = ref.watch(currentIndexProvider);
+
+    useMemoized(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        switch (currentIndex) {
+          case 0:
+            ref.read(schedulesProvider.notifier).requestGetSchedules();
+            break;
+          case 1:
+            break;
+          case 2:
+            ref.read(deviceListProvider.notifier).requestGetDevices();
+            break;
+          case 3:
+            break;
+          case 4:
+            break;
+        }
+      });
+    }, [currentIndex]);
 
     List<Triple> iconList = [
       Triple('assets/imgs/icon_schedules_line.svg', 'assets/imgs/icon_schedules_filled.svg',
@@ -39,7 +63,7 @@ class MainScreen extends HookWidget {
       body: Stack(
         children: [
           IndexedStack(
-            index: currentIndex.value,
+            index: currentIndex,
             children: const [
               SchedulesScreen(),
               PlaylistsScreens(),
@@ -51,24 +75,23 @@ class MainScreen extends HookWidget {
         ],
       ),
       bottomNavigationBar: _BottomNavigationBar(
-        currentIndex: currentIndex,
         iconList: iconList,
       ),
     );
   }
 }
 
-class _BottomNavigationBar extends HookWidget {
-  final ValueNotifier<int> currentIndex;
+class _BottomNavigationBar extends HookConsumerWidget {
   final List<Triple> iconList;
 
   const _BottomNavigationBar({
-    required this.currentIndex,
     required this.iconList,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentIndex = ref.watch(currentIndexProvider);
+
     return Container(
       color: getColorScheme(context).white,
       child: SafeArea(
@@ -96,8 +119,8 @@ class _BottomNavigationBar extends HookWidget {
                     backgroundColor: getColorScheme(context).white,
                     selectedItemColor: getColorScheme(context).colorPrimary900,
                     unselectedItemColor: getColorScheme(context).colorGray400,
-                    currentIndex: currentIndex.value,
-                    onTap: (index) => currentIndex.value = index,
+                    currentIndex: currentIndex,
+                    onTap: (index) => ref.read(currentIndexProvider.notifier).state = index,
                     items: iconList.map((data) {
                       return BottomNavigationBarItem(
                         icon: Column(

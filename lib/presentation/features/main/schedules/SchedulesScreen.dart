@@ -23,31 +23,25 @@ class SchedulesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final schedulesState = ref.watch(SchedulesProvider);
-    final schedulesProvider = ref.read(SchedulesProvider.notifier);
-    final scheduleList = useState<List<ResponseScheduleModel>?>(null);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        schedulesProvider.requestGetSchedules();
-      });
-      return null;
-    }, []);
+    final schedulesState = ref.watch(schedulesProvider);
+    final schedulesManager = ref.read(schedulesProvider.notifier);
+    // final scheduleList = useState<List<ResponseScheduleModel>?>(null);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           schedulesState.when(
-            success: (event) {
-              scheduleList.value = event.value;
-              schedulesProvider.init();
-            },
+            // success: (event) {
+            //   scheduleList.value = event.value;
+            // },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
 
-      handleUiStateChange();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        handleUiStateChange();
+      });
       return null;
     }, [schedulesState]);
 
@@ -61,9 +55,9 @@ class SchedulesScreen extends HookConsumerWidget {
             child: Stack(
               children: [
                 if (schedulesState is Failure)
-                  FailView(onPressed: () => schedulesProvider.requestGetSchedules())
-                else if (scheduleList.value != null)
-                  _ScheduleContentList(items: scheduleList.value!)
+                  FailView(onPressed: () => schedulesManager.requestGetSchedules())
+                // else if (scheduleList.value != null)
+                //   _ScheduleContentList(items: scheduleList.value!)
                 else if (schedulesState is Success<List<ResponseScheduleModel>>)
                   _ScheduleContentList(items: schedulesState.value),
                 if (schedulesState is Loading) const LoadingView(),
@@ -86,8 +80,8 @@ class _ScheduleContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceProvider = ref.read(DeviceListProvider.notifier);
-    final scheduleProvider = ref.read(SchedulesProvider.notifier);
+    final deviceManager = ref.read(deviceListProvider.notifier);
+    final scheduleProvider = ref.read(schedulesProvider.notifier);
 
     void goToCreateSchedule() async {
       try {
@@ -117,7 +111,7 @@ class _ScheduleContentList extends HookConsumerWidget {
         );
 
         if (isUpdated) {
-          deviceProvider.requestGetDevices();
+          deviceManager.requestGetDevices();
           scheduleProvider.requestGetSchedules();
         }
       } catch (e) {

@@ -28,12 +28,12 @@ class PlaylistsScreens extends HookConsumerWidget {
     final playlistProvider = ref.read(PlayListProvider.notifier);
     final playlist = useState<List<ResponsePlaylistsModel>?>(null);
 
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        playlistProvider.requestGetPlaylists();
-      });
-      return null;
-    }, []);
+    // useEffect(() {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     playlistProvider.requestGetPlaylists();
+    //   });
+    //   return null;
+    // }, []);
 
     useEffect(() {
       void handleUiStateChange() async {

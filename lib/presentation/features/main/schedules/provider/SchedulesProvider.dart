@@ -4,7 +4,7 @@ import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/domain/usecases/remote/schedule/GetSchedulesUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final SchedulesProvider = StateNotifierProvider<SchedulesNotifier, UIState<List<ResponseScheduleModel>>>(
+final schedulesProvider = StateNotifierProvider<SchedulesNotifier, UIState<List<ResponseScheduleModel>>>(
   (ref) => SchedulesNotifier(),
 );
 

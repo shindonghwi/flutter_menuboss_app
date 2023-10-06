@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
@@ -6,7 +7,7 @@ import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final DeviceListProvider = StateNotifierProvider<DeviceListNotifier, UIState<List<ResponseDeviceModel>>>(
+final deviceListProvider = StateNotifierProvider<DeviceListNotifier, UIState<List<ResponseDeviceModel>>>(
   (ref) => DeviceListNotifier(),
 );
 
@@ -24,7 +25,7 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
     state = Loading();
     _getDevicesUseCase.call().then((response) async {
       if (response.status == 200) {
-        currentDevices = response.list?.toList() ?? [];
+        updateCurrentDevices(response.list?.toList() ?? []);
         state = Success(currentDevices);
       } else {
         state = Failure(response.message);
@@ -33,49 +34,54 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   }
 
   /// 디바이스 삭제
-  void requestDelDevice(int screenId) {
-    state = Loading();
-    _delDeviceUseCase.call(screenId).then((response) {
-      if (response.status == 200) {
-        final index = currentDevices.indexWhere((item) => item.screenId == screenId);
-        final updateCurrentDevices = [...currentDevices]..remove(currentDevices[index]);
-        currentDevices = updateCurrentDevices;
-        if (index != -1) {
-          state = Success(currentDevices);
+  Future<void> requestDelDevice(int screenId) async {
+    final index = currentDevices.indexWhere((item) => item.screenId == screenId);
+
+    if (index != -1) {
+      final removedItem = currentDevices.removeAt(index);
+      state = Success(currentDevices); // 아이템을 먼저 삭제
+
+      await _delDeviceUseCase.call(screenId).then((response) async {
+        await Future.delayed(const Duration(milliseconds: 300));
+        if (response.status != 200) {
+          // 실패한 경우 아이템을 복구하고 에러 메시지 표시
+          currentDevices.insert(index, removedItem);
+          state = Failure(response.message);
         }
-      } else {
-        state = Failure(response.message);
-      }
-    });
+        updateCurrentDevices(currentDevices);
+      });
+    }
   }
 
   /// 디바이스 이름 변경
-  void requestPatchDeviceName(int screenId, String name) {
-    state = Loading();
-    _patchDeviceNameUseCase.call(screenId, name).then((response) {
-      if (response.status == 200) {
-        final index = currentDevices.indexWhere((item) => item.screenId == screenId);
+  void requestPatchDeviceName(int screenId, String name) async {
+    final index = currentDevices.indexWhere((item) => item.screenId == screenId);
 
-        if (index != -1) {
-          final itemToUpdate = currentDevices[index];
-          final updatedItem = itemToUpdate.copyWith(name: name);
-          final updateCurrentDevices = [
-            ...currentDevices.sublist(0, index),
-            updatedItem,
-            ...currentDevices.sublist(index + 1),
-          ];
+    if (index != -1) {
+      final itemToUpdate = currentDevices[index];
+      final originalItem = itemToUpdate;
+      final updatedItem = itemToUpdate.copyWith(name: name);
+      final updatedDevices = [
+        ...currentDevices.sublist(0, index),
+        updatedItem,
+        ...currentDevices.sublist(index + 1),
+      ];
 
-          state = Success(updateCurrentDevices);
+      state = Success(updatedDevices); // 아이템을 먼저 업데이트
+
+      _patchDeviceNameUseCase.call(screenId, name).then((response) async {
+        await Future.delayed(const Duration(milliseconds: 300));
+        if (response.status != 200) {
+          updatedDevices[index] = originalItem; // 원래 아이템으로 복구
+          state = Success(updatedDevices);
+          state = Failure(response.message);
         }
-      } else {
-        state = Failure(response.message);
-      }
-    });
+        updateCurrentDevices(updatedDevices);
+      });
+    }
   }
 
-  Future<Idle<List<ResponseDeviceModel>>> init({
-    bool isDelayMode = false,
-  }) {
-    return Future.delayed(Duration(milliseconds: isDelayMode ? 300 : 0), () => state = Idle());
+  void updateCurrentDevices(List<ResponseDeviceModel> devices) {
+    currentDevices = devices;
   }
 }

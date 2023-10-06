@@ -36,12 +36,12 @@ class MediaScreen extends HookConsumerWidget {
     final mediaProvider = ref.read(MediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
 
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        mediaProvider.requestGetMedias();
-      });
-      return null;
-    }, []);
+    // useEffect(() {
+    //   WidgetsBinding.instance.addPostFrameCallback((_) {
+    //     mediaProvider.requestGetMedias();
+    //   });
+    //   return null;
+    // }, []);
 
     useEffect(() {
       void handleUiStateChange() async {

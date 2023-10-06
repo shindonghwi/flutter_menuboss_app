@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
@@ -23,30 +22,21 @@ class DevicesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceState = ref.watch(DeviceListProvider);
-    final deviceProvider = ref.read(DeviceListProvider.notifier);
-    final deviceList = useState<List<ResponseDeviceModel>?>(null);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async{
-        await deviceProvider.init();
-        deviceProvider.requestGetDevices();
-      });
-      return null;
-    }, []);
+    final deviceState = ref.watch(deviceListProvider);
+    final deviceManager = ref.read(deviceListProvider.notifier);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           deviceState.when(
-            success: (event) {
-              deviceList.value = event.value;
-            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
-      handleUiStateChange();
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        handleUiStateChange();
+      });
       return null;
     }, [deviceState]);
 
@@ -57,10 +47,8 @@ class DevicesScreen extends HookConsumerWidget {
           Expanded(
             child: Stack(
               children: [
-                if (deviceState is Failure && deviceList.value == null)
-                  FailView(onPressed: () => deviceProvider.requestGetDevices())
-                else if (deviceList.value != null)
-                  _DeviceContentList(items: deviceList.value!)
+                if (deviceState is Failure)
+                  FailView(onPressed: () => deviceManager.requestGetDevices())
                 else if (deviceState is Success<List<ResponseDeviceModel>>)
                   _DeviceContentList(items: deviceState.value),
                 if (deviceState is Loading) const LoadingView(),
@@ -83,7 +71,7 @@ class _DeviceContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final deviceProvider = ref.read(DeviceListProvider.notifier);
+    final deviceManager = ref.read(deviceListProvider.notifier);
 
     void goToRegisterDevice() async {
       try {
@@ -93,7 +81,7 @@ class _DeviceContentList extends HookConsumerWidget {
         );
 
         if (isAdded) {
-          deviceProvider.requestGetDevices();
+          deviceManager.requestGetDevices();
         }
       } catch (e) {
         debugPrint(e.toString());

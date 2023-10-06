@@ -98,9 +98,10 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     isProcessing = true;
     GetIt.instance<PostDeviceUseCase>().call(code).then((response) async {
       if (response.status == 200) {
+        Toast.showSuccess(context, getAppLocalizations(context).message_register_screen_success);
         Navigator.of(context).pop(true);
       } else {
-        Toast.showError(context, response.message ?? "");
+        Toast.showError(context, response.message);
         await Future.delayed(const Duration(seconds: 2));
         isProcessing = false;
       }
