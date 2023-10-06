@@ -4,7 +4,7 @@ import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDevicesContentsUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final PostApplyContentsToScreenProvider = StateNotifierProvider<PostApplyContentsToScreenNotifier, UIState<String?>>(
+final postApplyContentsToScreenProvider = StateNotifierProvider<PostApplyContentsToScreenNotifier, UIState<String?>>(
   (ref) => PostApplyContentsToScreenNotifier(),
 );
 
@@ -17,7 +17,7 @@ class PostApplyContentsToScreenNotifier extends StateNotifier<UIState<String?>> 
     state = Loading();
     _postDevicesContentsUseCase(model).then((response) {
       if (response.status == 200) {
-        state = Success(response.message);
+        state = Success("");
       } else {
         state = Failure(response.message);
       }

@@ -27,19 +27,21 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final applyScreenState = ref.watch(PostApplyContentsToScreenProvider);
-    final applyScreenProvider = ref.read(PostApplyContentsToScreenProvider.notifier);
+    final applyScreenState = ref.watch(postApplyContentsToScreenProvider); // 스크린에 적용 상태
+    final applyScreenManager = ref.read(postApplyContentsToScreenProvider.notifier);
     final deviceManager = ref.read(deviceListProvider.notifier);
 
-    final checkList = ref.watch(ApplyScreenCheckListProvider);
-    final checkListProvider = ref.read(ApplyScreenCheckListProvider.notifier);
+    final checkList = ref.watch(applyScreenCheckListProvider);
+    final checkListManager = ref.read(applyScreenCheckListProvider.notifier);
     final applyItem = useState<RequestDeviceApplyContents>(item!);
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        checkListProvider.clear();
-      });
-      return null;
+      return () {
+        Future(() {
+          checkListManager.clear();
+          applyScreenManager.init();
+        });
+      };
     }, []);
 
     useEffect(() {
@@ -55,9 +57,12 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
         await Future(() {
           applyScreenState.when(
             success: (event) async {
-              Toast.showSuccess(context, getAppLocalizations(context).message_apply_screen_success);
+              /// 스크린 적용 성공시
+              /// 1. 스크린 목록을 다시 가져온다.
+              /// 2. 스크린 적용 성공 메시지를 띄운다.
+              /// 3. 현재 화면을 닫는다.
               deviceManager.requestGetDevices();
-              applyScreenProvider.init();
+              Toast.showSuccess(context, getAppLocalizations(context).message_apply_screen_success);
               Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
@@ -81,10 +86,8 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                     itemBuilder: (context, index) {
                       return ApplyDeviceItem(
                         item: deviceManager.currentDevices[index],
-                        isChecked: checkListProvider.isExist(index),
-                        onPressed: () {
-                          checkListProvider.onChanged(index);
-                        },
+                        isChecked: checkListManager.isExist(index),
+                        onPressed: () => checkListManager.onChanged(index),
                       );
                     },
                     separatorBuilder: (context, index) {
@@ -100,7 +103,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                         child: PrimaryFilledButton.largeRound8(
                           content: getAppLocalizations(context).common_done,
                           isActivated: checkList.isNotEmpty,
-                          onPressed: () => applyScreenProvider.applyToScreen(applyItem.value),
+                          onPressed: () => applyScreenManager.applyToScreen(applyItem.value),
                         ),
                       ),
                     ),
@@ -122,7 +125,8 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                   } catch (e) {
                     debugPrint(e.toString());
                   }
-                }),
+                },
+              ),
       ),
     );
   }

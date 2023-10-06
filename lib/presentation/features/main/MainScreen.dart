@@ -26,25 +26,6 @@ class MainScreen extends HookConsumerWidget {
 
     final currentIndex = ref.watch(currentIndexProvider);
 
-    useMemoized(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        switch (currentIndex) {
-          case 0:
-            ref.read(schedulesProvider.notifier).requestGetSchedules();
-            break;
-          case 1:
-            break;
-          case 2:
-            ref.read(deviceListProvider.notifier).requestGetDevices();
-            break;
-          case 3:
-            break;
-          case 4:
-            break;
-        }
-      });
-    }, [currentIndex]);
-
     List<Triple> iconList = [
       Triple('assets/imgs/icon_schedules_line.svg', 'assets/imgs/icon_schedules_filled.svg',
           getAppLocalizations(context).main_navigation_menu_schedules),
@@ -57,6 +38,31 @@ class MainScreen extends HookConsumerWidget {
       Triple('assets/imgs/icon_my_line.svg', 'assets/imgs/icon_my_filled.svg',
           getAppLocalizations(context).main_navigation_menu_my),
     ];
+
+    final executedCodeForIndex = useState<List<bool>>(List.generate(iconList.length, (index) => false));
+
+    useEffect(() {
+      if (!executedCodeForIndex.value[currentIndex]) {
+        WidgetsBinding.instance.addPostFrameCallback((_) {
+          switch (currentIndex) {
+            case 0:
+              ref.read(schedulesProvider.notifier).requestGetSchedules();
+              break;
+            case 1:
+              break;
+            case 2:
+              ref.read(deviceListProvider.notifier).requestGetDevices();
+              break;
+            case 3:
+              break;
+            case 4:
+              break;
+          }
+          executedCodeForIndex.value[currentIndex] = true;
+        });
+      }
+      return null;
+    }, [currentIndex]);
 
     return BaseScaffold(
       extendBody: true,
