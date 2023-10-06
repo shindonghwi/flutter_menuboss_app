@@ -5,7 +5,7 @@ import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistUseCase.da
 import 'package:menuboss/domain/usecases/remote/playlist/PostPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final PlayListRegisterProvider = StateNotifierProvider<PlayListRegisterProviderNotifier, UIState<String?>>(
+final playListRegisterProvider = StateNotifierProvider<PlayListRegisterProviderNotifier, UIState<String?>>(
   (ref) => PlayListRegisterProviderNotifier(),
 );
 

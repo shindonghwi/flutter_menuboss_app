@@ -3,10 +3,10 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
-import 'package:menuboss/presentation/components/button/NeutralFilledButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -29,8 +29,8 @@ class MediaItemAdd extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     Widget? iconWidget;
     bool isFolderType = false;
-    final mediaCartState = ref.watch(MediaContentsCartProvider);
-    final mediaCartProvider = ref.read(MediaContentsCartProvider.notifier);
+    final mediaCartState = ref.watch(mediaContentsCartProvider);
+    final mediaCartManager = ref.read(mediaContentsCartProvider.notifier);
 
     final isAdded = useState(false);
 
@@ -109,21 +109,14 @@ class MediaItemAdd extends HookConsumerWidget {
               ),
             ),
             !isFolderType
-                ? isAdded.value
-                    ? NeutralFilledButton.extraSmallRound100(
-                        content: getAppLocalizations(context).common_add,
-                        isActivated: true,
-                        onPressed: () {
-                          mediaCartProvider.removeItem(item);
-                        },
-                      )
-                    : PrimaryFilledButton.extraSmallRound100(
-                        content: getAppLocalizations(context).common_add,
-                        isActivated: true,
-                        onPressed: () {
-                          mediaCartProvider.addItem(item);
-                        },
-                      )
+                ? PrimaryFilledButton.extraSmallRound100(
+                    content: getAppLocalizations(context).common_add,
+                    isActivated: true,
+                    onPressed: () {
+                      Toast.showSuccess(context, getAppLocalizations(context).message_add_media_in_playlist_success);
+                      mediaCartManager.addItem(item);
+                    },
+                  )
                 : Container(
                     margin: const EdgeInsets.only(right: 18),
                     child: SvgPicture.asset(

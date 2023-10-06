@@ -53,6 +53,7 @@ class ResponseMediaModel {
 
   SimpleMediaContentModel toMapperMediaContentModel() {
     final model = SimpleMediaContentModel(
+      index: -1,
       object: object,
       id: mediaId,
       name: name ?? "",

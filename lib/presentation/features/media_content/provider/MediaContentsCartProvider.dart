@@ -3,30 +3,15 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 
-final MediaContentsCartProvider = StateNotifierProvider<MediaContentsCartNotifier, List<SimpleMediaContentModel>>(
+final mediaContentsCartProvider = StateNotifierProvider<MediaContentsCartNotifier, List<SimpleMediaContentModel>>(
   (ref) => MediaContentsCartNotifier(),
 );
 
 class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentModel>> {
   MediaContentsCartNotifier() : super([]);
 
-  final GetMediaUseCase _getMediaUseCase = GetIt.instance<GetMediaUseCase>();
-
   void addItem(SimpleMediaContentModel item) {
-    if (!state.any((existingItem) => existingItem.id == item.id)) {
-      switch (item.type?.toLowerCase()) {
-        case "folder":
-          _getMediaUseCase.call(item.id.toString()).then((response) {
-            if (response.status == 200) {
-              // response.data
-              // state = [...state, ...response.data?.toList() ?? []];
-            }
-          });
-          break;
-        default:
-          state = [...state, item];
-      }
-    }
+    state = [...state, item];
   }
 
   void addItems(List<SimpleMediaContentModel> items) {
@@ -34,8 +19,8 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
     state = [...state, ...uniqueItems];
   }
 
-  void removeItem(SimpleMediaContentModel item) {
-    state = [...state.where((existingItem) => existingItem.id != item.id)];
+  void removeItem(int index) {
+    state = [...state..removeAt(index)];
   }
 
   void changeDurationItem(SimpleMediaContentModel item, int duration) {

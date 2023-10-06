@@ -13,6 +13,7 @@ import 'devices/provider/DeviceListProvider.dart';
 import 'media/MediaScreen.dart';
 import 'my/MyScreen.dart';
 import 'playlists/PlaylistsScreens.dart';
+import 'playlists/provider/PlaylistProvider.dart';
 import 'schedules/SchedulesScreen.dart';
 import 'schedules/provider/SchedulesProvider.dart';
 
@@ -49,6 +50,7 @@ class MainScreen extends HookConsumerWidget {
               ref.read(schedulesProvider.notifier).requestGetSchedules();
               break;
             case 1:
+              ref.read(playListProvider.notifier).requestGetPlaylists();
               break;
             case 2:
               ref.read(deviceListProvider.notifier).requestGetDevices();

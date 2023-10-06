@@ -38,7 +38,7 @@ class ResponsePlaylistContent {
         size: property.size,
         duration: duration,
         imageUrl: property.imageUrl,
-      )
+      ),
     );
     return model;
   }

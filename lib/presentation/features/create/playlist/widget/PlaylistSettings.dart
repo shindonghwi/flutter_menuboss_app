@@ -107,7 +107,7 @@ class _SettingContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
+    final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -124,7 +124,7 @@ class _SettingContents extends HookConsumerWidget {
                   iconPath: "assets/imgs/icon_horizontal_line.svg",
                   iconText: getAppLocalizations(context).common_horizontal,
                   onPressed: () {
-                    saveProvider.changeDirection(PlaylistSettingType.Horizontal);
+                    saveManager.changeDirection(PlaylistSettingType.Horizontal);
                     directionType.value = PlaylistSettingType.Horizontal;
                   },
                   isChecked: directionType.value == PlaylistSettingType.Horizontal,
@@ -134,7 +134,7 @@ class _SettingContents extends HookConsumerWidget {
                   iconPath: "assets/imgs/icon_vertical_line.svg",
                   iconText: getAppLocalizations(context).common_vertical,
                   onPressed: () {
-                    saveProvider.changeDirection(PlaylistSettingType.Vertical);
+                    saveManager.changeDirection(PlaylistSettingType.Vertical);
                     directionType.value = PlaylistSettingType.Vertical;
                   },
                   isChecked: directionType.value == PlaylistSettingType.Vertical,
@@ -155,7 +155,7 @@ class _SettingContents extends HookConsumerWidget {
                   iconPath: "assets/imgs/icon_fit.svg",
                   iconText: getAppLocalizations(context).common_fit,
                   onPressed: () {
-                    saveProvider.changeFill(PlaylistSettingType.Fit);
+                    saveManager.changeFill(PlaylistSettingType.Fit);
                     scaleType.value = PlaylistSettingType.Fit;
                   },
                   isChecked: scaleType.value == PlaylistSettingType.Fit,
@@ -165,7 +165,7 @@ class _SettingContents extends HookConsumerWidget {
                   iconPath: "assets/imgs/icon_fill.svg",
                   iconText: getAppLocalizations(context).common_fill,
                   onPressed: () {
-                    saveProvider.changeFill(PlaylistSettingType.Fill);
+                    saveManager.changeFill(PlaylistSettingType.Fill);
                     scaleType.value = PlaylistSettingType.Fill;
                   },
                   isChecked: scaleType.value == PlaylistSettingType.Fill,

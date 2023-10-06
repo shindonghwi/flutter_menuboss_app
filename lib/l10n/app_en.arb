@@ -138,6 +138,10 @@
     "message_time_setting_duplicated": "Please correct the duplicate time",
     "message_apply_screen_success": "Successfully applied to screens",
     "message_register_screen_success": "Successfully added to the screens",
+    "message_remove_playlist_success": "Playlist deleted successfully",
+    "message_register_playlist_success": "Playlist registered successfully",
+    "message_update_playlist_success": "Playlist information has been changed",
+    "message_add_media_in_playlist_success": "Successfully Add Media to Playlist",
 
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",

@@ -18,7 +18,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaCart = ref.watch(MediaContentsCartProvider);
+    final mediaCart = ref.watch(mediaContentsCartProvider);
     final totalDuration = useState<int>(0);
 
     useEffect(() {
@@ -62,7 +62,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                nextSlideHorizontalScreen(
+                nextSlideVerticalScreen(
                   RoutingScreen.MediaContent.route,
                   fullScreen: true,
                 ),

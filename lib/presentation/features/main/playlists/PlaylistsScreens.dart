@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -24,31 +23,21 @@ class PlaylistsScreens extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playlistState = ref.watch(PlayListProvider);
-    final playlistProvider = ref.read(PlayListProvider.notifier);
-    final playlist = useState<List<ResponsePlaylistsModel>?>(null);
-
-    // useEffect(() {
-    //   WidgetsBinding.instance.addPostFrameCallback((_) {
-    //     playlistProvider.requestGetPlaylists();
-    //   });
-    //   return null;
-    // }, []);
+    final playlistState = ref.watch(playListProvider);
+    final playlistManager = ref.read(playListProvider.notifier);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           playlistState.when(
-            success: (event) {
-              playlist.value = event.value;
-              playlistProvider.init();
-            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
       }
 
-      handleUiStateChange();
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        handleUiStateChange();
+      });
       return null;
     }, [playlistState]);
 
@@ -62,9 +51,7 @@ class PlaylistsScreens extends HookConsumerWidget {
             child: Stack(
               children: [
                 if (playlistState is Failure)
-                  FailView(onPressed: () => playlistProvider.requestGetPlaylists())
-                else if (playlist.value != null)
-                  _PlaylistContentList(items: playlist.value!)
+                  FailView(onPressed: () => playlistManager.requestGetPlaylists())
                 else if (playlistState is Success<List<ResponsePlaylistsModel>>)
                   _PlaylistContentList(items: playlistState.value),
                 if (playlistState is Loading) const LoadingView(),
@@ -87,40 +74,23 @@ class _PlaylistContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playlistProvider = ref.read(PlayListProvider.notifier);
-
     void goToCreatePlaylist() async {
-      try {
-        bool isRegistered = await Navigator.push(
-          context,
-          nextSlideVerticalScreen(
-            RoutingScreen.CreatePlaylist.route,
-          ),
-        );
-        if (isRegistered) {
-          playlistProvider.requestGetPlaylists();
-        }
-      } catch (e) {
-        debugPrint(e.toString());
-      }
+      Navigator.push(
+        context,
+        nextSlideVerticalScreen(
+          RoutingScreen.CreatePlaylist.route,
+        ),
+      );
     }
 
     void goToDetailPlaylist(ResponsePlaylistsModel item) async {
-      try {
-        final isChanged = await Navigator.push(
-          context,
-          nextSlideHorizontalScreen(
-            RoutingScreen.DetailPlaylist.route,
-            parameter: item,
-          ),
-        );
-
-        if (isChanged) {
-          playlistProvider.requestGetPlaylists();
-        }
-      } catch (e) {
-        debugPrint(e.toString());
-      }
+      Navigator.push(
+        context,
+        nextSlideHorizontalScreen(
+          RoutingScreen.DetailPlaylist.route,
+          parameter: item,
+        ),
+      );
     }
 
     return items.isNotEmpty

@@ -24,8 +24,8 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContentsCart = ref.watch(MediaContentsCartProvider);
-    final playlistSaveInfo = ref.watch(PlaylistSaveInfoProvider);
+    final mediaContentsCart = ref.watch(mediaContentsCartProvider);
+    final playlistSaveInfo = ref.watch(playlistSaveInfoProvider);
 
     final currentPage = useState(0);
     final isDirectionHorizontal = useState(playlistSaveInfo.property.direction.toLowerCase() == "horizontal");

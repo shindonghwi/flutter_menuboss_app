@@ -5,12 +5,12 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlayListRegisterProvider.dart';
-import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/PlayListUpdateProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-import '../provider/PlayListUpdateProvider.dart';
+import '../provider/PlaylistSaveInfoProvider.dart';
 
 class PlaylistBottomContent extends HookConsumerWidget {
   final int? playlistId;
@@ -24,10 +24,10 @@ class PlaylistBottomContent extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaCart = ref.watch(MediaContentsCartProvider);
-    final playListUpdateProvider = ref.read(PlayListUpdateProvider.notifier);
-    final playListRegisterProvider = ref.read(PlayListRegisterProvider.notifier);
-    final playlistSaveInfo = ref.watch(PlaylistSaveInfoProvider);
+    final mediaCart = ref.watch(mediaContentsCartProvider);
+    final playListUpdateManager = ref.read(playListUpdateProvider.notifier);
+    final playListRegisterManager = ref.read(playListRegisterProvider.notifier);
+    final playlistSaveInfo = ref.watch(playlistSaveInfoProvider);
 
     return mediaCart.isNotEmpty
         ? Container(
@@ -63,9 +63,9 @@ class PlaylistBottomContent extends HookConsumerWidget {
                       child: PrimaryFilledButton.largeRound8(
                         onPressed: () {
                           if (isEditMode) {
-                            playListUpdateProvider.updatePlaylist(playlistId ?? -1, playlistSaveInfo);
+                            playListUpdateManager.updatePlaylist(playlistId ?? -1, playlistSaveInfo);
                           } else {
-                            playListRegisterProvider.registerPlaylist(playlistSaveInfo);
+                            playListRegisterManager.registerPlaylist(playlistSaveInfo);
                           }
                         },
                         content: getAppLocalizations(context).common_save,

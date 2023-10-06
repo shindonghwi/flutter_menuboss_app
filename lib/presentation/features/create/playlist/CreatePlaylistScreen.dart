@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
+import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
@@ -33,25 +34,26 @@ class CreatePlaylistScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = useState(item != null);
 
-    final playListRegisterState = ref.watch(PlayListRegisterProvider);
-    final playListUpdateState = ref.watch(PlayListUpdateProvider);
-    final playListRegisterProvider = ref.read(PlayListRegisterProvider.notifier);
-    final playListUpdateProvider = ref.read(PlayListUpdateProvider.notifier);
-    final mediaCartProvider = ref.read(MediaContentsCartProvider.notifier);
-    final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
+    final playlistsManager = ref.read(playListProvider.notifier);
 
-    void initState() {
-      mediaCartProvider.init();
-      saveProvider.init();
-      playListRegisterProvider.init();
-      playListUpdateProvider.init();
-    }
+    final playListRegisterState = ref.watch(playListRegisterProvider);
+    final playListRegisterManager = ref.read(playListRegisterProvider.notifier);
+
+    final playListUpdateState = ref.watch(playListUpdateProvider);
+    final playListUpdateManager = ref.read(playListUpdateProvider.notifier);
+
+    final mediaCartManager = ref.read(mediaContentsCartProvider.notifier);
+    final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
     useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        initState();
-      });
-      return null;
+      return (){
+        Future((){
+          playListRegisterManager.init();
+          playListUpdateManager.init();
+          mediaCartManager.init();
+          saveManager.init();
+        });
+      };
     }, []);
 
     useEffect(() {
@@ -59,18 +61,18 @@ class CreatePlaylistScreen extends HookConsumerWidget {
         if (isEditMode.value) {
           debugPrint("item: ${item.toString()}");
 
-          saveProvider.changeName(item?.name ?? "");
-          saveProvider.changeDirection(
+          saveManager.changeName(item?.name ?? "");
+          saveManager.changeDirection(
             item?.property?.direction?.code.toLowerCase() == "horizontal"
                 ? PlaylistSettingType.Horizontal
                 : PlaylistSettingType.Vertical,
           );
 
-          saveProvider.changeFill(
+          saveManager.changeFill(
             item?.property?.fill?.code.toLowerCase() == "fill" ? PlaylistSettingType.Fill : PlaylistSettingType.Fit,
           );
 
-          mediaCartProvider.addItems(
+          mediaCartManager.addItems(
             item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? [],
           );
         }
@@ -83,15 +85,18 @@ class CreatePlaylistScreen extends HookConsumerWidget {
         await Future(() {
           playListRegisterState.when(
             success: (event) {
-              initState();
-              Navigator.of(context).pop(true);
+              Toast.showSuccess(context, getAppLocalizations(context).message_register_playlist_success);
+              playlistsManager.requestGetPlaylists();
+              Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
           playListUpdateState.when(
             success: (event) {
-              initState();
-              Navigator.of(context).pop(true);
+              Toast.showSuccess(context, getAppLocalizations(context).message_update_playlist_success);
+              playlistsManager.requestGetPlaylists();
+              Navigator.of(context).pop();
+              Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );

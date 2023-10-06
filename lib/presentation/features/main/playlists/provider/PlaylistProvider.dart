@@ -4,7 +4,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistsUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final PlayListProvider = StateNotifierProvider<PlayListNotifier, UIState<List<ResponsePlaylistsModel>>>(
+final playListProvider = StateNotifierProvider<PlayListNotifier, UIState<List<ResponsePlaylistsModel>>>(
   (ref) => PlayListNotifier(),
 );
 

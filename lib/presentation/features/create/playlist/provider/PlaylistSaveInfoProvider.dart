@@ -18,7 +18,7 @@ final Map<PlaylistSettingType, String> playListSaveParams = {
   PlaylistSettingType.Fill: "Fill"
 };
 
-final PlaylistSaveInfoProvider =
+final playlistSaveInfoProvider =
     StateNotifierProvider<PlaylistSaveInfoProviderNotifier, RequestPlaylistUpdateInfoModel>(
   (ref) => PlaylistSaveInfoProviderNotifier(),
 );

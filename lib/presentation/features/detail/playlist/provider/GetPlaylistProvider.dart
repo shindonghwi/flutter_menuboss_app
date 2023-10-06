@@ -6,7 +6,7 @@ import 'package:menuboss/domain/usecases/remote/playlist/DelPlaylistUseCase.dart
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final GetPlaylistProvider = StateNotifierProvider<GetPlaylistNotifier, UIState<ResponsePlaylistModel>>(
+final getPlaylistProvider = StateNotifierProvider<GetPlaylistNotifier, UIState<ResponsePlaylistModel>>(
   (ref) => GetPlaylistNotifier(),
 );
 

@@ -27,6 +27,7 @@ import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
 import '../../../components/view_state/LoadingView.dart';
+import '../../main/playlists/provider/PlaylistProvider.dart';
 import 'provider/DelPlaylistProvider.dart';
 import 'provider/GetPlaylistProvider.dart';
 
@@ -40,32 +41,38 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playlistState = ref.watch(GetPlaylistProvider);
-    final delPlaylistState = ref.watch(DelPlaylistProvider);
+    final playlistsManager = ref.read(playListProvider.notifier);
 
-    final playlistProvider = ref.read(GetPlaylistProvider.notifier);
+    final playlistState = ref.watch(getPlaylistProvider);
+    final playlistManager = ref.read(getPlaylistProvider.notifier);
+
+    final delPlaylistState = ref.watch(DelPlaylistProvider);
     final delPlaylistProvider = ref.read(DelPlaylistProvider.notifier);
-    final playlistItem = useState<ResponsePlaylistModel?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        playlistProvider.init();
-        delPlaylistProvider.init();
-        if (item?.playlistId == null) return;
-        playlistProvider.requestPlaylistInfo(item?.playlistId ?? -1);
+        playlistManager.requestPlaylistInfo(item?.playlistId ?? -1);
       });
-      return null;
+      return () {
+        Future(() {
+          playlistManager.init();
+          delPlaylistProvider.init();
+        });
+      };
     }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           playlistState.when(
-            success: (event) => playlistItem.value = event.value,
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
           delPlaylistState.when(
-            success: (event) => Navigator.of(context).pop(true),
+            success: (event) {
+              Toast.showSuccess(context, getAppLocalizations(context).message_remove_playlist_success);
+              playlistsManager.requestGetPlaylists();
+              Navigator.of(context).pop();
+            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -81,19 +88,14 @@ class DetailPlaylistScreen extends HookConsumerWidget {
         content: item?.name ?? "",
         suffixIcons: [
           Pair("assets/imgs/icon_edit.svg", () async {
-            try {
-              final isUpdated = await Navigator.push(
+            if (playlistState is Success<ResponsePlaylistModel>) {
+              Navigator.push(
                 context,
                 nextSlideHorizontalScreen(
                   RoutingScreen.CreatePlaylist.route,
-                  parameter: playlistItem.value,
+                  parameter: playlistState.value,
                 ),
               );
-              if (isUpdated) {
-                Navigator.of(context).pop(true);
-              }
-            } catch (e) {
-              debugPrint(e.toString());
             }
           }),
           Pair("assets/imgs/icon_trash.svg", () {
@@ -111,9 +113,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
       body: Stack(
         children: [
           if (playlistState is Failure)
-            FailView(onPressed: () => playlistProvider.requestPlaylistInfo(item?.playlistId ?? -1))
-          else if (playlistItem.value != null)
-            _PlaylistContent(item: playlistItem.value!)
+            FailView(onPressed: () => playlistManager.requestPlaylistInfo(item?.playlistId ?? -1))
           else if (playlistState is Success<ResponsePlaylistModel>)
             _PlaylistContent(item: playlistState.value),
           if (playlistState is Loading || delPlaylistState is Loading) const LoadingView(),
@@ -249,7 +249,8 @@ class _Settings extends StatelessWidget {
               directionType: item.property?.direction?.name.toLowerCase() == "horizontal"
                   ? PlaylistSettingType.Horizontal
                   : PlaylistSettingType.Vertical,
-              scaleType: item.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
+              scaleType:
+                  item.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
             ),
           ),
         ],
@@ -335,8 +336,9 @@ class _SettingContents extends HookWidget {
         Expanded(
           child: _SettingSelectableIcon(
             iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
-            iconText:
-                scaleType == PlaylistSettingType.Fit ? getAppLocalizations(context).common_fit : getAppLocalizations(context).common_fill,
+            iconText: scaleType == PlaylistSettingType.Fit
+                ? getAppLocalizations(context).common_fit
+                : getAppLocalizations(context).common_fill,
             isChecked: true,
           ),
         ),

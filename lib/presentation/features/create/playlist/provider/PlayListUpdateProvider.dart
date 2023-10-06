@@ -4,7 +4,7 @@ import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dar
 import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final PlayListUpdateProvider = StateNotifierProvider<PlayListUpdateProviderNotifier, UIState<String?>>(
+final playListUpdateProvider = StateNotifierProvider<PlayListUpdateProviderNotifier, UIState<String?>>(
   (ref) => PlayListUpdateProviderNotifier(),
 );
 

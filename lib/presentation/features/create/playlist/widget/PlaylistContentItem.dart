@@ -27,7 +27,7 @@ class PlaylistContentItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaCartProvider = ref.read(MediaContentsCartProvider.notifier);
+    final mediaCartManger = ref.read(mediaContentsCartProvider.notifier);
     final type = item.type?.toLowerCase();
     final isAvailableChangeDuration = !(type == "video" || type == "folder");
 
@@ -134,7 +134,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                       min: StringUtil.parseDuration(duration).second,
                       sec: StringUtil.parseDuration(duration).third,
                       onClicked: (duration) {
-                        mediaCartProvider.changeDurationItem(item, duration);
+                        mediaCartManger.changeDurationItem(item, duration);
                       },
                     ),
                   );
@@ -142,7 +142,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                   CommonPopup.showPopup(
                     context,
                     child: PopupDelete(
-                      onClicked: () => mediaCartProvider.removeItem(item),
+                      onClicked: () => mediaCartManger.removeItem(item.index ?? -1),
                     ),
                   );
                 }

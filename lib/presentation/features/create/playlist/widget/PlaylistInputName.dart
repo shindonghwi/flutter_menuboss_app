@@ -17,7 +17,7 @@ class PlaylistInputName extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
+    final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.symmetric(
@@ -42,7 +42,7 @@ class PlaylistInputName extends HookConsumerWidget {
               textInputType: TextInputType.text,
               showPwVisibleButton: false,
               showSuffixStatusIcon: false,
-              onChanged: (name) => saveProvider.changeName(name),
+              onChanged: (name) => saveManager.changeName(name),
             ),
           ),
         ],

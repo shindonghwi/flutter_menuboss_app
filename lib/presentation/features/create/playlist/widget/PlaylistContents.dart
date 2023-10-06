@@ -16,14 +16,15 @@ class PlaylistContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final saveProvider = ref.read(PlaylistSaveInfoProvider.notifier);
-    final List<SimpleMediaContentModel> contentItems = ref.watch(MediaContentsCartProvider);
+    final saveManager = ref.read(playlistSaveInfoProvider.notifier);
+    final List<SimpleMediaContentModel> contentItems = ref.watch(mediaContentsCartProvider);
     final items = useState<List<SimpleMediaContentModel>>([]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        items.value = [...contentItems];
-        saveProvider.changeContents(items.value);
+        // 아이템 순서 셋팅 ( 중복아이템이 들어올수있어서, 순서대로 인덱스를 정한다. )
+        items.value = [...contentItems.asMap().entries.map((e) => e.value.copyWith(index: e.key))];
+        saveManager.changeContents(items.value);
       });
       return null;
     }, [contentItems]);
@@ -36,7 +37,7 @@ class PlaylistContents extends HookConsumerWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  nextSlideHorizontalScreen(
+                  nextSlideVerticalScreen(
                     RoutingScreen.MediaContent.route,
                     fullScreen: true,
                   ),
@@ -47,15 +48,12 @@ class PlaylistContents extends HookConsumerWidget {
         : Expanded(
             child: ReorderableListView(
               physics: const BouncingScrollPhysics(),
-              children: items.value.map(
-                (item) {
-                  final index = contentItems.indexOf(item);
-                  return Container(
-                    key: ValueKey(item.id),
-                    child: PlaylistContentItem(index: index, item: item),
-                  );
-                },
-              ).toList(),
+              children: items.value.map((item) {
+                return Container(
+                  key: ValueKey(item.index),
+                  child: PlaylistContentItem(index: item.index ?? -1, item: item),
+                );
+              }).toList(),
               onReorder: (int oldIndex, int newIndex) {
                 if (newIndex > oldIndex) {
                   newIndex -= 1;
@@ -63,7 +61,7 @@ class PlaylistContents extends HookConsumerWidget {
                 final item = items.value.removeAt(oldIndex);
                 items.value.insert(newIndex, item);
                 items.value = [...items.value];
-                saveProvider.changeContents(items.value);
+                saveManager.changeContents(items.value);
               },
             ),
           );
