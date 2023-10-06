@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
@@ -30,7 +31,7 @@ import 'provider/DelPlaylistProvider.dart';
 import 'provider/GetPlaylistProvider.dart';
 
 class DetailPlaylistScreen extends HookConsumerWidget {
-  final ResponsePlaylistModel? item;
+  final ResponsePlaylistsModel? item;
 
   const DetailPlaylistScreen({
     super.key,

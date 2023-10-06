@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryLineButton.dart';
@@ -13,7 +14,7 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class PlaylistItem extends HookWidget {
-  final ResponsePlaylistModel item;
+  final ResponsePlaylistsModel item;
 
   const PlaylistItem({
     super.key,

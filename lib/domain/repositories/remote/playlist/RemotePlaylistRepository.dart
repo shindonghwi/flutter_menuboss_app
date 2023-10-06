@@ -7,10 +7,11 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistCreate.dart';
 import '../../../../data/models/device/ResponseDeviceModel.dart';
 import '../../../../data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
 import '../../../../data/models/playlist/ResponsePlaylistModel.dart';
+import '../../../../data/models/playlist/ResponsePlaylistsModel.dart';
 
 abstract class RemotePlaylistRepository {
   /// 플레이 리스트 목록 조회
-  Future<ApiListResponse<List<ResponsePlaylistModel>>> getPlaylists();
+  Future<ApiListResponse<List<ResponsePlaylistsModel>>> getPlaylists();
 
   /// 플레이 리스트 정보 조회
   Future<ApiResponse<ResponsePlaylistModel>> getPlaylist(int playlistId);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
@@ -25,7 +26,7 @@ class PlaylistsScreens extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final playlistState = ref.watch(PlayListProvider);
     final playlistProvider = ref.read(PlayListProvider.notifier);
-    final playlist = useState<List<ResponsePlaylistModel>?>(null);
+    final playlist = useState<List<ResponsePlaylistsModel>?>(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -64,7 +65,7 @@ class PlaylistsScreens extends HookConsumerWidget {
                   FailView(onPressed: () => playlistProvider.requestGetPlaylists())
                 else if (playlist.value != null)
                   _PlaylistContentList(items: playlist.value!)
-                else if (playlistState is Success<List<ResponsePlaylistModel>>)
+                else if (playlistState is Success<List<ResponsePlaylistsModel>>)
                   _PlaylistContentList(items: playlistState.value),
                 if (playlistState is Loading) const LoadingView(),
               ],
@@ -77,7 +78,7 @@ class PlaylistsScreens extends HookConsumerWidget {
 }
 
 class _PlaylistContentList extends HookConsumerWidget {
-  final List<ResponsePlaylistModel> items;
+  final List<ResponsePlaylistsModel> items;
 
   const _PlaylistContentList({
     super.key,
@@ -104,7 +105,7 @@ class _PlaylistContentList extends HookConsumerWidget {
       }
     }
 
-    void goToDetailPlaylist(ResponsePlaylistModel item) async {
+    void goToDetailPlaylist(ResponsePlaylistsModel item) async {
       try {
         final isChanged = await Navigator.push(
           context,

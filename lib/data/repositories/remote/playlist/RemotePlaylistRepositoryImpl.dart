@@ -7,6 +7,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import '../../../../domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
 import '../../../models/base/ApiResponse.dart';
 import '../../../models/playlist/ResponsePlaylistCreate.dart';
+import '../../../models/playlist/ResponsePlaylistsModel.dart';
 
 class RemotePlaylistRepositoryImpl implements RemotePlaylistRepository {
   RemotePlaylistRepositoryImpl();
@@ -14,7 +15,7 @@ class RemotePlaylistRepositoryImpl implements RemotePlaylistRepository {
   final RemotePlaylistApi _remotePlaylistApi = GetIt.instance<RemotePlaylistApi>();
 
   @override
-  Future<ApiListResponse<List<ResponsePlaylistModel>>> getPlaylists() {
+  Future<ApiListResponse<List<ResponsePlaylistsModel>>> getPlaylists() {
     return _remotePlaylistApi.getPlaylists();
   }
 

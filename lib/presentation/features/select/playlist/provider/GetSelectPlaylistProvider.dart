@@ -1,16 +1,17 @@
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/GetPlaylistsUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
 final GetSelectPlaylistProvider =
-    StateNotifierProvider<GetSelectPlaylistProviderNotifier, UIState<List<ResponsePlaylistModel>>>(
+    StateNotifierProvider<GetSelectPlaylistProviderNotifier, UIState<List<ResponsePlaylistsModel>>>(
   (ref) => GetSelectPlaylistProviderNotifier(),
 );
 
-class GetSelectPlaylistProviderNotifier extends StateNotifier<UIState<List<ResponsePlaylistModel>>> {
+class GetSelectPlaylistProviderNotifier extends StateNotifier<UIState<List<ResponsePlaylistsModel>>> {
   GetSelectPlaylistProviderNotifier() : super(Idle());
 
   GetPlaylistsUseCase get _playListsUseCase => GetIt.instance<GetPlaylistsUseCase>();
@@ -21,7 +22,7 @@ class GetSelectPlaylistProviderNotifier extends StateNotifier<UIState<List<Respo
     state = Loading();
     _playListsUseCase.call().then((response) async {
       if (response.status == 200) {
-        List<ResponsePlaylistModel> filteredList = response.list
+        List<ResponsePlaylistsModel> filteredList = response.list
                 ?.where((e) => !addedPlaylistIds.contains(e.playlistId))
                 .map((e) => e.toUpDatedAtSimpleMapper())
                 .toList() ??

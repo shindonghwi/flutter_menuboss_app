@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/checkbox/checkbox/BasicBorderCheckBox.dart';
@@ -32,10 +33,10 @@ class SelectPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final playlistItems = useState<List<ResponsePlaylistModel>?>(null);
+    final playlistItems = useState<List<ResponsePlaylistsModel>?>(null);
     final playlistState = ref.watch(GetSelectPlaylistProvider);
     final playlistProvider = ref.read(GetSelectPlaylistProvider.notifier);
-    ValueNotifier<ResponsePlaylistModel?> selectedPlaylist = useState(null);
+    ValueNotifier<ResponsePlaylistsModel?> selectedPlaylist = useState(null);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -70,7 +71,7 @@ class SelectPlaylistScreen extends HookConsumerWidget {
               FailView(onPressed: () => playlistProvider.requestPlaylists())
             else if (playlistItems.value != null)
               _PlaylistContent(items: playlistItems.value!, selectedPlaylist: selectedPlaylist)
-            else if (playlistState is Success<List<ResponsePlaylistModel>>)
+            else if (playlistState is Success<List<ResponsePlaylistsModel>>)
               _PlaylistContent(items: playlistState.value, selectedPlaylist: selectedPlaylist),
             if (playlistState is Loading) const LoadingView(),
           ],
@@ -81,8 +82,8 @@ class SelectPlaylistScreen extends HookConsumerWidget {
 }
 
 class _PlaylistContent extends HookWidget {
-  final List<ResponsePlaylistModel> items;
-  final ValueNotifier<ResponsePlaylistModel?> selectedPlaylist;
+  final List<ResponsePlaylistsModel> items;
+  final ValueNotifier<ResponsePlaylistsModel?> selectedPlaylist;
 
   const _PlaylistContent({
     super.key,

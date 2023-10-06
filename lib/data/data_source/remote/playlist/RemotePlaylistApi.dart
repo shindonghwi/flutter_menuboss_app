@@ -8,6 +8,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../models/playlist/ResponsePlaylistCreate.dart';
+import '../../../models/playlist/ResponsePlaylistsModel.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
 
@@ -17,7 +18,7 @@ class RemotePlaylistApi {
   AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
 
   /// 플레이 리스트 목록 조회
-  Future<ApiListResponse<List<ResponsePlaylistModel>>> getPlaylists() async {
+  Future<ApiListResponse<List<ResponsePlaylistsModel>>> getPlaylists() async {
     final response = await Service.getApi(
       type: ServiceType.Playlist,
       endPoint: null,
@@ -35,8 +36,8 @@ class RemotePlaylistApi {
       return ApiListResponse.fromJson(
         jsonDecode(response.body),
         (json) {
-          return List<ResponsePlaylistModel>.from(
-            json.map((item) => ResponsePlaylistModel.fromJson(item as Map<String, dynamic>)),
+          return List<ResponsePlaylistsModel>.from(
+            json.map((item) => ResponsePlaylistsModel.fromJson(item as Map<String, dynamic>)),
           );
         },
       );

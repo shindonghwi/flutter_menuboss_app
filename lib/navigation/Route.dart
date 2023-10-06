@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
+import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
@@ -94,7 +95,7 @@ enum RoutingScreen {
       ResponseMediaModel mediaInfo = parameter;
       return MediaInFolderScreen(item: mediaInfo);
     } else if (route == RoutingScreen.DetailPlaylist.route) {
-      ResponsePlaylistModel model = parameter;
+      ResponsePlaylistsModel model = parameter;
       return DetailPlaylistScreen(item: model);
     } else if (route == RoutingScreen.CreatePlaylist.route) {
       ResponsePlaylistModel? model = parameter;
