@@ -1,10 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/domain/usecases/remote/canvas/GetCanvasesUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
 final MediaContentsCanvasProvider =

@@ -19,6 +19,7 @@ import 'package:menuboss/presentation/features/main/my/provider/LogoutProvider.d
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
@@ -113,7 +114,7 @@ class _UserProfile extends HookWidget {
             child: Column(
               mainAxisSize: MainAxisSize.max,
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -135,12 +136,13 @@ class _UserProfile extends HookWidget {
                         ),
                       ),
                     ),
-                    Text(
-                      name ?? "",
-                      style: getTextTheme(context).b2sb.copyWith(
-                            color: getColorScheme(context).colorGray900,
-                          ),
-                    ),
+                    if (!CollectionUtil.isNullEmptyFromString(name))
+                      Text(
+                        name.toString(),
+                        style: getTextTheme(context).b2sb.copyWith(
+                              color: getColorScheme(context).colorGray900,
+                            ),
+                      ),
                   ],
                 ),
                 Column(

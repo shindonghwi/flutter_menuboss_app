@@ -9,8 +9,10 @@ import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
+import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/apply_screen/provider/PostApplyContentsToScreenProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
@@ -79,54 +81,55 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
       body: SafeArea(
         child: !CollectionUtil.isNullorEmpty(deviceManager.currentDevices)
             ? Stack(
-                children: [
-                  ListView.separated(
-                    shrinkWrap: true,
-                    itemCount: deviceManager.currentDevices.length,
-                    itemBuilder: (context, index) {
-                      return ApplyDeviceItem(
-                        item: deviceManager.currentDevices[index],
-                        isChecked: checkListManager.isExist(index),
-                        onPressed: () => checkListManager.onChanged(index),
-                      );
-                    },
-                    separatorBuilder: (context, index) {
-                      return const SizedBox();
-                    },
+          children: [
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: deviceManager.currentDevices.length,
+              itemBuilder: (context, index) {
+                return ApplyDeviceItem(
+                  item: deviceManager.currentDevices[index],
+                  isChecked: checkListManager.isExist(index),
+                  onPressed: () => checkListManager.onChanged(index),
+                );
+              },
+              separatorBuilder: (context, index) {
+                return const SizedBox();
+              },
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: SizedBox(
+                width: getMediaQuery(context).size.width,
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
+                  child: PrimaryFilledButton.largeRound8(
+                    content: getAppLocalizations(context).common_done,
+                    isActivated: checkList.isNotEmpty,
+                    onPressed: () => applyScreenManager.applyToScreen(applyItem.value),
                   ),
-                  Align(
-                    alignment: Alignment.bottomCenter,
-                    child: SizedBox(
-                      width: getMediaQuery(context).size.width,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
-                        child: PrimaryFilledButton.largeRound8(
-                          content: getAppLocalizations(context).common_done,
-                          isActivated: checkList.isNotEmpty,
-                          onPressed: () => applyScreenManager.applyToScreen(applyItem.value),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              )
-            : EmptyView(
-                type: BlankMessageType.ADD_SCREEN,
-                onPressed: () async {
-                  try {
-                    final isAdded = await Navigator.push(
-                      context,
-                      nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
-                    );
-
-                    if (isAdded) {
-                      deviceManager.requestGetDevices();
-                    }
-                  } catch (e) {
-                    debugPrint(e.toString());
-                  }
-                },
+                ),
               ),
+            ),
+            if (applyScreenState is Loading) const LoadingView()
+          ],
+        )
+            : EmptyView(
+          type: BlankMessageType.ADD_SCREEN,
+          onPressed: () async {
+            try {
+              final isAdded = await Navigator.push(
+                context,
+                nextSlideVerticalScreen(RoutingScreen.ScanQR.route),
+              );
+
+              if (isAdded) {
+                deviceManager.requestGetDevices();
+              }
+            } catch (e) {
+              debugPrint(e.toString());
+            }
+          },
+        ),
       ),
     );
   }

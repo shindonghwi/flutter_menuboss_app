@@ -6,8 +6,8 @@ import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final MediaContentsProvider = StateNotifierProvider<MediaContentsNotifier, UIState<List<SimpleMediaContentModel>>>(
-  (ref) => MediaContentsNotifier(),
+final mediaContentsProvider = StateNotifierProvider<MediaContentsNotifier, UIState<List<SimpleMediaContentModel>>>(
+      (ref) => MediaContentsNotifier(),
 );
 
 class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaContentModel>>> {
@@ -22,40 +22,40 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
 
   /// 미디어 리스트 요청
   Future<void> requestGetMedias() async {
-    if (_currentPage == 1) {
-      state = Loading();
-    }
-
     if (_hasNext) {
+      if (_currentPage == 1) {
+        state = Loading();
+      }
+
       if (_isProcessing) return;
       _isProcessing = true;
-      _getMediasUseCase
-          .call(page: _currentPage, size: 50, sort: filterParams[FilterType.NewestFirst]!)
-          .then((response) {
-        try {
-          if (response.status == 200) {
-            final responseItems = response.list?.toList() ?? [];
-            List<SimpleMediaContentModel> updateItems = [];
-            if (_currentPage == 1) {
-              updateItems = responseItems.map((e) => e.toMapperMediaContentModel()).toList();
-            } else {
-              updateItems = [
-                ..._originMediaItems.map((e) => e.toMapperMediaContentModel()),
-                ...responseItems.map((e) => e.toMapperMediaContentModel())
-              ];
-            }
-            updateCurrentItems(responseItems);
-            _hasNext = response.page!.hasNext;
-            _currentPage = response.page!.currentPage + 1;
-            state = Success([...updateItems]);
+
+      try {
+        final response = await _getMediasUseCase.call(page: _currentPage, size: 20, sort: filterParams[FilterType.NewestFirst]!);
+        if (response.status == 200) {
+          final responseItems = response.list?.toList() ?? [];
+          List<SimpleMediaContentModel> updateItems = [];
+          if (_currentPage == 1) {
+            updateItems = responseItems.map((e) => e.toMapperMediaContentModel()).toList();
           } else {
-            state = Failure(response.message);
+            updateItems = [
+              ..._originMediaItems.map((e) => e.toMapperMediaContentModel()),
+              ...responseItems.map((e) => e.toMapperMediaContentModel())
+            ];
           }
-        } catch (e) {
+          updateCurrentItems(responseItems);
+          _hasNext = response.page!.hasNext;
+          _currentPage = response.page!.currentPage + 1;
+          state = Success([...updateItems]);
+        } else {
+          initPageInfo();
           state = Failure(response.message);
         }
-        _isProcessing = false;
-      });
+      } catch (e) {
+        initPageInfo();
+        state = Failure(e.toString());
+      }
+      _isProcessing = false;
     }
   }
 
@@ -68,4 +68,9 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
     _hasNext = true;
     _isProcessing = false;
   }
+
+  void init() {
+    state = Idle();
+  }
+
 }

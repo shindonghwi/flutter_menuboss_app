@@ -22,24 +22,25 @@ class MediaTab extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useAutomaticKeepAlive();
 
-    final mediaContents = useState<List<SimpleMediaContentModel>?>(null);
-    final mediaContentsState = ref.watch(MediaContentsProvider);
-    final mediaContentsProvider = ref.read(MediaContentsProvider.notifier);
+    final mediaContentsState = ref.watch(mediaContentsProvider);
+    final mediaContentsManager = ref.read(mediaContentsProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        mediaContentsProvider.requestGetMedias(); // 미디어 목록 호출
+        mediaContentsManager.requestGetMedias(); // 미디어 목록 호출
       });
-      return null;
-    },[]);
+      return () {
+        Future(() {
+          mediaContentsManager.initPageInfo();
+          mediaContentsManager.init();
+        });
+      };
+    }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           mediaContentsState.when(
-            success: (event) {
-              mediaContents.value = event.value;
-            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -52,13 +53,8 @@ class MediaTab extends HookConsumerWidget {
     return Stack(
       children: [
         if (mediaContentsState is Failure)
-          FailView(onPressed: () => mediaContentsProvider.requestGetMedias())
-        else if (mediaContents.value != null)
-          _SimpleMediaList(
-            items: mediaContents.value!,
-            onFolderTap: (folderId) {
-              onFolderTap.call(folderId);
-            },
+          FailView(
+            onPressed: () => mediaContentsManager.requestGetMedias(),
           )
         else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
           _SimpleMediaList(
@@ -85,13 +81,13 @@ class _SimpleMediaList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContentsProvider = ref.read(MediaContentsProvider.notifier);
+    final mediaContentsManager = ref.read(mediaContentsProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
     useEffect(() {
       scrollController.addListener(() {
         if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
-          mediaContentsProvider.requestGetMedias();
+          mediaContentsManager.requestGetMedias();
         }
       });
       return null;
@@ -103,7 +99,6 @@ class _SimpleMediaList extends HookConsumerWidget {
       padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
       itemCount: items.length,
       itemBuilder: (context, index) {
-        debugPrint("index: ${items[index].id} ${items[index].property}}");
         return MediaItemAdd(item: items[index], onFolderTap: () => onFolderTap.call(items[index].id ?? ""));
       },
     );

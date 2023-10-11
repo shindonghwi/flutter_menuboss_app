@@ -29,24 +29,25 @@ class MediaTabFolder extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContents = useState<List<SimpleMediaContentModel>?>(null);
-    final mediaContentsState = ref.watch(MediaContentsInFolderProvider);
-    final mediaContentsProvider = ref.read(MediaContentsInFolderProvider.notifier);
+    final mediaContentsState = ref.watch(mediaContentsInFolderProvider);
+    final mediaContentsManager = ref.read(mediaContentsInFolderProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        mediaContentsProvider.requestGetMedias(folderId);
+        mediaContentsManager.requestGetMedias(folderId);
       });
-      return null;
+      return () {
+        Future(() {
+          mediaContentsManager.initPageInfo();
+          mediaContentsManager.init();
+        });
+      };
     }, [folderId]);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           mediaContentsState.when(
-            success: (event) {
-              mediaContents.value = event.value;
-            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -61,11 +62,7 @@ class MediaTabFolder extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Clickable(
-            onPressed: () {
-              mediaContents.value?.clear();
-              mediaContentsProvider.initPageInfo();
-              onPressed.call();
-            },
+            onPressed: () => onPressed.call(),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
               child: Row(
@@ -85,8 +82,8 @@ class MediaTabFolder extends HookConsumerWidget {
                     child: Text(
                       "Back",
                       style: getTextTheme(context).b3sb.copyWith(
-                            color: getColorScheme(context).colorGray900,
-                          ),
+                        color: getColorScheme(context).colorGray900,
+                      ),
                     ),
                   ),
                 ],
@@ -97,17 +94,12 @@ class MediaTabFolder extends HookConsumerWidget {
             child: Stack(
               children: [
                 if (mediaContentsState is Failure)
-                  FailView(onPressed: () => mediaContentsProvider.requestGetMedias(folderId))
-                else if (mediaContents.value != null)
-                  _SimpleMediaList(
-                    folderId: folderId,
-                    items: mediaContents.value!,
-                  )
+                  FailView(onPressed: () => mediaContentsManager.requestGetMedias(folderId))
                 else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
-                  _SimpleMediaList(
-                    folderId: folderId,
-                    items: mediaContentsState.value,
-                  ),
+                    _SimpleMediaList(
+                      folderId: folderId,
+                      items: mediaContentsState.value,
+                    ),
                 if (mediaContentsState is Loading) const LoadingView(),
               ],
             ),
@@ -130,13 +122,13 @@ class _SimpleMediaList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContentsProvider = ref.read(MediaContentsInFolderProvider.notifier);
+    final mediaContentsManager = ref.read(mediaContentsInFolderProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
     useEffect(() {
       scrollController.addListener(() {
         if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
-          mediaContentsProvider.requestGetMedias(folderId);
+          mediaContentsManager.requestGetMedias(folderId);
         }
       });
       return null;
