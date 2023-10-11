@@ -25,18 +25,21 @@ class SelectMediaFileScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaState = ref.watch(mediaListProvider);
     final mediaManager = ref.read(mediaListProvider.notifier);
-    final mediaList = useState<List<ResponseMediaModel>?>(null);
-    final checkListState = ref.watch(SelectMediaCheckListProvider);
-    final checkListProvider = ref.read(SelectMediaCheckListProvider.notifier);
+    final checkListState = ref.watch(selectMediaCheckListProvider);
+    final checkListManager = ref.read(selectMediaCheckListProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        checkListProvider.init();
         if (!CollectionUtil.isNullorEmpty(mediaManager.currentItems)) {
           mediaManager.updateCurrentItems(mediaManager.currentItems, isUiUpdate: true);
         }
       });
-      return null;
+      return (){
+        Future(() {
+          checkListManager.init();
+          mediaManager.init();
+        });
+      };
     }, []);
 
     return BaseScaffold(
@@ -46,12 +49,8 @@ class SelectMediaFileScreen extends HookConsumerWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            if (mediaState is Failure && mediaList.value == null)
+            if (mediaState is Failure)
               FailView(onPressed: () => mediaManager.requestGetMedias())
-            else if (mediaList.value != null)
-              _MediaList(
-                items: mediaList.value!,
-              )
             else if (mediaState is Success<List<ResponseMediaModel>>)
               _MediaList(
                 items: mediaState.value,
@@ -89,7 +88,7 @@ class _MediaList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkListProvider = ref.read(SelectMediaCheckListProvider.notifier);
+    final checkListManager = ref.read(selectMediaCheckListProvider.notifier);
     final mediaManager = ref.read(mediaListProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
@@ -122,7 +121,7 @@ class _MediaList extends HookConsumerWidget {
                 ),
               );
             } else {
-              checkListProvider.onChanged(item.mediaId);
+              checkListManager.onChanged(item.mediaId);
             }
           },
           child: SelectMediaItem(item: item),

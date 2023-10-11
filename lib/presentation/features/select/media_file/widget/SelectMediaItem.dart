@@ -23,7 +23,7 @@ class SelectMediaItem extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkListState = ref.watch(SelectMediaCheckListProvider);
+    final checkListState = ref.watch(selectMediaCheckListProvider);
 
     Widget? iconWidget;
 

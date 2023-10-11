@@ -30,27 +30,26 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectMediaState = ref.watch(SelectMediaInFolderListProvider);
-    final selectMediaListProvider = ref.read(SelectMediaInFolderListProvider.notifier);
-    final mediaProvider = ref.read(mediaListProvider.notifier);
-    final checkListState = ref.watch(SelectMediaCheckListProvider);
-    final mediaList = useState<List<ResponseMediaModel>?>(null);
-    //
+    final selectMediaState = ref.watch(selectMediaInFolderListProvider);
+    final selectMediaListManager = ref.read(selectMediaInFolderListProvider.notifier);
+    final mediaListManager = ref.read(mediaListProvider.notifier);
+    final checkListState = ref.watch(selectMediaCheckListProvider);
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        selectMediaListProvider.initPageInfo();
-        selectMediaListProvider.requestGetMedias(mediaId: item!.mediaId);
+        selectMediaListManager.requestGetMedias(mediaId: item!.mediaId);
       });
-      return null;
+      return (){
+        Future(() {
+          selectMediaListManager.initPageInfo();
+        });
+      };
     }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           selectMediaState.when(
-            success: (event) {
-              mediaList.value = event.value;
-            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -67,12 +66,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
       body: Stack(
         children: [
           if (selectMediaState is Failure)
-            FailView(onPressed: () => selectMediaListProvider.requestGetMedias(mediaId: item!.mediaId))
-          else if (mediaList.value != null)
-            _MediaContentList(
-              folderId: item!.mediaId,
-              items: mediaList.value!,
-            )
+            FailView(onPressed: () => selectMediaListManager.requestGetMedias(mediaId: item!.mediaId))
           else if (selectMediaState is Success<List<ResponseMediaModel>>)
             _MediaContentList(
               folderId: item!.mediaId,
@@ -93,10 +87,10 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
           );
         },
         onDeleteClick: () async{
-          final isSuccess = await mediaProvider.removeItem(checkListState, folderId: item!.mediaId);
+          final isSuccess = await mediaListManager.removeItem(checkListState, folderId: item!.mediaId);
           if (isSuccess) {
-            mediaProvider.initPageInfo();
-            mediaProvider.requestGetMedias();
+            mediaListManager.initPageInfo();
+            mediaListManager.requestGetMedias();
           }
           Navigator.of(context).pop();
           Navigator.of(context).pop();
@@ -118,14 +112,14 @@ class _MediaContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final checkListProvider = ref.read(SelectMediaCheckListProvider.notifier);
-    final mediaProvider = ref.read(SelectMediaInFolderListProvider.notifier);
+    final checkListManager = ref.read(selectMediaCheckListProvider.notifier);
+    final mediaListManager = ref.read(selectMediaInFolderListProvider.notifier);
     final scrollController = useScrollController(keepScrollOffset: true);
 
     useEffect(() {
       scrollController.addListener(() {
         if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
-          mediaProvider.requestGetMedias(mediaId: folderId);
+          mediaListManager.requestGetMedias(mediaId: folderId);
         }
       });
       return null;
@@ -145,7 +139,7 @@ class _MediaContentList extends HookConsumerWidget {
                   final item = items[index];
                   return ClickableScale(
                     onPressed: () async {
-                      checkListProvider.onChanged(item.mediaId);
+                      checkListManager.onChanged(item.mediaId);
                     },
                     child: SelectMediaItem(
                       item: item,

@@ -1,6 +1,6 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 
-final SelectMediaCheckListProvider = StateNotifierProvider<SelectMediaCheckListProviderNotifier, List<String>>(
+final selectMediaCheckListProvider = StateNotifierProvider<SelectMediaCheckListProviderNotifier, List<String>>(
       (ref) => SelectMediaCheckListProviderNotifier(),
 );
 
