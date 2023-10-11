@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponseMediaProperty.dart';
+import 'ResponseMediaPropertyInfo.dart';
 
 part 'ResponseMediaInfoModel.g.dart';
 
@@ -10,7 +11,7 @@ class ResponseMediaInfoModel {
   final String object;
   final String mediaId;
   final String? name;
-  final String? type;
+  final ResponseMediaPropertyInfo? type;
   final ResponseMediaProperty? property;
   final String? updatedAt;
 

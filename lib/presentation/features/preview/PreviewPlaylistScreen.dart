@@ -31,7 +31,7 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
     final isDirectionHorizontal = useState(playlistSaveInfo.property.direction.toLowerCase() == "horizontal");
     final isScaleFit = useState(playlistSaveInfo.property.fill.toLowerCase() == "fit");
 
-    List<int?> durations = mediaContentsCart.map((e) => e.property?.duration).toList();
+    List<int?> durations = mediaContentsCart.map((e) => e.property?.duration?.toInt()).toList();
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(

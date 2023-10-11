@@ -13,7 +13,7 @@ class ResponsePlaylistContent {
   final String contentId;
   final String name;
   final ResponsePlaylistPropertyInfo type;
-  final int duration;
+  final double duration;
   final ResponsePlaylistContentProperty property;
 
   ResponsePlaylistContent({

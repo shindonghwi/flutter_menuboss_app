@@ -13,7 +13,7 @@ ResponsePlaylistContent _$ResponsePlaylistContentFromJson(
       name: json['name'] as String,
       type: ResponsePlaylistPropertyInfo.fromJson(
           json['type'] as Map<String, dynamic>),
-      duration: json['duration'] as int,
+      duration: (json['duration'] as num).toDouble(),
       property: ResponsePlaylistContentProperty.fromJson(
           json['property'] as Map<String, dynamic>),
     );

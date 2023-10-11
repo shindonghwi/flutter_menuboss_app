@@ -101,7 +101,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                               Padding(
                                 padding: const EdgeInsets.only(top: 4.0),
                                 child: Text(
-                                  StringUtil.formatDuration(item.property?.duration ?? 0),
+                                  StringUtil.formatDuration(item.property?.duration ?? 0.0),
                                   style: getTextTheme(context).c1sb.copyWith(
                                         color: getColorScheme(context).colorGray500,
                                       ),
@@ -126,7 +126,7 @@ class PlaylistContentItem extends HookConsumerWidget {
               ],
               onSelected: (type, text) {
                 if (type == ModifyType.ChangeDuration) {
-                  final duration = StringUtil.formatDuration(item.property?.duration ?? 0);
+                  final duration = StringUtil.formatDuration(item.property?.duration ?? 0.0);
                   CommonPopup.showPopup(
                     context,
                     child: PopupChangeDuration(
@@ -134,7 +134,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                       min: StringUtil.parseDuration(duration).second,
                       sec: StringUtil.parseDuration(duration).third,
                       onClicked: (duration) {
-                        mediaCartManger.changeDurationItem(item, duration);
+                        mediaCartManger.changeDurationItem(item, duration.toDouble());
                       },
                     ),
                   );

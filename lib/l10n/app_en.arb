@@ -57,11 +57,13 @@
 
     "media_info_title": "Media Information",
     "media_info_menu_input_title": "Title",
-    "media_info_menu_file_name": "File name",
-    "media_info_menu_uploaded_data": "Uploaded date",
+    "media_info_menu_input_file_name_hint": "Input file name",
+    "media_info_menu_modified_data": "Modified date",
     "media_info_menu_file_size": "File size",
     "media_info_menu_file_type": "File type",
     "media_info_menu_file_capacity": "File capacity",
+    "media_info_menu_file_codec": "Codec",
+    "media_info_menu_file_running_time": "Running time",
 
     "media_content_title": "Contents",
     "media_content_tab_media": "Media",

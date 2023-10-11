@@ -27,8 +27,8 @@ Map<String, dynamic> _$ResponseMediaModelToJson(ResponseMediaModel instance) =>
     <String, dynamic>{
       'object': instance.object,
       'mediaId': instance.mediaId,
-      'name': instance.name,
       'type': instance.type,
+      'name': instance.name,
       'property': instance.property,
       'createdAt': instance.createdAt,
       'updatedAt': instance.updatedAt,

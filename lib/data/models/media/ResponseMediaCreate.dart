@@ -2,6 +2,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponseMediaProperty.dart';
+import 'ResponseMediaPropertyInfo.dart';
 
 part 'ResponseMediaCreate.g.dart';
 
@@ -9,7 +10,7 @@ part 'ResponseMediaCreate.g.dart';
 class ResponseMediaCreate {
   final String? object;
   final String? mediaId;
-  final String? type;
+  final ResponseMediaPropertyInfo? type;
   final String? name;
   final ResponseMediaProperty? property;
   final String? updatedAt;

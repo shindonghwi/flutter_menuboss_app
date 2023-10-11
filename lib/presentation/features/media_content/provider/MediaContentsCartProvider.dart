@@ -23,7 +23,7 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
     state = [...state..removeAt(index)];
   }
 
-  void changeDurationItem(SimpleMediaContentModel item, int duration) {
+  void changeDurationItem(SimpleMediaContentModel item, double duration) {
     state = [
       ...state.map((e) {
         return e == item ? item.copyWith(property: item.property?.copyWith(duration: duration)) : e;

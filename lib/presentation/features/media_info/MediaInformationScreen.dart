@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
-import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
@@ -15,10 +13,12 @@ import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
+import 'provider/MediaInfoProvider.dart';
 import 'provider/MediaNameChangeProvider.dart';
 
 class MediaInformationScreen extends HookConsumerWidget {
@@ -31,18 +31,28 @@ class MediaInformationScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaNameChangeState = ref.watch(MediaNameChangeProvider);
-    final mediaNameChangeProvider = ref.read(MediaNameChangeProvider.notifier);
+    final mediaNameChangeState = ref.watch(mediaNameChangeProvider);
+    final mediaNameChangeManager = ref.read(mediaNameChangeProvider.notifier);
+    final mediaInfoState = ref.watch(mediaInformationProvider);
+    final mediaInfoManager = ref.read(mediaInformationProvider.notifier);
     final fileName = useState<String>(item?.name ?? "");
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        mediaInfoManager.requestMediaInformation(item?.mediaId ?? "");
+      });
+      return () {
+        Future(() {
+          mediaNameChangeManager.init();
+        });
+      };
+    }, []);
 
     useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           mediaNameChangeState.when(
-            success: (event) {
-              mediaNameChangeProvider.init();
-              Navigator.of(context).pop(fileName.value);
-            },
+            success: (event) => Navigator.of(context).pop(fileName.value),
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -57,24 +67,26 @@ class MediaInformationScreen extends HookConsumerWidget {
         content: getAppLocalizations(context).media_info_title,
         rightText: getAppLocalizations(context).common_save,
         rightTextActivated: fileName.value.isNotEmpty,
-        rightIconOnPressed: () => mediaNameChangeProvider.requestChangeMediaName(item!.mediaId, fileName.value),
+        rightIconOnPressed: () => mediaNameChangeManager.requestChangeMediaName(item!.mediaId, fileName.value),
       ),
-      body: SingleChildScrollView(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                _InputFileName(
-                  item: item,
-                  onChanged: (text) => fileName.value = text,
-                ),
-                _FileImage(item: item),
-                const DividerVertical(marginVertical: 16),
-                _MediaInformation(item: item),
-              ],
-            ),
-            if (mediaNameChangeState is Loading) const LoadingView(),
-          ],
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Stack(
+            children: [
+              Column(
+                children: [
+                  _InputFileName(
+                    item: item,
+                    onChanged: (text) => fileName.value = text,
+                  ),
+                  _FileImage(item: item),
+                  const DividerVertical(marginVertical: 16),
+                  _MediaInformation(item: item),
+                ],
+              ),
+              if (mediaNameChangeState is Loading || mediaInfoState is Loading) const LoadingView(),
+            ],
+          ),
         ),
       ),
     );
@@ -108,7 +120,7 @@ class _InputFileName extends HookWidget {
           const SizedBox(height: 12),
           OutlineTextField.small(
             controller: useTextEditingController(text: item?.name),
-            hint: item?.name ?? getAppLocalizations(context).media_info_menu_file_name,
+            hint: item?.name ?? getAppLocalizations(context).media_info_menu_input_file_name_hint,
             onChanged: onChanged,
           ),
         ],
@@ -148,7 +160,7 @@ class _FileImage extends StatelessWidget {
   }
 }
 
-class _MediaInformation extends HookWidget {
+class _MediaInformation extends HookConsumerWidget {
   final ResponseMediaModel? item;
 
   const _MediaInformation({
@@ -157,70 +169,89 @@ class _MediaInformation extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    final fileName = useState<String?>(null);
-    final fileSize = useState<String?>(null);
-    final fileCapacity = useState<String?>(null);
-    final fileType = useState<String?>(null);
-    final fileUploadedDate = useState<String?>(null);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaInfoState = ref.watch(mediaInformationProvider);
+    final ValueNotifier<List<Pair<String, String>>> mediaItems = useState([]);
 
     useEffect(() {
-      if (item?.mediaId != null) {
-        GetIt.instance<GetMediaUseCase>().call(item!.mediaId).then((response) {
-          if (response.status == 200) {
-            final data = response.data;
+      void handleUiStateChange() async {
+        await Future(() {
+          mediaInfoState.when(
+            success: (event) {
+              final data = event.value;
 
-            // file name
-            fileName.value = data?.name;
+              final items = <Pair<String, String>>[];
 
-            // file Type
-            switch (data?.type?.toLowerCase()) {
-              case "image":
-                final extension = StringUtil.extractFileExtensionFromUrl(data?.property?.imageUrl);
-                fileType.value = "image / $extension";
-              case "video":
-                final extension = StringUtil.extractFileExtensionFromUrl(data?.property?.videoUrl);
-                fileType.value = "video / $extension";
-            }
+              items.add(
+                Pair(
+                  getAppLocalizations(context).media_info_menu_modified_data,
+                  StringUtil.formatSimpleDate(data?.updatedAt.toString() ?? ""),
+                ),
+              );
 
-            // file size
-            fileSize.value = "${data?.property?.width} X ${data?.property?.height}";
+              items.add(
+                Pair(
+                  getAppLocalizations(context).media_info_menu_file_size,
+                  "${data?.property?.width} X ${data?.property?.height}",
+                ),
+              );
 
-            // file uploaded date
-            fileUploadedDate.value = StringUtil.formatSimpleDate(data?.updatedAt.toString() ?? "");
+              var isFileTypeImage = true;
+              switch (data?.type?.code.toLowerCase()) {
+                case "image":
+                  final extension = StringUtil.extractFileExtensionFromUrl(data?.property?.imageUrl);
+                  items.add(
+                    Pair(
+                      getAppLocalizations(context).media_info_menu_file_type,
+                      "image / $extension",
+                    ),
+                  );
+                case "video":
+                  final extension = StringUtil.extractFileExtensionFromUrl(data?.property?.videoUrl);
+                  items.add(
+                    Pair(
+                      getAppLocalizations(context).media_info_menu_file_type,
+                      "video / $extension",
+                    ),
+                  );
+                  isFileTypeImage = false;
+              }
 
-            // file capacity
-            fileCapacity.value = StringUtil.formatBytesToMegabytes(data?.property?.size ?? 0);
-          } else {
-            Toast.showError(context, response.message);
-          }
+              items.add(
+                Pair(
+                  getAppLocalizations(context).media_info_menu_file_capacity,
+                  StringUtil.formatBytesToMegabytes(data?.property?.size ?? 0),
+                ),
+              );
+
+              if (!CollectionUtil.isNullEmptyFromString(data?.property?.codec)) {
+                items.add(
+                  Pair(
+                    getAppLocalizations(context).media_info_menu_file_codec,
+                    data?.property?.codec?.toString() ?? "",
+                  ),
+                );
+              }
+
+              if (!CollectionUtil.isNullEmptyFromString(data?.property?.duration.toString()) && !isFileTypeImage) {
+                items.add(
+                  Pair(
+                    getAppLocalizations(context).media_info_menu_file_running_time,
+                    StringUtil.formatDuration(data?.property?.duration ?? 0),
+                  ),
+                );
+              }
+
+              mediaItems.value = [...items];
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
         });
       }
-      return null;
-    }, []);
 
-    final List<Pair<String, ValueNotifier<String?>>> items = [
-      Pair(
-        getAppLocalizations(context).media_info_menu_file_name,
-        fileName,
-      ),
-      Pair(
-        getAppLocalizations(context).media_info_menu_uploaded_data,
-        fileUploadedDate,
-      ),
-      Pair(
-        getAppLocalizations(context).media_info_menu_file_size,
-        fileSize,
-      ),
-      Pair(
-        getAppLocalizations(context).media_info_menu_file_type,
-        fileType,
-      ),
-      Pair(
-        getAppLocalizations(context).media_info_menu_file_capacity,
-        fileCapacity,
-      ),
-    ];
+      handleUiStateChange();
+      return null;
+    }, [mediaInfoState]);
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
@@ -237,25 +268,26 @@ class _MediaInformation extends HookWidget {
             ),
           ),
           Column(
-            children: items
+            children: mediaItems.value
                 .map(
                   (e) => Padding(
                     padding: const EdgeInsets.symmetric(vertical: 16.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          e.first,
-                          style: getTextTheme(context).b2sb.copyWith(
-                                color: getColorScheme(context).colorGray900,
-                              ),
-                        ),
-                        if (e.second.value != null)
+                        if (!CollectionUtil.isNullEmptyFromString(e.second))
+                          Text(
+                            e.first,
+                            style: getTextTheme(context).b2sb.copyWith(
+                                  color: getColorScheme(context).colorGray900,
+                                ),
+                          ),
+                        if (!CollectionUtil.isNullEmptyFromString(e.second))
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 52.0),
                               child: Text(
-                                e.second.value.toString(),
+                                e.second.toString(),
                                 style: getTextTheme(context).b2m.copyWith(
                                       color: getColorScheme(context).colorGray500,
                                     ),

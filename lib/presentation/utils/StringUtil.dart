@@ -33,10 +33,11 @@ class StringUtil {
   }
 
   /// 주어진 시간(초) 정보를 포맷에 맞게 변환하여 반환합니다. "00:01:01"
-  static String formatDuration(int seconds) {
-    int hours = seconds ~/ 3600;
-    int minutes = (seconds % 3600) ~/ 60;
-    int remainingSeconds = seconds % 60;
+  static String formatDuration(double seconds) {
+    final tempSecond = seconds.toInt();
+    int hours = tempSecond ~/ 3600;
+    int minutes = (tempSecond % 3600) ~/ 60;
+    int remainingSeconds = (tempSecond % 60);
 
     return "${hours.toString().padLeft(2, '0')}:${minutes.toString().padLeft(2, '0')}:${remainingSeconds.toString().padLeft(2, '0')}";
   }

@@ -6,7 +6,7 @@ part 'RequestPlaylistUpdateInfoContents.g.dart';
 @JsonSerializable()
 class RequestPlaylistUpdateInfoContents {
   final String contentId;
-  final int? duration;
+  final double? duration;
 
   RequestPlaylistUpdateInfoContents({
     required this.contentId,
@@ -18,7 +18,7 @@ class RequestPlaylistUpdateInfoContents {
 
   RequestPlaylistUpdateInfoContents copyWith({
     String? contentId,
-    int? duration,
+    double? duration,
   }) {
     return RequestPlaylistUpdateInfoContents(
       contentId: contentId ?? this.contentId,

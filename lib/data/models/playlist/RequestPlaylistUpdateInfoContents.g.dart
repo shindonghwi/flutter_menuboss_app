@@ -10,7 +10,7 @@ RequestPlaylistUpdateInfoContents _$RequestPlaylistUpdateInfoContentsFromJson(
         Map<String, dynamic> json) =>
     RequestPlaylistUpdateInfoContents(
       contentId: json['contentId'] as String,
-      duration: json['duration'] as int?,
+      duration: (json['duration'] as num?)?.toDouble(),
     );
 
 Map<String, dynamic> _$RequestPlaylistUpdateInfoContentsToJson(

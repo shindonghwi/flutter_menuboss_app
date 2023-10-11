@@ -12,7 +12,10 @@ ResponseMediaInfoModel _$ResponseMediaInfoModelFromJson(
       object: json['object'] as String? ?? "",
       mediaId: json['mediaId'] as String? ?? "",
       name: json['name'] as String? ?? "",
-      type: json['type'] as String?,
+      type: json['type'] == null
+          ? null
+          : ResponseMediaPropertyInfo.fromJson(
+              json['type'] as Map<String, dynamic>),
       property: json['property'] == null
           ? null
           : ResponseMediaProperty.fromJson(

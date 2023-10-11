@@ -11,8 +11,8 @@ part 'ResponseMediaModel.g.dart';
 class ResponseMediaModel {
   final String object;
   final String mediaId;
-  final String? name;
   final ResponseMediaPropertyInfo? type;
+  final String? name;
   final ResponseMediaProperty? property;
   final String? createdAt;
   final String? updatedAt;

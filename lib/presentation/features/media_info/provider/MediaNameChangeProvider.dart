@@ -3,7 +3,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/domain/usecases/remote/media/PatchMediaNameUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final MediaNameChangeProvider = StateNotifierProvider<MediaNameChangeNotifier, UIState<String?>>(
+final mediaNameChangeProvider = StateNotifierProvider<MediaNameChangeNotifier, UIState<String?>>(
       (ref) => MediaNameChangeNotifier(),
 );
 
@@ -15,7 +15,7 @@ class MediaNameChangeNotifier extends StateNotifier<UIState<String?>> {
   /// 미디어 이름 변경
   void requestChangeMediaName(String mediaId, String fileName) {
     state = Loading();
-    _mediaNameUseCase.call(mediaId, fileName).then((response) {
+    _mediaNameUseCase.call(mediaId, fileName).then((response) async{
       if (response.status == 200) {
         state = Success(response.message);
       } else {
