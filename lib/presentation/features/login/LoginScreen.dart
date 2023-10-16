@@ -234,7 +234,7 @@ class _InputEmail extends HookWidget {
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.small(
-              controller: useTextEditingController(text: "test10@test.comm"),
+              controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_email,
               successMessage: getAppLocalizations(context).login_email_correct,
               errorMessage: getAppLocalizations(context).login_email_invalid,
@@ -274,7 +274,7 @@ class _InputPassword extends HookWidget {
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.small(
-              controller: useTextEditingController(text: "qwer12344"),
+              controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_password,
               errorMessage: getAppLocalizations(context).login_pw_invalid,
               checkRegList: const [
