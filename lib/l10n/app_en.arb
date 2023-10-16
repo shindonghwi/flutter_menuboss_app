@@ -1,0 +1,158 @@
+{
+    "appTitle": "MenuBoss",
+
+    "login_title": "Login",
+    "login_welcome": "Welcome! Please enter your details",
+    "login_email_correct": "This is a valid email address",
+    "login_email_invalid": "Email address entered incorrectly",
+    "login_pw_invalid": "a-z, A-Z, 0-9, 4 to 20 characters",
+
+    "main_navigation_menu_schedules": "Schedules",
+    "main_navigation_menu_playlists": "Playlists",
+    "main_navigation_menu_screens": "Screens",
+    "main_navigation_menu_media": "Media",
+    "main_navigation_menu_my": "My",
+
+    "scan_qr_title": "Scan QR code",
+    "scan_qr_enter_pin_code": "Enter PIN code",
+
+    "apply_screen_title": "Apply to Screens",
+
+    "create_playlist_title": "Create playlist",
+
+    "select_playlist_title": "Playlist",
+
+    "destination_folder_title": "Select destination folder",
+
+    "select_media_file_title": "Select file({count})",
+    "@select_media_file_title":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "create_schedule_title": "Create schedule",
+    "create_schedule_default_playlist_title_basic": "Basic",
+    "create_schedule_default_playlist_title_breakfast": "Breakfast",
+    "create_schedule_default_playlist_title_lunch": "Lunch",
+    "create_schedule_default_playlist_title_dinner": "Dinner",
+    "create_schedule_default_playlist_title_dawn": "Dawn",
+    "create_schedule_add_playlist": "Add Playlist",
+    "create_schedule_change_playlist": "Change Playlist",
+    "create_schedule_new_timeline": "New timeline",
+
+    "edit_playlist_title": "Edit playlist",
+
+    "edit_schedule_title": "Edit schedule",
+
+    "my_page_appbar_title": "My page",
+    "my_page_setting_item": "Settings",
+    "my_page_setting_items_profile": "Profile",
+    "my_page_setting_items_log_out": "Log out",
+    "my_page_setting_items_plan": "Plan",
+
+    "my_page_profile_appbar_title": "Profile",
+    "my_page_profile_full_name": "Full Name",
+    "my_page_profile_business_name": "Business Name",
+
+    "media_info_title": "Media Information",
+    "media_info_menu_input_title": "Title",
+    "media_info_menu_input_file_name_hint": "Input file name",
+    "media_info_menu_modified_data": "Modified date",
+    "media_info_menu_file_size": "File size",
+    "media_info_menu_file_type": "File type",
+    "media_info_menu_file_capacity": "File capacity",
+    "media_info_menu_file_codec": "Codec",
+    "media_info_menu_file_running_time": "Running time",
+
+    "media_content_title": "Contents",
+    "media_content_tab_media": "Media",
+    "media_content_tab_canvas": "Canvas",
+
+    "bottom_sheet_pin_code_description": "Please enter your PIN code",
+
+    "blank_message_content_add_screen": "Add screen",
+    "blank_message_content_add_content": "Add content",
+    "blank_message_content_new_schedule": "New schedule",
+    "blank_message_content_new_playlist": "New playlist",
+    "blank_message_content_upload_file": "Upload file",
+    "blank_message_description_add_screen": "There is currently no saved screen list\nPlease register the screen through QR code",
+    "blank_message_description_add_content": "There is currently no content\nPlease add more content",
+    "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
+    "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
+    "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
+
+    "popup_rename_media_hint": "Media name",
+    "popup_rename_screen_hint": "Screen name",
+    "popup_rename_schedule_hint": "Schedule name",
+    "popup_rename_playlist_hint": "Playlist name",
+    "popup_delete_title": "Are you sure?",
+    "popup_delete_description": "Do you really want to delete these record?\nThis process cannot be undone",
+    "popup_apply_screen_title": "Apply to screens?",
+    "popup_apply_screen_description": "Are you sure you want to apply it directly to the screens?",
+    "popup_logout_description": "Are yor sure want to log out?",
+    "popup_change_duration_title": "Please enter the duration of the media",
+
+    "common_email": "Email",
+    "common_address": "Address",
+    "common_password": "Password",
+    "common_settings": "Settings",
+    "common_refresh": "Refresh",
+    "common_title": "Title",
+    "common_total_duration": "Total duration",
+    "common_add": "Add",
+    "common_horizontal": "Horizontal",
+    "common_vertical": "Vertical",
+    "common_fit": "Fit",
+    "common_fill": "Fill",
+    "common_on": "On",
+    "common_off": "Off",
+    "common_or": "or",
+    "common_done": "Done",
+    "common_do_login": "Log in",
+    "common_edit": "Edit",
+    "common_apply": "Apply",
+    "common_confirm": "Confirm",
+    "common_rename": "Rename",
+    "common_logout": "Log out",
+    "common_delete": "Delete",
+    "common_ok": "Ok",
+    "common_cancel": "Cancel",
+    "common_preview": "Preview",
+    "common_move": "Move",
+    "common_new_folder": "New folder",
+    "common_move_here": "Move here",
+    "common_delete": "Delete",
+    "common_save": "Save",
+    "common_time": "Time",
+    "common_mode_all_day": "All day Mode",
+    "common_mode_schedule": "Schedule Mode",
+
+    "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
+    "message_file_not_found_404": "File not found\nPlease use it again",
+    "message_file_not_allow_404": "File extension you do not allowed\nPlease use it again",
+    "message_permission_error_photos": "You need photo and video permissions to upload media files",
+    "message_network_required": "The network connection is unstable",
+    "message_not_found_user": "User information not found",
+    "message_api_success": "",
+    "message_temp_login_fail": "A temporary failure has occurred\nPlease use a different login method",
+    "message_time_setting_precede": "End time cannot precede start time",
+    "message_time_setting_duplicated": "Please correct the duplicate time",
+    "message_apply_screen_success": "Successfully applied to screens",
+    "message_register_screen_success": "Successfully added to the screens",
+    "message_remove_playlist_success": "Playlist deleted successfully",
+    "message_register_playlist_success": "Playlist registered successfully",
+    "message_update_playlist_success": "Playlist information has been changed",
+    "message_add_media_in_playlist_success": "Successfully Add Media to Playlist",
+    "message_remove_schedule_success": "Schedule deleted successfully",
+    "message_register_schedule_success": "Schedule registered successfully",
+    "message_update_schedule_success": "Schedule information has been changed",
+
+    "schedule_time_basic": "Basic Exposure",
+    "schedule_time_morning": "Morning",
+    "schedule_time_lunch": "Lunch",
+    "schedule_time_dinner": "Dinner",
+    "schedule_time_dawn": "Dawn"
+
+
+}

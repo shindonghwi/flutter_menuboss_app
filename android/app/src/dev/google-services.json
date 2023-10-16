@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "922858947237",
+    "project_id": "menuboss-app-dev",
+    "storage_bucket": "menuboss-app-dev.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:922858947237:android:5e914b60a9bfccf683434c",
+        "android_client_info": {
+          "package_name": "com.orot.menuboss.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "922858947237-mf0dts052vene2pe30t80to39dss9ngc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDiCJc6FfE9BGx38TIkvs8bQBTPaFtL3a0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "922858947237-mf0dts052vene2pe30t80to39dss9ngc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
