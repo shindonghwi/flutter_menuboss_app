@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		090927962A89C52600463337 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 090927952A89C52600463337 /* StoreKit.framework */; };
 		117D70AF4E514991E1C28E57 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 149C16AFE6B47DCCA095E887 /* Pods_Runner.framework */; };
 		1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */ = {isa = PBXBuildFile; fileRef = 1498D2331E8E89220040F4C2 /* GeneratedPluginRegistrant.m */; };
 		331C808B294A63AB00263BE5 /* RunnerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 331C807B294A618700263BE5 /* RunnerTests.swift */; };
@@ -43,7 +42,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		090927952A89C52600463337 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		09208C9D2A84F11600A7C59C /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
 		09ACB5252A84CDA8001B9AF2 /* GoogleService-Info-Release.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Release.plist"; sourceTree = "<group>"; };
 		09ACB5262A84CDA8001B9AF2 /* GoogleService-Info-Debug.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-Debug.plist"; sourceTree = "<group>"; };
@@ -76,7 +74,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				117D70AF4E514991E1C28E57 /* Pods_Runner.framework in Frameworks */,
-				090927962A89C52600463337 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -95,7 +92,6 @@
 		1F20A11DEBC85DACF3BEB03A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				090927952A89C52600463337 /* StoreKit.framework */,
 				149C16AFE6B47DCCA095E887 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
