@@ -30,4 +30,14 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     debugPrint("updateMeFullName : $meInfo");
     state = meInfo;
   }
+
+  void updateMeProfileImage(String imageUrl) {
+    ResponseMeInfoModel meInfo = state!.copyWith(
+      profile: state!.profile?.copyWith(
+        imageUrl: imageUrl,
+      ),
+    );
+    debugPrint("updateMeProfileImage : $meInfo");
+    state = meInfo;
+  }
 }

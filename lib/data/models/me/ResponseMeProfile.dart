@@ -9,10 +9,12 @@ part 'ResponseMeProfile.g.dart';
 class ResponseMeProfile {
   final String? name;
   final ResponseMePhone? phone;
+  final String? imageUrl;
 
   ResponseMeProfile({
     required this.name,
     required this.phone,
+    required this.imageUrl,
   });
 
   factory ResponseMeProfile.fromJson(Map<String, dynamic> json) => _$ResponseMeProfileFromJson(json);
@@ -22,10 +24,12 @@ class ResponseMeProfile {
   ResponseMeProfile copyWith({
     String? name,
     ResponseMePhone? phone,
+    String? imageUrl,
   }) {
     return ResponseMeProfile(
       name: name ?? this.name,
       phone: phone ?? this.phone,
+      imageUrl: imageUrl ?? this.imageUrl,
     );
   }
 

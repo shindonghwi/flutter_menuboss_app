@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
@@ -17,10 +18,13 @@ import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/main/my/profile/provider/NameChangeProvider.dart';
+import 'package:menuboss/presentation/features/main/my/profile/provider/PostProfileImageUploadProvider.dart';
+import 'package:menuboss/presentation/features/main/my/profile/provider/UpdateProfileImageProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
 
 class MyProfileScreen extends HookConsumerWidget {
   const MyProfileScreen({super.key});
@@ -28,16 +32,26 @@ class MyProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final nameChangeState = ref.watch(nameChangeProvider);
-    final meInfoManager = ref.read(meInfoProvider.notifier);
     final nameChangeManager = ref.read(nameChangeProvider.notifier);
 
+    final updateProfileImageState = ref.watch(updateProfileImageProvider);
+    final updateProfileImageManager = ref.read(updateProfileImageProvider.notifier);
+
+    final uploadState = ref.watch(postProfileImageUploadProvider);
+    final uploadManager = ref.read(postProfileImageUploadProvider.notifier);
+
+    final meInfoState = ref.watch(meInfoProvider);
+    final meInfoManager = ref.read(meInfoProvider.notifier);
+
     useEffect(() {
-      return (){
-        Future((){
+      return () {
+        Future(() {
           nameChangeManager.init();
+          updateProfileImageManager.init();
+          uploadManager.init();
         });
       };
-    },[]);
+    }, []);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -50,9 +64,28 @@ class MyProfileScreen extends HookConsumerWidget {
             Toast.showError(context, event.errorMessage);
           },
         );
+        uploadState.when(
+          success: (event) async {
+            updateProfileImageManager.requestUploadProfileImage(uploadManager.imageId);
+            updateProfileImageManager.init();
+          },
+          failure: (event) {
+            Toast.showError(context, event.errorMessage);
+          },
+        );
+        updateProfileImageState.when(
+          success: (event) async {
+            meInfoManager.updateMeProfileImage(event.value ?? "");
+            updateProfileImageManager.init();
+            uploadManager.init();
+          },
+          failure: (event) {
+            Toast.showError(context, event.errorMessage);
+          },
+        );
       });
       return null;
-    }, [nameChangeState]);
+    }, [nameChangeState, uploadState, updateProfileImageState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleText(
@@ -71,7 +104,7 @@ class MyProfileScreen extends HookConsumerWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 24),
-                  const Align(
+                  Align(
                     alignment: Alignment.center,
                     child: SizedBox(
                       width: 120,
@@ -79,7 +112,7 @@ class MyProfileScreen extends HookConsumerWidget {
                       child: Stack(
                         children: [
                           LoadProfile(
-                            url: "",
+                            url: meInfoState?.profile?.imageUrl ?? "",
                             type: ProfileImagePlaceholderType.Size120x120,
                           ),
                           _CameraWidget()
@@ -128,7 +161,8 @@ class MyProfileScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-            if (nameChangeState is Loading) const LoadingView()
+            if (nameChangeState is Loading || uploadState is Loading || updateProfileImageState is Loading)
+              const LoadingView()
           ],
         ),
       ),
@@ -136,13 +170,15 @@ class MyProfileScreen extends HookConsumerWidget {
   }
 }
 
-class _CameraWidget extends StatelessWidget {
+class _CameraWidget extends HookConsumerWidget {
   const _CameraWidget({
     super.key,
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final uploadManager = ref.read(postProfileImageUploadProvider.notifier);
+
     return Align(
       alignment: Alignment.bottomRight,
       child: Container(
@@ -153,7 +189,20 @@ class _CameraWidget extends StatelessWidget {
           borderRadius: BorderRadius.circular(100),
         ),
         child: Clickable(
-          onPressed: () {},
+          onPressed: () {
+            FilePickerUtil.pickFile(
+              onImageSelected: (XFile xFile) async {
+                uploadManager.requestUploadProfileImage(xFile.path);
+              },
+              onVideoSelected: null,
+              notAvailableFile: () {
+                Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);
+              },
+              onError: (message) {
+                Toast.showError(context, message);
+              },
+            );
+          },
           borderRadius: 100,
           child: Padding(
             padding: const EdgeInsets.all(10.0),
@@ -178,7 +227,7 @@ class _InputFullName extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final meInfoManager = ref.watch(meInfoProvider);
+    final meInfoState = ref.watch(meInfoProvider);
     final nameChangeManager = ref.read(nameChangeProvider.notifier);
 
     return Column(
@@ -192,8 +241,8 @@ class _InputFullName extends HookConsumerWidget {
         ),
         const SizedBox(height: 12),
         OutlineTextField.small(
-          controller: useTextEditingController(text: meInfoManager?.profile?.name),
-          hint: meInfoManager?.profile?.name ?? "",
+          controller: useTextEditingController(text: meInfoState?.profile?.name),
+          hint: meInfoState?.profile?.name ?? "",
           onChanged: (value) => nameChangeManager.updateName(value),
         )
       ],
@@ -206,7 +255,7 @@ class _InputEmail extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final meInfoManager = ref.watch(meInfoProvider);
+    final meInfoState = ref.watch(meInfoProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -218,7 +267,7 @@ class _InputEmail extends HookConsumerWidget {
         ),
         const SizedBox(height: 12),
         OutlineTextField.small(
-          hint: meInfoManager?.email ?? "",
+          hint: meInfoState?.email ?? "",
           enable: false,
         )
       ],

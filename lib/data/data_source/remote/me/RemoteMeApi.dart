@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
+import 'package:menuboss/data/models/me/ResponseMeUpdateProfile.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
@@ -103,6 +104,29 @@ class RemoteMeApi {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
         (json) {},
+      );
+    }
+  }
+
+  /// 프로필 이미지 업데이트
+  Future<ApiResponse<ResponseMeUpdateProfile>> patchProfileImage(int imageId) async {
+    final response = await Service.patchApi(
+      type: ServiceType.Me,
+      endPoint: "profile/image",
+      jsonBody: {"imageId": imageId},
+    );
+
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
+      return ApiResponse(
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+            (json) => ResponseMeUpdateProfile.fromJson(json),
       );
     }
   }

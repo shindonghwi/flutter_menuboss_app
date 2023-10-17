@@ -71,6 +71,7 @@ class MyScreen extends HookConsumerWidget {
               children: [
                 const SizedBox(height: 24),
                 _UserProfile(
+                  imageUrl: meInfo?.profile?.imageUrl,
                   role: meInfo?.business?.role,
                   name: meInfo?.profile?.name,
                   businessName: meInfo?.business?.title,
@@ -91,6 +92,7 @@ class MyScreen extends HookConsumerWidget {
 }
 
 class _UserProfile extends HookWidget {
+  final String? imageUrl;
   final String? role;
   final String? name;
   final String? businessName;
@@ -98,6 +100,7 @@ class _UserProfile extends HookWidget {
 
   const _UserProfile({
     super.key,
+    required this.imageUrl,
     required this.role,
     required this.name,
     required this.businessName,
@@ -111,8 +114,8 @@ class _UserProfile extends HookWidget {
       margin: const EdgeInsets.only(left: 24, right: 12),
       child: Row(
         children: [
-          const LoadProfile(
-            url: '',
+          LoadProfile(
+            url: imageUrl ?? "",
             type: ProfileImagePlaceholderType.Size100x100,
           ),
           const SizedBox(
