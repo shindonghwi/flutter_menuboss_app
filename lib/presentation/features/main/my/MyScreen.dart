@@ -69,12 +69,17 @@ class MyScreen extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                SizedBox(height: 24),
-                _UserProfile(role: meInfo?.business?.role, name: meInfo?.name),
-                SizedBox(height: 24),
-                _UserPlanScreenInfo(),
-                DividerVertical(marginVertical: 12),
-                _SettingItems(),
+                const SizedBox(height: 24),
+                _UserProfile(
+                  role: meInfo?.business?.role,
+                  name: meInfo?.profile?.name,
+                  businessName: meInfo?.business?.title,
+                  email: meInfo?.email,
+                ),
+                // SizedBox(height: 24),
+                // _UserPlanScreenInfo(),
+                const DividerVertical(marginVertical: 12),
+                const _SettingItems(),
               ],
             ),
             if (logoutState is Loading) const LoadingView()
@@ -88,11 +93,15 @@ class MyScreen extends HookConsumerWidget {
 class _UserProfile extends HookWidget {
   final String? role;
   final String? name;
+  final String? businessName;
+  final String? email;
 
   const _UserProfile({
     super.key,
     required this.role,
     required this.name,
+    required this.businessName,
+    required this.email,
   });
 
   @override
@@ -103,7 +112,7 @@ class _UserProfile extends HookWidget {
       child: Row(
         children: [
           const LoadProfile(
-            url: 'https://img.freepik.com/free-photo/portrait-of-white-man-isolated_53876-40306.jpg',
+            url: '',
             type: ProfileImagePlaceholderType.Size100x100,
           ),
           const SizedBox(
@@ -119,23 +128,24 @@ class _UserProfile extends HookWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: getColorScheme(context).colorPrimary500,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      margin: const EdgeInsets.only(bottom: 4),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        child: Text(
-                          role ?? "",
-                          style: getTextTheme(context).c2m.copyWith(
-                                color: getColorScheme(context).white,
-                              ),
-                          overflow: TextOverflow.ellipsis,
+                    if (!CollectionUtil.isNullEmptyFromString(role))
+                      Container(
+                        decoration: BoxDecoration(
+                          color: getColorScheme(context).colorPrimary500,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        margin: const EdgeInsets.only(bottom: 4),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          child: Text(
+                            role.toString(),
+                            style: getTextTheme(context).c2m.copyWith(
+                                  color: getColorScheme(context).white,
+                                ),
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
-                    ),
                     if (!CollectionUtil.isNullEmptyFromString(name))
                       Text(
                         name.toString(),
@@ -148,18 +158,20 @@ class _UserProfile extends HookWidget {
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'MenuBoss',
-                      style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray700,
-                          ),
-                    ),
-                    Text(
-                      'admin@menuboss.com',
-                      style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray700,
-                          ),
-                    ),
+                    if (!CollectionUtil.isNullEmptyFromString(businessName))
+                      Text(
+                        businessName.toString(),
+                        style: getTextTheme(context).c1sb.copyWith(
+                              color: getColorScheme(context).colorGray700,
+                            ),
+                      ),
+                    if (!CollectionUtil.isNullEmptyFromString(email))
+                      Text(
+                        email.toString(),
+                        style: getTextTheme(context).c1sb.copyWith(
+                              color: getColorScheme(context).colorGray700,
+                            ),
+                      ),
                   ],
                 ),
               ],

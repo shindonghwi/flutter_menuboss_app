@@ -23,7 +23,9 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
 
   void updateMeFullName(String name) {
     ResponseMeInfoModel meInfo = state!.copyWith(
-      name: name,
+      profile: state!.profile?.copyWith(
+        name: name,
+      ),
     );
     debugPrint("updateMeFullName : $meInfo");
     state = meInfo;

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/data/models/me/ResponseMeProfile.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 import 'ResponseMeAuthorization.dart';
@@ -13,16 +14,14 @@ part 'ResponseMeInfoModel.g.dart';
 class ResponseMeInfoModel {
   final int memberId;
   final String? email;
-  final String? name;
-  final ResponseMePhone? phone;
+  final ResponseMeProfile? profile;
   final ResponseMeBusiness? business;
   final ResponseMeAuthorization? authorization;
 
   ResponseMeInfoModel({
     required this.memberId,
     required this.email,
-    required this.name,
-    required this.phone,
+    required this.profile,
     required this.business,
     required this.authorization,
   });
@@ -33,16 +32,14 @@ class ResponseMeInfoModel {
 
   ResponseMeInfoModel copyWith({
     String? email,
-    String? name,
-    ResponseMePhone? phone,
+    ResponseMeProfile? profile,
     ResponseMeBusiness? business,
     ResponseMeAuthorization? authorization,
   }) {
     return ResponseMeInfoModel(
       memberId: memberId,
       email: email ?? this.email,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
+      profile: profile ?? this.profile,
       business: business ?? this.business,
       authorization: authorization ?? this.authorization,
     );

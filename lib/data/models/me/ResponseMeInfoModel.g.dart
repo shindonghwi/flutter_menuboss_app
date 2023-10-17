@@ -10,10 +10,9 @@ ResponseMeInfoModel _$ResponseMeInfoModelFromJson(Map<String, dynamic> json) =>
     ResponseMeInfoModel(
       memberId: json['memberId'] as int,
       email: json['email'] as String?,
-      name: json['name'] as String?,
-      phone: json['phone'] == null
+      profile: json['profile'] == null
           ? null
-          : ResponseMePhone.fromJson(json['phone'] as Map<String, dynamic>),
+          : ResponseMeProfile.fromJson(json['profile'] as Map<String, dynamic>),
       business: json['business'] == null
           ? null
           : ResponseMeBusiness.fromJson(
@@ -29,8 +28,7 @@ Map<String, dynamic> _$ResponseMeInfoModelToJson(
     <String, dynamic>{
       'memberId': instance.memberId,
       'email': instance.email,
-      'name': instance.name,
-      'phone': instance.phone,
+      'profile': instance.profile,
       'business': instance.business,
       'authorization': instance.authorization,
     };
