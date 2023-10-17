@@ -11,7 +11,7 @@ import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
-final NameChangeProvider = StateNotifierProvider<NameChangeUiStateNotifier, UIState<String?>>(
+final nameChangeProvider = StateNotifierProvider<NameChangeUiStateNotifier, UIState<String?>>(
       (_) => NameChangeUiStateNotifier(),
 );
 

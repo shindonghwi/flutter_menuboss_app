@@ -5,7 +5,7 @@ import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/me/ResponseMeInfoModel.dart';
 import 'package:riverpod/riverpod.dart';
 
-final MeInfoProvider = StateNotifierProvider<MeInfoNotifier, ResponseMeInfoModel?>(
+final meInfoProvider = StateNotifierProvider<MeInfoNotifier, ResponseMeInfoModel?>(
   (_) => MeInfoNotifier(),
 );
 

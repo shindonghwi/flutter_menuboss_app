@@ -21,7 +21,7 @@ class SplashScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final meInfoProvider = ref.read(MeInfoProvider.notifier);
+    final meInfoManager = ref.read(meInfoProvider.notifier);
 
     void movePage(RoutingScreen screen) async {
       Future.delayed(const Duration(milliseconds: 300), () async {
@@ -52,7 +52,7 @@ class SplashScreen extends HookConsumerWidget {
         Service.addHeader(key: HeaderKey.Authorization, value: accessToken);
         await GetIt.instance<GetMeInfoUseCase>().call().then((result) {
           if (result.status == 200 && result.data != null) {
-            meInfoProvider.updateMeInfo(result.data);
+            meInfoManager.updateMeInfo(result.data);
             movePage(RoutingScreen.Main);
           } else {
             movePage(RoutingScreen.Login);

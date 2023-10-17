@@ -30,13 +30,13 @@ class MyScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutState = ref.watch(LogoutProvider);
-    final meInfo = ref.watch(MeInfoProvider);
-    final meInfoProvider = ref.read(MeInfoProvider.notifier);
-    final logoutProvider = ref.read(LogoutProvider.notifier);
+    final logoutState = ref.watch(logoutProvider);
+    final meInfo = ref.watch(meInfoProvider);
+    final meInfoManager = ref.read(meInfoProvider.notifier);
+    final logoutManager = ref.read(logoutProvider.notifier);
 
     void goToLogin() {
-      meInfoProvider.updateMeInfo(null);
+      meInfoManager.updateMeInfo(null);
       Navigator.pushAndRemoveUntil(
         context,
         nextFadeInOutScreen(RoutingScreen.Login.route),
@@ -48,7 +48,7 @@ class MyScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         logoutState.when(
           success: (event) async {
-            logoutProvider.init();
+            logoutManager.init();
             goToLogin();
           },
           failure: (event) {
@@ -247,7 +247,7 @@ class _SettingItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutProvider = ref.read(LogoutProvider.notifier);
+    final logoutManager = ref.read(logoutProvider.notifier);
 
     final items = [
       Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
@@ -261,7 +261,7 @@ class _SettingItems extends HookConsumerWidget {
           context,
           child: PopupLogout(onClicked: (isCompleted) {
             if (isCompleted) {
-              logoutProvider.requestLogout();
+              logoutManager.requestLogout();
             }
           }),
         );

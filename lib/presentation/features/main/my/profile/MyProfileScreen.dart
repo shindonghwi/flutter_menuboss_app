@@ -21,16 +21,16 @@ class MyProfileScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final nameChangeState = ref.watch(NameChangeProvider);
-    final meInfoProvider = ref.read(MeInfoProvider.notifier);
-    final nameChangeProvider = ref.read(NameChangeProvider.notifier);
+    final nameChangeState = ref.watch(nameChangeProvider);
+    final meInfoManager = ref.read(meInfoProvider.notifier);
+    final nameChangeManager = ref.read(nameChangeProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         nameChangeState.when(
           success: (event) async {
-            meInfoProvider.updateMeFullName(nameChangeProvider.getName());
-            nameChangeProvider.init();
+            meInfoManager.updateMeFullName(nameChangeManager.getName());
+            nameChangeManager.init();
             Navigator.of(context).pop();
           },
           failure: (event) {
@@ -46,7 +46,7 @@ class MyProfileScreen extends HookConsumerWidget {
         content: getAppLocalizations(context).my_page_profile_appbar_title,
         rightText: getAppLocalizations(context).common_save,
         rightIconOnPressed: () {
-          nameChangeProvider.requestChangeName();
+          nameChangeManager.requestChangeName();
         },
         rightTextActivated: true,
       ),
@@ -138,7 +138,7 @@ class _InputFullName extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
 
-    final nameChangeProvider = ref.read(NameChangeProvider.notifier);
+    final nameChangeManager = ref.read(nameChangeProvider.notifier);
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -153,7 +153,7 @@ class _InputFullName extends HookConsumerWidget {
         OutlineTextField.small(
           controller: useTextEditingController(),
           hint: "John Doe",
-          onChanged: (value) => nameChangeProvider.updateName(value),
+          onChanged: (value) => nameChangeManager.updateName(value),
         )
       ],
     );

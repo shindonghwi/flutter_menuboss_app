@@ -23,11 +23,13 @@ import 'package:menuboss/presentation/features/select/destination_folder/Destina
 import 'package:menuboss/presentation/features/select/media_file/SelectMediaFileScreen.dart';
 import 'package:menuboss/presentation/features/select/media_file/in_folder/SelectMediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScreen.dart';
+import 'package:menuboss/presentation/features/signup/SignUpScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
 enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
   Login(route: "/login"), // 로그인
+  SignUp(route: "/signup"), // 회원가입
   Main(route: "/main"), // 메인
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
@@ -60,6 +62,7 @@ enum RoutingScreen {
     return {
       RoutingScreen.Splash.route: (context) => const SplashScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
+      RoutingScreen.SignUp.route: (context) => const SignUpScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
@@ -84,6 +87,8 @@ enum RoutingScreen {
       return const SplashScreen();
     } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
+    }else if (route == RoutingScreen.SignUp.route) {
+      return const SignUpScreen();
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
     } else if (route == RoutingScreen.ScanQR.route) {
