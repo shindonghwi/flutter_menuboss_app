@@ -27,6 +27,14 @@ class SchedulesScreen extends HookConsumerWidget {
     final schedulesManager = ref.read(schedulesProvider.notifier);
 
     useEffect(() {
+      return (){
+        Future((){
+          schedulesManager.init();
+        });
+      };
+    }, []);
+
+    useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           schedulesState.when(

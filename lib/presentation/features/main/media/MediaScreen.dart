@@ -37,6 +37,15 @@ class MediaScreen extends HookConsumerWidget {
     final mediaList = useState<List<ResponseMediaModel>?>(null);
 
     useEffect(() {
+      return (){
+        Future((){
+          mediaManager.init();
+          mediaManager.initPageInfo();
+        });
+      };
+    }, []);
+
+    useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           mediaState.when(

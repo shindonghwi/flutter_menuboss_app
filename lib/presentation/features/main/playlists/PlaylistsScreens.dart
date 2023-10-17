@@ -27,6 +27,14 @@ class PlaylistsScreens extends HookConsumerWidget {
     final playlistManager = ref.read(playListProvider.notifier);
 
     useEffect(() {
+      return (){
+        Future((){
+          playlistManager.init();
+        });
+      };
+    }, []);
+
+    useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           playlistState.when(

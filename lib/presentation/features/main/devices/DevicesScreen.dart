@@ -26,6 +26,14 @@ class DevicesScreen extends HookConsumerWidget {
     final deviceManager = ref.read(deviceListProvider.notifier);
 
     useEffect(() {
+      return (){
+        Future((){
+          deviceManager.init();
+        });
+      };
+    }, []);
+
+    useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           deviceState.when(

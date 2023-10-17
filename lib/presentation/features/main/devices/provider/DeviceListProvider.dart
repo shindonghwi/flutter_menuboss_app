@@ -84,4 +84,6 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   void updateCurrentDevices(List<ResponseDeviceModel> devices) {
     currentDevices = devices;
   }
+
+  void init() => state = Idle();
 }
