@@ -118,63 +118,65 @@ class _UserProfile extends HookWidget {
           const SizedBox(
             width: 24,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (!CollectionUtil.isNullEmptyFromString(role))
-                      Container(
-                        decoration: BoxDecoration(
-                          color: getColorScheme(context).colorPrimary500,
-                          borderRadius: BorderRadius.circular(100),
-                        ),
-                        margin: const EdgeInsets.only(bottom: 4),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                          child: Text(
-                            role.toString(),
-                            style: getTextTheme(context).c2m.copyWith(
-                                  color: getColorScheme(context).white,
-                                ),
-                            overflow: TextOverflow.ellipsis,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!CollectionUtil.isNullEmptyFromString(role))
+                        Container(
+                          decoration: BoxDecoration(
+                            color: getColorScheme(context).colorPrimary500,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          margin: const EdgeInsets.only(bottom: 4),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            child: Text(
+                              role.toString(),
+                              style: getTextTheme(context).c2m.copyWith(
+                                    color: getColorScheme(context).white,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
+                            ),
                           ),
                         ),
-                      ),
-                    if (!CollectionUtil.isNullEmptyFromString(name))
-                      Text(
-                        name.toString(),
-                        style: getTextTheme(context).b2sb.copyWith(
-                              color: getColorScheme(context).colorGray900,
-                            ),
-                      ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    if (!CollectionUtil.isNullEmptyFromString(businessName))
-                      Text(
-                        businessName.toString(),
-                        style: getTextTheme(context).c1sb.copyWith(
-                              color: getColorScheme(context).colorGray700,
-                            ),
-                      ),
-                    if (!CollectionUtil.isNullEmptyFromString(email))
-                      Text(
-                        email.toString(),
-                        style: getTextTheme(context).c1sb.copyWith(
-                              color: getColorScheme(context).colorGray700,
-                            ),
-                      ),
-                  ],
-                ),
-              ],
+                      if (!CollectionUtil.isNullEmptyFromString(name))
+                        Text(
+                          name.toString(),
+                          style: getTextTheme(context).b2sb.copyWith(
+                                color: getColorScheme(context).colorGray900,
+                              ),
+                        ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!CollectionUtil.isNullEmptyFromString(businessName))
+                        Text(
+                          businessName.toString(),
+                          style: getTextTheme(context).c1sb.copyWith(
+                                color: getColorScheme(context).colorGray700,
+                              ),
+                        ),
+                      if (!CollectionUtil.isNullEmptyFromString(email))
+                        Text(
+                          email.toString(),
+                          style: getTextTheme(context).c1sb.copyWith(
+                                color: getColorScheme(context).colorGray700,
+                              ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],

@@ -3,15 +3,14 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
-import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-class PopupLogout extends HookWidget {
+class PopupDeleteAccount extends HookWidget {
   final Function(bool isCompleted)? onClicked;
 
-  const PopupLogout({
+  const PopupDeleteAccount({
     super.key,
     required this.onClicked,
   });
@@ -26,7 +25,7 @@ class PopupLogout extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SvgPicture.asset(
-            "assets/imgs/icon_warning.svg",
+            "assets/imgs/icon_check_filled.svg",
             width: 36,
             height: 36,
             colorFilter: ColorFilter.mode(
@@ -38,54 +37,35 @@ class PopupLogout extends HookWidget {
             height: 32,
           ),
           Text(
-            getAppLocalizations(context).common_logout,
+            getAppLocalizations(context).popup_delete_account_title,
             style: getTextTheme(context).b2b.copyWith(
-              color: getColorScheme(context).colorGray900,
-            ),
+                  color: getColorScheme(context).colorGray900,
+                ),
           ),
           const SizedBox(
             height: 16,
           ),
           Text(
-            getAppLocalizations(context).popup_logout_description,
+            getAppLocalizations(context).popup_delete_account_description,
             style: getTextTheme(context).b3m.copyWith(
-              color: getColorScheme(context).colorGray500,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray500,
+                  overflow: TextOverflow.visible,
+                ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(
             height: 32,
           ),
-          Row(
-            children: [
-              Flexible(
-                fit: FlexFit.tight,
-                flex: 1,
-                child: NeutralLineButton.mediumRound8(
-                  content: getAppLocalizations(context).common_cancel,
-                  isActivated: true,
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-              const SizedBox(
-                width: 12,
-              ),
-              Flexible(
-                fit: FlexFit.tight,
-                flex: 1,
-                child: PrimaryFilledButton.mediumRound8(
-                  content: getAppLocalizations(context).common_logout,
-                  isActivated: true,
-                  onPressed: () {
-                    onClicked?.call(true);
-                    Navigator.pop(context);
-                  },
-                ),
-              ),
-            ],
+          SizedBox(
+            width: double.infinity,
+            child: PrimaryFilledButton.mediumRound8(
+              content: getAppLocalizations(context).common_ok,
+              isActivated: true,
+              onPressed: () {
+                onClicked?.call(true);
+                Navigator.pop(context);
+              },
+            ),
           )
         ],
       ),

@@ -47,6 +47,7 @@ import 'package:menuboss/domain/usecases/remote/file/PostUploadProfileImageUseCa
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PostMeJoinUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/me/PostMeLeaveUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
@@ -94,6 +95,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<GetMeInfoUseCase>(() => GetMeInfoUseCase());
   GetIt.instance.registerLazySingleton<PatchMeNameUseCase>(() => PatchMeNameUseCase());
   GetIt.instance.registerLazySingleton<PostMeJoinUseCase>(() => PostMeJoinUseCase());
+  GetIt.instance.registerLazySingleton<PostMeLeaveUseCase>(() => PostMeLeaveUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());

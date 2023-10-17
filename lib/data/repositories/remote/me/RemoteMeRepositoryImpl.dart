@@ -26,4 +26,10 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   Future<ApiResponse<ResponseMeAuthorization>> postJoin(RequestMeJoinModel model) {
     return remoteMeApi.postJoin(model);
   }
+
+  @override
+  Future<ApiResponse<void>> postMeLeave(String? reason) {
+    return remoteMeApi.postMeLeave(reason);
+
+  }
 }

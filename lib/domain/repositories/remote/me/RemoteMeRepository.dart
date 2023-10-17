@@ -13,6 +13,9 @@ abstract class RemoteMeRepository {
   /// Owner 이름 수정
   Future<ApiResponse<void>> patchName(String name);
 
-  /// Owner 이름 수정
+  /// 이메일 회원가입
   Future<ApiResponse<ResponseMeAuthorization>> postJoin(RequestMeJoinModel model);
+
+  /// 계정 삭제
+  Future<ApiResponse<void>> postMeLeave(String? reason);
 }

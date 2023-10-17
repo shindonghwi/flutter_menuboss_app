@@ -5,24 +5,31 @@ class CommonPopup {
     BuildContext context, {
     double borderRadius = 16.0,
     double contentPadding = 24.0,
+    bool barrierDismissible = true,
     Color backgroundColor = Colors.white,
     required Widget child,
   }) {
     showDialog(
       context: context,
+      barrierDismissible: barrierDismissible,
       builder: (BuildContext context) {
-        return AlertDialog(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
-          ),
-          backgroundColor: backgroundColor,
-          scrollable: false,
-          contentPadding: EdgeInsets.all(contentPadding),
-          content: SafeArea(
-            child: PopupWidget(
-              borderRadius: borderRadius,
-              backgroundColor: backgroundColor,
-              child: child,
+        return WillPopScope(
+          onWillPop: () async {
+            return barrierDismissible;
+          },
+          child: AlertDialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+            ),
+            backgroundColor: backgroundColor,
+            scrollable: false,
+            contentPadding: EdgeInsets.all(contentPadding),
+            content: SafeArea(
+              child: PopupWidget(
+                borderRadius: borderRadius,
+                backgroundColor: backgroundColor,
+                child: child,
+              ),
             ),
           ),
         );

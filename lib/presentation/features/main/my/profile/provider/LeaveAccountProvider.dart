@@ -8,32 +8,39 @@ import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/me/PostMeLeaveUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
-final nameChangeProvider = StateNotifierProvider<NameChangeUiStateNotifier, UIState<String?>>(
-      (_) => NameChangeUiStateNotifier(),
+final leaveAccountProvider = StateNotifierProvider<LeaveAccountNotifier, UIState<String?>>(
+      (_) => LeaveAccountNotifier(),
 );
 
-class NameChangeUiStateNotifier extends StateNotifier<UIState<String?>> {
-  NameChangeUiStateNotifier() : super(Idle<String?>());
+class LeaveAccountNotifier extends StateNotifier<UIState<String?>> {
+  LeaveAccountNotifier() : super(Idle<String?>());
 
 
-  PatchMeNameUseCase get _patchName => GetIt.instance<PatchMeNameUseCase>();
+  PostMeLeaveUseCase get _postMeLeaveUseCase => GetIt.instance<PostMeLeaveUseCase>();
+  PostLoginAccessTokenUseCase get _postLoginAccessToken => GetIt.instance<PostLoginAccessTokenUseCase>();
 
-  var _name = "";
-  void updateName(String name) => _name = name;
-  String getName() => _name;
+  String? currentReason = null;
 
-  void requestChangeName() async {
+  void requestMeLeave() async {
     state = Loading();
-    await _patchName.call(_name).then((result) {
+
+    await _postMeLeaveUseCase.call(currentReason).then((result) {
       if (result.status == 200) {
+        saveAccessToken("");
         state = Success("");
       } else {
         state = Failure(result.message);
       }
     });
+  }
+
+  void saveAccessToken(String accessToken) async {
+    await _postLoginAccessToken.call(accessToken);
+    Service.addHeader(key: HeaderKey.Authorization, value: accessToken);
   }
 
   void init() => state = Idle();

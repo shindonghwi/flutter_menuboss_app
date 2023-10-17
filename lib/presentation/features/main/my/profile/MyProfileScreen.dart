@@ -1,16 +1,23 @@
+// ignore_for_file: prefer_const_constructors
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
+import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/main/my/profile/provider/NameChangeProvider.dart';
+import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -20,17 +27,23 @@ class MyProfileScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
     final nameChangeState = ref.watch(nameChangeProvider);
     final meInfoManager = ref.read(meInfoProvider.notifier);
     final nameChangeManager = ref.read(nameChangeProvider.notifier);
+
+    useEffect(() {
+      return (){
+        Future((){
+          nameChangeManager.init();
+        });
+      };
+    },[]);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         nameChangeState.when(
           success: (event) async {
             meInfoManager.updateMeFullName(nameChangeManager.getName());
-            nameChangeManager.init();
             Navigator.of(context).pop();
           },
           failure: (event) {
@@ -52,43 +65,71 @@ class MyProfileScreen extends HookConsumerWidget {
       ),
       backgroundColor: getColorScheme(context).white,
       body: SafeArea(
-        child: Container(
-          margin: const EdgeInsets.symmetric(horizontal: 24),
-          child: SingleChildScrollView(
-            child: Column(
-              children: [
-                const SizedBox(height: 24),
-                const Align(
-                  alignment: Alignment.center,
-                  child: SizedBox(
-                    width: 120,
-                    height: 120,
-                    child: Stack(
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 24),
+                  const Align(
+                    alignment: Alignment.center,
+                    child: SizedBox(
+                      width: 120,
+                      height: 120,
+                      child: Stack(
+                        children: [
+                          LoadProfile(
+                            url: "",
+                            type: ProfileImagePlaceholderType.Size120x120,
+                          ),
+                          _CameraWidget()
+                        ],
+                      ),
+                    ),
+                  ),
+                  Container(
+                    alignment: Alignment.centerLeft,
+                    margin: const EdgeInsets.fromLTRB(24, 32, 24, 24),
+                    child: const Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        LoadProfile(
-                          url: "https://img.freepik.com/free-photo/portrait-of-white-man-isolated_53876-40306.jpg",
-                          type: ProfileImagePlaceholderType.Size120x120,
-                        ),
-                        _CameraWidget()
+                        _InputFullName(),
+                        SizedBox(height: 24),
+                        _InputEmail(),
                       ],
                     ),
                   ),
-                ),
-                Container(
-                  alignment: Alignment.centerLeft,
-                  margin: const EdgeInsets.only(top: 32, bottom: 40),
-                  child: const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _InputFullName(),
-                      SizedBox(height: 24),
-                      _InputEmail(),
-                    ],
-                  ),
-                )
-              ],
+                  const DividerVertical(marginVertical: 0),
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      child: Clickable(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            nextSlideHorizontalScreen(
+                              RoutingScreen.DeleteAccount.route,
+                            ),
+                          );
+                        },
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: Text(
+                            getAppLocalizations(context).my_page_profile_delete_account,
+                            style: getTextTheme(context).b3sb.copyWith(
+                                  color: getColorScheme(context).colorGray900,
+                                ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
             ),
-          ),
+            if (nameChangeState is Loading) const LoadingView()
+          ],
         ),
       ),
     );
@@ -137,7 +178,7 @@ class _InputFullName extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
+    final meInfoManager = ref.watch(meInfoProvider);
     final nameChangeManager = ref.read(nameChangeProvider.notifier);
 
     return Column(
@@ -151,8 +192,8 @@ class _InputFullName extends HookConsumerWidget {
         ),
         const SizedBox(height: 12),
         OutlineTextField.small(
-          controller: useTextEditingController(),
-          hint: "John Doe",
+          controller: useTextEditingController(text: meInfoManager?.profile?.name),
+          hint: meInfoManager?.profile?.name ?? "",
           onChanged: (value) => nameChangeManager.updateName(value),
         )
       ],
@@ -160,11 +201,12 @@ class _InputFullName extends HookConsumerWidget {
   }
 }
 
-class _InputEmail extends HookWidget {
+class _InputEmail extends HookConsumerWidget {
   const _InputEmail({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final meInfoManager = ref.watch(meInfoProvider);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -176,8 +218,7 @@ class _InputEmail extends HookWidget {
         ),
         const SizedBox(height: 12),
         OutlineTextField.small(
-          controller: useTextEditingController(),
-          hint: "John Doe",
+          hint: meInfoManager?.email ?? "",
           enable: false,
         )
       ],

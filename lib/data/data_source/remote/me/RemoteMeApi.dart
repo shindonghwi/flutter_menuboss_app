@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../models/me/ResponseMeInfoModel.dart';
@@ -78,7 +79,30 @@ class RemoteMeApi {
     } else {
       return ApiResponse.fromJson(
         jsonDecode(response.body),
-            (json) => ResponseMeAuthorization.fromJson(json),
+        (json) => ResponseMeAuthorization.fromJson(json),
+      );
+    }
+  }
+
+  /// 계정 삭제
+  Future<ApiResponse<void>> postMeLeave(String? reason) async {
+    final response = await Service.postApi(
+      type: ServiceType.Me,
+      endPoint: "leave",
+      jsonBody: {if (!CollectionUtil.isNullEmptyFromString(reason)) "reason": reason},
+    );
+
+    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+    if (errorResponse != null) {
+      return ApiResponse(
+        status: errorResponse.status,
+        message: errorResponse.message,
+        data: null,
+      );
+    } else {
+      return ApiResponse.fromJson(
+        jsonDecode(response.body),
+        (json) {},
       );
     }
   }

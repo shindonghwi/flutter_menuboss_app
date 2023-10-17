@@ -9,6 +9,7 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
+import 'package:menuboss/presentation/features/delete_account/DeleteAccountScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
@@ -50,7 +51,8 @@ enum RoutingScreen {
   SelectDestinationFolder(route: "/select/destination/folder"), // 폴더 선택
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
-  MyProfile(route: "/my/profile"); // 프로필 정보
+  MyProfile(route: "/my/profile"), // 프로필 정보
+  DeleteAccount(route: "/delete/account"); // 계정 삭제
 
   final String route;
 
@@ -79,6 +81,7 @@ enum RoutingScreen {
       RoutingScreen.SelectDestinationFolder.route: (context) => const DestinationFolderScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
+      RoutingScreen.DeleteAccount.route: (context) => const DeleteAccountScreen(),
     };
   }
 
@@ -131,6 +134,8 @@ enum RoutingScreen {
       return ApplyToDeviceScreen(item: model);
     } else if (route == RoutingScreen.MyProfile.route) {
       return const MyProfileScreen();
+    }else if (route == RoutingScreen.DeleteAccount.route) {
+      return const DeleteAccountScreen();
     } else {
       return const SplashScreen();
     }

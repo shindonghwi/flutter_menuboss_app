@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
 class LoadProfile extends StatelessWidget {
   final String url;
@@ -30,12 +30,14 @@ class LoadProfile extends StatelessWidget {
       width: containerSize,
       height: containerSize,
       child: ClipOval(
-        child: CachedNetworkImage(
-          imageUrl: url,
-          placeholder: (context, url) => ProfilePlaceholder(type: type),
-          errorWidget: (context, url, error) => ProfilePlaceholder(type: type),
-          fit: BoxFit.cover,
-        ),
+        child: !CollectionUtil.isNullEmptyFromString(url)
+            ? CachedNetworkImage(
+                imageUrl: url,
+                placeholder: (context, url) => ProfilePlaceholder(type: type),
+                errorWidget: (context, url, error) => ProfilePlaceholder(type: type),
+                fit: BoxFit.cover,
+              )
+            : ProfilePlaceholder(type: type),
       ),
     );
   }
