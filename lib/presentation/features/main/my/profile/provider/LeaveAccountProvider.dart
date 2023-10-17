@@ -23,7 +23,7 @@ class LeaveAccountNotifier extends StateNotifier<UIState<String?>> {
   PostMeLeaveUseCase get _postMeLeaveUseCase => GetIt.instance<PostMeLeaveUseCase>();
   PostLoginAccessTokenUseCase get _postLoginAccessToken => GetIt.instance<PostLoginAccessTokenUseCase>();
 
-  String? currentReason = null;
+  String? currentReason;
 
   void requestMeLeave() async {
     state = Loading();
