@@ -9,28 +9,33 @@ import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.
 import 'package:menuboss/presentation/components/button/NeutralFilledButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
 class ScanQrScreen extends StatelessWidget {
-  const ScanQrScreen({super.key});
+  const ScanQrScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return BaseScaffold(
-      body: const QrCodeScanner(),
+    return const BaseScaffold(
+      body: QrCodeScanner(),
     );
   }
 }
 
 class QrCodeScanner extends StatefulWidget {
-  const QrCodeScanner({super.key});
+  const QrCodeScanner({Key? key}) : super(key: key);
 
   @override
   State<QrCodeScanner> createState() => _QrCodeScannerState();
 }
 
 class _QrCodeScannerState extends State<QrCodeScanner> {
+  final columnKey = GlobalKey();
+  Offset? columnPosition;
+
   var isProcessing = false;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
   Barcode? result;
@@ -47,13 +52,46 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final RenderBox? columnRenderBox = columnKey.currentContext?.findRenderObject() as RenderBox?;
+      final position = columnRenderBox?.localToGlobal(Offset.zero);
+      setState(() {
+        columnPosition = position;
+        debugPrint("columnPosition: $columnPosition");
+      });
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    const imageSize = 180.0;
+    const textHeight = 44;
+    const verticalPadding = 32;
+
     return Stack(
       children: [
         QRView(
           key: qrKey,
           onQRViewCreated: _onQRViewCreated,
         ),
+        if (columnPosition != null)
+          CustomPaint(
+            size: getMediaQuery(context).size,
+            painter: HolePainter(
+              holeWidth: imageSize,
+              holeHeight: imageSize,
+              holeOffset: Offset(
+                  (getMediaQuery(context).size.width - imageSize) / 2,
+                  (getMediaQuery(context).size.height / 2)
+                      - (imageSize / 2)
+                      - (textHeight - verticalPadding) / 2  // Adjusting for the text and padding
+              ),
+              borderRadius: 20,
+            ),
+          ),
         Align(
           alignment: Alignment.topCenter,
           child: TopBarNoneTitleIcon(
@@ -65,14 +103,24 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
         Align(
           alignment: Alignment.center,
           child: Column(
+            key: columnKey,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                "assets/imgs/image_qr_guideline.png",
-                width: 180,
-                height: 180,
+              Text(
+                getAppLocalizations(context).scan_qr_description,
+                style: getTextTheme(context).b2sb.copyWith(
+                      color: getColorScheme(context).white,
+                    ),
+                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 32),
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 32.0),
+                child: Image.asset(
+                  "assets/imgs/image_qr_guideline.png",
+                  width: imageSize,
+                  height: imageSize,
+                ),
+              ),
               NeutralFilledButton.mediumRound100(
                 content: getAppLocalizations(context).scan_qr_enter_pin_code,
                 isActivated: true,
@@ -130,5 +178,42 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   void dispose() {
     controller?.dispose();
     super.dispose();
+  }
+}
+
+class HolePainter extends CustomPainter {
+  final double holeWidth;
+  final double holeHeight;
+  final Offset holeOffset;
+  final double borderRadius;
+
+  HolePainter({
+    required this.holeWidth,
+    required this.holeHeight,
+    required this.holeOffset,
+    this.borderRadius = 20.0,
+  });
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()..color = Colors.black.withOpacity(0.5);
+
+    final outerPath = Path()..addRect(Rect.fromLTWH(0, 0, size.width, size.height));
+
+    final innerRRect = RRect.fromRectAndRadius(
+      holeOffset & Size(holeWidth, holeHeight),
+      Radius.circular(borderRadius),
+    );
+
+    final innerPath = Path()..addRRect(innerRRect);
+
+    final combinedPath = Path.combine(PathOperation.difference, outerPath, innerPath);
+
+    canvas.drawPath(combinedPath, paint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return true;
   }
 }
