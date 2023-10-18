@@ -105,7 +105,7 @@ class _PlaylistContentList extends HookConsumerWidget {
         ? Stack(
             children: [
               ListView.builder(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
                 physics: const BouncingScrollPhysics(),
                 itemCount: items.length,
                 itemBuilder: (context, index) {

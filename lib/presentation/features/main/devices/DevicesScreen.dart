@@ -100,7 +100,7 @@ class _DeviceContentList extends HookConsumerWidget {
         ? Stack(
             children: [
               ListView.separated(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
                 physics: const BouncingScrollPhysics(),
                 shrinkWrap: true,
                 separatorBuilder: (BuildContext context, int index) {
