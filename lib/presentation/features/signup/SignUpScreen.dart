@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
+import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -149,6 +151,7 @@ class SignUpScreen extends HookConsumerWidget {
                           businessName.value.isNotEmpty,
                       onPressed: () async {
                         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
+                        Service.addHeader(key: HeaderKey.ApplicationTimeZone, value: timeZone);
                         signUpManager.requestMeJoin(
                           RequestMeJoinModel(
                             email: email.value,
