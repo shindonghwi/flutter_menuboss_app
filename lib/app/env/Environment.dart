@@ -45,6 +45,6 @@ class Environment {
     initServiceLocator();
     Service.initializeHeaders();
 
-    runApp(const ProviderScope(child: MenuBossApp()));
+    runApp(ProviderScope(child: MenuBossApp()));
   }
 }

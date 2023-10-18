@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -10,6 +9,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/theme.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/navigation/Route.dart';
+import 'package:uni_links/uni_links.dart';
 
 final firebaseAuth = FirebaseAuth.instance;
 
@@ -18,15 +18,38 @@ class MenuBossApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final initialLinkFuture = useMemoized(() => getInitialLink(), []);
+
+    final initialLink = useFuture(initialLinkFuture);
+
+    useEffect(() {
+      void handleDeepLink(String? link) {
+        debugPrint("@##@@##@#####44 link : $link");
+        if (link == null) return;
+        if (link == "menuboss://login") {
+          MenuBossGlobalVariable.navigatorKey.currentState?.pushNamed(RoutingScreen.SignUp.route);
+        }
+      }
+
+      if (initialLink.hasData) {
+        handleDeepLink(initialLink.data);
+      }
+
+      StreamSubscription subscription;
+
+      subscription = uriLinkStream.listen((Uri? link) {
+        debugPrint("@##@@##@ link : $link");
+        handleDeepLink(link != null ? link.toString() : null);
+        }, onError: (err) {
+      });
+      return () => subscription.cancel();
+    }, [initialLink]);
 
     return LayoutBuilder(
       builder: (context, constraints) {
         if (constraints.maxWidth != 0) {
           return MaterialApp(
-            // app default option
             onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
-
-            // 시스템 테마 설정 (라이트, 다크 모드)
             theme: AppTheme.lightTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: getColorScheme(context).colorPrimary500,
@@ -40,16 +63,11 @@ class MenuBossApp extends HookWidget {
               ),
             ),
             themeMode: ThemeMode.system,
-
-            // 앱 Localization ( 영어, 한국어 지원 )
             supportedLocales: AppLocalizations.supportedLocales,
             localizationsDelegates: AppLocalizations.localizationsDelegates,
-
             debugShowCheckedModeBanner: true,
-
             initialRoute: RoutingScreen.Splash.route,
             routes: RoutingScreen.getAppRoutes(),
-
             navigatorKey: MenuBossGlobalVariable.navigatorKey,
           );
         }
