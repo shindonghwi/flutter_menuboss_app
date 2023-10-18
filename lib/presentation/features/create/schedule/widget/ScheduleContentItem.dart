@@ -86,56 +86,56 @@ class ScheduleContentItem extends HookConsumerWidget {
       );
     }
 
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 24.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8.0),
-            child: Text(
-              getAppLocalizations(context).common_timeline,
-              style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorGray500,
-                  ),
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
+          child: Text(
+            getAppLocalizations(context).common_timeline,
+            style: getTextTheme(context).b3sb.copyWith(
+                  color: getColorScheme(context).colorGray500,
+                ),
           ),
-          ListView.separated(
-            physics: const NeverScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) {
-              return const DividerVertical(
-                marginVertical: 0,
-                height: 1,
-              );
-            },
-            itemBuilder: (BuildContext context, int index) {
-              final data = timelineState[index];
-              return data.isAddButton
-                  ? Container(
-                      width: 150,
-                      margin: const EdgeInsets.all(70),
-                      child: PrimaryFilledButton.mediumRound100Icon(
-                        leftIcon: SvgPicture.asset(
-                          "assets/imgs/icon_plus_1.svg",
-                          width: 20.0,
-                          height: 20.0,
-                          colorFilter: ColorFilter.mode(
-                            getColorScheme(context).white,
-                            BlendMode.srcIn,
-                          ),
+        ),
+        ListView.separated(
+          physics: const NeverScrollableScrollPhysics(),
+          shrinkWrap: true,
+          separatorBuilder: (BuildContext context, int index) {
+            return const DividerVertical(
+              marginVertical: 0,
+              height: 1,
+            );
+          },
+          itemBuilder: (BuildContext context, int index) {
+            final data = timelineState[index];
+            return data.isAddButton
+                ? Container(
+                    width: 150,
+                    margin: const EdgeInsets.all(70),
+                    child: PrimaryFilledButton.mediumRound100Icon(
+                      leftIcon: SvgPicture.asset(
+                        "assets/imgs/icon_plus_1.svg",
+                        width: 20.0,
+                        height: 20.0,
+                        colorFilter: ColorFilter.mode(
+                          getColorScheme(context).white,
+                          BlendMode.srcIn,
                         ),
-                        content: getAppLocalizations(context).create_schedule_new_timeline,
-                        isActivated: true,
-                        onPressed: () => timelineProvider.addItem(),
                       ),
-                    )
-                  : SizedBox(
-                      width: double.infinity,
+                      content: getAppLocalizations(context).create_schedule_new_playlist,
+                      isActivated: true,
+                      onPressed: () => timelineProvider.addItem(),
+                    ),
+                  )
+                : SizedBox(
+                    width: double.infinity,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
                       child: Stack(
                         children: [
                           Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 24.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               crossAxisAlignment: CrossAxisAlignment.center,
@@ -210,7 +210,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                                       width: 20,
                                                                       height: 20,
                                                                       colorFilter: ColorFilter.mode(
-                                                                        getColorScheme(context).colorGray900,
+                                                                        getColorScheme(context).colorRed500,
                                                                         BlendMode.srcIn,
                                                                       ),
                                                                     ),
@@ -219,7 +219,15 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                                     onPressed: () => showTimeSettingBottomSheet(data),
                                                                   )
                                                                 : NeutralLineButton.extraSmallRound4Icon(
-                                                                    leftIcon: SvgPicture.asset("assets/imgs/icon_time_edit.svg"),
+                                                                    leftIcon: SvgPicture.asset(
+                                                                      "assets/imgs/icon_time_edit.svg",
+                                                                      width: 20,
+                                                                      height: 20,
+                                                                      colorFilter: ColorFilter.mode(
+                                                                        getColorScheme(context).colorGray900,
+                                                                        BlendMode.srcIn,
+                                                                      ),
+                                                                    ),
                                                                     content: "${data.start} ~ ${data.end}",
                                                                     isActivated: true,
                                                                     onPressed: () => showTimeSettingBottomSheet(data),
@@ -242,7 +250,8 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                       ),
                                                       content: data.playlistId == null || data.playlistId! < 0
                                                           ? getAppLocalizations(context).create_schedule_add_playlist
-                                                          : getAppLocalizations(context).create_schedule_change_playlist,
+                                                          : getAppLocalizations(context)
+                                                              .create_schedule_change_playlist,
                                                       isActivated: true,
                                                       onPressed: () => goToSelectPlaylist(data),
                                                     ),
@@ -262,29 +271,32 @@ class ScheduleContentItem extends HookConsumerWidget {
                           if (!data.isRequired)
                             Align(
                                 alignment: Alignment.topRight,
-                                child: Clickable(
-                                  onPressed: () => timelineProvider.removeItem(data.playlistId!),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: SvgPicture.asset(
-                                      "assets/imgs/icon_trash.svg",
-                                      width: 24.0,
-                                      height: 24.0,
-                                      colorFilter: ColorFilter.mode(
-                                        getColorScheme(context).colorGray500,
-                                        BlendMode.srcIn,
+                                child: Container(
+                                  margin: const EdgeInsets.only(top: 12.0),
+                                  child: Clickable(
+                                    onPressed: () => timelineProvider.removeItem(data.playlistId!),
+                                    child: Container(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: SvgPicture.asset(
+                                        "assets/imgs/icon_trash.svg",
+                                        width: 24.0,
+                                        height: 24.0,
+                                        colorFilter: ColorFilter.mode(
+                                          getColorScheme(context).colorGray500,
+                                          BlendMode.srcIn,
+                                        ),
                                       ),
                                     ),
                                   ),
                                 ))
                         ],
                       ),
-                    );
-            },
-            itemCount: timelineState.length,
-          ),
-        ],
-      ),
+                    ),
+                  );
+          },
+          itemCount: timelineState.length,
+        ),
+      ],
     );
   }
 }

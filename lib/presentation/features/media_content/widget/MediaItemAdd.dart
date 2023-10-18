@@ -113,16 +113,23 @@ class MediaItemAdd extends HookConsumerWidget {
                     content: getAppLocalizations(context).common_add,
                     isActivated: true,
                     onPressed: () {
-                      Toast.showSuccess(context, getAppLocalizations(context).message_add_media_in_playlist_success);
+                      Toast.showSuccess(
+                        context,
+                        getAppLocalizations(context).message_add_media_in_playlist_success,
+                      );
                       mediaCartManager.addItem(item);
                     },
                   )
                 : Container(
                     margin: const EdgeInsets.only(right: 18),
                     child: SvgPicture.asset(
-                      "assets/imgs/icon_arrow_right.svg",
+                      "assets/imgs/icon_next.svg",
                       width: 24,
                       height: 24,
+                      colorFilter: ColorFilter.mode(
+                        getColorScheme(context).colorGray600,
+                        BlendMode.srcIn,
+                      )
                     ),
                   )
           ],
