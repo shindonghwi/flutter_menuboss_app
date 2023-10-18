@@ -31,6 +31,8 @@ class BasicBorderCheckBox extends StatelessWidget {
         children: [
           isChecked
               ? Container(
+                  width: 24,
+                  height: 24,
                   decoration: BoxDecoration(
                     color: getColorScheme(context).colorPrimary500,
                     borderRadius: BorderRadius.circular(borderRadius),
