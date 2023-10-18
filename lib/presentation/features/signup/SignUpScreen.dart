@@ -5,6 +5,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
@@ -12,12 +14,15 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
+import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/signup/provider/SignUpProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/RegUtil.dart';
+
+import 'provider/GetMeProvider.dart';
 
 class SignUpScreen extends HookConsumerWidget {
   const SignUpScreen({super.key});
@@ -31,15 +36,32 @@ class SignUpScreen extends HookConsumerWidget {
 
     final signUpState = ref.watch(signUpProvider);
     final signUpManager = ref.read(signUpProvider.notifier);
-    final loginManager = ref.read(loginProvider.notifier);
+
+    final getMeState = ref.watch(getMeProvider);
+    final getMeManager = ref.read(getMeProvider.notifier);
+
+    final meInfoManager = ref.read(meInfoProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         signUpState.when(
           success: (event) async {
-            loginManager.doEmailLogin(email: email.value, password: password.value);
             signUpManager.init();
-            Navigator.pop(context);
+            getMeManager.requestMeInfo();
+          },
+          failure: (event) {
+            Toast.showError(context, event.errorMessage);
+          },
+        );
+        getMeState.when(
+          success: (event) async {
+            getMeManager.init();
+            meInfoManager.updateMeInfo(getMeManager.meInfo);
+            Navigator.pushAndRemoveUntil(
+              context,
+              nextFadeInOutScreen(RoutingScreen.Main.route),
+                  (route) => false,
+            );
           },
           failure: (event) {
             Toast.showError(context, event.errorMessage);
@@ -47,7 +69,7 @@ class SignUpScreen extends HookConsumerWidget {
         );
       });
       return null;
-    }, [signUpState]);
+    }, [signUpState, getMeState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
@@ -167,7 +189,7 @@ class SignUpScreen extends HookConsumerWidget {
                 ],
               ),
             ),
-            if (signUpState is Loading) const LoadingView(),
+            if (signUpState is Loading || getMeState is Loading) const LoadingView(),
           ],
         ),
       ),

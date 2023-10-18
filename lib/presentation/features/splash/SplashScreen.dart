@@ -60,7 +60,7 @@ class SplashScreen extends HookConsumerWidget {
 
         if (result.status == 200 && result.data != null) {
           meInfoManager.updateMeInfo(result.data);
-          return null; // 로그인에 성공했지만 어느 화면으로 이동할지 여기서 결정하지 않습니다.
+          return RoutingScreen.Main;
         }
       }
 
