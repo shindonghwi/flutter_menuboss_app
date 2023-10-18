@@ -92,7 +92,7 @@ class _MediaSimpleInfo extends HookWidget {
     final code = item.type?.code.toLowerCase();
     String content = "";
     if (code == "image" || code == "video") {
-      content = "$code - (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "$code - ${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)}";
     } else if (code == "folder") {
       content = "${item.property?.count} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     }

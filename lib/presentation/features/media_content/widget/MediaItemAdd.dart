@@ -61,7 +61,7 @@ class MediaItemAdd extends HookConsumerWidget {
     String content = "";
     if (code == "image" || code == "video") {
       isFolderType = false;
-      content = "$code - (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "$code - ${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)}";
     } else if (code == "folder") {
       isFolderType = true;
       content = "${item.property?.count ?? 0} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
