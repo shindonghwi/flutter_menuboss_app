@@ -12,8 +12,8 @@ ResponseCanvasModel _$ResponseCanvasModelFromJson(Map<String, dynamic> json) =>
       canvasId: json['canvasId'] as String,
       name: json['name'] as String?,
       imageUrl: json['imageUrl'] as String?,
-      updatedAt: json['updatedAt'] as String?,
-      createdAt: json['createdAt'] as String?,
+      updatedDate: json['updatedDate'] as String?,
+      createdDate: json['createdDate'] as String?,
     );
 
 Map<String, dynamic> _$ResponseCanvasModelToJson(
@@ -23,6 +23,6 @@ Map<String, dynamic> _$ResponseCanvasModelToJson(
       'canvasId': instance.canvasId,
       'name': instance.name,
       'imageUrl': instance.imageUrl,
-      'updatedAt': instance.updatedAt,
-      'createdAt': instance.createdAt,
+      'updatedDate': instance.updatedDate,
+      'createdDate': instance.createdDate,
     };

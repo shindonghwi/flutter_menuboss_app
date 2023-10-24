@@ -36,12 +36,8 @@ class ResponseScheduleModel {
       scheduleId: scheduleId,
       name: name,
       playlists: playlists,
-      updatedAt: _updatedAtMapper(updatedAt),
+      updatedAt: updatedAt,
     );
-  }
-
-  String _updatedAtMapper(String updatedAt) {
-    return StringUtil.formatSimpleDate(updatedAt);
   }
 
   @override

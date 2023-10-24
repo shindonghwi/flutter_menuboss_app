@@ -72,7 +72,7 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
       if (response.status == 200) {
         final updatedItems = _currentItems.map((item) {
           if (item.mediaId == mediaId) {
-            return item.copyWith(name: newName, createdAt: item.createdAt, updatedAt: item.updatedAt);
+            return item.copyWith(name: newName, createdDate: item.createdDate, updatedDate: item.updatedDate);
           }
           return item;
         }).toList();

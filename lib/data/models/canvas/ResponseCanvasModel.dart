@@ -13,16 +13,16 @@ class ResponseCanvasModel {
   final String canvasId;
   final String? name;
   final String? imageUrl;
-  final String? updatedAt;
-  final String? createdAt;
+  final String? updatedDate;
+  final String? createdDate;
 
   ResponseCanvasModel({
     required this.object,
     required this.canvasId,
     required this.name,
     required this.imageUrl,
-    required this.updatedAt,
-    required this.createdAt,
+    required this.updatedDate,
+    required this.createdDate,
   });
 
   factory ResponseCanvasModel.fromJson(Map<String, dynamic> json) => _$ResponseCanvasModelFromJson(json);

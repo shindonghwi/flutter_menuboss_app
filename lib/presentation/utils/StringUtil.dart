@@ -62,10 +62,4 @@ class StringUtil {
     return hours * 3600 + minutes * 60 + seconds;
   }
 
-  /// "Sep 15, 2023, 9:30 AM" 형식의 문자열을 "Sep 15, 2023"로 변환합니다.
-  static String formatSimpleDate(String input) {
-    DateTime parsedDate = DateFormat('MMM d, y, h:mm a').parse(input);
-    return DateFormat('MMM d, y').format(parsedDate);
-  }
-
 }

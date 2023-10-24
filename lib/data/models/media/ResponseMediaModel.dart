@@ -14,8 +14,8 @@ class ResponseMediaModel {
   final ResponseMediaPropertyInfo? type;
   final String? name;
   final ResponseMediaProperty? property;
-  final String? createdAt;
-  final String? updatedAt;
+  final String? createdDate;
+  final String? updatedDate;
 
   ResponseMediaModel({
     this.object = "",
@@ -23,8 +23,8 @@ class ResponseMediaModel {
     this.name = "",
     this.type,
     this.property,
-    this.createdAt,
-    this.updatedAt,
+    this.createdDate,
+    this.updatedDate,
   });
 
   factory ResponseMediaModel.fromJson(Map<String, dynamic> json) => _$ResponseMediaModelFromJson(json);
@@ -37,8 +37,8 @@ class ResponseMediaModel {
     String? name,
     ResponseMediaPropertyInfo? type,
     ResponseMediaProperty? property,
-    String? createdAt,
-    String? updatedAt,
+    String? createdDate,
+    String? updatedDate,
   }) {
     return ResponseMediaModel(
       object: object ?? this.object,
@@ -46,8 +46,8 @@ class ResponseMediaModel {
       name: name ?? this.name,
       type: type ?? this.type,
       property: property ?? this.property,
-      createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      createdDate: createdDate ?? this.createdDate,
+      updatedDate: updatedDate ?? this.updatedDate,
     );
   }
 

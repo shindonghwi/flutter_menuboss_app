@@ -19,8 +19,8 @@ ResponseMediaCreate _$ResponseMediaCreateFromJson(Map<String, dynamic> json) =>
           ? null
           : ResponseMediaProperty.fromJson(
               json['property'] as Map<String, dynamic>),
-      updatedAt: json['updatedAt'] as String?,
-      createdAt: json['createdAt'] as String?,
+      updatedDate: json['updatedDate'] as String?,
+      createdDate: json['createdDate'] as String?,
     );
 
 Map<String, dynamic> _$ResponseMediaCreateToJson(
@@ -31,6 +31,6 @@ Map<String, dynamic> _$ResponseMediaCreateToJson(
       'type': instance.type,
       'name': instance.name,
       'property': instance.property,
-      'updatedAt': instance.updatedAt,
-      'createdAt': instance.createdAt,
+      'updatedDate': instance.updatedDate,
+      'createdDate': instance.createdDate,
     };

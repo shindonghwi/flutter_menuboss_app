@@ -36,12 +36,8 @@ class ResponseSchedulesModel {
       name: name,
       property: property,
       playlists: playlists,
-      updatedAt: _updatedAtMapper(updatedAt),
+      updatedAt: updatedAt,
     );
-  }
-
-  String _updatedAtMapper(String updatedAt) {
-    return StringUtil.formatSimpleDate(updatedAt);
   }
 
   ResponseSchedulesModel copyWith({

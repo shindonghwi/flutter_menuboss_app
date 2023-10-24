@@ -53,12 +53,8 @@ class ResponsePlaylistsModel {
       name: name,
       time: time,
       property: property,
-      updatedAt: _updatedAtMapper(updatedAt),
+      updatedAt: updatedAt,
     );
-  }
-
-  String _updatedAtMapper(String updatedAt) {
-    return StringUtil.formatSimpleDate(updatedAt);
   }
 
   @override
