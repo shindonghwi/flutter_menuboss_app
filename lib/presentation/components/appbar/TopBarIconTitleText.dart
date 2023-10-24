@@ -72,7 +72,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           rightText ?? "",
-                          style: getTextTheme(context).b1sb.copyWith(
+                          style: getTextTheme(context).b3sb.copyWith(
                                 color: rightTextActivated! ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray400,
                               ),
                         ),

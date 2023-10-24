@@ -10,7 +10,7 @@ class RequestPlaylistUpdateInfoProperty {
 
   RequestPlaylistUpdateInfoProperty({
     this.direction = "Horizontal",
-    this.fill = "Fit",
+    this.fill = "Fill",
   });
 
   factory RequestPlaylistUpdateInfoProperty.fromJson(Map<String, dynamic> json) =>

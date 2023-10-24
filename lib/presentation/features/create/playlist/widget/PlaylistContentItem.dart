@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
-import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetModifySelector.dart';
-import 'package:menuboss/presentation/components/commons/MoreButton.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupChangeDuration.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
+import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
@@ -31,9 +31,20 @@ class PlaylistContentItem extends HookConsumerWidget {
     final type = item.type?.toLowerCase();
     final isAvailableChangeDuration = !(type == "video" || type == "folder");
 
+    String iconWidgetPath = "";
+
+    switch (type) {
+      case "image":
+        iconWidgetPath = "assets/imgs/icon_image.svg";
+      case "video":
+        iconWidgetPath = "assets/imgs/icon_video.svg";
+      case "canvas":
+        iconWidgetPath = "assets/imgs/icon_canvas.svg";
+    }
+
     return Container(
       width: double.infinity,
-      color: getColorScheme(context).white,
+      color: Colors.transparent,
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -47,8 +58,8 @@ class PlaylistContentItem extends HookConsumerWidget {
                     padding: const EdgeInsets.all(12.0),
                     child: SvgPicture.asset(
                       "assets/imgs/icon_alignment.svg",
-                      width: 24,
-                      height: 24,
+                      width: 20,
+                      height: 20,
                       colorFilter: ColorFilter.mode(
                         getColorScheme(context).colorGray500,
                         BlendMode.srcIn,
@@ -69,44 +80,63 @@ class PlaylistContentItem extends HookConsumerWidget {
                       ),
                       Expanded(
                         child: Padding(
-                          padding: const EdgeInsets.only(left: 12.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
+                          padding: const EdgeInsets.only(left: 12.0, right: 0),
+                          child: Row(
                             children: [
-                              Row(
-                                children: [
-                                  SvgPicture.asset(
-                                    "assets/imgs/icon_image.svg",
-                                    width: 20,
-                                    height: 20,
-                                    colorFilter: ColorFilter.mode(
-                                      getColorScheme(context).colorGray900,
-                                      BlendMode.srcIn,
-                                    ),
+                              if (!CollectionUtil.isNullEmptyFromString(iconWidgetPath))
+                                SvgPicture.asset(
+                                  iconWidgetPath,
+                                  width: 16,
+                                  height: 16,
+                                  colorFilter: ColorFilter.mode(
+                                    getColorScheme(context).colorGray900,
+                                    BlendMode.srcIn,
                                   ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 8.0),
-                                      child: Text(
-                                        "${item.name}",
-                                        style: getTextTheme(context).b2sb.copyWith(
-                                              color: getColorScheme(context).colorGray900,
-                                            ),
-                                      ),
-                                    ),
-                                  )
-                                ],
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 4.0),
-                                child: Text(
-                                  StringUtil.formatDuration(item.property?.duration ?? 0.0),
-                                  style: getTextTheme(context).c1sb.copyWith(
-                                        color: getColorScheme(context).colorGray500,
-                                      ),
                                 ),
-                              )
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.only(left: 4.0, right: 12),
+                                  child: Text(
+                                    "${item.name}",
+                                    style: getTextTheme(context).b2sb.copyWith(
+                                          color: getColorScheme(context).colorGray900,
+                                        ),
+                                  ),
+                                ),
+                              ),
+                              Clickable(
+                                onPressed: () {
+                                  final duration = StringUtil.formatDuration(item.property?.duration ?? 0.0);
+                                  CommonPopup.showPopup(
+                                    context,
+                                    child: PopupChangeDuration(
+                                      hour: StringUtil.parseDuration(duration).first,
+                                      min: StringUtil.parseDuration(duration).second,
+                                      sec: StringUtil.parseDuration(duration).third,
+                                      onClicked: (duration) {
+                                        mediaCartManger.changeDurationItem(item, duration.toDouble());
+                                      },
+                                    ),
+                                  );
+                                },
+                                borderRadius: 4.0,
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: getColorScheme(context).colorGray300,
+                                      width: 1,
+                                    ),
+                                    borderRadius: BorderRadius.circular(4.0),
+                                  ),
+                                  padding: const EdgeInsets.symmetric(horizontal: 8.5, vertical: 8),
+                                  child: Text(
+                                    StringUtil.formatDuration(item.property?.duration ?? 0.0),
+                                    style: getTextTheme(context).c1sb.copyWith(
+                                          color: getColorScheme(context).colorGray900,
+                                        ),
+                                  ),
+                                ),
+                              ),
                             ],
                           ),
                         ),
@@ -117,36 +147,26 @@ class PlaylistContentItem extends HookConsumerWidget {
               ],
             ),
           ),
-          GestureDetector(
-            onLongPress: () {},
-            child: MoreButton(
-              items: [
-                if (isAvailableChangeDuration) ModifyType.ChangeDuration,
-                ModifyType.Delete,
-              ],
-              onSelected: (type, text) {
-                if (type == ModifyType.ChangeDuration) {
-                  final duration = StringUtil.formatDuration(item.property?.duration ?? 0.0);
-                  CommonPopup.showPopup(
-                    context,
-                    child: PopupChangeDuration(
-                      hour: StringUtil.parseDuration(duration).first,
-                      min: StringUtil.parseDuration(duration).second,
-                      sec: StringUtil.parseDuration(duration).third,
-                      onClicked: (duration) {
-                        mediaCartManger.changeDurationItem(item, duration.toDouble());
-                      },
-                    ),
-                  );
-                } else if (type == ModifyType.Delete) {
-                  CommonPopup.showPopup(
-                    context,
-                    child: PopupDelete(
-                      onClicked: () => mediaCartManger.removeItem(item.index ?? -1),
-                    ),
-                  );
-                }
-              },
+          Clickable(
+            onPressed: () {
+              CommonPopup.showPopup(
+                context,
+                child: PopupDelete(
+                  onClicked: () => mediaCartManger.removeItem(item.index ?? -1),
+                ),
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: SvgPicture.asset(
+                "assets/imgs/icon_trash.svg",
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).colorGray500,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
           ),
         ],

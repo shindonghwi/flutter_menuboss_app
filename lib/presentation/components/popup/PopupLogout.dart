@@ -27,8 +27,8 @@ class PopupLogout extends HookWidget {
         children: [
           SvgPicture.asset(
             "assets/imgs/icon_warning.svg",
-            width: 36,
-            height: 36,
+            width: 32,
+            height: 32,
             colorFilter: ColorFilter.mode(
               getColorScheme(context).colorPrimary500,
               BlendMode.srcIn,

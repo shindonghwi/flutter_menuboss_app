@@ -7,7 +7,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
-import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
+import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
@@ -18,6 +18,8 @@ import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
+import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -136,7 +138,7 @@ class _PlaylistContent extends StatelessWidget {
     return !CollectionUtil.isNullorEmpty(item.contents)
         ? Column(
             children: [
-              _Settings(item: item),
+              _Options(item: item),
               const DividerVertical(marginVertical: 0),
               _TotalDuration(item: item),
               ListView.separated(
@@ -166,42 +168,33 @@ class _PlaylistContent extends StatelessWidget {
                           ),
                           Expanded(
                             child: Padding(
-                              padding: const EdgeInsets.only(left: 16.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
+                              padding: const EdgeInsets.symmetric(horizontal: 12),
+                              child: Row(
                                 children: [
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
-                                    children: [
-                                      _ContentTypeImage(
-                                        code: data?.type.code ?? "",
-                                      ),
-                                      Expanded(
-                                        child: Padding(
-                                          padding: const EdgeInsets.only(left: 4.0),
-                                          child: Text(
-                                            data?.name ?? "",
-                                            style: getTextTheme(context).b2sb.copyWith(
-                                                  color: getColorScheme(context).colorGray900,
-                                                ),
-                                          ),
-                                        ),
-                                      )
-                                    ],
+                                  _ContentTypeImage(
+                                    code: data?.type.code ?? "",
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 4.0),
-                                    child: Text(
-                                      StringUtil.formatDuration(data?.duration ?? 0),
-                                      style: getTextTheme(context).c1m.copyWith(
-                                            color: getColorScheme(context).colorGray500,
-                                          ),
+                                  Expanded(
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(left: 4.0),
+                                      child: Text(
+                                        data?.name ?? "",
+                                        style: getTextTheme(context).b2sb.copyWith(
+                                              color: getColorScheme(context).colorGray900,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               ),
                             ),
-                          )
+                          ),
+                          Text(
+                            StringUtil.formatDuration(data?.duration ?? 0),
+                            style: getTextTheme(context).b3sb.copyWith(
+                                  color: getColorScheme(context).colorGray500,
+                                ),
+                          ),
                         ],
                       ),
                     ),
@@ -218,16 +211,19 @@ class _PlaylistContent extends StatelessWidget {
   }
 }
 
-class _Settings extends StatelessWidget {
+class _Options extends StatelessWidget {
   final ResponsePlaylistModel item;
 
-  const _Settings({
+  const _Options({
     super.key,
     required this.item,
   });
 
   @override
   Widget build(BuildContext context) {
+
+    debugPrint("item.property?.direction?.name.toLowerCase() : ${item}");
+
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
@@ -235,17 +231,17 @@ class _Settings extends StatelessWidget {
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            getAppLocalizations(context).common_settings,
+            getAppLocalizations(context).common_option,
             style: getTextTheme(context).b3b.copyWith(
-                  color: getColorScheme(context).colorGray500,
+                  color: getColorScheme(context).colorGray900,
                 ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
-            child: _SettingContents(
+            child: _OptionContents(
               directionType: item.property?.direction?.name.toLowerCase() == "horizontal"
                   ? PlaylistSettingType.Horizontal
                   : PlaylistSettingType.Vertical,
@@ -259,7 +255,7 @@ class _Settings extends StatelessWidget {
   }
 }
 
-class _TotalDuration extends StatelessWidget {
+class _TotalDuration extends HookConsumerWidget {
   final ResponsePlaylistModel item;
 
   const _TotalDuration({
@@ -268,44 +264,84 @@ class _TotalDuration extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final previewListManager = ref.read(previewListProvider.notifier);
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            getAppLocalizations(context).common_total_duration,
-            style: getTextTheme(context).b3b.copyWith(
-                  color: getColorScheme(context).colorGray500,
-                ),
-          ),
-          Padding(
-            padding: const EdgeInsets.only(left: 8.0),
-            child: Text(
-              StringUtil.formatDuration(
-                item.contents?.map((e) => e.duration).reduce(
-                      (value, element) {
-                        return value + element;
-                      },
-                    ) ??
-                    0,
+          Row(
+            children: [
+              Text(
+                getAppLocalizations(context).common_total_duration,
+                style: getTextTheme(context).b3b.copyWith(
+                      color: getColorScheme(context).colorGray900,
+                    ),
               ),
-              style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorGray900,
+              Padding(
+                padding: const EdgeInsets.only(left: 8.0),
+                child: Text(
+                  StringUtil.formatDuration(
+                    item.contents?.map((e) => e.duration).reduce(
+                          (value, element) {
+                            return value + element;
+                          },
+                        ) ??
+                        0,
                   ),
-            ),
+                  style: getTextTheme(context).b3sb.copyWith(
+                        color: getColorScheme(context).colorGray500,
+                      ),
+                ),
+              ),
+            ],
           ),
+          PrimaryFilledButton.extraSmallRound4Icon(
+            leftIcon: SvgPicture.asset(
+              "assets/imgs/icon_playlists_line.svg",
+              width: 20,
+              height: 20,
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).white,
+                BlendMode.srcIn,
+              ),
+            ),
+            content: getAppLocalizations(context).common_preview,
+            isActivated: true,
+            onPressed: () {
+              previewListManager.changeItems(
+                PreviewModel(
+                  item.property?.direction?.code.toLowerCase() == "horizontal"
+                      ? PlaylistSettingType.Horizontal.name.toLowerCase()
+                      : PlaylistSettingType.Vertical.name.toLowerCase(),
+                  item.property?.fill?.code.toLowerCase() == "fill"
+                      ? PlaylistSettingType.Fill.name.toLowerCase()
+                      : PlaylistSettingType.Fit.name.toLowerCase(),
+                  item.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? [],
+                  item.contents?.map((e) => e.duration.toInt()).toList() ?? [],
+                ),
+              );
+              Navigator.push(
+                context,
+                nextSlideVerticalScreen(
+                  RoutingScreen.PreviewPlaylist.route,
+                ),
+              );
+            },
+          )
         ],
       ),
     );
   }
 }
 
-class _SettingContents extends HookWidget {
+class _OptionContents extends HookWidget {
   final PlaylistSettingType directionType;
   final PlaylistSettingType scaleType;
 
-  const _SettingContents({
+  const _OptionContents({
     super.key,
     required this.directionType,
     required this.scaleType,
@@ -314,45 +350,41 @@ class _SettingContents extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Expanded(
-          child: _SettingSelectableIcon(
-            iconPath: directionType == PlaylistSettingType.Horizontal
-                ? "assets/imgs/icon_horizontal_line.svg"
-                : "assets/imgs/icon_vertical_line.svg",
-            iconText: directionType == PlaylistSettingType.Horizontal
-                ? getAppLocalizations(context).common_horizontal
-                : getAppLocalizations(context).common_vertical,
-            isChecked: true,
-          ),
+        _OptionPropertyInfo(
+          iconPath: directionType == PlaylistSettingType.Horizontal
+              ? "assets/imgs/icon_horizontal_line.svg"
+              : "assets/imgs/icon_vertical_line.svg",
+          iconText: directionType == PlaylistSettingType.Horizontal
+              ? getAppLocalizations(context).common_horizontal
+              : getAppLocalizations(context).common_vertical,
+          isChecked: true,
         ),
         Container(
           width: 1,
-          height: 24,
+          height: 20,
           margin: const EdgeInsets.symmetric(horizontal: 16),
           color: getColorScheme(context).colorGray300,
         ),
-        Expanded(
-          child: _SettingSelectableIcon(
-            iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
-            iconText: scaleType == PlaylistSettingType.Fit
-                ? getAppLocalizations(context).common_fit
-                : getAppLocalizations(context).common_fill,
-            isChecked: true,
-          ),
+        _OptionPropertyInfo(
+          iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
+          iconText: scaleType == PlaylistSettingType.Fit
+              ? getAppLocalizations(context).common_fit
+              : getAppLocalizations(context).common_fill,
+          isChecked: true,
         ),
       ],
     );
   }
 }
 
-class _SettingSelectableIcon extends HookWidget {
+class _OptionPropertyInfo extends HookWidget {
   final bool isChecked;
   final String iconPath;
   final String iconText;
 
-  const _SettingSelectableIcon({
+  const _OptionPropertyInfo({
     super.key,
     required this.isChecked,
     required this.iconPath,
@@ -389,14 +421,6 @@ class _SettingSelectableIcon extends HookWidget {
               ),
             ],
           ),
-          SizedBox(
-            width: 24,
-            height: 24,
-            child: BasicBorderRadioButton(
-              isChecked: isChecked,
-              onChange: null,
-            ),
-          )
         ],
       ),
     );
@@ -424,8 +448,8 @@ class _ContentTypeImage extends StatelessWidget {
 
     return SvgPicture.asset(
       iconPath,
-      width: 20,
-      height: 20,
+      width: 16,
+      height: 16,
       colorFilter: ColorFilter.mode(
         getColorScheme(context).colorGray900,
         BlendMode.srcIn,

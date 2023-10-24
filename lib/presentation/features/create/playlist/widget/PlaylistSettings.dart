@@ -4,11 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
+import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
+import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../provider/PlaylistSaveInfoProvider.dart';
@@ -25,7 +32,6 @@ class PlaylistSettings extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     debugPrint("PlaylistSettings build assad $direction $scale");
 
     final directionType = useState(direction);
@@ -55,9 +61,9 @@ class PlaylistSettings extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  getAppLocalizations(context).common_settings,
+                  getAppLocalizations(context).common_option,
                   style: getTextTheme(context).b3b.copyWith(
-                        color: getColorScheme(context).colorGray500,
+                        color: getColorScheme(context).colorGray900,
                       ),
                 ),
                 AnimatedBuilder(
@@ -107,71 +113,115 @@ class _SettingContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final previewListManager = ref.read(previewListProvider.notifier);
+    final mediaCartManager = ref.read(mediaContentsCartProvider.notifier);
+    final saveState = ref.watch(playlistSaveInfoProvider);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
-        vertical: 14,
+        vertical: 16,
       ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      child: Column(
         children: [
-          Expanded(
-            child: Column(
-              children: [
-                _SettingSelectableIcon(
-                  iconPath: "assets/imgs/icon_horizontal_line.svg",
-                  iconText: getAppLocalizations(context).common_horizontal,
-                  onPressed: () {
-                    saveManager.changeDirection(PlaylistSettingType.Horizontal);
-                    directionType.value = PlaylistSettingType.Horizontal;
-                  },
-                  isChecked: directionType.value == PlaylistSettingType.Horizontal,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: Column(
+                  children: [
+                    _SettingSelectableIcon(
+                      iconPath: "assets/imgs/icon_horizontal_line.svg",
+                      iconText: getAppLocalizations(context).common_horizontal,
+                      onPressed: () {
+                        saveManager.changeDirection(PlaylistSettingType.Horizontal);
+                        directionType.value = PlaylistSettingType.Horizontal;
+                      },
+                      isChecked: directionType.value == PlaylistSettingType.Horizontal,
+                    ),
+                    const SizedBox(height: 8),
+                    _SettingSelectableIcon(
+                      iconPath: "assets/imgs/icon_vertical_line.svg",
+                      iconText: getAppLocalizations(context).common_vertical,
+                      onPressed: () {
+                        saveManager.changeDirection(PlaylistSettingType.Vertical);
+                        directionType.value = PlaylistSettingType.Vertical;
+                      },
+                      isChecked: directionType.value == PlaylistSettingType.Vertical,
+                    ),
+                  ],
                 ),
-                const SizedBox(height: 8),
-                _SettingSelectableIcon(
-                  iconPath: "assets/imgs/icon_vertical_line.svg",
-                  iconText: getAppLocalizations(context).common_vertical,
-                  onPressed: () {
-                    saveManager.changeDirection(PlaylistSettingType.Vertical);
-                    directionType.value = PlaylistSettingType.Vertical;
-                  },
-                  isChecked: directionType.value == PlaylistSettingType.Vertical,
+              ),
+              Container(
+                width: 1,
+                height: 64,
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                color: getColorScheme(context).colorGray300,
+              ),
+              Expanded(
+                child: Column(
+                  children: [
+                    _SettingSelectableIcon(
+                      iconPath: "assets/imgs/icon_fill.svg",
+                      iconText: getAppLocalizations(context).common_fill,
+                      onPressed: () {
+                        saveManager.changeFill(PlaylistSettingType.Fill);
+                        scaleType.value = PlaylistSettingType.Fill;
+                      },
+                      isChecked: scaleType.value == PlaylistSettingType.Fill,
+                    ),
+                    const SizedBox(height: 8),
+                    _SettingSelectableIcon(
+                      iconPath: "assets/imgs/icon_fit.svg",
+                      iconText: getAppLocalizations(context).common_fit,
+                      onPressed: () {
+                        saveManager.changeFill(PlaylistSettingType.Fit);
+                        scaleType.value = PlaylistSettingType.Fit;
+                      },
+                      isChecked: scaleType.value == PlaylistSettingType.Fit,
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
           Container(
-            width: 1,
-            height: 64,
-            margin: const EdgeInsets.symmetric(horizontal: 16),
-            color: getColorScheme(context).colorGray300,
-          ),
-          Expanded(
-            child: Column(
-              children: [
-                _SettingSelectableIcon(
-                  iconPath: "assets/imgs/icon_fit.svg",
-                  iconText: getAppLocalizations(context).common_fit,
-                  onPressed: () {
-                    saveManager.changeFill(PlaylistSettingType.Fit);
-                    scaleType.value = PlaylistSettingType.Fit;
-                  },
-                  isChecked: scaleType.value == PlaylistSettingType.Fit,
-                ),
-                const SizedBox(height: 8),
-                _SettingSelectableIcon(
-                  iconPath: "assets/imgs/icon_fill.svg",
-                  iconText: getAppLocalizations(context).common_fill,
-                  onPressed: () {
-                    saveManager.changeFill(PlaylistSettingType.Fill);
-                    scaleType.value = PlaylistSettingType.Fill;
-                  },
-                  isChecked: scaleType.value == PlaylistSettingType.Fill,
-                ),
-              ],
+            width: double.infinity,
+            margin: const EdgeInsets.only(top: 16),
+            child: NeutralLineButton.extraSmallRound4(
+              onPressed: () {
+                final previewItems = mediaCartManager.getItems();
+
+                if (CollectionUtil.isNullorEmpty(previewItems)){
+                  Toast.showWarning(context, getAppLocalizations(context).message_add_media_content);
+                  return;
+                }
+
+                previewListManager.changeItems(
+                  PreviewModel(
+                      saveState.property.direction.toLowerCase() == "horizontal"
+                          ? PlaylistSettingType.Horizontal.name.toLowerCase()
+                          : PlaylistSettingType.Vertical.name.toLowerCase(),
+                      saveState.property.fill.toLowerCase() == "fill"
+                          ? PlaylistSettingType.Fill.name.toLowerCase()
+                          : PlaylistSettingType.Fit.name.toLowerCase(),
+                      previewItems,
+                      previewItems.map((e) => e.property?.duration?.toInt()).toList()),
+                );
+                Navigator.push(
+                  context,
+                  nextSlideVerticalScreen(
+                    RoutingScreen.PreviewPlaylist.route,
+                  ),
+                );
+              },
+              content: getAppLocalizations(context).common_preview,
+              isActivated: true,
             ),
+          ),
+          const SizedBox(
+            width: 12,
           ),
         ],
       ),

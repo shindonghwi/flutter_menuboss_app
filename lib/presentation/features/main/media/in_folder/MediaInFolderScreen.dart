@@ -57,9 +57,10 @@ class MediaInFolderScreen extends HookConsumerWidget {
         requestMedias();
       });
       return () {
+        mediaList.value?.clear();
         mediaManager.init();
       };
-    }, []);  // 의존성 배열을 빈 배열로 설정하여 이 useEffect가 한 번만 실행되도록 합니다.
+    }, []); // 의존성 배열을 빈 배열로 설정하여 이 useEffect가 한 번만 실행되도록 합니다.
 
     useEffect(() {
       // mediaState가 변경될 때마다 실행될 로직
@@ -68,9 +69,12 @@ class MediaInFolderScreen extends HookConsumerWidget {
           success: (event) {
             mediaList.value = event.value;
             final count = mediaList.value?.length ?? 0;
-            final size = mediaList.value?.map((e) => e.property?.size ?? 0).reduce(
-                  (value, element) => value + element,
-            );
+            final sizeList = mediaList.value?.map((e) => e.property?.size ?? 0);
+            final size = sizeList!.isEmpty
+                ? 0
+                : sizeList.reduce(
+                    (value, element) => value + element,
+                  );
             debugPrint("count: $count, size: $size");
             rootMediaManager.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
           },
@@ -87,40 +91,58 @@ class MediaInFolderScreen extends HookConsumerWidget {
 
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
-          GetIt.instance<PostUploadMediaImageUseCase>()
-              .call(
+          final controller = await uploadProgressProvider.uploadStart(
             xFile.path,
-            folderId: item!.mediaId,
-            streamController: controller,
-          )
-              .then((response) {
-            if (response.status == 200) {
-              requestMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+            isVideo: false,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaImageUseCase>()
+                .call(
+              xFile.path,
+              folderId: item!.mediaId,
+              streamController: controller,
+            )
+                .then((response) {
+              if (response.status == 200) {
+                requestMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         onVideoSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
-          GetIt.instance<PostUploadMediaVideoUseCase>()
-              .call(
+          final controller = await uploadProgressProvider.uploadStart(
             xFile.path,
-            folderId: item!.mediaId,
-            streamController: controller,
-          )
-              .then((response) {
-            if (response.status == 200) {
-              requestMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+            isVideo: true,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaVideoUseCase>()
+                .call(
+              xFile.path,
+              folderId: item!.mediaId,
+              streamController: controller,
+            )
+                .then((response) {
+              if (response.status == 200) {
+                requestMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         notAvailableFile: () {
           Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);

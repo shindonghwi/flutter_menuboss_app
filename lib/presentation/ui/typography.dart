@@ -101,8 +101,8 @@ extension StyleText on TextTheme {
       height: 1.4
   );
   TextStyle get c2m => defaultTextStyle.copyWith(
-      fontSize: 12,
+      fontSize: 10,
       fontWeight: FontWeight.w500,
-      height: 1.4
+      height: 1.3
   );
 }

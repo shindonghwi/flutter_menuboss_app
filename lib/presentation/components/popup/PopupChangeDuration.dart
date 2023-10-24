@@ -26,10 +26,10 @@ class PopupChangeDuration extends HookWidget {
     const size = 3;
     final controllers = List.generate(size, (index) {
       return index == 0
-          ? useTextEditingController(text: hour)
+          ? useTextEditingController(text: hour == '00' ? "" : hour)
           : index == 1
-              ? useTextEditingController(text: min)
-              : useTextEditingController(text: sec);
+              ? useTextEditingController(text: min == '00' ? "" : min)
+              : useTextEditingController(text: sec == '00' ? "" : sec);
     });
     final focusNodes = List.generate(size, (_) => useFocusNode());
     final currentFocusIndex = useState(2);
@@ -60,6 +60,8 @@ class PopupChangeDuration extends HookWidget {
       return null;
     }, []);
 
+    debugPrint("c : ${currentFocusIndex.value}");
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
@@ -81,49 +83,68 @@ class PopupChangeDuration extends HookWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: List.generate(size, (index) {
-              return Container(
-                width: 32,
-                margin: EdgeInsets.only(left: index == 0 ? 0 : 12, right: index == 2 ? 0 : 12),
-                child: TextField(
-                  controller: controllers[index],
-                  focusNode: focusNodes[index],
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                  maxLength: 2,
-                  style: getTextTheme(context).s2b.copyWith(
-                        color: getColorScheme(context).colorGray900,
-                      ),
-                  decoration: InputDecoration(
-                    hintText: "00",
-                    hintStyle: getTextTheme(context).s2b.copyWith(
-                          color: getColorScheme(context).colorGray400,
+              return Row(
+                children: [
+                  SizedBox(
+                    width: 32,
+                    child: Column(
+                      children: [
+                        TextField(
+                          controller: controllers[index],
+                          focusNode: focusNodes[index],
+                          keyboardType: TextInputType.number,
+                          textAlign: TextAlign.center,
+                          maxLength: 2,
+                          style: getTextTheme(context).s2b.copyWith(
+                                color: index == currentFocusIndex.value
+                                    ? getColorScheme(context).colorGray900
+                                    : getColorScheme(context).colorGray400,
+                              ),
+
+                          decoration: InputDecoration(
+                            contentPadding: const EdgeInsets.only(bottom: 10),
+                            hintText: "00",
+                            hintStyle: getTextTheme(context).s2b.copyWith(
+                                  color: getColorScheme(context).colorGray400,
+                                ),
+                            counterText: '',
+                            border: InputBorder.none,
+                          ),
+                          onTap: () {
+                            currentFocusIndex.value = index;
+                          },
+                          onChanged: (value) {
+                            if (value.length == 2 && index < size - 1) {
+                              // 입력한 값의 길이가 2이고 마지막 필드가 아닌 경우
+                              FocusScope.of(context).requestFocus(focusNodes[index + 1]); // 다음 필드로 초점 이동
+                              currentFocusIndex.value = index + 1;
+                            }
+                          },
+                          textAlignVertical: TextAlignVertical.bottom,
                         ),
-                    counterText: '',
-                    enabledBorder: currentFocusIndex.value == index
-                        ? UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: getColorScheme(context).colorGray900,
-                              width: 2,
-                            ),
-                          )
-                        : InputBorder.none,
-                    focusedBorder: currentFocusIndex.value == index
-                        ? UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: getColorScheme(context).colorGray900,
-                              width: 2,
-                            ),
-                          )
-                        : InputBorder.none,
+                        if (index == currentFocusIndex.value)
+                          Container(
+                            width: 32,
+                            height: 2,
+                            color: index == currentFocusIndex.value
+                                ? getColorScheme(context).colorGray900
+                                : getColorScheme(context).colorGray400,
+                          ),
+                      ],
+                    ),
                   ),
-                  onChanged: (value) {
-                    if (value.length == 2 && index < size - 1) {
-                      // 입력한 값의 길이가 2이고 마지막 필드가 아닌 경우
-                      FocusScope.of(context).requestFocus(focusNodes[index + 1]); // 다음 필드로 초점 이동
-                      currentFocusIndex.value = index + 1;
-                    }
-                  },
-                ),
+                  if (index < size - 1)
+                    Container(
+                      margin: const EdgeInsets.fromLTRB(8, 8, 8, 0),
+                      child: Text(
+                        ":",
+                        style: getTextTheme(context).s1b.copyWith(
+                              color: getColorScheme(context).colorGray400,
+                            ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
+                ],
               );
             }),
           ),
@@ -157,9 +178,9 @@ class PopupChangeDuration extends HookWidget {
                   Navigator.pop(context);
                   onClicked?.call(
                     StringUtil.convertToSeconds(
-                      int.parse(controllers[0].text),
-                      int.parse(controllers[1].text),
-                      int.parse(controllers[2].text),
+                      controllers[0].text.isNotEmpty ? int.parse(controllers[0].text) : 0,
+                      controllers[1].text.isNotEmpty ? int.parse(controllers[1].text) : 0,
+                      controllers[2].text.isNotEmpty ? int.parse(controllers[2].text) : 0,
                     ),
                   );
                 },

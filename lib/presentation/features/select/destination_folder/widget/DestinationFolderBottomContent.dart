@@ -66,7 +66,7 @@ class DestinationFolderBottomContent extends HookConsumerWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       SvgPicture.asset(
-                        "assets/imgs/icon_trash.svg",
+                        "assets/imgs/icon_move_here.svg",
                         width: 24,
                         height: 24,
                         colorFilter: ColorFilter.mode(

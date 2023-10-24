@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
@@ -95,11 +96,14 @@ class _ToastWidget extends HookWidget {
     }, const []);
 
     Color backgroundColor = getColorScheme(context).colorGray800;
+    String iconPath = "assets/imgs/icon_check_filled.svg";
 
     if (type == ToastType.Warning) {
       backgroundColor = getColorScheme(context).colorYellow500;
+      iconPath = "assets/imgs/icon_warning.svg";
     } else if (type == ToastType.Error) {
       backgroundColor = getColorScheme(context).colorRed500;
+      iconPath = "assets/imgs/icon_warning.svg";
     }
 
     return Positioned(
@@ -107,27 +111,44 @@ class _ToastWidget extends HookWidget {
       right: 0,
       top: 52,
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24),
           child: FadeTransition(
             opacity: animation,
             child: Material(
               color: Colors.transparent,
               child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Text(
-                    message,
-                    style: getTextTheme(context).b2sb.copyWith(
-                          color: getColorScheme(context).white,
-                          overflow: TextOverflow.visible,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      iconPath,
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        getColorScheme(context).white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          message,
+                          style: getTextTheme(context).b2sb.copyWith(
+                                color: getColorScheme(context).white,
+                                overflow: TextOverflow.visible,
+                              ),
+                          textAlign: TextAlign.left,
                         ),
-                    textAlign: TextAlign.center,
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

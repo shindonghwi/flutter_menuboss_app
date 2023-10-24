@@ -297,7 +297,7 @@ class _SettingItems extends HookConsumerWidget {
               child: Text(
                 getAppLocalizations(context).my_page_setting_item,
                 style: getTextTheme(context).c1sb.copyWith(
-                      color: getColorScheme(context).colorGray500,
+                      color: getColorScheme(context).colorGray900,
                     ),
                 textAlign: TextAlign.start,
               ),

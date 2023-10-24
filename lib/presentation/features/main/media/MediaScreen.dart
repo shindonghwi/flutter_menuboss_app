@@ -37,8 +37,8 @@ class MediaScreen extends HookConsumerWidget {
     final mediaList = useState<List<ResponseMediaModel>?>(null);
 
     useEffect(() {
-      return (){
-        Future((){
+      return () {
+        Future(() {
           mediaManager.init();
           mediaManager.initPageInfo();
         });
@@ -61,35 +61,55 @@ class MediaScreen extends HookConsumerWidget {
       return null;
     }, [mediaState]);
 
-    void doMediaUploadAction() {
+    void doMediaUploadAction() async {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
 
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
-          GetIt.instance<PostUploadMediaImageUseCase>().call(xFile.path, streamController: controller).then((response) {
-            if (response.status == 200) {
-              mediaManager.initPageInfo();
-              mediaManager.requestGetMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+          final controller = await uploadProgressProvider.uploadStart(
+            xFile.path,
+            isVideo: false,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaImageUseCase>()
+                .call(xFile.path, streamController: controller)
+                .then((response) {
+              if (response.status == 200) {
+                mediaManager.initPageInfo();
+                mediaManager.requestGetMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         onVideoSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
-          GetIt.instance<PostUploadMediaVideoUseCase>().call(xFile.path, streamController: controller).then((response) {
-            if (response.status == 200) {
-              mediaManager.initPageInfo();
-              mediaManager.requestGetMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+          final controller = await uploadProgressProvider.uploadStart(
+            xFile.path,
+            isVideo: true,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaVideoUseCase>()
+                .call(xFile.path, streamController: controller)
+                .then((response) {
+              if (response.status == 200) {
+                mediaManager.initPageInfo();
+                mediaManager.requestGetMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         notAvailableFile: () {
           Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);

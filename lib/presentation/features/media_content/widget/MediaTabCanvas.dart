@@ -20,7 +20,6 @@ class MediaTabCanvas extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useAutomaticKeepAlive();
 
-    // final mediaContents = useState<List<SimpleMediaContentModel>?>(null);
     final mediaContentsState = ref.watch(MediaContentsCanvasProvider);
     final mediaContentsProvider = ref.read(MediaContentsCanvasProvider.notifier);
 
@@ -35,9 +34,6 @@ class MediaTabCanvas extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           mediaContentsState.when(
-            success: (event) {
-              // mediaContents.value = event.value;
-            },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
         });
@@ -51,14 +47,8 @@ class MediaTabCanvas extends HookConsumerWidget {
       children: [
         if (mediaContentsState is Failure)
           FailView(onPressed: () => mediaContentsProvider.requestGetCanvases())
-        // else if (mediaContents.value != null)
-        //   _SimpleMediaList(
-        //     items: mediaContents.value!,
-        //   )
         else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
-          _SimpleMediaList(
-            items: mediaContentsState.value,
-          ),
+          _SimpleMediaList(items: mediaContentsState.value),
         if (mediaContentsState is Loading) const LoadingView(),
       ],
     );
@@ -85,7 +75,7 @@ class _SimpleMediaList extends HookConsumerWidget {
             },
           )
         : const EmptyView(
-            type: BlankMessageType.ADD_CONTENT,
+            type: BlankMessageType.ADD_CANVAS,
             onPressed: null,
           );
   }

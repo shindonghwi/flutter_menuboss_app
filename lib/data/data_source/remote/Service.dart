@@ -149,21 +149,25 @@ class Service {
 
         var totalByteLength = file.lengthSync();
         int bytesUploaded = 0;
-        file.openRead().listen((data) {
-          bytesUploaded += data.length;
-          uploadProgressController?.sink.add(bytesUploaded / totalByteLength);
-        })
-          .onDone(() async {
-            var streamedResponse = await client.send(request);
-            var response = await http.Response.fromStream(streamedResponse);
-            debugPrint('http response statusCode: ${response.statusCode}');
-            debugPrint('http response method: ${response.request?.method.toString()}');
-            debugPrint('http response body: ${response.body}');
-            uploadProgressController?.close();
-            completer.complete(response);  // Completing the Future
-          });
+        try {
+          await for (var data in file.openRead()) {
+            bytesUploaded += data.length;
+            uploadProgressController?.sink.add(bytesUploaded / totalByteLength);
+          }
 
-        return completer.future;
+          var streamedResponse = await client.send(request);
+          var response = await http.Response.fromStream(streamedResponse);
+          debugPrint('http response statusCode: ${response.statusCode}');
+          debugPrint('http response method: ${response.request?.method.toString()}');
+          debugPrint('http response body: ${response.body}');
+          uploadProgressController?.close();
+          return response;
+        } catch (e) {
+          // Handling error during client.send(request) or file upload
+          debugPrint('Network send error: $e');
+          uploadProgressController?.close();
+          return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
+        }
       } else {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }

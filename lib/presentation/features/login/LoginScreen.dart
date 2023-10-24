@@ -78,7 +78,7 @@ class LoginScreen extends HookConsumerWidget {
                       _InputPassword(
                         onChanged: (text) {
                           loginManager.updatePassword(text);
-                          isPwValid.value = RegUtil.checkPw(text);
+                          isPwValid.value = text.isNotEmpty;
                         },
                       ),
                       const SizedBox(height: 20),
@@ -314,10 +314,6 @@ class _InputPassword extends HookWidget {
             child: OutlineTextField.small(
               controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_password,
-              errorMessage: getAppLocalizations(context).login_pw_invalid,
-              checkRegList: const [
-                RegCheckType.PW,
-              ],
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.visiblePassword,
               showPwVisibleButton: true,

@@ -31,6 +31,8 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
     ];
   }
 
+  List<SimpleMediaContentModel> getItems() => state;
+
   void init() {
     state = [];
   }

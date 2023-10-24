@@ -5,14 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
-import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
-import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -24,14 +22,20 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContentsCart = ref.watch(mediaContentsCartProvider);
-    final playlistSaveInfo = ref.watch(playlistSaveInfoProvider);
-
+    final previewState = ref.watch(previewListProvider);
+    final previewManager = ref.watch(previewListProvider.notifier);
     final currentPage = useState(0);
-    final isDirectionHorizontal = useState(playlistSaveInfo.property.direction.toLowerCase() == "horizontal");
-    final isScaleFit = useState(playlistSaveInfo.property.fill.toLowerCase() == "fit");
+    final isDirectionHorizontal = useState(previewState?.direction == "horizontal");
+    final isScaleFit = useState(previewState?.fill == "fit");
+    List<int?> durations = previewState?.durations ?? [];
 
-    List<int?> durations = mediaContentsCart.map((e) => e.property?.duration?.toInt()).toList();
+    useEffect(() {
+      return () {
+        Future(() {
+          previewManager.init();
+        });
+      };
+    }, []);
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
@@ -47,7 +51,6 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
             isScaleFit: isScaleFit,
           ),
           _ImageDisplay(
-            mediaContentsCart: mediaContentsCart,
             currentPage: currentPage.value,
             isDirectionHorizontal: isDirectionHorizontal.value,
             isScaleFit: isScaleFit.value,
@@ -68,11 +71,9 @@ class _ImageDisplay extends HookConsumerWidget {
   final int currentPage;
   final bool isDirectionHorizontal;
   final bool isScaleFit;
-  final List<SimpleMediaContentModel> mediaContentsCart;
 
   const _ImageDisplay({
     super.key,
-    required this.mediaContentsCart,
     required this.currentPage,
     required this.isDirectionHorizontal,
     required this.isScaleFit,
@@ -80,34 +81,40 @@ class _ImageDisplay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final previewState = ref.watch(previewListProvider);
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 60.0),
         child: Stack(
           alignment: Alignment.center,
-          children: mediaContentsCart.map((mediaContent) {
-            int index = mediaContentsCart.indexOf(mediaContent);
-            return AnimatedOpacity(
-              opacity: currentPage == index ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 500),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: getColorScheme(context).colorGray800,
-                    width: 4,
+          children: previewState?.previewItems.map((mediaContent) {
+                int index = previewState.previewItems.indexOf(mediaContent);
+                return AnimatedOpacity(
+                  key: Key("${mediaContent.id}-$index}"),
+                  opacity: currentPage == index ? 1.0 : 0.0,
+                  duration: const Duration(milliseconds: 500),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: getColorScheme(context).colorGray800,
+                        width: 4,
+                      ),
+                    ),
+                    child: AspectRatio(
+                      key: Key("${mediaContent.id}-$index"),
+                      aspectRatio: isDirectionHorizontal ? 16 / 9 : 9 / 16,
+                      child: LoadImage(
+                        tag: "${mediaContent.id}-$index",
+                        url: mediaContent.property?.imageUrl,
+                        type: ImagePlaceholderType.AUTO_16x9,
+                        fit: isScaleFit ? BoxFit.contain : BoxFit.cover,
+                      ),
+                    ),
                   ),
-                ),
-                child: AspectRatio(
-                  aspectRatio: isDirectionHorizontal ? 16 / 9 : 9 / 16,
-                  child: LoadImage(
-                      tag: mediaContent.id.toString(),
-                      url: mediaContent.property?.imageUrl,
-                      type: ImagePlaceholderType.AUTO_16x9,
-                      fit: isScaleFit ? BoxFit.contain : BoxFit.cover),
-                ),
-              ),
-            );
-          }).toList(),
+                );
+              }).toList() ??
+              [],
         ),
       ),
     );

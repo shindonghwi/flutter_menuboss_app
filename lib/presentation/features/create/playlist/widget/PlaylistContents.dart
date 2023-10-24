@@ -7,7 +7,9 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 
 import 'PlaylistContentItem.dart';
 
@@ -63,7 +65,16 @@ class PlaylistContents extends HookConsumerWidget {
                 items.value = [...items.value];
                 saveManager.changeContents(items.value);
               },
-            ),
-          );
+              proxyDecorator: (child, index, animation) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: getColorScheme(context).colorGray50,
+                  ),
+                  child: child,
+                );
+              },
+            )
+
+    );
   }
 }

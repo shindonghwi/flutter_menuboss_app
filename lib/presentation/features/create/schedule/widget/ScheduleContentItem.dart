@@ -93,8 +93,8 @@ class ScheduleContentItem extends HookConsumerWidget {
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 8.0),
           child: Text(
             getAppLocalizations(context).common_timeline,
-            style: getTextTheme(context).b3sb.copyWith(
-                  color: getColorScheme(context).colorGray500,
+            style: getTextTheme(context).b3b.copyWith(
+                  color: getColorScheme(context).colorGray900,
                 ),
           ),
         ),

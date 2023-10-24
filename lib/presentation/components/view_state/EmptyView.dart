@@ -9,6 +9,7 @@ import 'package:menuboss/presentation/utils/Common.dart';
 enum BlankMessageType {
   ADD_SCREEN,
   ADD_CONTENT,
+  ADD_CANVAS,
   NEW_SCHEDULE,
   NEW_PLAYLIST,
   UPLOAD_FILE,
@@ -32,6 +33,8 @@ class EmptyView extends HookWidget {
           return getAppLocalizations(context).blank_message_content_add_screen;
         case BlankMessageType.ADD_CONTENT:
           return getAppLocalizations(context).blank_message_content_add_content;
+        case BlankMessageType.ADD_CANVAS:
+          return getAppLocalizations(context).blank_message_content_add_canvas;
         case BlankMessageType.NEW_SCHEDULE:
           return getAppLocalizations(context).blank_message_content_new_schedule;
         case BlankMessageType.NEW_PLAYLIST:
@@ -49,6 +52,8 @@ class EmptyView extends HookWidget {
           return getAppLocalizations(context).blank_message_description_add_screen;
         case BlankMessageType.ADD_CONTENT:
           return getAppLocalizations(context).blank_message_description_add_content;
+        case BlankMessageType.ADD_CANVAS:
+          return getAppLocalizations(context).blank_message_description_add_canvas;
         case BlankMessageType.NEW_SCHEDULE:
           return getAppLocalizations(context).blank_message_description_new_schedule;
         case BlankMessageType.NEW_PLAYLIST:
@@ -66,6 +71,8 @@ class EmptyView extends HookWidget {
           return "assets/imgs/image_blank_device.svg";
         case BlankMessageType.ADD_CONTENT:
           return "assets/imgs/image_blank_upload.svg";
+        case BlankMessageType.ADD_CANVAS:
+          return "assets/imgs/image_blank_canvas.svg";
         case BlankMessageType.NEW_SCHEDULE:
           return "assets/imgs/image_blank_schedule.svg";
         case BlankMessageType.NEW_PLAYLIST:
@@ -80,6 +87,8 @@ class EmptyView extends HookWidget {
     String? getButtonIconPath() {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
+          return "assets/imgs/icon_plus_1.svg";
+        case BlankMessageType.ADD_CONTENT:
           return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.ADD_CONTENT:
           return "assets/imgs/icon_plus_1.svg";
@@ -120,7 +129,7 @@ class EmptyView extends HookWidget {
           if (description != null)
             Text(
               description,
-              style: getTextTheme(context).b2m.copyWith(
+              style: getTextTheme(context).c1m.copyWith(
                     color: getColorScheme(context).colorGray300,
                   ),
               textAlign: TextAlign.center,

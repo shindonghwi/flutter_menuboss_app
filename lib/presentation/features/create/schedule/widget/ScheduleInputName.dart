@@ -32,7 +32,7 @@ class ScheduleInputName extends HookConsumerWidget {
           Text(
             getAppLocalizations(context).common_title,
             style: getTextTheme(context).b3b.copyWith(
-                  color: getColorScheme(context).colorGray500,
+                  color: getColorScheme(context).colorGray900,
                 ),
           ),
           Padding(

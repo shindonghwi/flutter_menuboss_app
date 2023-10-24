@@ -1,10 +1,9 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -176,13 +175,25 @@ class _SuffixFail extends HookConsumerWidget {
 
     return Row(
       children: [
-        SvgPicture.asset(
-          "assets/imgs/icon_refresh.svg",
-          width: 20,
-          height: 20,
-          colorFilter: ColorFilter.mode(
-            getColorScheme(context).colorGray500,
-            BlendMode.srcIn,
+        Clickable(
+          onPressed: () {
+            mediaUploadProvider.uploadStart(
+              mediaUploadProvider.currentFile!.path,
+              isVideo: mediaUploadProvider.isLastUploadVideo,
+              onNetworkError: () => Toast.showError(
+                context,
+                getAppLocalizations(context).message_network_required,
+              ),
+            );
+          },
+          child: SvgPicture.asset(
+            "assets/imgs/icon_refresh.svg",
+            width: 20,
+            height: 20,
+            colorFilter: ColorFilter.mode(
+              getColorScheme(context).colorGray500,
+              BlendMode.srcIn,
+            ),
           ),
         ),
         Clickable(
@@ -215,9 +226,9 @@ class _SuffixLoading extends HookWidget {
         Padding(
           padding: const EdgeInsets.all(12.0),
           child: Lottie.asset(
-            'assets/motions/loading.json',
-            width: 24,
-            height: 24,
+            'assets/motions/loading_progress.json',
+            width: 20,
+            height: 20,
             fit: BoxFit.fill,
           ),
         )

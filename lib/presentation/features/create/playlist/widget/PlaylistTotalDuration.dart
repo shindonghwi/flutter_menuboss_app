@@ -44,7 +44,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
               Text(
                 getAppLocalizations(context).common_total_duration,
                 style: getTextTheme(context).b3sb.copyWith(
-                      color: getColorScheme(context).colorGray500,
+                      color: getColorScheme(context).colorGray900,
                     ),
               ),
               Padding(
@@ -52,7 +52,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
                 child: Text(
                   StringUtil.formatDuration(totalDuration.value),
                   style: getTextTheme(context).b3sb.copyWith(
-                        color: getColorScheme(context).colorGray900,
+                        color: getColorScheme(context).colorGray500,
                       ),
                 ),
               ),
@@ -72,8 +72,8 @@ class PlaylistTotalDuration extends HookConsumerWidget {
               padding: const EdgeInsets.all(12.0),
               child: SvgPicture.asset(
                 "assets/imgs/icon_upload_01.svg",
-                width: 24,
-                height: 24,
+                width: 20,
+                height: 20,
                 colorFilter: ColorFilter.mode(
                   getColorScheme(context).colorGray900,
                   BlendMode.srcIn,

@@ -31,13 +31,9 @@ class ProfilePlaceholder extends StatelessWidget {
         imageSize = Pair(40, 20);
     }
 
-    return Container(
+    return SizedBox(
       width: containerSize,
       height: containerSize,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        color: getColorScheme(context).colorGray100,
-      ),
       child: Center(
         child: SvgPicture.asset(
           "assets/imgs/image_logo_text.svg",

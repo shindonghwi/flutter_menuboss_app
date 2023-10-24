@@ -1,5 +1,3 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -8,7 +6,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
-import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadProfile.dart';
 import 'package:menuboss/presentation/components/placeholder/ProfilePlaceholder.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
@@ -42,6 +39,8 @@ class MyProfileScreen extends HookConsumerWidget {
 
     final meInfoState = ref.watch(meInfoProvider);
     final meInfoManager = ref.read(meInfoProvider.notifier);
+
+    final isNameChangedState = useState(false);
 
     useEffect(() {
       return () {
@@ -94,7 +93,7 @@ class MyProfileScreen extends HookConsumerWidget {
         rightIconOnPressed: () {
           nameChangeManager.requestChangeName();
         },
-        rightTextActivated: true,
+        rightTextActivated: isNameChangedState.value,
       ),
       backgroundColor: getColorScheme(context).white,
       body: SafeArea(
@@ -115,28 +114,31 @@ class MyProfileScreen extends HookConsumerWidget {
                             url: meInfoState?.profile?.imageUrl ?? "",
                             type: ProfileImagePlaceholderType.Size120x120,
                           ),
-                          _CameraWidget()
+                          const _CameraWidget()
                         ],
                       ),
                     ),
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.fromLTRB(24, 32, 24, 24),
-                    child: const Column(
+                    margin: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+                    child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        _InputFullName(),
+                        _InputFullName(
+                          isNameChanged: (value) {
+                            isNameChangedState.value = value;
+                          },
+                        ),
                         SizedBox(height: 24),
                         _InputEmail(),
                       ],
                     ),
                   ),
-                  const DividerVertical(marginVertical: 0),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+                      margin: const EdgeInsets.symmetric(horizontal: 8),
                       child: Clickable(
                         onPressed: () {
                           Navigator.push(
@@ -147,7 +149,7 @@ class MyProfileScreen extends HookConsumerWidget {
                           );
                         },
                         child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           child: Text(
                             getAppLocalizations(context).my_page_profile_delete_account,
                             style: getTextTheme(context).b3sb.copyWith(
@@ -182,10 +184,10 @@ class _CameraWidget extends HookConsumerWidget {
     return Align(
       alignment: Alignment.bottomRight,
       child: Container(
-        width: 40,
-        height: 40,
+        width: 32,
+        height: 32,
         decoration: BoxDecoration(
-          color: getColorScheme(context).colorPrimary500,
+          color: getColorScheme(context).colorGray600,
           borderRadius: BorderRadius.circular(100),
         ),
         child: Clickable(
@@ -205,11 +207,11 @@ class _CameraWidget extends HookConsumerWidget {
           },
           borderRadius: 100,
           child: Padding(
-            padding: const EdgeInsets.all(10.0),
+            padding: const EdgeInsets.all(8.0),
             child: SvgPicture.asset(
               "assets/imgs/icon_picture.svg",
-              width: 20,
-              height: 20,
+              width: 16,
+              height: 16,
               colorFilter: ColorFilter.mode(
                 getColorScheme(context).white,
                 BlendMode.srcIn,
@@ -223,7 +225,12 @@ class _CameraWidget extends HookConsumerWidget {
 }
 
 class _InputFullName extends HookConsumerWidget {
-  const _InputFullName({super.key});
+  final Function(bool) isNameChanged;
+
+  const _InputFullName({
+    super.key,
+    required this.isNameChanged,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -243,7 +250,10 @@ class _InputFullName extends HookConsumerWidget {
         OutlineTextField.small(
           controller: useTextEditingController(text: meInfoState?.profile?.name),
           hint: meInfoState?.profile?.name ?? "",
-          onChanged: (value) => nameChangeManager.updateName(value),
+          onChanged: (value) {
+            isNameChanged(value != meInfoState?.profile?.name);
+            nameChangeManager.updateName(value);
+          },
         )
       ],
     );

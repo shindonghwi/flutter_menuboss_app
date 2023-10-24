@@ -17,8 +17,9 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String get apiUrl =>
-      _instance._buildType == BuildType.dev ? 'https://dev-app-api.themenuboss.com' : 'https://dev-app-api.themenuboss.com'; // api 주소
+  static String get apiUrl => _instance._buildType == BuildType.dev
+      ? 'https://dev-app-api.themenuboss.com'
+      : 'https://app-api.themenuboss.com'; // api 주소
 
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
@@ -30,7 +31,6 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() async {
-
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
@@ -45,6 +45,6 @@ class Environment {
     initServiceLocator();
     Service.initializeHeaders();
 
-    runApp(ProviderScope(child: MenuBossApp()));
+    runApp(const ProviderScope(child: MenuBossApp()));
   }
 }
