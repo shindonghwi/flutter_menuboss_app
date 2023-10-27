@@ -14,7 +14,19 @@ class PrimaryFilledButton extends HookWidget {
 
   /// @feature: xSmall buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryFilledButton.extraSmallRound4({
+  const PrimaryFilledButton.xSmallRound4Icon({
+    Key? key,
+    required this.leftIcon,
+    required this.content,
+    required this.isActivated,
+    this.onPressed,
+  })  : borderRadius = 4,
+        height = 32,
+        super(key: key);
+
+  /// @feature: xmall buttons
+  /// @author: 2023/09/05 3:13 PM donghwishin
+  const PrimaryFilledButton.smallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -24,7 +36,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const PrimaryFilledButton.extraSmallRound4Icon({
+  const PrimaryFilledButton.smallRound4Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -34,7 +46,7 @@ class PrimaryFilledButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const PrimaryFilledButton.extraSmallRound100({
+  const PrimaryFilledButton.smallRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -156,6 +168,9 @@ class PrimaryFilledButton extends HookWidget {
     var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
 
     switch (height) {
+      case 32:
+        textStyle = getTextTheme(context).c1sb.copyWith(color: textColor);
+        break;
       case 40:
         textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
         break;

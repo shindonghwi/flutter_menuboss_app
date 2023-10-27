@@ -114,7 +114,7 @@ class MediaItemAdd extends HookConsumerWidget {
             !isFolderType
                 ? Container(
                     margin: const EdgeInsets.only(right: 12),
-                    child: PrimaryFilledButton.extraSmallRound100(
+                    child: PrimaryFilledButton.smallRound100(
                       content: getAppLocalizations(context).common_add,
                       isActivated: true,
                       onPressed: () {

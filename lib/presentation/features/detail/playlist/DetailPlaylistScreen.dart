@@ -298,7 +298,7 @@ class _TotalDuration extends HookConsumerWidget {
               ),
             ],
           ),
-          PrimaryFilledButton.extraSmallRound4Icon(
+          PrimaryFilledButton.smallRound4Icon(
             leftIcon: SvgPicture.asset(
               "assets/imgs/icon_playlists_line.svg",
               width: 20,

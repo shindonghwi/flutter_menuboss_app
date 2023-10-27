@@ -1,14 +1,12 @@
-import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:menuboss/app/env/Environment.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/theme.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/navigation/Route.dart';
 import 'package:uni_links/uni_links.dart';
 
 final firebaseAuth = FirebaseAuth.instance;
@@ -18,31 +16,14 @@ class MenuBossApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final initialLinkFuture = useMemoized(() => getInitialLink(), []);
-
-    final initialLink = useFuture(initialLinkFuture);
-
-    // useEffect(() {
-    //   void handleDeepLink(String? link) {
-    //     debugPrint("@##@@##@#####44 link : $link");
-    //     if (link == null) return;
-    //     if (link == "menuboss://login") {
-    //       MenuBossGlobalVariable.navigatorKey.currentState?.pushNamed(RoutingScreen.SignUp.route);
-    //     }
-    //   }
-    //
-    //   if (initialLink.hasData) {
-    //     handleDeepLink(initialLink.data);
-    //   }
-    //
-    //   StreamSubscription subscription;
-    //
-    //   subscription = uriLinkStream.listen((Uri? link) {
-    //     debugPrint("@##@@##@ link : $link");
-    //     handleDeepLink(link?.toString());
-    //   }, onError: (err) {});
-    //   return () => subscription.cancel();
-    // }, [initialLink]);
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        uriLinkStream.listen((Uri? uriLink) {
+          handleDeepLink(uriLink?.toString());
+        });
+      });
+      return null;
+    }, []);
 
     return LayoutBuilder(
       builder: (context, constraints) {

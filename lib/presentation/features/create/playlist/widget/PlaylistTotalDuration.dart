@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -35,7 +35,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
     }, [mediaCart]);
 
     return Padding(
-      padding: const EdgeInsets.fromLTRB(24, 2.5, 12, 2.5),
+      padding: const EdgeInsets.fromLTRB(24, 12, 12, 12),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -58,7 +58,18 @@ class PlaylistTotalDuration extends HookConsumerWidget {
               ),
             ],
           ),
-          Clickable(
+          PrimaryFilledButton.xSmallRound4Icon(
+            leftIcon: SvgPicture.asset(
+              "assets/imgs/icon_plus_1.svg",
+              width: 16,
+              height: 16,
+              colorFilter: ColorFilter.mode(
+                getColorScheme(context).white,
+                BlendMode.srcIn,
+              ),
+            ),
+            content: getAppLocalizations(context).blank_message_content_add_content,
+            isActivated: true,
             onPressed: () {
               Navigator.push(
                 context,
@@ -68,18 +79,6 @@ class PlaylistTotalDuration extends HookConsumerWidget {
                 ),
               );
             },
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: SvgPicture.asset(
-                "assets/imgs/icon_upload_01.svg",
-                width: 20,
-                height: 20,
-                colorFilter: ColorFilter.mode(
-                  getColorScheme(context).colorGray900,
-                  BlendMode.srcIn,
-                ),
-              ),
-            ),
           ),
         ],
       ),
