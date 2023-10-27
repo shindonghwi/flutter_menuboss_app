@@ -8,6 +8,8 @@ import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCanvasProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 
 import 'MediaItemAdd.dart';
 
@@ -21,11 +23,11 @@ class MediaTabCanvas extends HookConsumerWidget {
     useAutomaticKeepAlive();
 
     final mediaContentsState = ref.watch(MediaContentsCanvasProvider);
-    final mediaContentsProvider = ref.read(MediaContentsCanvasProvider.notifier);
+    final mediaContentsManager = ref.read(MediaContentsCanvasProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        mediaContentsProvider.requestGetCanvases();
+        mediaContentsManager.requestGetCanvases();
       });
       return null;
     }, []);
@@ -46,7 +48,7 @@ class MediaTabCanvas extends HookConsumerWidget {
     return Stack(
       children: [
         if (mediaContentsState is Failure)
-          FailView(onPressed: () => mediaContentsProvider.requestGetCanvases())
+          FailView(onPressed: () => mediaContentsManager.requestGetCanvases())
         else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
           _SimpleMediaList(items: mediaContentsState.value),
         if (mediaContentsState is Loading) const LoadingView(),
@@ -65,14 +67,22 @@ class _SimpleMediaList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mediaContentsManager = ref.read(MediaContentsCanvasProvider.notifier);
     return items.isNotEmpty
-        ? ListView.builder(
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            physics: const BouncingScrollPhysics(),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return MediaItemAdd(item: items[index], onFolderTap: () {});
+        ? RefreshIndicator(
+            onRefresh: () async {
+              mediaContentsManager.requestGetCanvases(delayed: 300);
             },
+            color: getColorScheme(context).colorPrimary500,
+            backgroundColor: getColorScheme(context).white,
+            child: ListView.builder(
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              physics: const AlwaysScrollableScrollPhysics(),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return MediaItemAdd(item: items[index], onFolderTap: () {});
+              },
+            ),
           )
         : const EmptyView(
             type: BlankMessageType.ADD_CANVAS,

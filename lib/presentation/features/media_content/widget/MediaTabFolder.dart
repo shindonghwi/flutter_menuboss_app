@@ -136,14 +136,22 @@ class _SimpleMediaList extends HookConsumerWidget {
     }, []);
 
     return items.isNotEmpty
-        ? ListView.builder(
-            controller: scrollController,
-            physics: const BouncingScrollPhysics(),
-            padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-            itemCount: items.length,
-            itemBuilder: (context, index) {
-              return MediaItemAdd(item: items[index], onFolderTap: () {});
+        ? RefreshIndicator(
+            onRefresh: () async {
+              mediaContentsManager.initPageInfo();
+              mediaContentsManager.requestGetMedias(folderId, delay: 300);
             },
+            color: getColorScheme(context).colorPrimary500,
+            backgroundColor: getColorScheme(context).white,
+            child: ListView.builder(
+              controller: scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return MediaItemAdd(item: items[index], onFolderTap: () {});
+              },
+            ),
           )
         : const EmptyView(
             type: BlankMessageType.ADD_CONTENT,

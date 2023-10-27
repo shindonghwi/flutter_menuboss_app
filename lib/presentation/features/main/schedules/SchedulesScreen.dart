@@ -10,10 +10,10 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
-import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/provider/SchedulesProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/widget/ScheduleItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../components/view_state/LoadingView.dart';
@@ -27,8 +27,8 @@ class SchedulesScreen extends HookConsumerWidget {
     final schedulesManager = ref.read(schedulesProvider.notifier);
 
     useEffect(() {
-      return (){
-        Future((){
+      return () {
+        Future(() {
           schedulesManager.init();
         });
       };
@@ -82,6 +82,7 @@ class _ScheduleContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final schedulesManager = ref.read(schedulesProvider.notifier);
 
     void goToCreateSchedule() {
       Navigator.push(
@@ -105,18 +106,25 @@ class _ScheduleContentList extends HookConsumerWidget {
     return items.isNotEmpty
         ? Stack(
             children: [
-              ListView.builder(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return ClickableScale(
-                    child: ScheduleItem(item: item),
-                    onPressed: () => goToDetailSchedule(item),
-                  );
+              RefreshIndicator(
+                onRefresh: () async {
+                  schedulesManager.requestGetSchedules(delay: 300);
                 },
+                color: getColorScheme(context).colorPrimary500,
+                backgroundColor: getColorScheme(context).white,
+                child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return ClickableScale(
+                      child: ScheduleItem(item: item),
+                      onPressed: () => goToDetailSchedule(item),
+                    );
+                  },
+                ),
               ),
               Container(
                 alignment: Alignment.bottomRight,

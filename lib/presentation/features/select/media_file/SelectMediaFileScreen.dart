@@ -104,7 +104,7 @@ class _MediaList extends HookConsumerWidget {
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
       controller: scrollController,
-      physics: const BouncingScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: items.length,
       itemBuilder: (context, index) {

@@ -21,6 +21,7 @@ import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
@@ -83,8 +84,6 @@ class MediaInFolderScreen extends HookConsumerWidget {
       });
       return null;
     }, [mediaState]);
-
-    debugPrint("MediaInFolderScreen build ${mediaState}");
 
     void doMediaUploadAction() {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
@@ -234,50 +233,58 @@ class _MediaContentList extends HookConsumerWidget {
     return items.isNotEmpty
         ? Stack(
             children: [
-              ListView.builder(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return ClickableScale(
-                    onPressed: () async {
-                      try {
-                        final newName = await Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(
-                            RoutingScreen.MediaInfo.route,
-                            parameter: item,
-                          ),
-                        );
-
-                        if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                          mediaManager.renameItem(item.mediaId, newName);
-                        }
-                      } catch (e) {
-                        debugPrint(e.toString());
-                      }
-                    },
-                    child: MediaItem(
-                      item: item,
-                      onRemove: () async {
-                        final isRemoved = await mediaManager.removeItem([item.mediaId]);
-                        if (isRemoved) {
-                          rootMediaManager.updateFolderCountAndSize(
-                            folderId,
-                            item.property?.size ?? 0,
-                            isIncrement: false,
-                            isUiUpdate: true,
-                          );
-                        }
-                      },
-                      onRename: (newName) {
-                        mediaManager.renameItem(item.mediaId, newName);
-                      },
-                    ),
-                  );
+              RefreshIndicator(
+                onRefresh: () async {
+                  mediaManager.initPageInfo();
+                  mediaManager.requestGetMedias(mediaId: folderId, delayed: 300);
                 },
+                color: getColorScheme(context).colorPrimary500,
+                backgroundColor: getColorScheme(context).white,
+                child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return ClickableScale(
+                      onPressed: () async {
+                        try {
+                          final newName = await Navigator.push(
+                            context,
+                            nextSlideHorizontalScreen(
+                              RoutingScreen.MediaInfo.route,
+                              parameter: item,
+                            ),
+                          );
+
+                          if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                            mediaManager.renameItem(item.mediaId, newName);
+                          }
+                        } catch (e) {
+                          debugPrint(e.toString());
+                        }
+                      },
+                      child: MediaItem(
+                        item: item,
+                        onRemove: () async {
+                          final isRemoved = await mediaManager.removeItem([item.mediaId]);
+                          if (isRemoved) {
+                            rootMediaManager.updateFolderCountAndSize(
+                              folderId,
+                              item.property?.size ?? 0,
+                              isIncrement: false,
+                              isUiUpdate: true,
+                            );
+                          }
+                        },
+                        onRename: (newName) {
+                          mediaManager.renameItem(item.mediaId, newName);
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
               Container(
                 alignment: Alignment.bottomRight,

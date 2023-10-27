@@ -63,7 +63,7 @@ class LoginScreen extends HookConsumerWidget {
               child: Container(
                 margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
                       const _Title(),

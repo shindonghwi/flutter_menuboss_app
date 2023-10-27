@@ -80,7 +80,7 @@ class SignUpScreen extends HookConsumerWidget {
           children: [
             SingleChildScrollView(
               padding: const EdgeInsets.fromLTRB(24, 24, 24, 60),
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [

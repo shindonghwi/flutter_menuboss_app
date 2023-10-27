@@ -39,9 +39,8 @@ class MenuBossApp extends HookWidget {
 
       subscription = uriLinkStream.listen((Uri? link) {
         debugPrint("@##@@##@ link : $link");
-        handleDeepLink(link != null ? link.toString() : null);
-        }, onError: (err) {
-      });
+        handleDeepLink(link?.toString());
+      }, onError: (err) {});
       return () => subscription.cancel();
     }, [initialLink]);
 
@@ -49,6 +48,12 @@ class MenuBossApp extends HookWidget {
       builder: (context, constraints) {
         if (constraints.maxWidth != 0) {
           return MaterialApp(
+            builder: (context, child) {
+              return ScrollConfiguration(
+                behavior: AppScrollBehavior(),
+                child: child!,
+              );
+            },
             onGenerateTitle: (context) => AppLocalizations.of(context).appTitle,
             theme: AppTheme.lightTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
@@ -81,4 +86,11 @@ class MenuBossApp extends HookWidget {
 
 class MenuBossGlobalVariable {
   static final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+}
+
+class AppScrollBehavior extends ScrollBehavior {
+  @override
+  Widget buildOverscrollIndicator(BuildContext context, Widget child, ScrollableDetails details) {
+    return child;
+  }
 }

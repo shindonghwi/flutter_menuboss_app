@@ -17,6 +17,7 @@ import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
@@ -216,54 +217,62 @@ class _MediaContentList extends HookConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
-                      controller: scrollController,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        final isFolderType = item.type?.code.toLowerCase() == "folder";
-                        return ClickableScale(
-                          onPressed: () async {
-                            if (isFolderType) {
-                              Navigator.push(
-                                context,
-                                nextSlideHorizontalScreen(
-                                  RoutingScreen.MediaDetailInFolder.route,
-                                  parameter: item,
-                                ),
-                              );
-                            } else {
-                              try {
-                                final newName = await Navigator.push(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        mediaManager.initPageInfo();
+                        mediaManager.requestGetMedias(delayed: 300);
+                      },
+                      color: getColorScheme(context).colorPrimary500,
+                      backgroundColor: getColorScheme(context).white,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          final isFolderType = item.type?.code.toLowerCase() == "folder";
+                          return ClickableScale(
+                            onPressed: () async {
+                              if (isFolderType) {
+                                Navigator.push(
                                   context,
                                   nextSlideHorizontalScreen(
-                                    RoutingScreen.MediaInfo.route,
+                                    RoutingScreen.MediaDetailInFolder.route,
                                     parameter: item,
                                   ),
                                 );
+                              } else {
+                                try {
+                                  final newName = await Navigator.push(
+                                    context,
+                                    nextSlideHorizontalScreen(
+                                      RoutingScreen.MediaInfo.route,
+                                      parameter: item,
+                                    ),
+                                  );
 
-                                if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                                  mediaManager.renameItem(item.mediaId ?? "", newName);
+                                  if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                                    mediaManager.renameItem(item.mediaId ?? "", newName);
+                                  }
+                                } catch (e) {
+                                  debugPrint(e.toString());
                                 }
-                              } catch (e) {
-                                debugPrint(e.toString());
                               }
-                            }
-                          },
-                          child: MediaItem(
-                            item: item,
-                            onRemove: () {
-                              mediaManager.removeItem([item.mediaId]);
                             },
-                            onRename: (newName) {
-                              mediaManager.renameItem(item.mediaId, newName);
-                            },
-                          ),
-                        );
-                      },
+                            child: MediaItem(
+                              item: item,
+                              onRemove: () {
+                                mediaManager.removeItem([item.mediaId]);
+                              },
+                              onRename: (newName) {
+                                mediaManager.renameItem(item.mediaId, newName);
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],

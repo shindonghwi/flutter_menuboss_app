@@ -77,7 +77,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
             else if (destinationFolderState is Success<List<ResponseMediaModel?>>)
               ListView.builder(
                 padding: const EdgeInsets.only(bottom: 100),
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
                 controller: useScrollController(keepScrollOffset: true),
                 itemCount: destinationFolderState.value.length,

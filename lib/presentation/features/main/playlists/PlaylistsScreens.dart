@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -14,6 +13,7 @@ import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/widget/PlaylistItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../components/view_state/LoadingView.dart';
@@ -27,8 +27,8 @@ class PlaylistsScreens extends HookConsumerWidget {
     final playlistManager = ref.read(playListProvider.notifier);
 
     useEffect(() {
-      return (){
-        Future((){
+      return () {
+        Future(() {
           playlistManager.init();
         });
       };
@@ -82,6 +82,8 @@ class _PlaylistContentList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final playlistManager = ref.read(playListProvider.notifier);
+
     void goToCreatePlaylist() async {
       Navigator.push(
         context,
@@ -104,17 +106,24 @@ class _PlaylistContentList extends HookConsumerWidget {
     return items.isNotEmpty
         ? Stack(
             children: [
-              ListView.builder(
-                padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
-                physics: const BouncingScrollPhysics(),
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return ClickableScale(
-                    child: PlaylistItem(item: item),
-                    onPressed: () => goToDetailPlaylist(item),
-                  );
+              RefreshIndicator(
+                onRefresh: () async {
+                  playlistManager.requestGetPlaylists(delay: 300);
                 },
+                color: getColorScheme(context).colorPrimary500,
+                backgroundColor: getColorScheme(context).white,
+                child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return ClickableScale(
+                      child: PlaylistItem(item: item),
+                      onPressed: () => goToDetailPlaylist(item),
+                    );
+                  },
+                ),
               ),
               Container(
                 alignment: Alignment.bottomRight,

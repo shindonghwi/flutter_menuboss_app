@@ -49,7 +49,7 @@ class PlaylistContents extends HookConsumerWidget {
           )
         : Expanded(
             child: ReorderableListView(
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               children: items.value.map((item) {
                 return Container(
                   key: ValueKey(item.index),

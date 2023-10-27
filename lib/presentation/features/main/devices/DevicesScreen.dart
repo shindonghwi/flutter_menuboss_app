@@ -15,6 +15,7 @@ import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class DevicesScreen extends HookConsumerWidget {
@@ -99,17 +100,24 @@ class _DeviceContentList extends HookConsumerWidget {
     return items.isNotEmpty
         ? Stack(
             children: [
-              ListView.separated(
-                padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: 0);
+              RefreshIndicator(
+                onRefresh: () async {
+                  deviceManager.requestGetDevices(delay: 300);
                 },
-                itemBuilder: (BuildContext context, int index) {
-                  return DeviceItem(item: items[index]);
-                },
-                itemCount: items.length,
+                color: getColorScheme(context).colorPrimary500,
+                backgroundColor: getColorScheme(context).white,
+                child: ListView.separated(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 0);
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    return DeviceItem(item: items[index]);
+                  },
+                  itemCount: items.length,
+                ),
               ),
               Container(
                 alignment: Alignment.bottomRight,
