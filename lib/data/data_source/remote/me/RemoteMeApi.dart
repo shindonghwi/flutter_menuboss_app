@@ -19,114 +19,139 @@ class RemoteMeApi {
 
   /// 내 정보 요청
   Future<ApiResponse<ResponseMeInfoModel>> getMe() async {
-    final response = await Service.getApi(
-      type: ServiceType.Me,
-      endPoint: null,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.getApi(
+        type: ServiceType.Me,
+        endPoint: null,
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseMeInfoModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseMeInfoModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// Owner 이름 수정
   Future<ApiResponse<void>> patchName(String name) async {
-    final response = await Service.patchApi(
-      type: ServiceType.Me,
-      endPoint: "name",
-      jsonBody: {"name": name},
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Me,
+        endPoint: "name",
+        jsonBody: {"name": name},
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) {},
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// 이메일 회원가입
   Future<ApiResponse<ResponseMeAuthorization>> postJoin(RequestMeJoinModel model) async {
-    final response = await Service.postApi(
-      type: ServiceType.Me,
-      endPoint: "join",
-      jsonBody: model.toJson(),
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postApi(
+        type: ServiceType.Me,
+        endPoint: "join",
+        jsonBody: model.toJson(),
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseMeAuthorization.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseMeAuthorization.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// 계정 삭제
   Future<ApiResponse<void>> postMeLeave(String? reason) async {
-    final response = await Service.postApi(
-      type: ServiceType.Me,
-      endPoint: "leave",
-      jsonBody: {if (!CollectionUtil.isNullEmptyFromString(reason)) "reason": reason},
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postApi(
+        type: ServiceType.Me,
+        endPoint: "leave",
+        jsonBody: {if (!CollectionUtil.isNullEmptyFromString(reason)) "reason": reason},
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) {},
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// 프로필 이미지 업데이트
   Future<ApiResponse<ResponseMeUpdateProfile>> patchProfileImage(int imageId) async {
-    final response = await Service.patchApi(
-      type: ServiceType.Me,
-      endPoint: "profile/image",
-      jsonBody: {"imageId": imageId},
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Me,
+        endPoint: "profile/image",
+        jsonBody: {"imageId": imageId},
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-            (json) => ResponseMeUpdateProfile.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseMeUpdateProfile.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }

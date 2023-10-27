@@ -40,27 +40,32 @@ class RemoteFileApi {
       );
     }
 
-    final response = await Service.postUploadApi(
-      type: ServiceType.File,
-      endPoint: "upload/media/images",
-      file: file,
-      jsonBody: {
-        if (folderId != null) "folderId": folderId,
-      },
-      uploadProgressController: streamController,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postUploadApi(
+        type: ServiceType.File,
+        endPoint: "upload/media/images",
+        file: file,
+        jsonBody: {
+          if (folderId != null) "folderId": folderId,
+        },
+        uploadProgressController: streamController,
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseFileModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseFileModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
@@ -86,27 +91,32 @@ class RemoteFileApi {
       );
     }
 
-    final response = await Service.postUploadApi(
-      type: ServiceType.File,
-      endPoint: "upload/media/videos",
-      file: file,
-      jsonBody: {
-        if (folderId != null) "folderId": folderId,
-      },
-      uploadProgressController: streamController,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postUploadApi(
+        type: ServiceType.File,
+        endPoint: "upload/media/videos",
+        file: file,
+        jsonBody: {
+          if (folderId != null) "folderId": folderId,
+        },
+        uploadProgressController: streamController,
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseFileModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseFileModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
@@ -132,25 +142,30 @@ class RemoteFileApi {
       );
     }
 
-    final response = await Service.postUploadApi(
-      type: ServiceType.File,
-      endPoint: "upload/profile/images",
-      file: file,
-      jsonBody: {},
-      uploadProgressController: streamController,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postUploadApi(
+        type: ServiceType.File,
+        endPoint: "upload/profile/images",
+        file: file,
+        jsonBody: {},
+        uploadProgressController: streamController,
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseFileModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseFileModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
