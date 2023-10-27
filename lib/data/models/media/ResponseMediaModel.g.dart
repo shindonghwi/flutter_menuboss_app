@@ -19,8 +19,8 @@ ResponseMediaModel _$ResponseMediaModelFromJson(Map<String, dynamic> json) =>
           ? null
           : ResponseMediaProperty.fromJson(
               json['property'] as Map<String, dynamic>),
-      createdDate: json['createdDate'] as String?,
-      updatedDate: json['updatedDate'] as String?,
+      createdAt: json['createdAt'] as String?,
+      updatedAt: json['updatedAt'] as String?,
     );
 
 Map<String, dynamic> _$ResponseMediaModelToJson(ResponseMediaModel instance) =>
@@ -30,6 +30,6 @@ Map<String, dynamic> _$ResponseMediaModelToJson(ResponseMediaModel instance) =>
       'type': instance.type,
       'name': instance.name,
       'property': instance.property,
-      'createdDate': instance.createdDate,
-      'updatedDate': instance.updatedDate,
+      'createdAt': instance.createdAt,
+      'updatedAt': instance.updatedAt,
     };

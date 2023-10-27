@@ -185,7 +185,7 @@ class _MediaInformation extends HookConsumerWidget {
               items.add(
                 Pair(
                   getAppLocalizations(context).media_info_menu_modified_data,
-                  data?.updatedDate.toString() ?? "",
+                  data?.updatedAt.toString() ?? "",
                 ),
               );
 

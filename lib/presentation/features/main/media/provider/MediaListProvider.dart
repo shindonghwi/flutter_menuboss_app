@@ -109,8 +109,8 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
         count: 0,
         size: 0,
       ),
-      createdDate: formattedDate,
-      updatedDate: formattedDate,
+      createdAt: formattedDate,
+      updatedAt: formattedDate,
     );
   }
 
@@ -120,7 +120,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (response.status == 200) {
         final updatedItems = currentItems.map((item) {
           if (item.mediaId == mediaId) {
-            return item.copyWith(name: newName, createdDate: item.createdDate, updatedDate: item.updatedDate);
+            return item.copyWith(name: newName, createdAt: item.createdAt, updatedAt: item.updatedAt);
           }
           return item;
         }).toList();

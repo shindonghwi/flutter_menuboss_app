@@ -13,7 +13,7 @@ class ResponseMediaInfoModel {
   final String? name;
   final ResponseMediaPropertyInfo? type;
   final ResponseMediaProperty? property;
-  final String? updatedDate;
+  final String? updatedAt;
 
   ResponseMediaInfoModel({
     this.object = "",
@@ -21,7 +21,7 @@ class ResponseMediaInfoModel {
     this.name = "",
     this.type,
     this.property,
-    this.updatedDate,
+    this.updatedAt,
   });
 
   factory ResponseMediaInfoModel.fromJson(Map<String, dynamic> json) => _$ResponseMediaInfoModelFromJson(json);

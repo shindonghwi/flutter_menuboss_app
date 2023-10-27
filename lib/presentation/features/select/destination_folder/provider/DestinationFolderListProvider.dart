@@ -96,8 +96,8 @@ class DestinationFolderListNotifier extends StateNotifier<UIState<List<ResponseM
         count: 0,
         size: 0,
       ),
-      createdDate: formattedDate,
-      updatedDate: formattedDate,
+      createdAt: formattedDate,
+      updatedAt: formattedDate,
     );
   }
 

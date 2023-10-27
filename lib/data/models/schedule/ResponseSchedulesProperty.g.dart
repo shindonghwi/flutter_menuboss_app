@@ -15,14 +15,7 @@ ResponseSchedulesProperty _$ResponseSchedulesPropertyFromJson(
           ?.map((e) =>
               ResponseSchedulesPropertyInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
-      direction: json['direction'] == null
-          ? null
-          : ResponseSchedulesPropertyInfo.fromJson(
-              json['direction'] as Map<String, dynamic>),
-      fill: json['fill'] == null
-          ? null
-          : ResponseSchedulesPropertyInfo.fromJson(
-              json['fill'] as Map<String, dynamic>),
+      direction: json['direction'] as String?,
     );
 
 Map<String, dynamic> _$ResponseSchedulesPropertyToJson(
@@ -32,5 +25,4 @@ Map<String, dynamic> _$ResponseSchedulesPropertyToJson(
       'imageUrl': instance.imageUrl,
       'contentTypes': instance.contentTypes,
       'direction': instance.direction,
-      'fill': instance.fill,
     };
