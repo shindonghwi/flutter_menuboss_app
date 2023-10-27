@@ -48,10 +48,10 @@ class BottomSheetFilterSelector extends HookWidget {
             String value = e.value;
             return Clickable(
               onPressed: () {
-                onSelected(filterTypeList[index], value);
                 popPage(context, () {
                   Navigator.pop(context);
                 });
+                onSelected(filterTypeList[index], value);
               },
               child: Padding(
                 padding: const EdgeInsets.all(24),

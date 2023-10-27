@@ -74,10 +74,10 @@ class PopupRename extends HookWidget {
                   content: getAppLocalizations(context).common_ok,
                   isActivated: true,
                   onPressed: () {
-                    onClicked?.call(renameText.value);
                     popPage(context, () {
                       Navigator.pop(context);
                     });
+                    onClicked?.call(renameText.value);
                   },
                 ),
               ),

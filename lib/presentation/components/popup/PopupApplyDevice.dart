@@ -85,10 +85,10 @@ class PopupApplyDevice extends HookWidget {
                   content: getAppLocalizations(context).common_apply,
                   isActivated: true,
                   onPressed: () {
-                    onClicked?.call(true);
                     popPage(context, () {
                       Navigator.pop(context);
                     });
+                    onClicked?.call(true);
                   },
                 ),
               ),

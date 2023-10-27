@@ -85,10 +85,10 @@ class PopupDelete extends HookWidget {
                   content: getAppLocalizations(context).common_delete,
                   isActivated: true,
                   onPressed: () {
-                    onClicked.call();
                     popPage(context, () {
                       Navigator.pop(context);
                     });
+                    onClicked.call();
                   },
                 ),
               ),

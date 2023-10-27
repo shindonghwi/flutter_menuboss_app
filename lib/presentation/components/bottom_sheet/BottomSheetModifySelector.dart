@@ -70,10 +70,10 @@ class BottomSheetModifySelector extends HookWidget {
             Color? color = getIconColor(type);
             return ClickableScale(
               onPressed: () {
-                onSelected(type, value);
                 popPage(context, () {
                   Navigator.pop(context);
                 });
+                onSelected(type, value);
               },
               child: Padding(
                 padding: const EdgeInsets.all(24),
