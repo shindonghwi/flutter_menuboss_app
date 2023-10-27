@@ -67,7 +67,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   @override
   Widget build(BuildContext context) {
     const imageSize = 180.0;
-    const textHeight = 36;
+    const textHeight = 38;
     const verticalPadding = 32;
 
     return Stack(
@@ -77,20 +77,31 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
           onQRViewCreated: _onQRViewCreated,
         ),
         if (columnPosition != null)
-          CustomPaint(
-            size: getMediaQuery(context).size,
-            painter: HolePainter(
-              holeWidth: imageSize,
-              holeHeight: imageSize,
-              holeOffset: Offset(
-                  (getMediaQuery(context).size.width - imageSize) / 2,
-                  (getMediaQuery(context).size.height / 2) -
-                      (imageSize / 2) -
-                      (textHeight - verticalPadding) / 2 // Adjusting for the text and padding
-                  ),
-              borderRadius: 20,
+          Positioned(
+            top: 0,
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: CustomPaint(
+              size: getMediaQuery(context).size,
+              painter: HolePainter(
+                holeWidth: imageSize,
+                holeHeight: imageSize,
+                holeOffset: Offset(
+                  (getMediaQuery(context).size.width - imageSize) / 2, // Center horizontally
+                  (getMediaQuery(context).size.height - imageSize) / 2, // Center vertically
+                ),
+                borderRadius: 20,
+              ),
             ),
           ),
+        Center(
+          child: Image.asset(
+            "assets/imgs/image_qr_guideline.png",
+            width: imageSize,
+            height: imageSize,
+          ),
+        ),
         Align(
           alignment: Alignment.topCenter,
           child: TopBarNoneTitleIcon(
@@ -112,13 +123,8 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
                     ),
                 textAlign: TextAlign.center,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 32.0),
-                child: Image.asset(
-                  "assets/imgs/image_qr_guideline.png",
-                  width: imageSize,
-                  height: imageSize,
-                ),
+              SizedBox(
+                height: 244,
               ),
               NeutralFilledButton.mediumRound100(
                 content: getAppLocalizations(context).scan_qr_enter_pin_code,
