@@ -63,6 +63,12 @@ class MyProfileScreen extends HookConsumerWidget {
             Toast.showError(context, event.errorMessage);
           },
         );
+      });
+      return null;
+    }, [nameChangeState, updateProfileImageState]);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         uploadState.when(
           success: (event) async {
             updateProfileImageManager.requestUploadProfileImage(uploadManager.imageId);
@@ -72,6 +78,12 @@ class MyProfileScreen extends HookConsumerWidget {
             Toast.showError(context, event.errorMessage);
           },
         );
+      });
+      return null;
+    }, [uploadState]);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
         updateProfileImageState.when(
           success: (event) async {
             meInfoManager.updateMeProfileImage(event.value ?? "");
@@ -84,7 +96,7 @@ class MyProfileScreen extends HookConsumerWidget {
         );
       });
       return null;
-    }, [nameChangeState, uploadState, updateProfileImageState]);
+    }, [updateProfileImageState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleText(
