@@ -7,6 +7,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class PopupRename extends HookWidget {
   final String hint;
   final String name;
@@ -56,7 +58,9 @@ class PopupRename extends HookWidget {
                   content: getAppLocalizations(context).common_cancel,
                   isActivated: true,
                   onPressed: () {
-                    Navigator.pop(context);
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),
@@ -70,8 +74,10 @@ class PopupRename extends HookWidget {
                   content: getAppLocalizations(context).common_ok,
                   isActivated: true,
                   onPressed: () {
-                    Navigator.pop(context);
                     onClicked?.call(renameText.value);
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),

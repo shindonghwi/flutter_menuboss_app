@@ -9,6 +9,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class PopupDelete extends HookWidget {
   final VoidCallback onClicked;
 
@@ -67,7 +69,9 @@ class PopupDelete extends HookWidget {
                   content: getAppLocalizations(context).common_cancel,
                   isActivated: true,
                   onPressed: () {
-                    Navigator.pop(context);
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),
@@ -81,8 +85,10 @@ class PopupDelete extends HookWidget {
                   content: getAppLocalizations(context).common_delete,
                   isActivated: true,
                   onPressed: () {
-                    Navigator.pop(context);
                     onClicked.call();
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),

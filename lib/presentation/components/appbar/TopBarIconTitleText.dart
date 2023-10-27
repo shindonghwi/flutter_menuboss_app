@@ -6,6 +6,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
   final String content;
   final String? leftIconPath;
@@ -42,7 +44,9 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                   margin: const EdgeInsets.only(left: 12.0),
                   child: Clickable(
                     onPressed: () {
-                      leftIconOnPressed != null ? leftIconOnPressed?.call() : Navigator.pop(context);
+                      popPage(context, () {
+                        leftIconOnPressed != null ? leftIconOnPressed?.call() : Navigator.pop(context);
+                      });
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),

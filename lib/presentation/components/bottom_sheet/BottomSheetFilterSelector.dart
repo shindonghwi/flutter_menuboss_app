@@ -6,6 +6,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 enum FilterType { NameAsc, NameDesc, NewestFirst, OldestFirst }
 
 final Map<FilterType, String> filterDescriptions = {
@@ -47,7 +49,9 @@ class BottomSheetFilterSelector extends HookWidget {
             return Clickable(
               onPressed: () {
                 onSelected(filterTypeList[index], value);
-                Navigator.pop(context);
+                popPage(context, () {
+                  Navigator.pop(context);
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.all(24),

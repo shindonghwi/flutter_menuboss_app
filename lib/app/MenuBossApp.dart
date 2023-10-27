@@ -22,27 +22,27 @@ class MenuBossApp extends HookWidget {
 
     final initialLink = useFuture(initialLinkFuture);
 
-    useEffect(() {
-      void handleDeepLink(String? link) {
-        debugPrint("@##@@##@#####44 link : $link");
-        if (link == null) return;
-        if (link == "menuboss://login") {
-          MenuBossGlobalVariable.navigatorKey.currentState?.pushNamed(RoutingScreen.SignUp.route);
-        }
-      }
-
-      if (initialLink.hasData) {
-        handleDeepLink(initialLink.data);
-      }
-
-      StreamSubscription subscription;
-
-      subscription = uriLinkStream.listen((Uri? link) {
-        debugPrint("@##@@##@ link : $link");
-        handleDeepLink(link?.toString());
-      }, onError: (err) {});
-      return () => subscription.cancel();
-    }, [initialLink]);
+    // useEffect(() {
+    //   void handleDeepLink(String? link) {
+    //     debugPrint("@##@@##@#####44 link : $link");
+    //     if (link == null) return;
+    //     if (link == "menuboss://login") {
+    //       MenuBossGlobalVariable.navigatorKey.currentState?.pushNamed(RoutingScreen.SignUp.route);
+    //     }
+    //   }
+    //
+    //   if (initialLink.hasData) {
+    //     handleDeepLink(initialLink.data);
+    //   }
+    //
+    //   StreamSubscription subscription;
+    //
+    //   subscription = uriLinkStream.listen((Uri? link) {
+    //     debugPrint("@##@@##@ link : $link");
+    //     handleDeepLink(link?.toString());
+    //   }, onError: (err) {});
+    //   return () => subscription.cancel();
+    // }, [initialLink]);
 
     return LayoutBuilder(
       builder: (context, constraints) {

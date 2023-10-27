@@ -61,3 +61,15 @@ PageRoute nextSlideVerticalScreen(String route, {dynamic parameter, fullScreen =
     },
   );
 }
+
+void popPage(BuildContext context, VoidCallback onPressed){
+  if (Navigator.canPop(context)) {
+    onPressed.call();
+  } else {
+    Navigator.pushAndRemoveUntil(
+      context,
+      nextFadeInOutScreen(RoutingScreen.Main.route),
+          (route) => false,
+    );
+  }
+}

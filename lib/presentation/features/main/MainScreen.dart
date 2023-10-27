@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
+import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -25,7 +29,7 @@ class MainScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
+    final meInfoManager = ref.read(meInfoProvider.notifier);
     final currentIndex = ref.watch(currentIndexProvider);
 
     List<Triple> iconList = [
@@ -46,6 +50,16 @@ class MainScreen extends HookConsumerWidget {
     useEffect(() {
       if (!executedCodeForIndex.value[currentIndex]) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
+
+          if (meInfoManager.getMeInfo() == null) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              nextFadeInOutScreen(RoutingScreen.Login.route),
+                  (route) => false,
+            );
+            return;
+          }
+
           switch (currentIndex) {
             case 0:
               ref.read(schedulesProvider.notifier).requestGetSchedules();

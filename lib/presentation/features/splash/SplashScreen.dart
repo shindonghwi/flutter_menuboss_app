@@ -68,9 +68,30 @@ class SplashScreen extends HookConsumerWidget {
     }
 
     void handleDeepLink(String? link) {
+      debugPrint("handleDeepLink: $link");
+
       if (link == null) return;
-      if (link == "menuboss://login") {
+
+      if (link.contains(RoutingScreen.Login.route)) {
         movePage(RoutingScreen.Login);
+      } else if (link.contains(RoutingScreen.SignUp.route)) {
+        movePage(RoutingScreen.SignUp);
+      } else if (link.contains(RoutingScreen.ScanQR.route)) {
+        movePage(RoutingScreen.ScanQR);
+      } else if (link.contains(RoutingScreen.DetailPlaylist.route)) {
+        movePage(RoutingScreen.DetailPlaylist);
+      } else if (link.contains(RoutingScreen.CreatePlaylist.route)) {
+        movePage(RoutingScreen.CreatePlaylist);
+      } else if (link.contains(RoutingScreen.PreviewPlaylist.route)) {
+        movePage(RoutingScreen.PreviewPlaylist);
+      } else if (link.contains(RoutingScreen.DetailSchedule.route)) {
+        movePage(RoutingScreen.DetailSchedule);
+      } else if (link.contains(RoutingScreen.CreateSchedule.route)) {
+        movePage(RoutingScreen.CreateSchedule);
+      } else if (link.contains(RoutingScreen.MediaInfo.route)) {
+        movePage(RoutingScreen.MediaInfo);
+      } else if (link.contains(RoutingScreen.MediaDetailInFolder.route)) {
+        movePage(RoutingScreen.MediaDetailInFolder);
       }
     }
 

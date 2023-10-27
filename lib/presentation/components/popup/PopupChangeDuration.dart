@@ -7,6 +7,8 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class PopupChangeDuration extends HookWidget {
   final String hour;
   final String min;
@@ -161,7 +163,9 @@ class PopupChangeDuration extends HookWidget {
                 content: getAppLocalizations(context).common_cancel,
                 isActivated: true,
                 onPressed: () {
-                  Navigator.pop(context);
+                  popPage(context, () {
+                    Navigator.pop(context);
+                  });
                 },
               ),
             ),
@@ -175,7 +179,6 @@ class PopupChangeDuration extends HookWidget {
                 content: getAppLocalizations(context).common_ok,
                 isActivated: true,
                 onPressed: () {
-                  Navigator.pop(context);
                   onClicked?.call(
                     StringUtil.convertToSeconds(
                       controllers[0].text.isNotEmpty ? int.parse(controllers[0].text) : 0,
@@ -183,6 +186,9 @@ class PopupChangeDuration extends HookWidget {
                       controllers[2].text.isNotEmpty ? int.parse(controllers[2].text) : 0,
                     ),
                   );
+                  popPage(context, () {
+                    Navigator.pop(context);
+                  });
                 },
               ),
             ),

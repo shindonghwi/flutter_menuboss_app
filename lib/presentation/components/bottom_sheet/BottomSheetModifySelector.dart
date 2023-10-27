@@ -7,6 +7,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 enum ModifyType { Rename, Delete, ChangeDuration }
 
 final Map<ModifyType, String> modifyDescriptions = {
@@ -68,8 +70,10 @@ class BottomSheetModifySelector extends HookWidget {
             Color? color = getIconColor(type);
             return ClickableScale(
               onPressed: () {
-                Navigator.pop(context);
                 onSelected(type, value);
+                popPage(context, () {
+                  Navigator.pop(context);
+                });
               },
               child: Padding(
                 padding: const EdgeInsets.all(24),

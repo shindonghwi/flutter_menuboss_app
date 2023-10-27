@@ -40,4 +40,6 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     debugPrint("updateMeProfileImage : $meInfo");
     state = meInfo;
   }
+
+  ResponseMeInfoModel? getMeInfo() => state;
 }

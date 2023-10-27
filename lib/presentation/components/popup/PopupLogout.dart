@@ -8,6 +8,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class PopupLogout extends HookWidget {
   final Function(bool isCompleted)? onClicked;
 
@@ -66,7 +68,9 @@ class PopupLogout extends HookWidget {
                   content: getAppLocalizations(context).common_cancel,
                   isActivated: true,
                   onPressed: () {
-                    Navigator.pop(context);
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),
@@ -81,7 +85,9 @@ class PopupLogout extends HookWidget {
                   isActivated: true,
                   onPressed: () {
                     onClicked?.call(true);
-                    Navigator.pop(context);
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),
