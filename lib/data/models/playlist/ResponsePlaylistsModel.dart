@@ -16,7 +16,7 @@ class ResponsePlaylistsModel {
   final String name;
   final ResponsePlaylistTime? time;
   final ResponsePlaylistsProperty? property;
-  String updatedAt;
+  String updatedDate;
 
   ResponsePlaylistsModel({
     required this.object,
@@ -24,7 +24,7 @@ class ResponsePlaylistsModel {
     required this.name,
     required this.time,
     required this.property,
-    required this.updatedAt,
+    required this.updatedDate,
   });
 
   factory ResponsePlaylistsModel.fromJson(Map<String, dynamic> json) => _$ResponsePlaylistsModelFromJson(json);
@@ -53,7 +53,7 @@ class ResponsePlaylistsModel {
       name: name,
       time: time,
       property: property,
-      updatedAt: updatedAt,
+      updatedDate: updatedDate,
     );
   }
 

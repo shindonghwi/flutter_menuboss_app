@@ -19,7 +19,7 @@ ResponsePlaylistsModel _$ResponsePlaylistsModelFromJson(
           ? null
           : ResponsePlaylistsProperty.fromJson(
               json['property'] as Map<String, dynamic>),
-      updatedAt: json['updatedAt'] as String,
+      updatedDate: json['updatedDate'] as String,
     );
 
 Map<String, dynamic> _$ResponsePlaylistsModelToJson(
@@ -30,5 +30,5 @@ Map<String, dynamic> _$ResponsePlaylistsModelToJson(
       'name': instance.name,
       'time': instance.time,
       'property': instance.property,
-      'updatedAt': instance.updatedAt,
+      'updatedDate': instance.updatedDate,
     };

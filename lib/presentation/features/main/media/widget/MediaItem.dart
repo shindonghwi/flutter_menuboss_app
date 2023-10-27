@@ -81,6 +81,7 @@ class MediaItem extends HookWidget {
                   context,
                   child: PopupRename(
                     hint: getAppLocalizations(context).popup_rename_media_hint,
+                    name: item.name.toString(),
                     onClicked: (name) => onRename.call(name),
                   ),
                 );

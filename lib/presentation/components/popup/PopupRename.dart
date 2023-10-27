@@ -9,11 +9,13 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 class PopupRename extends HookWidget {
   final String hint;
+  final String name;
   final Function(String name)? onClicked;
 
   const PopupRename({
     super.key,
     required this.hint,
+    required this.name,
     required this.onClicked,
   });
 
@@ -39,6 +41,7 @@ class PopupRename extends HookWidget {
           ),
           OutlineTextField.small(
             hint: hint,
+            controller: useTextEditingController(text: name),
             onChanged: (text) => renameText.value = text,
           ),
           const SizedBox(

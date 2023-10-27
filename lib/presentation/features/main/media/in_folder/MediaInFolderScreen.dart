@@ -163,6 +163,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
               context,
               child: PopupRename(
                 hint: getAppLocalizations(context).popup_rename_media_hint,
+                name: folderName.value,
                 onClicked: (name) {
                   folderName.value = name;
                   rootMediaManager.renameItem(item?.mediaId ?? "", name);

@@ -16,27 +16,27 @@ class ResponseScheduleModel {
   final int scheduleId;
   final String name;
   final List<ResponsePlaylistsModel>? playlists;
-  String updatedAt;
+  String updatedDate;
 
   ResponseScheduleModel({
     required this.object,
     required this.scheduleId,
     required this.name,
     required this.playlists,
-    required this.updatedAt,
+    required this.updatedDate,
   });
 
   factory ResponseScheduleModel.fromJson(Map<String, dynamic> json) => _$ResponseScheduleModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseScheduleModelToJson(this);
 
-  ResponseScheduleModel toUpDatedAtSimpleMapper() {
+  ResponseScheduleModel toupdatedDateSimpleMapper() {
     return ResponseScheduleModel(
       object: object,
       scheduleId: scheduleId,
       name: name,
       playlists: playlists,
-      updatedAt: updatedAt,
+      updatedDate: updatedDate,
     );
   }
 

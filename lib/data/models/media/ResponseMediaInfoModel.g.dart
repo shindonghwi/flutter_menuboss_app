@@ -20,7 +20,7 @@ ResponseMediaInfoModel _$ResponseMediaInfoModelFromJson(
           ? null
           : ResponseMediaProperty.fromJson(
               json['property'] as Map<String, dynamic>),
-      updatedAt: json['updatedAt'] as String?,
+      updatedDate: json['updatedDate'] as String?,
     );
 
 Map<String, dynamic> _$ResponseMediaInfoModelToJson(
@@ -31,5 +31,5 @@ Map<String, dynamic> _$ResponseMediaInfoModelToJson(
       'name': instance.name,
       'type': instance.type,
       'property': instance.property,
-      'updatedAt': instance.updatedAt,
+      'updatedDate': instance.updatedDate,
     };

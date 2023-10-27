@@ -16,7 +16,7 @@ ResponseScheduleModel _$ResponseScheduleModelFromJson(
           ?.map(
               (e) => ResponsePlaylistsModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-      updatedAt: json['updatedAt'] as String,
+      updatedDate: json['updatedDate'] as String,
     );
 
 Map<String, dynamic> _$ResponseScheduleModelToJson(
@@ -26,5 +26,5 @@ Map<String, dynamic> _$ResponseScheduleModelToJson(
       'scheduleId': instance.scheduleId,
       'name': instance.name,
       'playlists': instance.playlists,
-      'updatedAt': instance.updatedAt,
+      'updatedDate': instance.updatedDate,
     };
