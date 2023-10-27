@@ -100,5 +100,7 @@
 		<string>You can take pictures with your camera and upload and manage media files</string>
 		<key>NSMicrophoneUsageDescription</key>
 		<string>You can record videos with your camera to upload and manage media files</string>
+		<key>ITSAppUsesNonExemptEncryption</key>
+        <false/>
 	</dict>
 </plist>
