@@ -66,9 +66,8 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
   @override
   Widget build(BuildContext context) {
-
     const imageSize = 180.0;
-    const textHeight = 44;
+    const textHeight = 36;
     const verticalPadding = 32;
 
     return Stack(
@@ -85,10 +84,10 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
               holeHeight: imageSize,
               holeOffset: Offset(
                   (getMediaQuery(context).size.width - imageSize) / 2,
-                  (getMediaQuery(context).size.height / 2)
-                      - (imageSize / 2)
-                      - (textHeight - verticalPadding) / 2  // Adjusting for the text and padding
-              ),
+                  (getMediaQuery(context).size.height / 2) -
+                      (imageSize / 2) -
+                      (textHeight - verticalPadding) / 2 // Adjusting for the text and padding
+                  ),
               borderRadius: 20,
             ),
           ),
@@ -157,7 +156,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   }
 
   void _onQRViewCreated(QRViewController controller) async {
-    const scheme = "https://dev-internal.themenuboss.com/qrcode/";
+    const scheme = "menuboss.onelink.me";
 
     this.controller = controller;
     controller.scannedDataStream.listen((scanData) async {
@@ -166,8 +165,8 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
         if (isProcessing) return;
 
-        if (result!.code.toString().startsWith(scheme) && !isProcessing) {
-          final code = result!.code.toString().replaceAll(scheme, "");
+        if (result!.code.toString().contains(scheme) && result!.code.toString().contains("?pin=") && !isProcessing) {
+          final code = result!.code.toString().split("?pin=").last;
           postDevice(code);
         }
       });
