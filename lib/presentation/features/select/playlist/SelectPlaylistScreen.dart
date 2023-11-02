@@ -181,7 +181,7 @@ class _PlaylistContent extends HookWidget {
                 child: Container(
                   width: getMediaQuery(context).size.width,
                   padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
-                  child: PrimaryFilledButton.mediumRound8(
+                  child: PrimaryFilledButton.largeRound8(
                     content: getAppLocalizations(context).common_done,
                     isActivated: selectedPlaylist.value != null,
                     onPressed: () {

@@ -113,7 +113,7 @@ class _PlaylistContentList extends HookConsumerWidget {
                 color: getColorScheme(context).colorPrimary500,
                 backgroundColor: getColorScheme(context).white,
                 child: ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
                   physics: const AlwaysScrollableScrollPhysics(),
                   itemCount: items.length,
                   itemBuilder: (context, index) {
@@ -127,7 +127,7 @@ class _PlaylistContentList extends HookConsumerWidget {
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                margin: const EdgeInsets.only(bottom: 16, right: 24),
                 child: FloatingPlusButton(
                   onPressed: () {
                     goToCreatePlaylist();

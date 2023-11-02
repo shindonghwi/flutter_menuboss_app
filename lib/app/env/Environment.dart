@@ -42,6 +42,12 @@ class Environment {
       statusBarIconBrightness: Brightness.dark, // 혹은 Brightness.light
     ));
 
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]); // 세로모드 고정
+
+
     initServiceLocator();
     Service.initializeHeaders();
 

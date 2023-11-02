@@ -288,7 +288,7 @@ class _MediaContentList extends HookConsumerWidget {
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                margin: const EdgeInsets.only(bottom: 16, right: 24),
                 child: FloatingPlusButton(
                   onPressed: () => onMediaUpload.call(),
                 ),
