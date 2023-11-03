@@ -368,7 +368,7 @@ class _OptionContents extends HookWidget {
           color: getColorScheme(context).colorGray300,
         ),
         _OptionPropertyInfo(
-          iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill.svg",
+          iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill_line.svg",
           iconText: scaleType == PlaylistSettingType.Fit
               ? getAppLocalizations(context).common_fit
               : getAppLocalizations(context).common_fill,

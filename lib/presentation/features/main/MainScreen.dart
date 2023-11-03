@@ -125,8 +125,8 @@ class _BottomNavigationBar extends HookConsumerWidget {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: getColorScheme(context).colorGray400,
-                    width: 0.5,
+                    color: getColorScheme(context).colorGray100,
+                    width: 1,
                   ),
                 ),
               ),
@@ -141,7 +141,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
                   child: BottomNavigationBar(
                     type: BottomNavigationBarType.fixed,
                     backgroundColor: getColorScheme(context).white,
-                    selectedItemColor: getColorScheme(context).colorPrimary900,
+                    selectedItemColor: getColorScheme(context).colorPrimary500,
                     unselectedItemColor: getColorScheme(context).colorGray400,
                     currentIndex: currentIndex,
                     onTap: (index) => ref.read(currentIndexProvider.notifier).state = index,
@@ -170,7 +170,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
                               width: 24,
                               height: 24,
                               colorFilter: ColorFilter.mode(
-                                getColorScheme(context).colorPrimary900,
+                                getColorScheme(context).colorPrimary500,
                                 BlendMode.srcIn,
                               ),
                             ),

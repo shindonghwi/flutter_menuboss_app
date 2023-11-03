@@ -111,8 +111,8 @@ class ScheduleContentItem extends HookConsumerWidget {
             final data = timelineState[index];
             return data.isAddButton
                 ? Container(
-                    width: 150,
-                    margin: const EdgeInsets.all(70),
+                    width: double.infinity,
+                    margin: const EdgeInsets.symmetric(vertical: 70, horizontal: 115),
                     child: PrimaryFilledButton.mediumRound100Icon(
                       leftIcon: SvgPicture.asset(
                         "assets/imgs/icon_plus_1.svg",
@@ -167,13 +167,13 @@ class ScheduleContentItem extends HookConsumerWidget {
                                               if (data.isRequired)
                                                 Text(
                                                   "*",
-                                                  style: getTextTheme(context).s2b.copyWith(
+                                                  style: getTextTheme(context).s3b.copyWith(
                                                         color: getColorScheme(context).colorSecondary500,
                                                       ),
                                                 ),
                                               Text(
                                                 data.playListName,
-                                                style: getTextTheme(context).s2b.copyWith(
+                                                style: getTextTheme(context).s3b.copyWith(
                                                       color: getColorScheme(context).colorGray900,
                                                     ),
                                               )

@@ -108,7 +108,7 @@ class _SignUpButton extends StatelessWidget {
       children: [
         Text(
           getAppLocalizations(context).login_no_account,
-          style: getTextTheme(context).b2sb.copyWith(
+          style: getTextTheme(context).b3sb.copyWith(
                 color: getColorScheme(context).colorGray500,
               ),
         ),
@@ -126,7 +126,7 @@ class _SignUpButton extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             child: Text(
               getAppLocalizations(context).common_sign_up,
-              style: getTextTheme(context).b2sb.copyWith(
+              style: getTextTheme(context).b3sb.copyWith(
                     color: getColorScheme(context).colorPrimary500,
                   ),
             ),

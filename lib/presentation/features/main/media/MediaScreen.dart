@@ -139,7 +139,7 @@ class MediaScreen extends HookConsumerWidget {
                 () {
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(
+                    nextSlideVerticalScreen(
                       RoutingScreen.SelectMediaFile.route,
                     ),
                   );

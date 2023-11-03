@@ -13,6 +13,7 @@ import 'package:menuboss/domain/usecases/remote/media/PatchMediaNameUseCase.dart
 import 'package:menuboss/domain/usecases/remote/media/PostCreateMediaFolderUseCase.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
 final mediaListProvider = StateNotifierProvider<MediaListNotifier, UIState<List<ResponseMediaModel>>>(
   (ref) => MediaListNotifier(),
@@ -206,6 +207,16 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     currentItems = items;
     if (isUiUpdate) {
       state = Success([...currentItems]);
+    }
+  }
+
+  String getFolderName(String? folderId) {
+    debugPrint("getFolderName: $folderId ${folderId == null}");
+    if (CollectionUtil.isNullEmptyFromString(folderId)) {
+      return "Media"; // root로 이동함.
+    }else{
+      ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
+      return folderItem.name ?? "";
     }
   }
 

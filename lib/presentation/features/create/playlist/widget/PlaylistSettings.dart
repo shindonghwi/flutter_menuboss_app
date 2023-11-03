@@ -119,16 +119,15 @@ class _SettingContents extends HookConsumerWidget {
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(
-        horizontal: 24.0,
-        vertical: 16,
-      ),
+      padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Expanded(
+              Flexible(
+                flex: 45,
+                fit: FlexFit.tight,
                 child: Column(
                   children: [
                     _SettingSelectableIcon(
@@ -153,17 +152,22 @@ class _SettingContents extends HookConsumerWidget {
                   ],
                 ),
               ),
-              Container(
-                width: 1,
-                height: 64,
-                margin: const EdgeInsets.symmetric(horizontal: 16),
-                color: getColorScheme(context).colorGray300,
+              Flexible(
+                fit: FlexFit.loose,
+                flex: 9,
+                child: Container(
+                  width: 1,
+                  height: 64,
+                  color: getColorScheme(context).colorGray300,
+                ),
               ),
-              Expanded(
+              Flexible(
+                flex: 45,
+                fit: FlexFit.tight,
                 child: Column(
                   children: [
                     _SettingSelectableIcon(
-                      iconPath: "assets/imgs/icon_fill.svg",
+                      iconPath: "assets/imgs/icon_fill_line.svg",
                       iconText: getAppLocalizations(context).common_fill,
                       onPressed: () {
                         saveManager.changeFill(PlaylistSettingType.Fill);
@@ -188,12 +192,12 @@ class _SettingContents extends HookConsumerWidget {
           ),
           Container(
             width: double.infinity,
-            margin: const EdgeInsets.only(top: 16),
+            margin: const EdgeInsets.symmetric(vertical: 16),
             child: NeutralLineButton.extraSmallRound4(
               onPressed: () {
                 final previewItems = mediaCartManager.getItems();
 
-                if (CollectionUtil.isNullorEmpty(previewItems)){
+                if (CollectionUtil.isNullorEmpty(previewItems)) {
                   Toast.showWarning(context, getAppLocalizations(context).message_add_media_content);
                   return;
                 }
@@ -277,8 +281,8 @@ class _SettingSelectableIcon extends HookWidget {
             ),
             IgnorePointer(
               child: SizedBox(
-                width: 24,
-                height: 24,
+                width: 20,
+                height: 20,
                 child: BasicBorderRadioButton(
                   isChecked: isChecked,
                   onChange: null,

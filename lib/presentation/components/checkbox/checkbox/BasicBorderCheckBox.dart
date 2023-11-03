@@ -39,13 +39,16 @@ class BasicBorderCheckBox extends StatelessWidget {
                   ),
                   child: Align(
                     alignment: Alignment.center,
-                    child: SvgPicture.asset(
-                      "assets/imgs/icon_check_line.svg",
-                      width: 24,
-                      height: 24,
-                      colorFilter: ColorFilter.mode(
-                        getColorScheme(context).white,
-                        BlendMode.srcIn,
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: SvgPicture.asset(
+                        "assets/imgs/icon_check_line.svg",
+                        width: 24,
+                        height: 24,
+                        colorFilter: ColorFilter.mode(
+                          getColorScheme(context).white,
+                          BlendMode.srcIn,
+                        ),
                       ),
                     ),
                   ),

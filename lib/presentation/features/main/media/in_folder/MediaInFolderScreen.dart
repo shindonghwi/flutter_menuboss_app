@@ -183,31 +183,33 @@ class MediaInFolderScreen extends HookConsumerWidget {
           }),
         ],
       ),
-      body: Column(
-        children: [
-          const MediaUploadProgress(),
-          Expanded(
-            child: Stack(
-              children: [
-                if (mediaState is Failure && mediaList.value == null)
-                  FailView(onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId))
-                else if (mediaList.value != null)
-                  _MediaContentList(
-                    folderId: item!.mediaId,
-                    items: mediaList.value!,
-                    onMediaUpload: () => doMediaUploadAction(),
-                  )
-                else if (mediaState is Success<List<ResponseMediaModel>>)
-                  _MediaContentList(
-                    folderId: item!.mediaId,
-                    items: mediaState.value,
-                    onMediaUpload: () => doMediaUploadAction(),
-                  ),
-                if (mediaState is Loading) const LoadingView(),
-              ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const MediaUploadProgress(),
+            Expanded(
+              child: Stack(
+                children: [
+                  if (mediaState is Failure && mediaList.value == null)
+                    FailView(onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId))
+                  else if (mediaList.value != null)
+                    _MediaContentList(
+                      folderId: item!.mediaId,
+                      items: mediaList.value!,
+                      onMediaUpload: () => doMediaUploadAction(),
+                    )
+                  else if (mediaState is Success<List<ResponseMediaModel>>)
+                    _MediaContentList(
+                      folderId: item!.mediaId,
+                      items: mediaState.value,
+                      onMediaUpload: () => doMediaUploadAction(),
+                    ),
+                  if (mediaState is Loading) const LoadingView(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -288,7 +290,7 @@ class _MediaContentList extends HookConsumerWidget {
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                margin: const EdgeInsets.only(bottom: 16, right: 24),
+                margin: const EdgeInsets.only(bottom: 48, right: 24),
                 child: FloatingPlusButton(
                   onPressed: () => onMediaUpload.call(),
                 ),

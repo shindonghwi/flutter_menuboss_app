@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
@@ -43,7 +44,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
     }, []);
 
     return BaseScaffold(
-      appBar: TopBarIconTitleNone(
+      appBar: TopBarNoneTitleIcon(
         content: getAppLocalizations(context).select_media_file_title(checkListState.length),
       ),
       body: SafeArea(

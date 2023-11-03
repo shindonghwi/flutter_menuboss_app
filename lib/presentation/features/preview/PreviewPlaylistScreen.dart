@@ -182,7 +182,7 @@ class _Settings extends HookWidget {
                     onPressed: () => isScaleFit.value = true,
                   ),
                   _PreviewSettingIcon(
-                    iconPath: 'assets/imgs/icon_fill.svg',
+                    iconPath: 'assets/imgs/icon_fill_line.svg',
                     content: getAppLocalizations(context).common_fill,
                     isSelected: !isScaleFit.value,
                     onPressed: () => isScaleFit.value = false,

@@ -58,6 +58,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
               ),
             ],
           ),
+          if (mediaCart.isNotEmpty)
           PrimaryFilledButton.xSmallRound4Icon(
             leftIcon: SvgPicture.asset(
               "assets/imgs/icon_plus_1.svg",

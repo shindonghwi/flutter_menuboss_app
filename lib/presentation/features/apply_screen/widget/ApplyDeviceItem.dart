@@ -8,6 +8,7 @@ import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.da
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
+import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class ApplyDeviceItem extends HookWidget {
@@ -49,7 +50,9 @@ class ApplyDeviceItem extends HookWidget {
                   Row(
                     children: [
                       LabelText(
-                        content: item.isOnline ? getAppLocalizations(context).common_on : getAppLocalizations(context).common_off,
+                        content: item.isOnline
+                            ? getAppLocalizations(context).common_on
+                            : getAppLocalizations(context).common_off,
                         isOn: item.isOnline,
                       ),
                       Padding(
@@ -63,13 +66,16 @@ class ApplyDeviceItem extends HookWidget {
                       ),
                     ],
                   ),
-                  const SizedBox(height: 4),
-                  Text(
-                    item.content?.name ?? "",
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray500,
-                        ),
-                  ),
+                  if (!CollectionUtil.isNullEmptyFromString(item.content?.name))
+                    Padding(
+                      padding: const EdgeInsets.only(top: 4),
+                      child: Text(
+                        item.content?.name ?? "",
+                        style: getTextTheme(context).b3m.copyWith(
+                              color: getColorScheme(context).colorGray500,
+                            ),
+                      ),
+                    ),
                 ],
               ),
             ),

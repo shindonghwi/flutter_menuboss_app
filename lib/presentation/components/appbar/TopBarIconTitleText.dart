@@ -59,7 +59,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s2b.copyWith(
+                  style: getTextTheme(context).s3b.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,

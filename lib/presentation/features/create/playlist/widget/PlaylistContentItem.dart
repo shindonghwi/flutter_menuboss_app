@@ -105,7 +105,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                                 ),
                               ),
                               Clickable(
-                                onPressed: () {
+                                onPressed: type == "video" ? null : () {
                                   final duration = StringUtil.formatDuration(item.property?.duration ?? 0.0);
                                   CommonPopup.showPopup(
                                     context,
@@ -122,6 +122,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                                 borderRadius: 4.0,
                                 child: Container(
                                   decoration: BoxDecoration(
+                                    color: type == "video" ? getColorScheme(context).colorGray100 : Colors.transparent,
                                     border: Border.all(
                                       color: getColorScheme(context).colorGray300,
                                       width: 1,
@@ -132,7 +133,9 @@ class PlaylistContentItem extends HookConsumerWidget {
                                   child: Text(
                                     StringUtil.formatDuration(item.property?.duration ?? 0.0),
                                     style: getTextTheme(context).c1sb.copyWith(
-                                          color: getColorScheme(context).colorGray900,
+                                          color: type == "video"
+                                              ? getColorScheme(context).colorGray400
+                                              : getColorScheme(context).colorGray900,
                                         ),
                                   ),
                                 ),

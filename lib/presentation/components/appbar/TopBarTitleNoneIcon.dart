@@ -40,7 +40,7 @@ class TopBarTitleNoneIcon extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s2b.copyWith(
+                  style: getTextTheme(context).s3b.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,
@@ -61,8 +61,11 @@ class TopBarTitleNoneIcon extends HookWidget implements PreferredSizeWidget {
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
-                        child:
-                            SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg", width: 24, height: 24),
+                        child: SvgPicture.asset(
+                          rightIconPath ?? "assets/imgs/icon_close_line.svg",
+                          width: 24,
+                          height: 24,
+                        ),
                       ),
                     ),
                   ),
