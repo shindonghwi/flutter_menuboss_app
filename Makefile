@@ -23,7 +23,7 @@ run-icon:
 
 # DebugDev Run
 run:
-	flutter run --debug --flavor dev -t lib/app/env/dev.dart
+	flutter run --debug --flavor dev -t lib/app/env/dev.dart --no-enable-impeller
 
 # DebugDev Rebuild
 run-rebuild:
@@ -31,11 +31,11 @@ run-rebuild:
 	flutter pub get
 	cd ios && pod install
 	flutter pub run build_runner build --delete-conflicting-outputs
-	flutter run --debug --flavor dev -t lib/app/env/dev.dart
+	make run
 
 # ProdRelease Run
 run-prod:
-	flutter run --release --flavor prod -t lib/app/env/prod.dart
+	flutter run --release --flavor prod -t lib/app/env/prod.dart --no-enable-impeller
 
 # ProdRelease Rebuild
 run-prod-rebuild:
@@ -43,7 +43,7 @@ run-prod-rebuild:
 	flutter pub get
 	cd ios && pod install
 	flutter pub run build_runner build --delete-conflicting-outputs
-	flutter run --release --flavor prod -t lib/app/env/prod.dart
+	make run-prod
 
 
 ########################
@@ -52,14 +52,14 @@ run-prod-rebuild:
 
 # android apk-release create
 create-apk-prod:
-	flutter build apk --release --flavor prod --no-tree-shake-icons -t lib/app/env/prod.dart
+	flutter build apk --release --flavor prod --no-tree-shake-icons --no-enable-impeller -t lib/app/env/prod.dart
 
 # android apk-debug create
 create-apk-dev:
-	flutter build apk --debug --flavor dev --no-tree-shake-icons -t lib/app/env/dev.dart
+	flutter build apk --debug --flavor dev --no-tree-shake-icons --no-enable-impeller -t lib/app/env/dev.dart
 
 # android aab-prod create
 create-aab-prod:
-	flutter build appbundle --release --flavor prod --no-tree-shake-icons -t lib/app/env/prod.dart
+	flutter build appbundle --release --flavor prod --no-tree-shake-icons --no-enable-impeller -t lib/app/env/prod.dart
 
 
