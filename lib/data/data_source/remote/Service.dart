@@ -39,10 +39,19 @@ class Service {
     final DeviceInfoPlugin deviceInfoPlugin = DeviceInfoPlugin();
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfoPlugin.androidInfo;
-      addHeader(key: HeaderKey.XDeviceModel, value: androidInfo.model);
+      final isPhysicalDevice = androidInfo.isPhysicalDevice ? 'Physical' : 'Emulator';
+      String xDeviceModel = "Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt}; "
+          "Model ${androidInfo.model}; Brand ${androidInfo.brand}; Device ${androidInfo.device}; "
+          "Product ${androidInfo.product}; $isPhysicalDevice)";
+      debugPrint('AndroidInfo: $xDeviceModel');
+      addHeader(key: HeaderKey.XDeviceModel, value: xDeviceModel);
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfoPlugin.iosInfo;
-      addHeader(key: HeaderKey.XDeviceModel, value: iosInfo.utsname.machine);
+      final isPhysicalDevice = iosInfo.isPhysicalDevice ? 'Physical' : 'Simulator';
+      String xDeviceModel = "${iosInfo.systemName}/${iosInfo.systemVersion} (${iosInfo.localizedModel}; "
+          "${iosInfo.utsname.machine}; ${iosInfo.model}; ${iosInfo.name}; $isPhysicalDevice)";
+      debugPrint('iosInfo: $xDeviceModel');
+      addHeader(key: HeaderKey.XDeviceModel, value: xDeviceModel);
     }
   }
 
@@ -143,7 +152,8 @@ class Service {
         var request = http.MultipartRequest('POST', url)
           ..headers.addAll(headers)
           ..fields.addAll(jsonBody.map((key, value) => MapEntry(key, value.toString())))
-          ..files.add(http.MultipartFile('file', file.openRead(), file.lengthSync(), filename: file.path.split('/').last));
+          ..files
+              .add(http.MultipartFile('file', file.openRead(), file.lengthSync(), filename: file.path.split('/').last));
 
         var client = http.Client();
 
@@ -176,8 +186,6 @@ class Service {
       return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
-
-
 
   static Future<Response> patchApi({
     required ServiceType type,
