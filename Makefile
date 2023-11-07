@@ -35,7 +35,7 @@ run-rebuild:
 
 # ProdRelease Run
 run-prod:
-	flutter run --release --flavor prod -t lib/app/env/prod.dart --no-enable-impeller
+	flutter run --release --flavor prod -t lib/app/env/prod.dart
 
 # ProdRelease Rebuild
 run-prod-rebuild:
@@ -52,14 +52,14 @@ run-prod-rebuild:
 
 # android apk-release create
 create-apk-prod:
-	flutter build apk --release --flavor prod --no-tree-shake-icons --no-enable-impeller -t lib/app/env/prod.dart
+	flutter build apk --release --flavor prod --no-tree-shake-icons -t lib/app/env/prod.dart
 
 # android apk-debug create
 create-apk-dev:
-	flutter build apk --debug --flavor dev --no-tree-shake-icons --no-enable-impeller -t lib/app/env/dev.dart
+	flutter build apk --debug --flavor dev --no-tree-shake-icons -t lib/app/env/dev.dart
 
 # android aab-prod create
 create-aab-prod:
-	flutter build appbundle --release --flavor prod --no-tree-shake-icons --no-enable-impeller -t lib/app/env/prod.dart
+	flutter build appbundle --release --flavor prod --no-tree-shake-icons -t lib/app/env/prod.dart
 
 
