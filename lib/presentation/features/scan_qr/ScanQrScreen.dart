@@ -196,7 +196,7 @@ class HolePainter extends CustomPainter {
     required this.holeWidth,
     required this.holeHeight,
     required this.holeOffset,
-    this.borderRadius = 20.0,
+    this.borderRadius = 8.0,
   });
 
   @override
