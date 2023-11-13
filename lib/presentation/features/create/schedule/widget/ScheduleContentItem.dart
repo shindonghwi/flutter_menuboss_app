@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -130,167 +129,154 @@ class ScheduleContentItem extends HookConsumerWidget {
                   )
                 : SizedBox(
                     width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                      child: Stack(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 24.0),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              crossAxisAlignment: CrossAxisAlignment.center,
+                    height: 188,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Container(
+                          margin: const EdgeInsets.only(left: 24.0),
+                          child: SizedBox(
+                            width: 140,
+                            height: 140,
+                            child: LoadImage(
+                              url: data.imageUrl,
+                              type: ImagePlaceholderType.Large,
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 16.0,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(top: 12, right: 12, bottom: 24),
+                            child: Column(
+                              mainAxisSize: MainAxisSize.max,
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                SizedBox(
-                                  width: 140,
-                                  height: 140,
-                                  child: LoadImage(
-                                    url: data.imageUrl,
-                                    type: ImagePlaceholderType.Large,
-                                  ),
-                                ),
-                                const SizedBox(
-                                  width: 16.0,
-                                ),
-                                Expanded(
-                                  child: SizedBox(
-                                    height: 140,
-                                    child: Padding(
-                                      padding: const EdgeInsets.symmetric(vertical: 8.5),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Row(
-                                            children: [
-                                              if (data.isRequired)
-                                                Text(
-                                                  "*",
-                                                  style: getTextTheme(context).s3b.copyWith(
-                                                        color: getColorScheme(context).colorSecondary500,
-                                                      ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
+                                      children: [
+                                        if (data.isRequired)
+                                          Text(
+                                            "*",
+                                            style: getTextTheme(context).s3b.copyWith(
+                                                  color: getColorScheme(context).colorSecondary500,
                                                 ),
-                                              Text(
-                                                data.playListName,
-                                                style: getTextTheme(context).s3b.copyWith(
+                                          ),
+                                        Text(
+                                          data.playListName,
+                                          style: getTextTheme(context).s3b.copyWith(
+                                                color: getColorScheme(context).colorGray900,
+                                              ),
+                                        )
+                                      ],
+                                    ),
+                                    Clickable(
+                                      onPressed: () => timelineProvider.removeItem(data.playlistId!),
+                                      child: Container(
+                                        padding: const EdgeInsets.all(12),
+                                        child: SvgPicture.asset(
+                                          "assets/imgs/icon_trash.svg",
+                                          width: 24.0,
+                                          height: 24.0,
+                                          colorFilter: ColorFilter.mode(
+                                            getColorScheme(context).colorGray500,
+                                            BlendMode.srcIn,
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 12.0),
+                                  child: Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    mainAxisSize: MainAxisSize.max,
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: [
+                                      data.start == null && data.end == null || index == 0
+                                          ? Padding(
+                                              padding: const EdgeInsets.only(bottom: 14.5),
+                                              child: Text(
+                                                "${getAppLocalizations(context).common_time} 00:00 ~ 24:00",
+                                                style: getTextTheme(context).b3sb.copyWith(
                                                       color: getColorScheme(context).colorGray900,
                                                     ),
-                                              )
-                                            ],
-                                          ),
-                                          Expanded(
-                                            child: ConstrainedBox(
-                                              constraints: const BoxConstraints(
-                                                minWidth: 180,
                                               ),
-                                              child: Column(
-                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment: MainAxisAlignment.end,
-                                                children: [
-                                                  data.start == null && data.end == null || index == 0
-                                                      ? Padding(
-                                                          padding: const EdgeInsets.only(bottom: 14.5),
-                                                          child: Text(
-                                                            "${getAppLocalizations(context).common_time} 00:00 ~ 24:00",
-                                                            style: getTextTheme(context).b3sb.copyWith(
-                                                                  color: getColorScheme(context).colorGray900,
-                                                                ),
-                                                          ),
-                                                        )
-                                                      : Padding(
-                                                          padding: const EdgeInsets.only(bottom: 4.0),
-                                                          child: SizedBox(
-                                                            width: double.infinity,
-                                                            child: data.timeIsDuplicate
-                                                                ? ErrorLineButton.extraSmallRound4Icon(
-                                                                    leftIcon: SvgPicture.asset(
-                                                                      "assets/imgs/icon_time_edit.svg",
-                                                                      width: 20,
-                                                                      height: 20,
-                                                                      colorFilter: ColorFilter.mode(
-                                                                        getColorScheme(context).colorRed500,
-                                                                        BlendMode.srcIn,
-                                                                      ),
-                                                                    ),
-                                                                    content: "${data.start} ~ ${data.end}",
-                                                                    isActivated: true,
-                                                                    onPressed: () => showTimeSettingBottomSheet(data),
-                                                                  )
-                                                                : NeutralLineButton.extraSmallRound4Icon(
-                                                                    leftIcon: SvgPicture.asset(
-                                                                      "assets/imgs/icon_time_edit.svg",
-                                                                      width: 20,
-                                                                      height: 20,
-                                                                      colorFilter: ColorFilter.mode(
-                                                                        getColorScheme(context).colorGray900,
-                                                                        BlendMode.srcIn,
-                                                                      ),
-                                                                    ),
-                                                                    content: "${data.start} ~ ${data.end}",
-                                                                    isActivated: true,
-                                                                    onPressed: () => showTimeSettingBottomSheet(data),
-                                                                  ),
+                                            )
+                                          : Padding(
+                                              padding: const EdgeInsets.only(bottom: 4.0),
+                                              child: SizedBox(
+                                                width: double.infinity,
+                                                child: data.timeIsDuplicate
+                                                    ? ErrorLineButton.extraSmallRound4Icon(
+                                                        leftIcon: SvgPicture.asset(
+                                                          "assets/imgs/icon_time_edit.svg",
+                                                          width: 20,
+                                                          height: 20,
+                                                          colorFilter: ColorFilter.mode(
+                                                            getColorScheme(context).colorRed500,
+                                                            BlendMode.srcIn,
                                                           ),
                                                         ),
-                                                  SizedBox(
-                                                    width: double.infinity,
-                                                    child: NeutralLineButton.extraSmallRound4Icon(
-                                                      leftIcon: SvgPicture.asset(
-                                                        data.playlistId == null || data.playlistId! < 0
-                                                            ? "assets/imgs/icon_plus_1.svg"
-                                                            : "assets/imgs/icon_edit.svg",
-                                                        width: 20,
-                                                        height: 20,
-                                                        colorFilter: ColorFilter.mode(
-                                                          getColorScheme(context).colorGray900,
-                                                          BlendMode.srcIn,
+                                                        content: "${data.start} ~ ${data.end}",
+                                                        isActivated: true,
+                                                        onPressed: () => showTimeSettingBottomSheet(data),
+                                                      )
+                                                    : NeutralLineButton.extraSmallRound4Icon(
+                                                        leftIcon: SvgPicture.asset(
+                                                          "assets/imgs/icon_time_edit.svg",
+                                                          width: 20,
+                                                          height: 20,
+                                                          colorFilter: ColorFilter.mode(
+                                                            getColorScheme(context).colorGray900,
+                                                            BlendMode.srcIn,
+                                                          ),
                                                         ),
+                                                        content: "${data.start} ~ ${data.end}",
+                                                        isActivated: true,
+                                                        onPressed: () => showTimeSettingBottomSheet(data),
                                                       ),
-                                                      content: data.playlistId == null || data.playlistId! < 0
-                                                          ? getAppLocalizations(context).create_schedule_add_playlist
-                                                          : getAppLocalizations(context)
-                                                              .create_schedule_change_playlist,
-                                                      isActivated: true,
-                                                      onPressed: () => goToSelectPlaylist(data),
-                                                    ),
-                                                  ),
-                                                ],
                                               ),
                                             ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 4.0),
+                                        child: SizedBox(
+                                          width: double.infinity,
+                                          child: NeutralLineButton.extraSmallRound4Icon(
+                                            leftIcon: SvgPicture.asset(
+                                              data.playlistId == null || data.playlistId! < 0
+                                                  ? "assets/imgs/icon_plus_1.svg"
+                                                  : "assets/imgs/icon_edit.svg",
+                                              width: 20,
+                                              height: 20,
+                                              colorFilter: ColorFilter.mode(
+                                                getColorScheme(context).colorGray900,
+                                                BlendMode.srcIn,
+                                              ),
+                                            ),
+                                            content: data.playlistId == null || data.playlistId! < 0
+                                                ? getAppLocalizations(context).create_schedule_add_playlist
+                                                : getAppLocalizations(context).create_schedule_change_playlist,
+                                            isActivated: true,
+                                            onPressed: () => goToSelectPlaylist(data),
                                           ),
-                                        ],
+                                        ),
                                       ),
-                                    ),
+                                    ],
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
-                          if (!data.isRequired)
-                            Align(
-                                alignment: Alignment.topRight,
-                                child: Container(
-                                  margin: const EdgeInsets.only(top: 12.0),
-                                  child: Clickable(
-                                    onPressed: () => timelineProvider.removeItem(data.playlistId!),
-                                    child: Container(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child: SvgPicture.asset(
-                                        "assets/imgs/icon_trash.svg",
-                                        width: 24.0,
-                                        height: 24.0,
-                                        colorFilter: ColorFilter.mode(
-                                          getColorScheme(context).colorGray500,
-                                          BlendMode.srcIn,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ))
-                        ],
-                      ),
+                        )
+                      ],
                     ),
                   );
           },

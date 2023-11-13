@@ -36,6 +36,7 @@ class ApplyDeviceItem extends HookWidget {
               width: 80,
               height: 80,
               child: LoadImage(
+                key: ValueKey(item.screenId),
                 url: item.content?.imageUrl,
                 type: ImagePlaceholderType.Normal,
               ),

@@ -141,66 +141,68 @@ class _PlaylistContent extends StatelessWidget {
               _Options(item: item),
               const DividerVertical(marginVertical: 0),
               _TotalDuration(item: item),
-              ListView.separated(
-                physics: const NeverScrollableScrollPhysics(),
-                shrinkWrap: true,
-                separatorBuilder: (BuildContext context, int index) {
-                  return const SizedBox(height: 0);
-                },
-                itemBuilder: (BuildContext context, int index) {
-                  final data = item.contents?[index];
-                  return SizedBox(
-                    width: double.infinity,
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(
-                            width: 60,
-                            height: 60,
-                            child: LoadImage(
-                              url: data?.property.imageUrl ?? "",
-                              type: ImagePlaceholderType.Small,
-                            ),
-                          ),
-                          Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(horizontal: 12),
-                              child: Row(
-                                children: [
-                                  _ContentTypeImage(
-                                    code: data?.type.code ?? "",
-                                  ),
-                                  Expanded(
-                                    child: Padding(
-                                      padding: const EdgeInsets.only(left: 4.0),
-                                      child: Text(
-                                        data?.name ?? "",
-                                        style: getTextTheme(context).b2sb.copyWith(
-                                              color: getColorScheme(context).colorGray900,
-                                            ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
+              Expanded(
+                child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 0);
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    final data = item.contents?[index];
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                              height: 60,
+                              child: LoadImage(
+                                url: data?.property.imageUrl ?? "",
+                                type: ImagePlaceholderType.Small,
                               ),
                             ),
-                          ),
-                          Text(
-                            StringUtil.formatDuration(data?.duration ?? 0),
-                            style: getTextTheme(context).b3sb.copyWith(
-                                  color: getColorScheme(context).colorGray500,
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                child: Row(
+                                  children: [
+                                    _ContentTypeImage(
+                                      code: data?.type.code ?? "",
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4.0),
+                                        child: Text(
+                                          data?.name ?? "",
+                                          style: getTextTheme(context).b2sb.copyWith(
+                                                color: getColorScheme(context).colorGray900,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
-                          ),
-                        ],
+                              ),
+                            ),
+                            Text(
+                              StringUtil.formatDuration(data?.duration ?? 0),
+                              style: getTextTheme(context).b3sb.copyWith(
+                                    color: getColorScheme(context).colorGray500,
+                                  ),
+                            ),
+                          ],
+                        ),
                       ),
-                    ),
-                  );
-                },
-                itemCount: item.contents?.length ?? 0,
+                    );
+                  },
+                  itemCount: item.contents?.length ?? 0,
+                ),
               ),
             ],
           )
