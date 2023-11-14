@@ -49,7 +49,7 @@ class Service {
       final iosInfo = await deviceInfoPlugin.iosInfo;
       final isPhysicalDevice = iosInfo.isPhysicalDevice ? 'Physical' : 'Simulator';
       String xDeviceModel = "${iosInfo.systemName}/${iosInfo.systemVersion} (${iosInfo.localizedModel}; "
-          "${iosInfo.utsname.machine}; ${iosInfo.model}; ${iosInfo.name}; $isPhysicalDevice)";
+          "${iosInfo.utsname.machine}; ${iosInfo.model}; $isPhysicalDevice)";
       debugPrint('iosInfo: $xDeviceModel');
       addHeader(key: HeaderKey.XDeviceModel, value: xDeviceModel);
     }
@@ -130,6 +130,7 @@ class Service {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
+      debugPrint('\http response error: $e');
       return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
     }
   }
