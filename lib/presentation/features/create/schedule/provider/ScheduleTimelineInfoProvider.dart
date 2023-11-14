@@ -4,7 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-final scheduleTimelineInfoProvider = StateNotifierProvider<ScheduleTimelineInfoProviderNotifier, List<SimpleSchedulesModel>>(
+final scheduleTimelineInfoProvider =
+    StateNotifierProvider<ScheduleTimelineInfoProviderNotifier, List<SimpleSchedulesModel>>(
   (ref) => ScheduleTimelineInfoProviderNotifier(),
 );
 
@@ -13,14 +14,14 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
 
   static List<SimpleSchedulesModel> _initialState() {
     return [
-      _createScheduleItem(
-          -1, true, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_basic, null, null),
-      _createScheduleItem(
-          -2, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_breakfast, "06:00", "11:00"),
-      _createScheduleItem(
-          -3, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_lunch, "11:00", "15:00"),
-      _createScheduleItem(
-          -4, false, false, GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_dinner, "15:00", "23:59"),
+      _createScheduleItem(-1, true, false,
+          GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_basic, null, null),
+      _createScheduleItem(-2, false, false,
+          GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_breakfast, "06:00", "11:00"),
+      _createScheduleItem(-3, false, false,
+          GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_lunch, "11:00", "15:00"),
+      _createScheduleItem(-4, false, false,
+          GetIt.instance<AppLocalization>().get().create_schedule_default_playlist_title_dinner, "15:00", "23:59"),
       _createScheduleItem(-5, false, true, "", null, null),
     ];
   }
@@ -73,34 +74,50 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
     state = [...newState];
   }
 
-  /// @feature: 스케줄 아이템 업데이트
+  /// @feature: 스케줄 아이템 정렬 - startTime 기준으로 정렬한다.
+  void _sortSchedulesByTime(List<SimpleSchedulesModel> schedules) {
+    SimpleSchedulesModel firstItem = schedules.first;
+    SimpleSchedulesModel lastItem = schedules.last;
+    List<SimpleSchedulesModel> itemsToSort = schedules.sublist(1, schedules.length - 1);
+
+    itemsToSort.sort((a, b) => timeOfDayToMinutes(_parseTime(a.start.toString()))
+        .compareTo(timeOfDayToMinutes(_parseTime(b.start.toString()))));
+
+    schedules
+      ..clear()
+      ..add(firstItem)
+      ..addAll(itemsToSort)
+      ..add(lastItem);
+  }
+
+  /// @feature: 스케줄 아이템 업데이트 - id 기반으로 업데이트
   /// @author: 2023/09/21 2:36 PM donghwishin
   /// @description{
   ///   업데이트 아이템을 startTime 기준으로 정렬한다.
   /// }
-  void updateItem(int? id, SimpleSchedulesModel updatedItem) {
+  void updateItemById(int? id, SimpleSchedulesModel updatedItem) {
     int itemIndex = state.indexWhere((item) => item.playlistId == id);
     if (itemIndex != -1) {
       List<SimpleSchedulesModel> newState = [...state];
       newState[itemIndex] = updatedItem;
-
-      // 첫 번째와 마지막 아이템을 분리
-      SimpleSchedulesModel firstItem = newState.first;
-      SimpleSchedulesModel lastItem = newState.last;
-
-      // 첫 번째와 마지막 아이템을 제외한 아이템들만 추출
-      List<SimpleSchedulesModel> itemsToSort = newState.sublist(1, newState.length - 1);
-
-      // start 시간을 기준으로 정렬
-      itemsToSort
-          .sort((a, b) => timeOfDayToMinutes(_parseTime(a.start.toString())).compareTo(timeOfDayToMinutes(_parseTime(b.start.toString()))));
-
-      // 정렬된 리스트를 다시 합치기
-      newState = [firstItem, ...itemsToSort, lastItem];
-
+      _sortSchedulesByTime(newState);
       _checkForOverlappingTimes(newState);
-      state = [...newState];
+      state = newState;
     }
+  }
+
+  /// @feature: 스케줄 아이템 업데이트 - index 기반으로 업데이트
+  /// @author: 2023/09/21 2:36 PM donghwishin
+  /// @description{
+  ///   업데이트 아이템을 startTime 기준으로 정렬한다.
+  /// }
+
+  void updateItemByIndex(int index, SimpleSchedulesModel updatedItem) {
+    List<SimpleSchedulesModel> newState = [...state];
+    newState[index] = updatedItem;
+    _sortSchedulesByTime(newState);
+    _checkForOverlappingTimes(newState);
+    state = newState;
   }
 
   /// 시간 중복 체크

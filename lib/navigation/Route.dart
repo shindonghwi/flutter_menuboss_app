@@ -119,8 +119,8 @@ enum RoutingScreen {
       ResponseScheduleModel? model = parameter;
       return CreateScheduleScreen(item: model);
     } else if (route == RoutingScreen.SelectPlaylist.route) {
-      List<int> playlistIds = parameter;
-      return SelectPlaylistScreen(playlistIds: playlistIds);
+      SelectedPlaylistInfo? info = parameter;
+      return SelectPlaylistScreen(selectedPlaylistInfo: info);
     } else if (route == RoutingScreen.SelectMediaFile.route) {
       return const SelectMediaFileScreen();
     } else if (route == RoutingScreen.SelectMediaInFolder.route) {

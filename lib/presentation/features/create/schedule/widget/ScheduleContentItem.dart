@@ -20,6 +20,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../select/playlist/SelectPlaylistScreen.dart';
 import '../provider/ScheduleTimelineInfoProvider.dart';
 
 class ScheduleContentItem extends HookConsumerWidget {
@@ -43,13 +44,21 @@ class ScheduleContentItem extends HookConsumerWidget {
       return null;
     }, [timelineState]);
 
-    void goToSelectPlaylist(SimpleSchedulesModel data) async {
+    void goToSelectPlaylist(int index, SimpleSchedulesModel data) async {
       try {
+        SelectedPlaylistInfo? selectedPlaylistInfo = SelectedPlaylistInfo(
+          playlistIds: timelineState.map((e) => e.playlistId!).toList(),
+          playlistId: data.playlistId ?? -1,
+          playlistName: data.playListName,
+          start: data.start,
+          end: data.end,
+        );
+
         final playlistInfo = await Navigator.push(
           context,
           nextSlideHorizontalScreen(
             RoutingScreen.SelectPlaylist.route,
-            parameter: timelineState.map((e) => e.playlistId!).toList(),
+            parameter: selectedPlaylistInfo,
           ),
         );
 
@@ -59,7 +68,7 @@ class ScheduleContentItem extends HookConsumerWidget {
             playListName: playlistInfo.name,
             imageUrl: playlistInfo.property?.imageUrl ?? "",
           );
-          timelineProvider.updateItem(data.playlistId, updatedItem);
+          timelineProvider.updateItemByIndex(index, updatedItem);
         }
       } catch (e) {
         debugPrint(e.toString());
@@ -73,7 +82,7 @@ class ScheduleContentItem extends HookConsumerWidget {
           startTime: data.start.toString(),
           endTime: data.end.toString(),
           callback: (startTime, endTime) {
-            timelineProvider.updateItem(
+            timelineProvider.updateItemById(
               data.playlistId,
               data.copyWith(
                 start: startTime,
@@ -170,31 +179,35 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                   ),
                                             ),
                                           Expanded(
-                                            child: Text(
-                                              data.playListName,
-                                              style: getTextTheme(context).s3b.copyWith(
-                                                    color: getColorScheme(context).colorGray900,
-                                                  ),
+                                            child: Padding(
+                                              padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
+                                              child: Text(
+                                                data.playListName,
+                                                style: getTextTheme(context).s3b.copyWith(
+                                                      color: getColorScheme(context).colorGray900,
+                                                    ),
+                                              ),
                                             ),
                                           )
                                         ],
                                       ),
                                     ),
-                                    Clickable(
-                                      onPressed: () => timelineProvider.removeItem(data.playlistId!),
-                                      child: Container(
-                                        padding: const EdgeInsets.all(12),
-                                        child: SvgPicture.asset(
-                                          "assets/imgs/icon_trash.svg",
-                                          width: 24.0,
-                                          height: 24.0,
-                                          colorFilter: ColorFilter.mode(
-                                            getColorScheme(context).colorGray500,
-                                            BlendMode.srcIn,
+                                    if (!data.isRequired)
+                                      Clickable(
+                                        onPressed: () => timelineProvider.removeItem(data.playlistId!),
+                                        child: Container(
+                                          padding: const EdgeInsets.all(12),
+                                          child: SvgPicture.asset(
+                                            "assets/imgs/icon_trash.svg",
+                                            width: 24.0,
+                                            height: 24.0,
+                                            colorFilter: ColorFilter.mode(
+                                              getColorScheme(context).colorGray500,
+                                              BlendMode.srcIn,
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    )
+                                      )
                                   ],
                                 ),
                                 Padding(
@@ -269,7 +282,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                 ? getAppLocalizations(context).create_schedule_add_playlist
                                                 : getAppLocalizations(context).create_schedule_change_playlist,
                                             isActivated: true,
-                                            onPressed: () => goToSelectPlaylist(data),
+                                            onPressed: () => goToSelectPlaylist(index, data),
                                           ),
                                         ),
                                       ),
