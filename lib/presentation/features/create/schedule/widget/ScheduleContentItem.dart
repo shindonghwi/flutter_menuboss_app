@@ -159,22 +159,26 @@ class ScheduleContentItem extends HookConsumerWidget {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Row(
-                                      children: [
-                                        if (data.isRequired)
-                                          Text(
-                                            "*",
-                                            style: getTextTheme(context).s3b.copyWith(
-                                                  color: getColorScheme(context).colorSecondary500,
-                                                ),
-                                          ),
-                                        Text(
-                                          data.playListName,
-                                          style: getTextTheme(context).s3b.copyWith(
-                                                color: getColorScheme(context).colorGray900,
-                                              ),
-                                        )
-                                      ],
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          if (data.isRequired)
+                                            Text(
+                                              "*",
+                                              style: getTextTheme(context).s3b.copyWith(
+                                                    color: getColorScheme(context).colorSecondary500,
+                                                  ),
+                                            ),
+                                          Expanded(
+                                            child: Text(
+                                              data.playListName,
+                                              style: getTextTheme(context).s3b.copyWith(
+                                                    color: getColorScheme(context).colorGray900,
+                                                  ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                     Clickable(
                                       onPressed: () => timelineProvider.removeItem(data.playlistId!),

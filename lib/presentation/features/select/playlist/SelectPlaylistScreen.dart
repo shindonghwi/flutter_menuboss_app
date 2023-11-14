@@ -97,78 +97,84 @@ class _PlaylistContent extends HookWidget {
                     },
                     child: SizedBox(
                       width: double.infinity,
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Row(
-                              children: [
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: LoadImage(
-                                    url: data.property?.imageUrl ?? "",
-                                    type: ImagePlaceholderType.Normal,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.only(left: 16.0),
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        data.name,
-                                        style: getTextTheme(context).b2sb.copyWith(
-                                              color: getColorScheme(context).colorGray900,
-                                            ),
+                      child: Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Expanded(
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 80,
+                                      height: 80,
+                                      child: LoadImage(
+                                        url: data.property?.imageUrl ?? "",
+                                        type: ImagePlaceholderType.Normal,
                                       ),
-                                      Padding(
-                                        padding: const EdgeInsets.symmetric(vertical: 4.0),
-                                        child: Text(
-                                          "Updated: ${data.updatedDate}",
-                                          style: getTextTheme(context).c1m.copyWith(
-                                                color: getColorScheme(context).colorGray500,
-                                              ),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          if (!CollectionUtil.isNullorEmpty(data.property?.contentTypes))
-                                            Row(
-                                              children: data.property!.contentTypes!.map((e) {
-                                                return Container(
-                                                  margin: const EdgeInsets.only(right: 4),
-                                                  child: _ContentTypeImage(code: e.code),
-                                                );
-                                              }).toList(),
+                                    ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              data.name,
+                                              style: getTextTheme(context).b2sb.copyWith(
+                                                    color: getColorScheme(context).colorGray900,
+                                                  ),
                                             ),
-                                          if (data.property?.count != null)
                                             Padding(
-                                              padding: const EdgeInsets.only(left: 4.0),
+                                              padding: const EdgeInsets.symmetric(vertical: 4.0),
                                               child: Text(
-                                                "${data.property?.count ?? 0} pages",
+                                                "Updated: ${data.updatedDate}",
                                                 style: getTextTheme(context).c1m.copyWith(
                                                       color: getColorScheme(context).colorGray500,
                                                     ),
                                               ),
                                             ),
-                                        ],
+                                            Row(
+                                              children: [
+                                                if (!CollectionUtil.isNullorEmpty(data.property?.contentTypes))
+                                                  Row(
+                                                    children: data.property!.contentTypes!.map((e) {
+                                                      return Container(
+                                                        margin: const EdgeInsets.only(right: 4),
+                                                        child: _ContentTypeImage(code: e.code),
+                                                      );
+                                                    }).toList(),
+                                                  ),
+                                                if (data.property?.count != null)
+                                                  Padding(
+                                                    padding: const EdgeInsets.only(left: 4.0),
+                                                    child: Text(
+                                                      "${data.property?.count ?? 0} pages",
+                                                      style: getTextTheme(context).c1m.copyWith(
+                                                            color: getColorScheme(context).colorGray500,
+                                                          ),
+                                                    ),
+                                                  ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
-                            IgnorePointer(
-                              child: BasicBorderCheckBox(
-                                isChecked: selectedPlaylist.value?.playlistId == data.playlistId,
-                                onChange: null,
+                                    )
+                                  ],
+                                ),
                               ),
-                            )
-                          ],
+                              IgnorePointer(
+                                child: BasicBorderCheckBox(
+                                  isChecked: selectedPlaylist.value?.playlistId == data.playlistId,
+                                  onChange: null,
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
