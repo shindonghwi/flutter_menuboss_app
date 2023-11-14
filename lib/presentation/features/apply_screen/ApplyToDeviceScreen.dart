@@ -7,6 +7,8 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
+import 'package:menuboss/presentation/components/popup/PopupApplyDevice.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
@@ -92,7 +94,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                 children: [
                   RefreshIndicator(
                     onRefresh: () async {
-                      deviceManager.requestGetDevices(delay: 300);
+                      deviceManager.requestGetDevices();
                     },
                     color: getColorScheme(context).colorPrimary500,
                     backgroundColor: getColorScheme(context).white,
@@ -120,7 +122,18 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                         child: PrimaryFilledButton.largeRound8(
                           content: getAppLocalizations(context).common_done,
                           isActivated: checkList.isNotEmpty,
-                          onPressed: () => applyScreenManager.applyToScreen(applyItem.value),
+                          onPressed: () {
+                            CommonPopup.showPopup(
+                              context,
+                              child: PopupApplyDevice(
+                                onClicked: (isApply) {
+                                  if (isApply) {
+                                    applyScreenManager.applyToScreen(applyItem.value);
+                                  }
+                                },
+                              ),
+                            );
+                          },
                         ),
                       ),
                     ),

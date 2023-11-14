@@ -60,6 +60,10 @@ class ImagePlaceholder extends StatelessWidget {
             height: containerSize,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(4),
+              border: Border.all(
+                width: 1,
+                color: getColorScheme(context).colorGray200,
+              ),
               color: getColorScheme(context).colorGray100,
             ),
             child: Center(

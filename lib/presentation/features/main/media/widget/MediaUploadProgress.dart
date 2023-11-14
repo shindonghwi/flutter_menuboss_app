@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -10,6 +12,7 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
+import '../provider/MediaListProvider.dart';
 import '../provider/MediaUploadProvider.dart';
 
 class MediaUploadProgress extends HookConsumerWidget {
@@ -171,20 +174,35 @@ class _SuffixFail extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaUploadProvider = ref.read(mediaUploadProgressProvider.notifier);
+    final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
+    final mediaManager = ref.read(mediaListProvider.notifier);
 
     return Row(
       children: [
         Clickable(
-          onPressed: () {
-            mediaUploadProvider.uploadStart(
-              mediaUploadProvider.currentFile!.path,
-              isVideo: mediaUploadProvider.isLastUploadVideo,
+          onPressed: () async {
+            final controller = await uploadProgressProvider.uploadStart(
+              uploadProgressProvider.currentFile!.path,
+              isVideo: uploadProgressProvider.isLastUploadVideo,
               onNetworkError: () => Toast.showError(
                 context,
                 getAppLocalizations(context).message_network_required,
               ),
             );
+            if (controller != null) {
+              GetIt.instance<PostUploadMediaImageUseCase>()
+                  .call(uploadProgressProvider.currentFile!.path, streamController: controller)
+                  .then((response) {
+                if (response.status == 200) {
+                  mediaManager.initPageInfo();
+                  mediaManager.requestGetMedias();
+                  uploadProgressProvider.uploadSuccess();
+                } else {
+                  Toast.showError(context, response.message);
+                  uploadProgressProvider.uploadFail();
+                }
+              });
+            }
           },
           child: SvgPicture.asset(
             "assets/imgs/icon_refresh.svg",
@@ -197,7 +215,7 @@ class _SuffixFail extends HookConsumerWidget {
           ),
         ),
         Clickable(
-          onPressed: () => mediaUploadProvider.uploadIdle(),
+          onPressed: () => uploadProgressProvider.uploadIdle(),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(

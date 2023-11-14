@@ -193,7 +193,16 @@ class _SettingContents extends HookConsumerWidget {
           Container(
             width: double.infinity,
             margin: const EdgeInsets.symmetric(vertical: 16),
-            child: NeutralLineButton.extraSmallRound4(
+            child: NeutralLineButton.extraSmallRound4Icon(
+              leftIcon: SvgPicture.asset(
+                "assets/imgs/icon_playlists_line.svg",
+                width: 20,
+                height: 20,
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).black,
+                  BlendMode.srcIn,
+                ),
+              ),
               onPressed: () {
                 final previewItems = mediaCartManager.getItems();
 

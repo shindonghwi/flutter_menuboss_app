@@ -20,6 +20,9 @@ class Service {
   static AppLocalization get _getAppLocalization => GetIt.instance<AppLocalization>();
   static String baseUrl = "${Environment.apiUrl}/${Environment.apiVersion}";
 
+  static const _apiTimeOut = Duration(seconds: 10);
+  static const _apiUploadTimeOut = Duration(seconds: 30);
+
   static Map<String, String> headers = {
     HeaderKey.ContentType: 'application/json',
     HeaderKey.AcceptLanguage: 'en-US',
@@ -89,19 +92,27 @@ class Service {
         debugPrint('\nrequest Url: $url');
         debugPrint('request header: $headers\n');
 
-        final res = await http.get(
-          url,
-          headers: headers,
-        );
-        debugPrint('\http response statusCode: ${res.statusCode}');
-        debugPrint('\http response method: ${res.request?.method.toString()}');
-        debugPrint('\http response body: ${res.body}');
+        final res = await http
+            .get(
+              url,
+              headers: headers,
+            )
+            .timeout(_apiTimeOut);
+        debugPrint('\nhttp response statusCode: ${res.statusCode}');
+        debugPrint('\nhttp response method: ${res.request?.method.toString()}');
+        debugPrint('\nhttp response body: ${res.body}');
         return res;
       } else {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      if (e is TimeoutException) {
+        debugPrint('\nRequest timed out');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_operation_timeout.toString(), 408);
+      } else {
+        debugPrint('\nhttp response error: $e');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      }
     }
   }
 
@@ -114,24 +125,31 @@ class Service {
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
         debugPrint('\nrequest Url: $url');
-        debugPrint('request header: $headers');
-        debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+        debugPrint('\nrequest header: $headers');
+        debugPrint('\nrequest body: $jsonBody\n', wrapWidth: 2048);
 
-        final res = await http.post(
-          url,
-          headers: headers,
-          body: jsonEncode(jsonBody),
-        );
-        debugPrint('\http response statusCode: ${res.statusCode}');
-        debugPrint('\http response method: ${res.request?.method.toString()}');
-        debugPrint('\http response body: ${res.body}');
+        final res = await http
+            .post(
+              url,
+              headers: headers,
+              body: jsonEncode(jsonBody),
+            )
+            .timeout(_apiTimeOut);
+        debugPrint('\nhttp response statusCode: ${res.statusCode}');
+        debugPrint('\nhttp response method: ${res.request?.method.toString()}');
+        debugPrint('\nhttp response body: ${res.body}');
         return res;
       } else {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
-      debugPrint('\http response error: $e');
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      if (e is TimeoutException) {
+        debugPrint('\nRequest timed out');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_operation_timeout.toString(), 408);
+      } else {
+        debugPrint('\nhttp esponse error: $e');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      }
     }
   }
 
@@ -142,19 +160,19 @@ class Service {
     required Map<String, dynamic> jsonBody,
     StreamController<double>? uploadProgressController,
   }) async {
-    var completer = Completer<http.Response>();
     try {
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
 
         debugPrint('\nrequest Url: $url');
-        debugPrint('request header: $headers');
+        debugPrint('\nrequest header: $headers');
 
         var request = http.MultipartRequest('POST', url)
           ..headers.addAll(headers)
           ..fields.addAll(jsonBody.map((key, value) => MapEntry(key, value.toString())))
-          ..files
-              .add(http.MultipartFile('file', file.openRead(), file.lengthSync(), filename: file.path.split('/').last));
+          ..files.add(
+            http.MultipartFile('file', file.openRead(), file.lengthSync(), filename: file.path.split('/').last),
+          );
 
         var client = http.Client();
 
@@ -166,16 +184,15 @@ class Service {
             uploadProgressController?.sink.add(bytesUploaded / totalByteLength);
           }
 
-          var streamedResponse = await client.send(request);
+          var streamedResponse = await client.send(request).timeout(_apiUploadTimeOut);
           var response = await http.Response.fromStream(streamedResponse);
-          debugPrint('http response statusCode: ${response.statusCode}');
-          debugPrint('http response method: ${response.request?.method.toString()}');
-          debugPrint('http response body: ${response.body}');
+          debugPrint('\nhttp response statusCode: ${response.statusCode}');
+          debugPrint('\nhttp response method: ${response.request?.method.toString()}');
+          debugPrint('\nhttp response body: ${response.body}');
           uploadProgressController?.close();
           return response;
         } catch (e) {
-          // Handling error during client.send(request) or file upload
-          debugPrint('Network send error: $e');
+          debugPrint('\nNetwork send error: $e');
           uploadProgressController?.close();
           return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
         }
@@ -183,8 +200,13 @@ class Service {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
-      debugPrint('http response error: $e');
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      if (e is TimeoutException) {
+        debugPrint('\nRequest timed out');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_operation_timeout.toString(), 408);
+      } else {
+        debugPrint('\nhttp esponse error: $e');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      }
     }
   }
 
@@ -197,23 +219,29 @@ class Service {
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
         debugPrint('\nrequest Url: $url');
-        debugPrint('request header: $headers');
-        debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+        debugPrint('\nrequest header: $headers');
+        debugPrint('\nrequest body: $jsonBody\n', wrapWidth: 2048);
 
         final res = await http.patch(
           url,
           headers: headers,
           body: jsonEncode(jsonBody),
-        );
-        debugPrint('\http response statusCode: ${res.statusCode}');
-        debugPrint('\http response method: ${res.request?.method.toString()}');
-        debugPrint('\http response body: ${res.body}');
+        ).timeout(_apiTimeOut);
+        debugPrint('\nhttp response statusCode: ${res.statusCode}');
+        debugPrint('\nhttp response method: ${res.request?.method.toString()}');
+        debugPrint('\nhttp response body: ${res.body}');
         return res;
       } else {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      if (e is TimeoutException) {
+        debugPrint('\nRequest timed out');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_operation_timeout.toString(), 408);
+      } else {
+        debugPrint('\nhttp esponse error: $e');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      }
     }
   }
 
@@ -226,23 +254,29 @@ class Service {
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
         debugPrint('\nrequest Url: $url');
-        debugPrint('request header: $headers');
-        debugPrint('request body: $jsonBody\n', wrapWidth: 2048);
+        debugPrint('\nrequest header: $headers');
+        debugPrint('\nrequest body: $jsonBody\n', wrapWidth: 2048);
 
         final res = await http.delete(
           url,
           headers: headers,
           body: jsonEncode(jsonBody),
-        );
-        debugPrint('\http response statusCode: ${res.statusCode}');
-        debugPrint('\http response method: ${res.request?.method.toString()}');
-        debugPrint('\http response body: ${res.body}');
+        ).timeout(_apiTimeOut);
+        debugPrint('\nhttp response statusCode: ${res.statusCode}');
+        debugPrint('\nhttp response method: ${res.request?.method.toString()}');
+        debugPrint('\nhttp response body: ${res.body}');
         return res;
       } else {
         return BaseApiUtil.createResponse(_getAppLocalization.get().message_network_required.toString(), 406);
       }
     } catch (e) {
-      return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      if (e is TimeoutException) {
+        debugPrint('\nRequest timed out');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_operation_timeout.toString(), 408);
+      } else {
+        debugPrint('\nhttp esponse error: $e');
+        return BaseApiUtil.createResponse(_getAppLocalization.get().message_server_error_5xx.toString(), 500);
+      }
     }
   }
 }

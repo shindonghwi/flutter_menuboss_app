@@ -13,56 +13,47 @@ enum ToastType { Success, Error, Warning }
 class Toast {
   static OverlayEntry? _overlayEntry;
   static Timer? _timer;
+  static OverlayState? _overlayState;
 
-  static showError(
-    BuildContext context,
-    String message, {
-    Duration autoCloseTime = const Duration(seconds: 5),
-  }) {
-    if (CollectionUtil.isNullEmptyFromString(message)) return;
-    _removeExistingToast();
-    _addOverlayEntry(context, ToastType.Error, message);
-    _cancelTimer(autoCloseTime);
+  static void init(BuildContext context) {
+    _overlayState = Overlay.of(context, rootOverlay: true);
   }
 
-  static showSuccess(
-    BuildContext context,
-    String message, {
-    Duration autoCloseTime = const Duration(seconds: 5),
-  }) {
-    if (CollectionUtil.isNullEmptyFromString(message)) return;
-    _removeExistingToast();
-    _addOverlayEntry(context, ToastType.Success, message);
-    _cancelTimer(autoCloseTime);
+  static showError(BuildContext context, String message, {Duration autoCloseTime = const Duration(seconds: 5)}) {
+    _showToast(context, message, ToastType.Error, autoCloseTime);
   }
 
-  static showWarning(
-    BuildContext context,
-    String message, {
-    Duration autoCloseTime = const Duration(seconds: 5),
-  }) {
+  static showSuccess(BuildContext context, String message, {Duration autoCloseTime = const Duration(seconds: 5)}) {
+    _showToast(context, message, ToastType.Success, autoCloseTime);
+  }
+
+  static showWarning(BuildContext context, String message, {Duration autoCloseTime = const Duration(seconds: 5)}) {
+    _showToast(context, message, ToastType.Warning, autoCloseTime);
+  }
+
+  static void _showToast(BuildContext context, String message, ToastType type, Duration autoCloseTime) {
     if (CollectionUtil.isNullEmptyFromString(message)) return;
     _removeExistingToast();
-    _addOverlayEntry(context, ToastType.Warning, message);
+    _addOverlayEntry(context, type, message);
     _cancelTimer(autoCloseTime);
   }
 
   static void _addOverlayEntry(BuildContext context, ToastType type, String message) {
-    final overlay = Overlay.of(context, rootOverlay: true);
+    _overlayState ??= Overlay.of(context, rootOverlay: true);
     _overlayEntry = OverlayEntry(
       builder: (context) => _ToastWidget(message: message, onDismissed: _removeExistingToast, type: type),
     );
-    overlay.insert(_overlayEntry!);
+    _overlayState?.insert(_overlayEntry!);
   }
 
   static void _cancelTimer(Duration autoCloseTime) {
-    _timer?.cancel(); // 이전 Timer가 있으면 취소
+    _timer?.cancel();
     _timer = Timer(autoCloseTime, () {
       _removeExistingToast();
     });
   }
 
-  static _removeExistingToast() {
+  static void _removeExistingToast() {
     _overlayEntry?.remove();
     _overlayEntry = null;
   }
@@ -85,11 +76,13 @@ class _ToastWidget extends HookWidget {
     final animation = Tween(begin: 0.0, end: 1.0).animate(animationController);
 
     useEffect(() {
-      animationController.forward().whenComplete(() {
-        Timer(const Duration(seconds: 2), () {
-          if (animationController.status == AnimationStatus.completed) {
-            animationController.reverse().whenComplete(onDismissed);
-          }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        animationController.forward().whenComplete(() {
+          Timer(const Duration(seconds: 2), () {
+            if (animationController.status == AnimationStatus.completed) {
+              animationController.reverse().whenComplete(onDismissed);
+            }
+          });
         });
       });
       return null;

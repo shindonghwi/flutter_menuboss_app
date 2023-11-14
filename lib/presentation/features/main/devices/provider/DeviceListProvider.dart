@@ -21,10 +21,10 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   List<ResponseDeviceModel> currentDevices = [];
 
   /// 디바이스 리스트 조회
-  void requestGetDevices({int delay = 300}) async{
+  void requestGetDevices() async{
     state = Loading();
 
-    await Future.delayed(Duration(milliseconds: delay));
+    await Future.delayed(const Duration(milliseconds: 600));
 
     _getDevicesUseCase.call().then((response) async {
       if (response.status == 200) {

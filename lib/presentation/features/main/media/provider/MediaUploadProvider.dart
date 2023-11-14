@@ -79,10 +79,10 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   }
 
   void uploadIdle() {
-    isUploading = UploadState.IDLE;
-    _timer?.cancel();
     currentProgressByte =StringUtil.formatBytesToMegabytes(0);
     uploadProgress = 0.0;
+    _timer?.cancel();
+    isUploading = UploadState.IDLE;
     notifyListeners();
   }
 

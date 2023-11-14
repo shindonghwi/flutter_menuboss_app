@@ -158,36 +158,40 @@ class _FolderItem extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
-          children: [
-            if (inRoot)
-              SvgPicture.asset(
-                "assets/imgs/icon_chevron_down.svg",
-                width: 24,
-                height: 24,
-                colorFilter: ColorFilter.mode(
-                  getColorScheme(context).colorGray500,
-                  BlendMode.srcIn,
+        Expanded(
+          child: Row(
+            children: [
+              if (inRoot)
+                SvgPicture.asset(
+                  "assets/imgs/icon_chevron_down.svg",
+                  width: 24,
+                  height: 24,
+                  colorFilter: ColorFilter.mode(
+                    getColorScheme(context).colorGray500,
+                    BlendMode.srcIn,
+                  ),
+                ),
+              Container(
+                margin: EdgeInsets.only(left: inRoot ? 12 : 56),
+                child: SvgPicture.asset(
+                  "assets/imgs/icon_folder.svg",
+                  width: 24,
+                  height: 24,
                 ),
               ),
-            Container(
-              margin: EdgeInsets.only(left: inRoot ? 12 : 56),
-              child: SvgPicture.asset(
-                "assets/imgs/icon_folder.svg",
-                width: 24,
-                height: 24,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 12.0),
-              child: Text(
-                folderName,
-                style: getTextTheme(context).b2sb.copyWith(
-                      color: getColorScheme(context).colorGray900,
-                    ),
-              ),
-            )
-          ],
+              Expanded(
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 12.0),
+                  child: Text(
+                    folderName,
+                    style: getTextTheme(context).b2sb.copyWith(
+                          color: getColorScheme(context).colorGray900,
+                        ),
+                  ),
+                ),
+              )
+            ],
+          ),
         ),
         if (isSelected)
           SizedBox(

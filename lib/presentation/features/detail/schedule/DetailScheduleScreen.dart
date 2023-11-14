@@ -180,11 +180,13 @@ class _ScheduleContent extends StatelessWidget {
                                         color: getColorScheme(context).colorSecondary500,
                                       ),
                                 ),
-                              Text(
-                                item.name,
-                                style: getTextTheme(context).s2b.copyWith(
-                                      color: getColorScheme(context).colorGray900,
-                                    ),
+                              Expanded(
+                                child: Text(
+                                  item.name,
+                                  style: getTextTheme(context).s2b.copyWith(
+                                        color: getColorScheme(context).colorGray900,
+                                      ),
+                                ),
                               )
                             ],
                           ),

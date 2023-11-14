@@ -35,7 +35,7 @@ run-rebuild:
 
 # ProdRelease Run
 run-prod:
-	flutter run --release --flavor prod -t lib/app/env/prod.dart
+	flutter run --release --flavor prod -t lib/app/env/prod.dart --no-enable-impeller
 
 # ProdRelease Rebuild
 run-prod-rebuild:

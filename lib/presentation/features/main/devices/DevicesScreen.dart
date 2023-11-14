@@ -102,7 +102,7 @@ class _DeviceContentList extends HookConsumerWidget {
             children: [
               RefreshIndicator(
                 onRefresh: () async {
-                  deviceManager.requestGetDevices(delay: 300);
+                  deviceManager.requestGetDevices();
                 },
                 color: getColorScheme(context).colorPrimary500,
                 backgroundColor: getColorScheme(context).white,

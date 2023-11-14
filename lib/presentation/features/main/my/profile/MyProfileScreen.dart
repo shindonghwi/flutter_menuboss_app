@@ -282,7 +282,7 @@ class _InputEmail extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
+          getAppLocalizations(context).my_page_profile_email,
           style: getTextTheme(context).b1sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),

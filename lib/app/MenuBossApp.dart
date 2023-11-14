@@ -9,6 +9,8 @@ import 'package:menuboss/presentation/ui/theme.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:uni_links/uni_links.dart';
 
+import '../presentation/components/toast/Toast.dart';
+
 final firebaseAuth = FirebaseAuth.instance;
 
 class MenuBossApp extends HookWidget {
@@ -16,8 +18,10 @@ class MenuBossApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        Toast.init(context);
         uriLinkStream.listen((Uri? uriLink) {
           handleDeepLink(uriLink?.toString());
         });

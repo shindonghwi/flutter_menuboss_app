@@ -139,14 +139,18 @@ class _FileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
-        decoration: BoxDecoration(
-          color: getColorScheme(context).colorGray100,
-          borderRadius: BorderRadius.circular(8),
+    return Container(
+      margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
+      decoration: BoxDecoration(
+        color: getColorScheme(context).colorGray100,
+        borderRadius: BorderRadius.circular(4),
+        border: Border.all(
+          width: 1,
+          color: getColorScheme(context).colorGray200,
         ),
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(4),
         child: AspectRatio(
           aspectRatio: 342 / 200,
           child: LoadImage(

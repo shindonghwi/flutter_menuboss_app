@@ -38,11 +38,11 @@ extension StyleText on TextTheme {
 
   TextStyle get b2m => defaultTextStyle.copyWith(fontSize: 16, fontWeight: FontWeight.w500, height: 1.375);
 
-  TextStyle get b3b => defaultTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w700, height: 1.428);
+  TextStyle get b3b => defaultTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w700, height: 1.357);
 
-  TextStyle get b3sb => defaultTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w600, height: 1.428);
+  TextStyle get b3sb => defaultTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w600, height: 1.357);
 
-  TextStyle get b3m => defaultTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, height: 1.428);
+  TextStyle get b3m => defaultTextStyle.copyWith(fontSize: 14, fontWeight: FontWeight.w500, height: 1.357);
 
   TextStyle get c1sb => defaultTextStyle.copyWith(fontSize: 12, fontWeight: FontWeight.w600, height: 1.333);
 
