@@ -9,14 +9,26 @@ enum PlaylistSettingType {
   Vertical,
   Fit,
   Fill,
+  Stretch,
 }
 
 final Map<PlaylistSettingType, String> playListSaveParams = {
   PlaylistSettingType.Horizontal: "Horizontal",
   PlaylistSettingType.Vertical: "Vertical",
   PlaylistSettingType.Fit: "Fit",
-  PlaylistSettingType.Fill: "Fill"
+  PlaylistSettingType.Fill: "Fill",
+  PlaylistSettingType.Stretch: "Stretch"
 };
+
+PlaylistSettingType getPlaylistDirectionTypeFromString(String? value) {
+  if (value == null) return PlaylistSettingType.Horizontal;
+  return playListSaveParams.entries.firstWhere((entry) => entry.value.toLowerCase() == value.toLowerCase()).key;
+}
+
+PlaylistSettingType getPlaylistScaleTypeFromString(String? value) {
+  if (value == null) return PlaylistSettingType.Fill;
+  return playListSaveParams.entries.firstWhere((entry) => entry.value.toLowerCase() == value.toLowerCase()).key;
+}
 
 final playlistSaveInfoProvider =
     StateNotifierProvider<PlaylistSaveInfoProviderNotifier, RequestPlaylistUpdateInfoModel>(

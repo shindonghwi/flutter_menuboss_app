@@ -61,22 +61,10 @@ class CreatePlaylistScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (isEditMode.value) {
-          debugPrint("item: ${item.toString()}");
-
           saveManager.changeName(item?.name ?? "");
-          saveManager.changeDirection(
-            item?.property?.direction?.code.toLowerCase() == "horizontal"
-                ? PlaylistSettingType.Horizontal
-                : PlaylistSettingType.Vertical,
-          );
-
-          saveManager.changeFill(
-            item?.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
-          );
-
-          mediaCartManager.addItems(
-            item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? [],
-          );
+          saveManager.changeDirection(getPlaylistDirectionTypeFromString(item?.property?.direction?.code));
+          saveManager.changeFill(getPlaylistScaleTypeFromString(item?.property?.fill?.code));
+          mediaCartManager.addItems(item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? []);
         }
       });
       return null;
@@ -132,12 +120,8 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                             initTitle: item?.name ?? "",
                           ),
                           PlaylistSettings(
-                            direction: item?.property?.direction?.code.toLowerCase() == "vertical"
-                                ? PlaylistSettingType.Vertical
-                                : PlaylistSettingType.Horizontal,
-                            scale: item?.property?.fill?.code.toLowerCase() == "fit"
-                                ? PlaylistSettingType.Fit
-                                : PlaylistSettingType.Fill,
+                            direction: getPlaylistDirectionTypeFromString(item?.property?.direction?.code),
+                            scale: getPlaylistDirectionTypeFromString(item?.property?.fill?.code),
                           ),
                         ],
                       ),

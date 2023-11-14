@@ -32,11 +32,11 @@ class PlaylistSettings extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("PlaylistSettings build assad $direction $scale");
-
     final directionType = useState(direction);
     final scaleType = useState(scale);
     final isFolded = useState(false);
+
+    debugPrint("Select ${directionType.value} | ${scaleType.value}");
 
     final controller = useAnimationController(duration: const Duration(milliseconds: 300));
     final rotationAnimation = Tween<double>(begin: 0, end: pi).animate(controller);
@@ -118,77 +118,88 @@ class _SettingContents extends HookConsumerWidget {
     final saveState = ref.watch(playlistSaveInfoProvider);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
-    return Padding(
+    return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Flexible(
-                flex: 45,
-                fit: FlexFit.tight,
-                child: Column(
-                  children: [
-                    _SettingSelectableIcon(
-                      iconPath: "assets/imgs/icon_horizontal_line.svg",
-                      iconText: getAppLocalizations(context).common_horizontal,
-                      onPressed: () {
-                        saveManager.changeDirection(PlaylistSettingType.Horizontal);
-                        directionType.value = PlaylistSettingType.Horizontal;
-                      },
-                      isChecked: directionType.value == PlaylistSettingType.Horizontal,
-                    ),
-                    const SizedBox(height: 8),
-                    _SettingSelectableIcon(
-                      iconPath: "assets/imgs/icon_vertical_line.svg",
-                      iconText: getAppLocalizations(context).common_vertical,
-                      onPressed: () {
-                        saveManager.changeDirection(PlaylistSettingType.Vertical);
-                        directionType.value = PlaylistSettingType.Vertical;
-                      },
-                      isChecked: directionType.value == PlaylistSettingType.Vertical,
-                    ),
-                  ],
+          SizedBox(
+            height: 96,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Flexible(
+                  flex: 45,
+                  fit: FlexFit.tight,
+                  child: Column(
+                    children: [
+                      _SettingSelectableIcon(
+                        iconPath: "assets/imgs/icon_horizontal_line.svg",
+                        iconText: getAppLocalizations(context).common_horizontal,
+                        onPressed: () {
+                          saveManager.changeDirection(PlaylistSettingType.Horizontal);
+                          directionType.value = PlaylistSettingType.Horizontal;
+                        },
+                        isChecked: directionType.value == PlaylistSettingType.Horizontal,
+                      ),
+                      _SettingSelectableIcon(
+                        iconPath: "assets/imgs/icon_vertical_line.svg",
+                        iconText: getAppLocalizations(context).common_vertical,
+                        onPressed: () {
+                          saveManager.changeDirection(PlaylistSettingType.Vertical);
+                          directionType.value = PlaylistSettingType.Vertical;
+                        },
+                        isChecked: directionType.value == PlaylistSettingType.Vertical,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-              Flexible(
-                fit: FlexFit.loose,
-                flex: 9,
-                child: Container(
-                  width: 1,
-                  height: 64,
-                  color: getColorScheme(context).colorGray300,
+                Flexible(
+                  fit: FlexFit.loose,
+                  flex: 9,
+                  child: Container(
+                    width: 1,
+                    height: 96,
+                    color: getColorScheme(context).colorGray300,
+                  ),
                 ),
-              ),
-              Flexible(
-                flex: 45,
-                fit: FlexFit.tight,
-                child: Column(
-                  children: [
-                    _SettingSelectableIcon(
-                      iconPath: "assets/imgs/icon_fill_line.svg",
-                      iconText: getAppLocalizations(context).common_fill,
-                      onPressed: () {
-                        saveManager.changeFill(PlaylistSettingType.Fill);
-                        scaleType.value = PlaylistSettingType.Fill;
-                      },
-                      isChecked: scaleType.value == PlaylistSettingType.Fill,
-                    ),
-                    const SizedBox(height: 8),
-                    _SettingSelectableIcon(
-                      iconPath: "assets/imgs/icon_fit.svg",
-                      iconText: getAppLocalizations(context).common_fit,
-                      onPressed: () {
-                        saveManager.changeFill(PlaylistSettingType.Fit);
-                        scaleType.value = PlaylistSettingType.Fit;
-                      },
-                      isChecked: scaleType.value == PlaylistSettingType.Fit,
-                    ),
-                  ],
+                Flexible(
+                  flex: 45,
+                  fit: FlexFit.tight,
+                  child: Column(
+                    children: [
+                      _SettingSelectableIcon(
+                        iconPath: "assets/imgs/icon_fill_line.svg",
+                        iconText: getAppLocalizations(context).common_fill,
+                        onPressed: () {
+                          saveManager.changeFill(PlaylistSettingType.Fill);
+                          scaleType.value = PlaylistSettingType.Fill;
+                        },
+                        isChecked: scaleType.value == PlaylistSettingType.Fill,
+                      ),
+                      _SettingSelectableIcon(
+                        iconPath: "assets/imgs/icon_fit.svg",
+                        iconText: getAppLocalizations(context).common_fit,
+                        onPressed: () {
+                          saveManager.changeFill(PlaylistSettingType.Fit);
+                          scaleType.value = PlaylistSettingType.Fit;
+                        },
+                        isChecked: scaleType.value == PlaylistSettingType.Fit,
+                      ),
+                      _SettingSelectableIcon(
+                        iconPath: "assets/imgs/icon_stretch.svg",
+                        iconText: getAppLocalizations(context).common_stretch,
+                        onPressed: () {
+                          saveManager.changeFill(PlaylistSettingType.Stretch);
+                          scaleType.value = PlaylistSettingType.Stretch;
+                        },
+                        isChecked: scaleType.value == PlaylistSettingType.Stretch,
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
           Container(
             width: double.infinity,
@@ -211,17 +222,18 @@ class _SettingContents extends HookConsumerWidget {
                   return;
                 }
 
+                debugPrint("ASDASD ${getPlaylistDirectionTypeFromString(saveState.property.direction)}");
+                debugPrint("ASDASD D ${getPlaylistScaleTypeFromString(saveState.property.fill)}");
+
                 previewListManager.changeItems(
                   PreviewModel(
-                      saveState.property.direction.toLowerCase() == "horizontal"
-                          ? PlaylistSettingType.Horizontal.name.toLowerCase()
-                          : PlaylistSettingType.Vertical.name.toLowerCase(),
-                      saveState.property.fill.toLowerCase() == "fill"
-                          ? PlaylistSettingType.Fill.name.toLowerCase()
-                          : PlaylistSettingType.Fit.name.toLowerCase(),
-                      previewItems,
-                      previewItems.map((e) => e.property?.duration?.toInt()).toList()),
+                    getPlaylistDirectionTypeFromString(saveState.property.direction),
+                    getPlaylistScaleTypeFromString(saveState.property.fill),
+                    previewItems,
+                    previewItems.map((e) => e.property?.duration?.toInt()).toList(),
+                  ),
                 );
+
                 Navigator.push(
                   context,
                   nextSlideVerticalScreen(

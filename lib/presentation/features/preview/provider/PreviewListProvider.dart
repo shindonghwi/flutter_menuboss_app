@@ -1,9 +1,11 @@
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 
+import '../../create/playlist/provider/PlaylistSaveInfoProvider.dart';
+
 class PreviewModel {
-  final String? direction;
-  final String? fill;
+  final PlaylistSettingType direction;
+  final PlaylistSettingType fill;
   final List<SimpleMediaContentModel> previewItems;
   final List<int?> durations;
 

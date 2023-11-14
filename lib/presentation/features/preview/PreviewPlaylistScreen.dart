@@ -10,6 +10,8 @@ import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
+import 'package:menuboss/presentation/features/create/playlist/widget/PlaylistSettings.dart';
 import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -25,8 +27,8 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
     final previewState = ref.watch(previewListProvider);
     final previewManager = ref.watch(previewListProvider.notifier);
     final currentPage = useState(0);
-    final isDirectionHorizontal = useState(previewState?.direction == "horizontal");
-    final isScaleFit = useState(previewState?.fill == "fit");
+    final directionType = useState(previewState?.direction);
+    final contentScale = useState(previewState?.fill);
     List<int?> durations = previewState?.durations ?? [];
 
     useEffect(() {
@@ -47,13 +49,13 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
       body: Column(
         children: [
           _Settings(
-            isDirectionHorizontal: isDirectionHorizontal,
-            isScaleFit: isScaleFit,
+            directionType: directionType,
+            contentScale: contentScale,
           ),
           _ImageDisplay(
             currentPage: currentPage.value,
-            isDirectionHorizontal: isDirectionHorizontal.value,
-            isScaleFit: isScaleFit.value,
+            directionType: directionType.value,
+            contentScale: contentScale.value,
           ),
         ],
       ),
@@ -69,19 +71,34 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
 class _ImageDisplay extends HookConsumerWidget {
   final int currentPage;
-  final bool isDirectionHorizontal;
-  final bool isScaleFit;
+  final PlaylistSettingType? directionType;
+  final PlaylistSettingType? contentScale;
 
   const _ImageDisplay({
     super.key,
     required this.currentPage,
-    required this.isDirectionHorizontal,
-    required this.isScaleFit,
+    required this.directionType,
+    required this.contentScale,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final previewState = ref.watch(previewListProvider);
+
+    final ratio = directionType == PlaylistSettingType.Horizontal ? 16 / 9 : 9 / 16;
+    var fitInfo = BoxFit.contain;
+
+    if (contentScale == PlaylistSettingType.Fit) {
+      fitInfo = BoxFit.contain;
+    } else if (contentScale == PlaylistSettingType.Fill) {
+      fitInfo = BoxFit.cover;
+    } else if (contentScale == PlaylistSettingType.Stretch) {
+      if (directionType == PlaylistSettingType.Horizontal) {
+        fitInfo = BoxFit.fitWidth;
+      } else {
+        fitInfo = BoxFit.fitHeight;
+      }
+    }
 
     return Expanded(
       child: Padding(
@@ -103,12 +120,12 @@ class _ImageDisplay extends HookConsumerWidget {
                     ),
                     child: AspectRatio(
                       key: Key("${mediaContent.id}-$index"),
-                      aspectRatio: isDirectionHorizontal ? 16 / 9 : 9 / 16,
+                      aspectRatio: ratio,
                       child: LoadImage(
                         tag: "${mediaContent.id}-$index",
                         url: mediaContent.property?.imageUrl,
                         type: ImagePlaceholderType.AUTO_16x9,
-                        fit: isScaleFit ? BoxFit.contain : BoxFit.cover,
+                        fit: fitInfo,
                       ),
                     ),
                   ),
@@ -122,17 +139,18 @@ class _ImageDisplay extends HookConsumerWidget {
 }
 
 class _Settings extends HookWidget {
-  final ValueNotifier<bool> isDirectionHorizontal;
-  final ValueNotifier<bool> isScaleFit;
+  final ValueNotifier<PlaylistSettingType?> directionType;
+  final ValueNotifier<PlaylistSettingType?> contentScale;
 
   const _Settings({
     super.key,
-    required this.isDirectionHorizontal,
-    required this.isScaleFit,
+    required this.directionType,
+    required this.contentScale,
   });
 
   @override
   Widget build(BuildContext context) {
+
     return SizedBox(
       width: double.infinity,
       height: 66,
@@ -151,14 +169,14 @@ class _Settings extends HookWidget {
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_horizontal_line.svg',
                     content: getAppLocalizations(context).common_horizontal,
-                    isSelected: isDirectionHorizontal.value,
-                    onPressed: () => isDirectionHorizontal.value = true,
+                    isSelected: directionType.value == PlaylistSettingType.Horizontal,
+                    onPressed: () => directionType.value = PlaylistSettingType.Horizontal,
                   ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_vertical_line.svg',
                     content: getAppLocalizations(context).common_vertical,
-                    isSelected: !isDirectionHorizontal.value,
-                    onPressed: () => isDirectionHorizontal.value = false,
+                    isSelected: directionType.value == PlaylistSettingType.Vertical,
+                    onPressed: () => directionType.value = PlaylistSettingType.Vertical,
                   )
                 ],
               ),
@@ -166,26 +184,31 @@ class _Settings extends HookWidget {
             Container(
               width: 1,
               height: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               color: getColorScheme(context).white,
             ),
             Flexible(
               fit: FlexFit.tight,
               flex: 1,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fit.svg',
                     content: getAppLocalizations(context).common_fit,
-                    isSelected: isScaleFit.value,
-                    onPressed: () => isScaleFit.value = true,
+                    isSelected: contentScale.value == PlaylistSettingType.Fit,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Fit,
                   ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fill_line.svg',
                     content: getAppLocalizations(context).common_fill,
-                    isSelected: !isScaleFit.value,
-                    onPressed: () => isScaleFit.value = false,
+                    isSelected: contentScale.value == PlaylistSettingType.Fill,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Fill,
+                  ),
+                  _PreviewSettingIcon(
+                    iconPath: 'assets/imgs/icon_stretch.svg',
+                    content: getAppLocalizations(context).common_stretch,
+                    isSelected: contentScale.value == PlaylistSettingType.Stretch,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Stretch,
                   )
                 ],
               ),

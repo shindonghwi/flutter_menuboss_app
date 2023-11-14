@@ -18,7 +18,6 @@ import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
-import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -223,7 +222,6 @@ class _Options extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     debugPrint("item.property?.direction?.name.toLowerCase() : ${item}");
 
     return Padding(
@@ -244,11 +242,8 @@ class _Options extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
             child: _OptionContents(
-              directionType: item.property?.direction?.name.toLowerCase() == "horizontal"
-                  ? PlaylistSettingType.Horizontal
-                  : PlaylistSettingType.Vertical,
-              scaleType:
-                  item.property?.fill?.code.toLowerCase() == "fit" ? PlaylistSettingType.Fit : PlaylistSettingType.Fill,
+              directionType: getPlaylistDirectionTypeFromString(item.property?.direction?.code),
+              scaleType: getPlaylistDirectionTypeFromString(item.property?.fill?.code),
             ),
           ),
         ],
@@ -315,12 +310,8 @@ class _TotalDuration extends HookConsumerWidget {
             onPressed: () {
               previewListManager.changeItems(
                 PreviewModel(
-                  item.property?.direction?.code.toLowerCase() == "horizontal"
-                      ? PlaylistSettingType.Horizontal.name.toLowerCase()
-                      : PlaylistSettingType.Vertical.name.toLowerCase(),
-                  item.property?.fill?.code.toLowerCase() == "fill"
-                      ? PlaylistSettingType.Fill.name.toLowerCase()
-                      : PlaylistSettingType.Fit.name.toLowerCase(),
+                  getPlaylistDirectionTypeFromString(item.property?.direction?.code),
+                  getPlaylistScaleTypeFromString(item.property?.fill?.code),
                   item.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? [],
                   item.contents?.map((e) => e.duration.toInt()).toList() ?? [],
                 ),
@@ -351,16 +342,36 @@ class _OptionContents extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    var directionIconPath = "";
+    var directionName = "";
+    var scaleIconPath = "";
+    var scaleIconName = "";
+
+    if (directionType == PlaylistSettingType.Horizontal) {
+      directionIconPath = "assets/imgs/icon_horizontal_line.svg";
+      directionName = getAppLocalizations(context).common_horizontal;
+    } else {
+      directionIconPath = "assets/imgs/icon_vertical_line.svg";
+      directionName = getAppLocalizations(context).common_vertical;
+    }
+
+    if (scaleType == PlaylistSettingType.Fit) {
+      scaleIconPath = "assets/imgs/icon_fit.svg";
+      scaleIconName = getAppLocalizations(context).common_fit;
+    } else if (scaleType == PlaylistSettingType.Fill) {
+      scaleIconPath = "assets/imgs/icon_fill_line.svg";
+      scaleIconName = getAppLocalizations(context).common_fill;
+    } else if (scaleType == PlaylistSettingType.Stretch) {
+      scaleIconPath = "assets/imgs/icon_stretch.svg";
+      scaleIconName = getAppLocalizations(context).common_stretch;
+    }
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         _OptionPropertyInfo(
-          iconPath: directionType == PlaylistSettingType.Horizontal
-              ? "assets/imgs/icon_horizontal_line.svg"
-              : "assets/imgs/icon_vertical_line.svg",
-          iconText: directionType == PlaylistSettingType.Horizontal
-              ? getAppLocalizations(context).common_horizontal
-              : getAppLocalizations(context).common_vertical,
+          iconPath: directionIconPath,
+          iconText: directionName,
           isChecked: true,
         ),
         Container(
@@ -370,10 +381,8 @@ class _OptionContents extends HookWidget {
           color: getColorScheme(context).colorGray300,
         ),
         _OptionPropertyInfo(
-          iconPath: scaleType == PlaylistSettingType.Fit ? "assets/imgs/icon_fit.svg" : "assets/imgs/icon_fill_line.svg",
-          iconText: scaleType == PlaylistSettingType.Fit
-              ? getAppLocalizations(context).common_fit
-              : getAppLocalizations(context).common_fill,
+          iconPath: scaleIconPath,
+          iconText: scaleIconName,
           isChecked: true,
         ),
       ],
