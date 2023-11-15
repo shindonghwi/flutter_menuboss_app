@@ -169,27 +169,30 @@ class ScheduleContentItem extends HookConsumerWidget {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                   children: [
                                     Expanded(
-                                      child: Row(
-                                        children: [
-                                          if (data.isRequired)
-                                            Text(
-                                              "*",
-                                              style: getTextTheme(context).s3b.copyWith(
-                                                    color: getColorScheme(context).colorSecondary500,
-                                                  ),
-                                            ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
-                                              child: Text(
-                                                data.playListName,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(top: data.isRequired ? 12 : 0),
+                                        child: Row(
+                                          children: [
+                                            if (data.isRequired)
+                                              Text(
+                                                "*",
                                                 style: getTextTheme(context).s3b.copyWith(
-                                                      color: getColorScheme(context).colorGray900,
+                                                      color: getColorScheme(context).colorSecondary500,
                                                     ),
                                               ),
-                                            ),
-                                          )
-                                        ],
+                                            Expanded(
+                                              child: Padding(
+                                                padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
+                                                child: Text(
+                                                  data.playListName,
+                                                  style: getTextTheme(context).s3b.copyWith(
+                                                        color: getColorScheme(context).colorGray900,
+                                                      ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
                                       ),
                                     ),
                                     if (!data.isRequired)

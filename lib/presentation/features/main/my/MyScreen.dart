@@ -296,7 +296,7 @@ class _SettingItems extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
                 getAppLocalizations(context).my_page_setting_item,
-                style: getTextTheme(context).c1sb.copyWith(
+                style: getTextTheme(context).b3b.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
                 textAlign: TextAlign.start,
@@ -321,14 +321,14 @@ class _SettingItems extends HookConsumerWidget {
                       children: [
                         Text(
                           item.first,
-                          style: getTextTheme(context).b2sb.copyWith(
+                          style: getTextTheme(context).b3sb.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),
                         SvgPicture.asset(
                           "assets/imgs/icon_next.svg",
                           colorFilter: ColorFilter.mode(
-                            getColorScheme(context).colorGray400,
+                            getColorScheme(context).black,
                             BlendMode.srcIn,
                           ),
                           width: 24,

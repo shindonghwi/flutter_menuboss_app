@@ -133,7 +133,7 @@ class MyProfileScreen extends HookConsumerWidget {
                   ),
                   Container(
                     alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.fromLTRB(24, 32, 24, 16),
+                    margin: const EdgeInsets.fromLTRB(24, 32, 24, 0),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -142,15 +142,15 @@ class MyProfileScreen extends HookConsumerWidget {
                             isNameChangedState.value = value;
                           },
                         ),
-                        SizedBox(height: 24),
-                        _InputEmail(),
+                        const SizedBox(height: 24),
+                        const _InputEmail(),
                       ],
                     ),
                   ),
                   Align(
                     alignment: Alignment.centerLeft,
                     child: Container(
-                      margin: const EdgeInsets.symmetric(horizontal: 8),
+                      margin: const EdgeInsets.all(24),
                       child: Clickable(
                         onPressed: () {
                           Navigator.push(
@@ -160,14 +160,11 @@ class MyProfileScreen extends HookConsumerWidget {
                             ),
                           );
                         },
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                          child: Text(
-                            getAppLocalizations(context).my_page_profile_delete_account,
-                            style: getTextTheme(context).b3sb.copyWith(
-                                  color: getColorScheme(context).colorGray900,
-                                ),
-                          ),
+                        child: Text(
+                          getAppLocalizations(context).my_page_profile_delete_account,
+                          style: getTextTheme(context).b3sb.copyWith(
+                                color: getColorScheme(context).colorGray600,
+                              ),
                         ),
                       ),
                     ),
@@ -254,7 +251,7 @@ class _InputFullName extends HookConsumerWidget {
       children: [
         Text(
           getAppLocalizations(context).my_page_profile_full_name,
-          style: getTextTheme(context).b1sb.copyWith(
+          style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),
@@ -283,7 +280,7 @@ class _InputEmail extends HookConsumerWidget {
       children: [
         Text(
           getAppLocalizations(context).my_page_profile_email,
-          style: getTextTheme(context).b1sb.copyWith(
+          style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),

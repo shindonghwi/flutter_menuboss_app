@@ -40,7 +40,7 @@
 
     "create_schedule_title": "Create schedule",
     "create_schedule_default_playlist_title_basic": "Basic",
-    "create_schedule_default_playlist_title_breakfast": "Breakfast",
+    "create_schedule_default_playlist_title_morning": "Morning",
     "create_schedule_default_playlist_title_lunch": "Lunch",
     "create_schedule_default_playlist_title_dinner": "Dinner",
     "create_schedule_add_playlist": "Add Playlist",

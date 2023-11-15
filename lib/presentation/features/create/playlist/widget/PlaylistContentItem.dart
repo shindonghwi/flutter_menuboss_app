@@ -29,7 +29,6 @@ class PlaylistContentItem extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final mediaCartManger = ref.read(mediaContentsCartProvider.notifier);
     final type = item.type?.toLowerCase();
-    final isAvailableChangeDuration = !(type == "video" || type == "folder");
 
     String iconWidgetPath = "";
 

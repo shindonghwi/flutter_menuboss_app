@@ -99,7 +99,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     children: [
                       Text(
                         getAppLocalizations(context).delete_account_description,
-                        style: getTextTheme(context).s2b.copyWith(
+                        style: getTextTheme(context).s3b.copyWith(
                               color: getColorScheme(context).colorGray900,
                             ),
                         overflow: TextOverflow.visible,
@@ -127,7 +127,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     ),
                     Text(
                       getAppLocalizations(context).delete_account_reason_title,
-                      style: getTextTheme(context).s2b.copyWith(
+                      style: getTextTheme(context).s3b.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                       overflow: TextOverflow.visible,
