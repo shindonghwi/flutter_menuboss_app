@@ -31,12 +31,12 @@ PlaylistSettingType getPlaylistScaleTypeFromString(String? value) {
 }
 
 final playlistSaveInfoProvider =
-    StateNotifierProvider<PlaylistSaveInfoProviderNotifier, RequestPlaylistUpdateInfoModel>(
-  (ref) => PlaylistSaveInfoProviderNotifier(),
+    StateNotifierProvider<PlaylistSaveInfoNotifier, RequestPlaylistUpdateInfoModel>(
+  (ref) => PlaylistSaveInfoNotifier(),
 );
 
-class PlaylistSaveInfoProviderNotifier extends StateNotifier<RequestPlaylistUpdateInfoModel> {
-  PlaylistSaveInfoProviderNotifier()
+class PlaylistSaveInfoNotifier extends StateNotifier<RequestPlaylistUpdateInfoModel> {
+  PlaylistSaveInfoNotifier()
       : super(
           RequestPlaylistUpdateInfoModel(
             name: "",

@@ -7,6 +7,7 @@ import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/CreatePreviewItemProcessProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -43,6 +44,9 @@ class CreatePlaylistScreen extends HookConsumerWidget {
     final playListUpdateState = ref.watch(playListUpdateProvider);
     final playListUpdateManager = ref.read(playListUpdateProvider.notifier);
 
+    final createPreviewProcessState = ref.watch(createPreviewItemProcessProvider);
+    final createPreviewProcessManager = ref.read(createPreviewItemProcessProvider.notifier);
+
     final mediaCartManager = ref.read(mediaContentsCartProvider.notifier);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
@@ -54,6 +58,8 @@ class CreatePlaylistScreen extends HookConsumerWidget {
 
           mediaCartManager.init();
           saveManager.init();
+
+          createPreviewProcessManager.init();
         });
       };
     }, []);
@@ -136,7 +142,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                   ],
                 ),
               ),
-              if (playListRegisterState is Loading || playListUpdateState is Loading) const LoadingView(),
+              if (playListRegisterState is Loading || playListUpdateState is Loading || createPreviewProcessState is Loading) const LoadingView(),
             ],
           ),
         ),

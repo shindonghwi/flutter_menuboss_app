@@ -19,6 +19,7 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../provider/PlaylistSaveInfoProvider.dart';
+import '../provider/CreatePreviewItemProcessProvider.dart';
 
 class PlaylistSettings extends HookWidget {
   final PlaylistSettingType direction;
@@ -35,8 +36,6 @@ class PlaylistSettings extends HookWidget {
     final directionType = useState(direction);
     final scaleType = useState(scale);
     final isFolded = useState(false);
-
-    debugPrint("Select ${directionType.value} | ${scaleType.value}");
 
     final controller = useAnimationController(duration: const Duration(milliseconds: 300));
     final rotationAnimation = Tween<double>(begin: 0, end: pi).animate(controller);
@@ -113,10 +112,47 @@ class _SettingContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final createPreviewProcessState = ref.watch(createPreviewItemProcessProvider);
+    final createPreviewProcessManager = ref.read(createPreviewItemProcessProvider.notifier);
     final previewListManager = ref.read(previewListProvider.notifier);
     final mediaCartManager = ref.read(mediaContentsCartProvider.notifier);
     final saveState = ref.watch(playlistSaveInfoProvider);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          createPreviewProcessState.when(
+            success: (event) {
+              final convertedItems = event.value;
+              if (CollectionUtil.isNullorEmpty(convertedItems)) {
+                Toast.showWarning(context, getAppLocalizations(context).message_add_media_content);
+                return;
+              }
+              previewListManager.changeItems(
+                PreviewModel(
+                  getPlaylistDirectionTypeFromString(saveState.property.direction),
+                  getPlaylistScaleTypeFromString(saveState.property.fill),
+                  convertedItems,
+                  convertedItems.map((e) => e.property?.duration?.toInt()).toList(),
+                ),
+              );
+
+              Navigator.push(
+                context,
+                nextSlideVerticalScreen(
+                  RoutingScreen.PreviewPlaylist.route,
+                ),
+              );
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [createPreviewProcessState]);
 
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
@@ -214,29 +250,14 @@ class _SettingContents extends HookConsumerWidget {
                   BlendMode.srcIn,
                 ),
               ),
-              onPressed: () {
-                final previewItems = mediaCartManager.getItems();
+              onPressed: () async {
+                var previewItems = mediaCartManager.getItems();
 
-                if (CollectionUtil.isNullorEmpty(previewItems)) {
-                  Toast.showWarning(context, getAppLocalizations(context).message_add_media_content);
-                  return;
-                }
-
-                previewListManager.changeItems(
-                  PreviewModel(
-                    getPlaylistDirectionTypeFromString(saveState.property.direction),
-                    getPlaylistScaleTypeFromString(saveState.property.fill),
-                    previewItems,
-                    previewItems.map((e) => e.property?.duration?.toInt()).toList(),
-                  ),
+                createPreviewProcessManager.conversionStart(
+                  scaleType.value,
+                  previewItems,
                 );
-
-                Navigator.push(
-                  context,
-                  nextSlideVerticalScreen(
-                    RoutingScreen.PreviewPlaylist.route,
-                  ),
-                );
+                // 이후 conversionStart가 끝나면 변환된 리스트를 uistate Success에서 관찰 후 이후 프리뷰로 이동한다.
               },
               content: getAppLocalizations(context).common_preview,
               isActivated: true,

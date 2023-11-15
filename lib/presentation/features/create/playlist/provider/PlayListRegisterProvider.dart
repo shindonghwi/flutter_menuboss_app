@@ -1,16 +1,15 @@
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
-import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/playlist/PostPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final playListRegisterProvider = StateNotifierProvider<PlayListRegisterProviderNotifier, UIState<String?>>(
-  (ref) => PlayListRegisterProviderNotifier(),
+final playListRegisterProvider = StateNotifierProvider<PlayListRegisterNotifier, UIState<String?>>(
+  (ref) => PlayListRegisterNotifier(),
 );
 
-class PlayListRegisterProviderNotifier extends StateNotifier<UIState<String?>> {
-  PlayListRegisterProviderNotifier() : super(Idle());
+class PlayListRegisterNotifier extends StateNotifier<UIState<String?>> {
+  PlayListRegisterNotifier() : super(Idle());
 
   final PostPlaylistUseCase _postPlaylistUseCase = GetIt.instance<PostPlaylistUseCase>();
 

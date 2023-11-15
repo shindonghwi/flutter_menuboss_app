@@ -4,12 +4,12 @@ import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dar
 import 'package:menuboss/domain/usecases/remote/playlist/PatchPlaylistUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final playListUpdateProvider = StateNotifierProvider<PlayListUpdateProviderNotifier, UIState<String?>>(
-  (ref) => PlayListUpdateProviderNotifier(),
+final playListUpdateProvider = StateNotifierProvider<PlayListUpdateNotifier, UIState<String?>>(
+  (ref) => PlayListUpdateNotifier(),
 );
 
-class PlayListUpdateProviderNotifier extends StateNotifier<UIState<String?>> {
-  PlayListUpdateProviderNotifier() : super(Idle());
+class PlayListUpdateNotifier extends StateNotifier<UIState<String?>> {
+  PlayListUpdateNotifier() : super(Idle());
 
   final PatchPlaylistUseCase _patchPlaylistUseCase = GetIt.instance<PatchPlaylistUseCase>();
 
