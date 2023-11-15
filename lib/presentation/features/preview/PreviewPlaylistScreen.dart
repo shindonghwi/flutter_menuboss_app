@@ -93,11 +93,7 @@ class _ImageDisplay extends HookConsumerWidget {
     } else if (contentScale == PlaylistSettingType.Fill) {
       fitInfo = BoxFit.cover;
     } else if (contentScale == PlaylistSettingType.Stretch) {
-      if (directionType == PlaylistSettingType.Horizontal) {
-        fitInfo = BoxFit.fitWidth;
-      } else {
-        fitInfo = BoxFit.fitHeight;
-      }
+      fitInfo = BoxFit.fill;
     }
 
     return Expanded(
