@@ -18,10 +18,11 @@ class MenuBossApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        Toast.init(context);
+        Future.delayed(Duration.zero, () {
+          Toast.init(context);
+        });
         uriLinkStream.listen((Uri? uriLink) {
           handleDeepLink(uriLink?.toString());
         });

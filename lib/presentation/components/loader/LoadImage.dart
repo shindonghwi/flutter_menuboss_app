@@ -37,7 +37,7 @@ class LoadImage extends StatelessWidget {
                     errorWidget: (context, url, error) => ImagePlaceholder(type: type),
                     fit: fit,
                   ),
-                )
+      )
           : ImagePlaceholder(type: type),
     );
   }
