@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
+import 'package:menuboss/presentation/components/loader/LoadVideo.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
@@ -17,6 +18,7 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
+import 'package:video_player/video_player.dart';
 
 import 'provider/MediaInfoProvider.dart';
 import 'provider/MediaNameChangeProvider.dart';
@@ -129,7 +131,7 @@ class _InputFileName extends HookWidget {
   }
 }
 
-class _FileImage extends StatelessWidget {
+class _FileImage extends HookConsumerWidget {
   final ResponseMediaModel? item;
 
   const _FileImage({
@@ -138,7 +140,28 @@ class _FileImage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaInfoState = ref.watch(mediaInformationProvider);
+    final videoUrl = useState<String?>(null);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        mediaInfoState.when(
+          success: (event) async {
+            final data = event.value;
+
+            if (!CollectionUtil.isNullEmptyFromString(data?.property?.videoUrl)) {
+              videoUrl.value = data?.property?.videoUrl;
+            }
+          },
+          failure: (event) => Toast.showError(context, event.errorMessage),
+        );
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [mediaInfoState]);
+
     return Container(
       margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
       decoration: BoxDecoration(
@@ -153,11 +176,19 @@ class _FileImage extends StatelessWidget {
         borderRadius: BorderRadius.circular(4),
         child: AspectRatio(
           aspectRatio: 342 / 200,
-          child: LoadImage(
-            tag: item?.mediaId.toString(),
-            url: item?.property?.imageUrl,
-            type: ImagePlaceholderType.AUTO_16x9,
-          ),
+          child: item?.type?.code.toLowerCase() == "video"
+              ? LoadVideo(
+                  mediaId: item?.mediaId,
+                  fit: BoxFit.cover,
+                  imageUrl: item?.property?.imageUrl ?? "",
+                  videoUrl: videoUrl.value,
+                  isHorizontal: true
+                )
+              : LoadImage(
+                  tag: item?.mediaId.toString(),
+                  url: item?.property?.imageUrl,
+                  type: ImagePlaceholderType.AUTO_16x9,
+                ),
         ),
       ),
     );
