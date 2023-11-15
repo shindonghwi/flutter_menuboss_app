@@ -18,6 +18,7 @@ class PlaylistContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mediaCartManger = ref.read(mediaContentsCartProvider.notifier);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
     final List<SimpleMediaContentModel> contentItems = ref.watch(mediaContentsCartProvider);
     final items = useState<List<SimpleMediaContentModel>>([]);
@@ -63,6 +64,7 @@ class PlaylistContents extends HookConsumerWidget {
                 final item = items.value.removeAt(oldIndex);
                 items.value.insert(newIndex, item);
                 items.value = [...items.value];
+                mediaCartManger.changeItems(items.value);
                 saveManager.changeContents(items.value);
               },
               proxyDecorator: (child, index, animation) {

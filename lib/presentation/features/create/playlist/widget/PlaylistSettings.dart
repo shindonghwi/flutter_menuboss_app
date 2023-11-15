@@ -222,9 +222,6 @@ class _SettingContents extends HookConsumerWidget {
                   return;
                 }
 
-                debugPrint("ASDASD ${getPlaylistDirectionTypeFromString(saveState.property.direction)}");
-                debugPrint("ASDASD D ${getPlaylistScaleTypeFromString(saveState.property.fill)}");
-
                 previewListManager.changeItems(
                   PreviewModel(
                     getPlaylistDirectionTypeFromString(saveState.property.direction),

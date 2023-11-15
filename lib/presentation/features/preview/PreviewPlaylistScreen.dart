@@ -11,7 +11,6 @@ import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.da
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
-import 'package:menuboss/presentation/features/create/playlist/widget/PlaylistSettings.dart';
 import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -146,7 +145,6 @@ class _Settings extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return SizedBox(
       width: double.infinity,
       height: 66,
@@ -189,16 +187,16 @@ class _Settings extends HookWidget {
               child: Row(
                 children: [
                   _PreviewSettingIcon(
+                    iconPath: 'assets/imgs/icon_fill_filled.svg',
+                    content: getAppLocalizations(context).common_fill,
+                    isSelected: contentScale.value == PlaylistSettingType.Fill,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Fill,
+                  ),
+                  _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fit.svg',
                     content: getAppLocalizations(context).common_fit,
                     isSelected: contentScale.value == PlaylistSettingType.Fit,
                     onPressed: () => contentScale.value = PlaylistSettingType.Fit,
-                  ),
-                  _PreviewSettingIcon(
-                    iconPath: 'assets/imgs/icon_fill_line.svg',
-                    content: getAppLocalizations(context).common_fill,
-                    isSelected: contentScale.value == PlaylistSettingType.Fill,
-                    onPressed: () => contentScale.value = PlaylistSettingType.Fill,
                   ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_stretch.svg',

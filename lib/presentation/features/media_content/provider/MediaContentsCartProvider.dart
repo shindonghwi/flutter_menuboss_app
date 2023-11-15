@@ -19,6 +19,10 @@ class MediaContentsCartNotifier extends StateNotifier<List<SimpleMediaContentMod
     state = [...state, ...uniqueItems];
   }
 
+  void changeItems(List<SimpleMediaContentModel> items) {
+    state = [...items];
+  }
+
   void removeItem(int index) {
     state = [...state..removeAt(index)];
   }
