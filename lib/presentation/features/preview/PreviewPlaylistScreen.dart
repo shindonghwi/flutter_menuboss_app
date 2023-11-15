@@ -15,6 +15,10 @@ import 'package:menuboss/presentation/features/preview/provider/PreviewListProvi
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:video_player/video_player.dart';
+
+import '../create/playlist/provider/CreatePreviewItemProcessProvider.dart';
+import '../detail/playlist/provider/DetailPreviewItemProcessProvider.dart';
 
 class PreviewPlaylistScreen extends HookConsumerWidget {
   const PreviewPlaylistScreen({
@@ -24,19 +28,46 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final previewState = ref.watch(previewListProvider);
-    final previewManager = ref.watch(previewListProvider.notifier);
+
+    final createPreviewProcessManager = ref.read(createPreviewItemProcessProvider.notifier);
+    final detailPreviewProcessManager = ref.read(detailPreviewItemProcessProvider.notifier);
+
     final currentPage = useState(0);
+
     final directionType = useState(previewState?.direction);
     final contentScale = useState(previewState?.fill);
+
     List<int?> durations = previewState?.durations ?? [];
 
+    final videoControllers = useState<List<VideoPlayerController?>?>(null);
+
     useEffect(() {
-      return () {
-        Future(() {
-          previewManager.init();
+      return (){
+        Future((){
+          createPreviewProcessManager.init();
+          detailPreviewProcessManager.init();
         });
       };
-    }, []);
+    },[]);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        videoControllers.value = previewState?.previewItems.map((mediaContent) {
+          if (mediaContent.type?.toLowerCase() == "video") {
+            var controller = VideoPlayerController.networkUrl(Uri.parse(mediaContent.property!.videoUrl ?? ""))
+              ..initialize().then((_) {
+                debugPrint("video initialized");
+              }).catchError((e) {
+                debugPrint(e.toString());
+              });
+            controller.setLooping(true);
+            return controller;
+          }
+          return null;
+        }).toList();
+      });
+      return () => videoControllers.value?.forEach((controller) => controller?.dispose());
+    }, [previewState]);
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
@@ -51,8 +82,10 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
             directionType: directionType,
             contentScale: contentScale,
           ),
-          _ImageDisplay(
-            currentPage: currentPage.value,
+          _Display(
+            currentPage: currentPage,
+            videoControllers: videoControllers.value,
+            durations: durations.map((e) => e ?? -1).toList(),
             directionType: directionType.value,
             contentScale: contentScale.value,
           ),
@@ -60,22 +93,31 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: TimerDivider(
-          durations: durations,
-          currentPageNotifier: currentPage,
-        ),
+            durations: durations,
+            currentPageNotifier: currentPage,
+            onStart: () {
+              videoControllers.value?[currentPage.value]?.play();
+            },
+            onStop: () {
+              videoControllers.value?[currentPage.value]?.pause();
+            }),
       ),
     );
   }
 }
 
-class _ImageDisplay extends HookConsumerWidget {
-  final int currentPage;
+class _Display extends HookConsumerWidget {
+  final ValueNotifier<int> currentPage;
+  final List<VideoPlayerController?>? videoControllers;
+  final List<int> durations;
   final PlaylistSettingType? directionType;
   final PlaylistSettingType? contentScale;
 
-  const _ImageDisplay({
+  const _Display({
     super.key,
     required this.currentPage,
+    required this.videoControllers,
+    required this.durations,
     required this.directionType,
     required this.contentScale,
   });
@@ -95,6 +137,19 @@ class _ImageDisplay extends HookConsumerWidget {
       fitInfo = BoxFit.fill;
     }
 
+    // duration에 따라 표시되는 로직을 추가하기 위해 사용될 State
+    final autoAdvanceTimer = useState<Timer?>(null);
+
+    useEffect(() {
+      autoAdvanceTimer.value?.cancel(); // 이전 타이머가 있다면 취소
+      if (durations.isNotEmpty && currentPage.value < durations.length) {
+        autoAdvanceTimer.value = Timer(Duration(seconds: durations[currentPage.value]), () {
+          currentPage.value = (currentPage.value + 1) % durations.length;
+        });
+      }
+      return () => autoAdvanceTimer.value?.cancel(); // 정리 함수
+    }, [currentPage, durations]); // currentPage와 durations 변경시 재실행
+
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 60.0),
@@ -102,9 +157,11 @@ class _ImageDisplay extends HookConsumerWidget {
           alignment: Alignment.center,
           children: previewState?.previewItems.map((mediaContent) {
                 int index = previewState.previewItems.indexOf(mediaContent);
+                bool isCurrentPage = currentPage.value == index;
+
                 return AnimatedOpacity(
                   key: Key("${mediaContent.id}-$index}"),
-                  opacity: currentPage == index ? 1.0 : 0.0,
+                  opacity: isCurrentPage ? 1.0 : 0.0,
                   duration: const Duration(milliseconds: 500),
                   child: Container(
                     decoration: BoxDecoration(
@@ -264,11 +321,15 @@ class _PreviewSettingIcon extends StatelessWidget {
 class TimerDivider extends HookWidget {
   final List<int?> durations;
   final ValueNotifier<int> currentPageNotifier;
+  final VoidCallback onStart;
+  final VoidCallback onStop;
 
   const TimerDivider({
     super.key,
     required this.durations,
     required this.currentPageNotifier,
+    required this.onStart,
+    required this.onStop,
   });
 
   @override
@@ -283,6 +344,7 @@ class TimerDivider extends HookWidget {
     }, const []);
 
     void startTimer() {
+      timer.value?.cancel(); // 이전 타이머가 있다면 취소
       timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
         progressValue.value += 1 / durations[currentPageNotifier.value]!;
         if (progressValue.value >= 1) {
@@ -388,8 +450,10 @@ class TimerDivider extends HookWidget {
                     if (timer.value != null) {
                       timer.value?.cancel();
                       timer.value = null;
+                      onStop.call();
                     } else {
                       startTimer();
+                      onStart.call();
                     }
                   },
                   child: Padding(

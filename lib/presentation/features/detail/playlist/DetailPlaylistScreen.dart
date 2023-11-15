@@ -265,8 +265,6 @@ class _Options extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("item.property?.direction?.name.toLowerCase() : ${item}");
-
     return Padding(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
