@@ -44,6 +44,7 @@ import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDevicesContentsUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/device/PostShowNameEventUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadProfileImageUseCase.dart';
@@ -109,6 +110,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<DelDeviceUseCase>(() => DelDeviceUseCase());
   GetIt.instance.registerLazySingleton<PatchDeviceNameUseCase>(() => PatchDeviceNameUseCase());
   GetIt.instance.registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
+  GetIt.instance.registerLazySingleton<PostShowNameEventUseCase>(() => PostShowNameEventUseCase());
 
   // playlist
   GetIt.instance.registerLazySingleton<GetPlaylistsUseCase>(() => GetPlaylistsUseCase());

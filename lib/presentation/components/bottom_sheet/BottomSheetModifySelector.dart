@@ -9,9 +9,10 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../navigation/PageMoveUtil.dart';
 
-enum ModifyType { Rename, Delete, ChangeDuration }
+enum ModifyType { ShowNameToScreen, Rename, Delete, ChangeDuration }
 
 final Map<ModifyType, String> modifyDescriptions = {
+  ModifyType.ShowNameToScreen: "ShowNameToScreen",
   ModifyType.Rename: "Rename",
   ModifyType.Delete: "Delete",
   ModifyType.ChangeDuration: "Change duration",
@@ -35,6 +36,8 @@ class BottomSheetModifySelector extends HookWidget {
 
     String? getIconPath(ModifyType type) {
       switch (type) {
+        case ModifyType.ShowNameToScreen:
+          return "assets/imgs/icon_rename.svg";
         case ModifyType.Rename:
           return "assets/imgs/icon_rename.svg";
         case ModifyType.Delete:
@@ -48,6 +51,8 @@ class BottomSheetModifySelector extends HookWidget {
 
     Color? getIconColor(ModifyType type) {
       switch (type) {
+        case ModifyType.ShowNameToScreen:
+          return getColorScheme(context).black;
         case ModifyType.Rename:
           return getColorScheme(context).black;
         case ModifyType.Delete:

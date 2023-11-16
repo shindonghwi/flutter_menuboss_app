@@ -40,4 +40,9 @@ class RemoteDeviceRepositoryImpl implements RemoteDeviceRepository {
     return _remoteDeviceApi.postDevicesContents(model);
   }
 
+  @override
+  Future<ApiResponse<void>> sendShowNameEvent(int screenId) {
+    return _remoteDeviceApi.sendShowNameEvent(screenId);
+  }
+
 }

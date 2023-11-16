@@ -157,4 +157,32 @@ class RemoteDeviceApi {
       );
     }
   }
+
+  /// 스크린에 이름 표시 이벤트 전달
+  Future<ApiResponse<void>> sendShowNameEvent(int screenId) async {
+    try {
+      final response = await Service.postApi(
+        type: ServiceType.Device,
+        endPoint: "$screenId/show",
+        jsonBody: null,
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
 }

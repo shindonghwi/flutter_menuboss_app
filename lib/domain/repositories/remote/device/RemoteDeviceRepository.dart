@@ -22,4 +22,7 @@ abstract class RemoteDeviceRepository {
   /// 스크린 목록에 콘텐츠 적용
   Future<ApiResponse<void>> postDevicesContents(RequestDeviceApplyContents model);
 
+  /// 스크린에 이름 표시 이벤트 전달
+  Future<ApiResponse<void>> sendShowNameEvent(int screenId);
+
 }

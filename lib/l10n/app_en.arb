@@ -176,6 +176,7 @@
     "message_register_schedule_success": "Schedule registered successfully",
     "message_update_schedule_success": "Schedule information has been changed",
     "message_remove_media_success": "Media file deleted successfully",
+    "message_send_event_name_show_success": "Successfully Send Show Name Event to Screen",
 
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",

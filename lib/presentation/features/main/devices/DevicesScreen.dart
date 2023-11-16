@@ -13,6 +13,7 @@ import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceShowNameEventProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -23,8 +24,12 @@ class DevicesScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+
     final deviceState = ref.watch(deviceListProvider);
     final deviceManager = ref.read(deviceListProvider.notifier);
+
+    final deviceShowNameEventState = ref.watch(deviceShowNameEventProvider);
+    final deviceShowNameEventManager = ref.read(deviceShowNameEventProvider.notifier);
 
     useEffect(() {
       return (){
@@ -48,6 +53,25 @@ class DevicesScreen extends HookConsumerWidget {
       });
       return null;
     }, [deviceState]);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          deviceShowNameEventState.when(
+            success: (event) {
+              Toast.showSuccess(context, getAppLocalizations(context).message_send_event_name_show_success);
+              deviceShowNameEventManager.init();
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
+        });
+      }
+
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        handleUiStateChange();
+      });
+      return null;
+    }, [deviceShowNameEventState]);
 
     return SafeArea(
       child: Column(
