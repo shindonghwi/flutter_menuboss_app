@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -24,6 +25,8 @@ class RemoteFileApi {
     String? folderId,
     StreamController<double>? streamController,
   }) async {
+    debugPrint("postMediaImageUpload : $folderId");
+    debugPrint("postMediaImageUpload : $filePath // extension : ${filePath.split('.').last}");
     final file = File(filePath);
 
     if (!file.existsSync()) {
@@ -32,7 +35,7 @@ class RemoteFileApi {
         message: _getAppLocalization.get().message_file_not_found_404,
         data: null,
       );
-    } else if (!allowedExtensionsImage.contains(file.path.split('.').last)) {
+    } else if (!allowedExtensionsImage.contains(file.path.split('.').last) && !allowedExtensionsVideo.contains(file.path.split('.').last)) {
       return ApiResponse(
         status: 400,
         message: _getAppLocalization.get().message_file_not_allow_404,

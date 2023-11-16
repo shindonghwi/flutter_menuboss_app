@@ -52,13 +52,14 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   }
 
   Future<StreamController<double>?> uploadStart(String filePath, {bool isVideo = false, VoidCallback? onNetworkError}) async {
-    uploadIdle();
-    isLastUploadVideo = isVideo;
 
     if (!await Service.isNetworkAvailable()) {
       onNetworkError?.call();
       return Future(() => null);
     }
+
+    isLastUploadVideo = isVideo;
+    uploadIdle();
 
     if (isVideo == true) {
       String? thumbnailFilePath = await generateThumbnail(filePath);
@@ -69,6 +70,7 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
       thumbnailFile = File(filePath);
     }
 
+    uploadProgressController?.close();
     uploadProgressController = StreamController<double>.broadcast();
     uploadStatusChange(UploadState.UPLOADING);
     uploadProgressController?.stream.listen((event) {

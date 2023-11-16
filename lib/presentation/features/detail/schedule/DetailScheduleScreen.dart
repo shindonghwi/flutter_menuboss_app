@@ -175,7 +175,7 @@ class _ScheduleContent extends StatelessWidget {
                             children: [
                               if (index == 0)
                                 Text(
-                                  "*",
+                                  "* ",
                                   style: getTextTheme(context).s2b.copyWith(
                                         color: getColorScheme(context).colorSecondary500,
                                       ),

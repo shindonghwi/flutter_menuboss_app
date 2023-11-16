@@ -175,7 +175,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                           children: [
                                             if (data.isRequired)
                                               Text(
-                                                "*",
+                                                "* ",
                                                 style: getTextTheme(context).s3b.copyWith(
                                                       color: getColorScheme(context).colorSecondary500,
                                                     ),

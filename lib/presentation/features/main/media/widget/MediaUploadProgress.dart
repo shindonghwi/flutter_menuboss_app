@@ -4,7 +4,10 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:lottie/lottie.dart';
+import 'package:menuboss/data/models/base/ApiResponse.dart';
+import 'package:menuboss/data/models/file/ResponseFileModel.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -186,6 +189,21 @@ class _SuffixFail extends HookConsumerWidget {
     final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
     final mediaManager = ref.read(mediaListProvider.notifier);
 
+    /**
+     * @feature: 이미지 또는 비디오를 업로드 한 뒤 응답처리
+     * @author: 2023/11/16 8:02 PM donghwishin
+    */
+    void responseLogic(ApiResponse<ResponseFileModel> response){
+      if (response.status == 200) {
+        mediaManager.initPageInfo();
+        mediaManager.requestGetMedias();
+        uploadProgressProvider.uploadSuccess();
+      } else {
+        Toast.showError(context, response.message);
+        uploadProgressProvider.uploadFail();
+      }
+    }
+
     return Row(
       children: [
         Clickable(
@@ -199,18 +217,19 @@ class _SuffixFail extends HookConsumerWidget {
               ),
             );
             if (controller != null) {
-              GetIt.instance<PostUploadMediaImageUseCase>()
-                  .call(uploadProgressProvider.currentFile!.path, streamController: controller)
-                  .then((response) {
-                if (response.status == 200) {
-                  mediaManager.initPageInfo();
-                  mediaManager.requestGetMedias();
-                  uploadProgressProvider.uploadSuccess();
-                } else {
-                  Toast.showError(context, response.message);
-                  uploadProgressProvider.uploadFail();
-                }
-              });
+              if (uploadProgressProvider.isLastUploadVideo){
+                GetIt.instance<PostUploadMediaVideoUseCase>()
+                    .call(uploadProgressProvider.currentFile!.path, streamController: controller)
+                    .then((response) {
+                  responseLogic(response);
+                });
+              }else{
+                GetIt.instance<PostUploadMediaImageUseCase>()
+                    .call(uploadProgressProvider.currentFile!.path, streamController: controller)
+                    .then((response) {
+                  responseLogic(response);
+                });
+              }
             }
           },
           child: SvgPicture.asset(

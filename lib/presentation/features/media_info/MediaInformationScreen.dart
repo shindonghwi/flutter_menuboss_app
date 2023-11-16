@@ -163,7 +163,7 @@ class _FileImage extends HookConsumerWidget {
     }, [mediaInfoState]);
 
     return Container(
-      margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
+      margin: const EdgeInsets.symmetric(horizontal: 24),
       decoration: BoxDecoration(
         color: getColorScheme(context).colorGray100,
         borderRadius: BorderRadius.circular(4),

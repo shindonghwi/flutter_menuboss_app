@@ -23,7 +23,7 @@ run-icon:
 
 # DebugDev Run
 run:
-	flutter run --debug --flavor dev -t lib/app/env/dev.dart --no-enable-impeller
+	flutter run --debug --flavor dev -t lib/app/env/dev.dart
 
 # DebugDev Rebuild
 run-rebuild:
@@ -35,7 +35,7 @@ run-rebuild:
 
 # ProdRelease Run
 run-prod:
-	flutter run --release --flavor prod -t lib/app/env/prod.dart --no-enable-impeller
+	flutter run --release --flavor prod -t lib/app/env/prod.dart
 
 # ProdRelease Rebuild
 run-prod-rebuild:
