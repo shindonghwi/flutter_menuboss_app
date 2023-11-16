@@ -127,7 +127,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                           ),
                           PlaylistSettings(
                             direction: getPlaylistDirectionTypeFromString(item?.property?.direction?.code),
-                            scale: getPlaylistDirectionTypeFromString(item?.property?.fill?.code),
+                            scale: getPlaylistScaleTypeFromString(item?.property?.fill?.code),
                           ),
                         ],
                       ),
