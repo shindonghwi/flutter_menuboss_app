@@ -263,8 +263,11 @@ class _MediaContentList extends HookConsumerWidget {
                             },
                             child: MediaItem(
                               item: item,
-                              onRemove: () {
-                                mediaManager.removeItem([item.mediaId]);
+                              onRemove: () async {
+                                final isRemoved = await mediaManager.removeItem([item.mediaId]);
+                                if (isRemoved) {
+                                  Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
+                                }
                               },
                               onRename: (newName) {
                                 mediaManager.renameItem(item.mediaId, newName);

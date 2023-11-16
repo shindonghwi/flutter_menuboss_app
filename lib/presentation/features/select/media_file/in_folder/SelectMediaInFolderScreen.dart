@@ -89,6 +89,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
         onDeleteClick: () async{
           final isSuccess = await mediaListManager.removeItem(checkListState, folderId: item!.mediaId);
           if (isSuccess) {
+            Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
             mediaListManager.initPageInfo();
             mediaListManager.requestGetMedias();
           }

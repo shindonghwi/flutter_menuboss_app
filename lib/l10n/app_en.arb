@@ -175,6 +175,7 @@
     "message_remove_schedule_success": "Schedule deleted successfully",
     "message_register_schedule_success": "Schedule registered successfully",
     "message_update_schedule_success": "Schedule information has been changed",
+    "message_remove_media_success": "Media file deleted successfully",
 
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",

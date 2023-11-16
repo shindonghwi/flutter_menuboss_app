@@ -176,6 +176,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
               child: PopupDelete(onClicked: () async {
                 final isRemoved = await rootMediaManager.removeItem([item?.mediaId ?? ""]);
                 if (isRemoved) {
+                  Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
                   Navigator.of(context).pop();
                 }
               }),
@@ -272,6 +273,7 @@ class _MediaContentList extends HookConsumerWidget {
                         onRemove: () async {
                           final isRemoved = await mediaManager.removeItem([item.mediaId]);
                           if (isRemoved) {
+                            Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
                             rootMediaManager.updateFolderCountAndSize(
                               folderId,
                               item.property?.size ?? 0,

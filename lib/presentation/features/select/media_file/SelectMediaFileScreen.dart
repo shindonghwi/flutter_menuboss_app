@@ -4,8 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
@@ -35,7 +35,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
           mediaManager.updateCurrentItems(mediaManager.currentItems, isUiUpdate: true);
         }
       });
-      return (){
+      return () {
         Future(() {
           checkListManager.init();
           mediaManager.init();
@@ -70,9 +70,12 @@ class SelectMediaFileScreen extends HookConsumerWidget {
             ),
           );
         },
-        onDeleteClick: () {
-          mediaManager.removeItem(checkListState);
-          Navigator.of(context).pop();
+        onDeleteClick: () async {
+          final isRemoved = await mediaManager.removeItem(checkListState);
+          if (isRemoved) {
+            Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
+            Navigator.of(context).pop();
+          }
         },
       ),
     );
