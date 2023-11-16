@@ -79,7 +79,7 @@ class EmptyView extends HookWidget {
         case BlankMessageType.ADD_CANVAS:
           return "assets/imgs/image_blank_canvas.svg";
         case BlankMessageType.ADD_TO_PLAYLIST:
-          return "assets/imgs/image_blank_add_to_playlist.svg";
+          return null;
         case BlankMessageType.NEW_SCHEDULE:
           return "assets/imgs/image_blank_schedule.svg";
         case BlankMessageType.NEW_PLAYLIST:

@@ -240,7 +240,7 @@ class _SettingContents extends HookConsumerWidget {
           Container(
             width: double.infinity,
             margin: const EdgeInsets.symmetric(vertical: 16),
-            child: NeutralLineButton.extraSmallRound4Icon(
+            child: NeutralLineButton.smallRound4Icon(
               leftIcon: SvgPicture.asset(
                 "assets/imgs/icon_playlists_line.svg",
                 width: 20,

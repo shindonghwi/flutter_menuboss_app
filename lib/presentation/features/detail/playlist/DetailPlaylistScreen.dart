@@ -7,7 +7,7 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
-import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
+import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
@@ -18,7 +18,6 @@ import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
-import 'package:menuboss/presentation/features/create/playlist/provider/CreatePreviewItemProcessProvider.dart';
 import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -157,9 +156,8 @@ class DetailPlaylistScreen extends HookConsumerWidget {
         children: [
           if (playlistState is Failure)
             FailView(onPressed: () => playlistManager.requestPlaylistInfo(item?.playlistId ?? -1))
-          else
-            if (playlistState is Success<ResponsePlaylistModel>)
-              _PlaylistContent(item: playlistState.value),
+          else if (playlistState is Success<ResponsePlaylistModel>)
+            _PlaylistContent(item: playlistState.value),
           if (playlistState is Loading || delPlaylistState is Loading) const LoadingView(),
         ],
       ),
@@ -179,79 +177,79 @@ class _PlaylistContent extends StatelessWidget {
   Widget build(BuildContext context) {
     return !CollectionUtil.isNullorEmpty(item.contents)
         ? Column(
-      children: [
-        _Options(item: item),
-        const DividerVertical(marginVertical: 0),
-        _TotalDuration(item: item),
-        Expanded(
-          child: ListView.separated(
-            physics: const AlwaysScrollableScrollPhysics(),
-            shrinkWrap: true,
-            separatorBuilder: (BuildContext context, int index) {
-              return const SizedBox(height: 0);
-            },
-            itemBuilder: (BuildContext context, int index) {
-              final data = item.contents?[index];
-              return SizedBox(
-                width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
-                  child: Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: 60,
-                        height: 60,
-                        child: LoadImage(
-                          url: data?.property.imageUrl ?? "",
-                          type: ImagePlaceholderType.Small,
-                        ),
-                      ),
-                      Expanded(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 12),
-                          child: Row(
-                            children: [
-                              _ContentTypeImage(
-                                code: data?.type.code ?? "",
+            children: [
+              _Options(item: item),
+              const DividerVertical(marginVertical: 0),
+              _TotalDuration(item: item),
+              Expanded(
+                child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  separatorBuilder: (BuildContext context, int index) {
+                    return const SizedBox(height: 0);
+                  },
+                  itemBuilder: (BuildContext context, int index) {
+                    final data = item.contents?[index];
+                    return SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(
+                              width: 60,
+                              height: 60,
+                              child: LoadImage(
+                                url: data?.property.imageUrl ?? "",
+                                type: ImagePlaceholderType.Small,
                               ),
-                              Expanded(
-                                child: Padding(
-                                  padding: const EdgeInsets.only(left: 4.0),
-                                  child: Text(
-                                    data?.name ?? "",
-                                    style: getTextTheme(context).b2sb.copyWith(
-                                      color: getColorScheme(context).colorGray900,
+                            ),
+                            Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(horizontal: 12),
+                                child: Row(
+                                  children: [
+                                    _ContentTypeImage(
+                                      code: data?.type.code ?? "",
                                     ),
-                                  ),
+                                    Expanded(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(left: 4.0),
+                                        child: Text(
+                                          data?.name ?? "",
+                                          style: getTextTheme(context).b2sb.copyWith(
+                                                color: getColorScheme(context).colorGray900,
+                                              ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
-                          ),
+                            ),
+                            Text(
+                              StringUtil.formatDuration(data?.duration ?? 0),
+                              style: getTextTheme(context).b3sb.copyWith(
+                                    color: getColorScheme(context).colorGray500,
+                                  ),
+                            ),
+                          ],
                         ),
                       ),
-                      Text(
-                        StringUtil.formatDuration(data?.duration ?? 0),
-                        style: getTextTheme(context).b3sb.copyWith(
-                          color: getColorScheme(context).colorGray500,
-                        ),
-                      ),
-                    ],
-                  ),
+                    );
+                  },
+                  itemCount: item.contents?.length ?? 0,
                 ),
-              );
-            },
-            itemCount: item.contents?.length ?? 0,
-          ),
-        ),
-      ],
-    )
+              ),
+            ],
+          )
         : const EmptyView(
-      type: BlankMessageType.NEW_PLAYLIST,
-      onPressed: null,
-    );
+            type: BlankMessageType.NEW_PLAYLIST,
+            onPressed: null,
+          );
   }
 }
 
@@ -277,8 +275,8 @@ class _Options extends StatelessWidget {
           Text(
             getAppLocalizations(context).common_option,
             style: getTextTheme(context).b3b.copyWith(
-              color: getColorScheme(context).colorGray900,
-            ),
+                  color: getColorScheme(context).colorGray900,
+                ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 16.0),
@@ -315,8 +313,8 @@ class _TotalDuration extends HookConsumerWidget {
               Text(
                 getAppLocalizations(context).common_total_duration,
                 style: getTextTheme(context).b3b.copyWith(
-                  color: getColorScheme(context).colorGray900,
-                ),
+                      color: getColorScheme(context).colorGray900,
+                    ),
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 8.0),
@@ -324,25 +322,25 @@ class _TotalDuration extends HookConsumerWidget {
                   StringUtil.formatDuration(
                     item.contents?.map((e) => e.duration).reduce(
                           (value, element) {
-                        return value + element;
-                      },
-                    ) ??
+                            return value + element;
+                          },
+                        ) ??
                         0,
                   ),
                   style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorGray500,
-                  ),
+                        color: getColorScheme(context).colorGray500,
+                      ),
                 ),
               ),
             ],
           ),
-          PrimaryFilledButton.smallRound4Icon(
+          NeutralLineButton.smallRound4Icon(
             leftIcon: SvgPicture.asset(
               "assets/imgs/icon_playlists_line.svg",
               width: 20,
               height: 20,
               colorFilter: ColorFilter.mode(
-                getColorScheme(context).white,
+                getColorScheme(context).black,
                 BlendMode.srcIn,
               ),
             ),
@@ -459,8 +457,8 @@ class _OptionPropertyInfo extends HookWidget {
                 child: Text(
                   iconText,
                   style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorGray900,
-                  ),
+                        color: getColorScheme(context).colorGray900,
+                      ),
                 ),
               ),
             ],

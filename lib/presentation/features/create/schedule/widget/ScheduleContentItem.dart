@@ -249,7 +249,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                         isActivated: true,
                                                         onPressed: () => showTimeSettingBottomSheet(data),
                                                       )
-                                                    : NeutralLineButton.extraSmallRound4Icon(
+                                                    : NeutralLineButton.smallRound4Icon(
                                                         leftIcon: SvgPicture.asset(
                                                           "assets/imgs/icon_time_edit.svg",
                                                           width: 20,
@@ -269,7 +269,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                         padding: const EdgeInsets.only(top: 4.0),
                                         child: SizedBox(
                                           width: double.infinity,
-                                          child: NeutralLineButton.extraSmallRound4Icon(
+                                          child: NeutralLineButton.smallRound4Icon(
                                             leftIcon: SvgPicture.asset(
                                               data.playlistId == null || data.playlistId! < 0
                                                   ? "assets/imgs/icon_plus_1.svg"
