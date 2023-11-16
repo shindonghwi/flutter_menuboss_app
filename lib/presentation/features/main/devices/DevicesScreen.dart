@@ -84,7 +84,7 @@ class DevicesScreen extends HookConsumerWidget {
                   FailView(onPressed: () => deviceManager.requestGetDevices())
                 else if (deviceState is Success<List<ResponseDeviceModel>>)
                   _DeviceContentList(items: deviceState.value),
-                if (deviceState is Loading) const LoadingView(),
+                if (deviceState is Loading || deviceShowNameEventState is Loading) const LoadingView(),
               ],
             ),
           ),

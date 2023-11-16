@@ -12,7 +12,7 @@ import '../../../navigation/PageMoveUtil.dart';
 enum ModifyType { ShowNameToScreen, Rename, Delete, ChangeDuration }
 
 final Map<ModifyType, String> modifyDescriptions = {
-  ModifyType.ShowNameToScreen: "ShowNameToScreen",
+  ModifyType.ShowNameToScreen: "Display screen name",
   ModifyType.Rename: "Rename",
   ModifyType.Delete: "Delete",
   ModifyType.ChangeDuration: "Change duration",
@@ -37,7 +37,7 @@ class BottomSheetModifySelector extends HookWidget {
     String? getIconPath(ModifyType type) {
       switch (type) {
         case ModifyType.ShowNameToScreen:
-          return "assets/imgs/icon_rename.svg";
+          return "assets/imgs/icon_display_screen.svg";
         case ModifyType.Rename:
           return "assets/imgs/icon_rename.svg";
         case ModifyType.Delete:
