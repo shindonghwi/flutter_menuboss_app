@@ -36,7 +36,7 @@ class MediaUploadProgress extends HookConsumerWidget {
                     Row(
                       children: [
                         ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(2),
                           child: mediaUploadProvider.thumbnailFile != null
                               ? Image.file(
                                   mediaUploadState.thumbnailFile!,

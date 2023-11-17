@@ -197,7 +197,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                     ),
                                     if (!data.isRequired)
                                       Clickable(
-                                        onPressed: () => timelineProvider.removeItem(data.playlistId!),
+                                        onPressed: () => timelineProvider.removeItemByIndex(index),
                                         child: Container(
                                           padding: const EdgeInsets.all(12),
                                           child: SvgPicture.asset(

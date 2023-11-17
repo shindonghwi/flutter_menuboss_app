@@ -68,8 +68,14 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
     state = [...newState];
   }
 
-  void removeItem(int id) {
+  void removeItemById(int id) {
     List<SimpleSchedulesModel> newState = state.where((item) => item.playlistId != id).toList();
+    _checkForOverlappingTimes(newState);
+    state = [...newState];
+  }
+
+  void removeItemByIndex(int index) {
+    List<SimpleSchedulesModel> newState = [...state]..removeAt(index);
     _checkForOverlappingTimes(newState);
     state = [...newState];
   }

@@ -164,32 +164,24 @@ class _FileImage extends HookConsumerWidget {
 
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 24),
-      decoration: BoxDecoration(
-        color: getColorScheme(context).colorGray100,
-        borderRadius: BorderRadius.circular(4),
-        border: Border.all(
-          width: 1,
-          color: getColorScheme(context).colorGray200,
-        ),
-      ),
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(4),
-        child: AspectRatio(
-          aspectRatio: 342 / 200,
-          child: item?.type?.code.toLowerCase() == "video"
-              ? LoadVideo(
+      child: AspectRatio(
+        aspectRatio: 342 / 200,
+        child: item?.type?.code.toLowerCase() == "video"
+            ? ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+              child: LoadVideo(
                   mediaId: item?.mediaId,
                   fit: BoxFit.cover,
                   imageUrl: item?.property?.imageUrl ?? "",
                   videoUrl: videoUrl.value,
                   isHorizontal: true
-                )
-              : LoadImage(
-                  tag: item?.mediaId.toString(),
-                  url: item?.property?.imageUrl,
-                  type: ImagePlaceholderType.AUTO_16x9,
                 ),
-        ),
+            )
+            : LoadImage(
+                tag: item?.mediaId.toString(),
+                url: item?.property?.imageUrl,
+                type: ImagePlaceholderType.AUTO_16x9,
+              ),
       ),
     );
   }
@@ -306,7 +298,7 @@ class _MediaInformation extends HookConsumerWidget {
             children: mediaItems.value
                 .map(
                   (e) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

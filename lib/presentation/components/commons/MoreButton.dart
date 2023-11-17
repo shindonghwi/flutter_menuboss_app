@@ -35,7 +35,7 @@ class MoreButton extends StatelessWidget {
           width: 24,
           height: 24,
           colorFilter: ColorFilter.mode(
-            getColorScheme(context).colorGray900,
+            getColorScheme(context).colorGray600,
             BlendMode.srcIn,
           ),
         ),
