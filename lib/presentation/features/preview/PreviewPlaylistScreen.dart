@@ -189,6 +189,9 @@ class _Display extends HookConsumerWidget {
                         url: mediaContent.property?.imageUrl,
                         type: ImagePlaceholderType.AUTO_16x9,
                         fit: fitInfo,
+                        borderRadius: 0,
+                        borderWidth: 0,
+                        backgroundColor: getColorScheme(context).black,
                       ),
                     );
                   }).toList() ??

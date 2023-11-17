@@ -328,7 +328,7 @@ class _SettingItems extends HookConsumerWidget {
                         SvgPicture.asset(
                           "assets/imgs/icon_next.svg",
                           colorFilter: ColorFilter.mode(
-                            getColorScheme(context).black,
+                            getColorScheme(context).colorGray600,
                             BlendMode.srcIn,
                           ),
                           width: 24,

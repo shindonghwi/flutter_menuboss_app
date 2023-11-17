@@ -10,6 +10,9 @@ class LoadImage extends StatelessWidget {
   final ImagePlaceholderType type;
   final String? tag;
   final BoxFit fit;
+  final double borderRadius;
+  final double borderWidth;
+  final Color? backgroundColor;
 
   const LoadImage({
     super.key,
@@ -17,21 +20,24 @@ class LoadImage extends StatelessWidget {
     required this.type,
     this.tag,
     this.fit = BoxFit.cover,
+    this.borderRadius = 4,
+    this.borderWidth = 1,
+    this.backgroundColor,
   });
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(borderRadius),
         border: Border.all(
-          width: 1,
+          width: borderWidth,
           color: getColorScheme(context).colorGray200,
         ),
-        color: getColorScheme(context).colorGray100,
+        color: backgroundColor ?? getColorScheme(context).colorGray100,
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(4),
+        borderRadius: BorderRadius.circular(borderRadius),
         child: !CollectionUtil.isNullEmptyFromString(url)
             ? CollectionUtil.isNullEmptyFromString(tag)
                 ? CachedNetworkImage(
