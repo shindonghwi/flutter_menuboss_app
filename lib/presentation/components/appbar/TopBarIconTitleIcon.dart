@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
@@ -44,7 +45,9 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
                         margin: const EdgeInsets.only(left: 12),
                         child: Clickable(
                           onPressed: () {
-                            leading != null ? leading?.second.call() : Navigator.pop(context);
+                            popPage(context, (){
+                              leading != null ? leading?.second.call() : Navigator.pop(context);
+                            });
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
@@ -61,7 +64,7 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
                         padding: EdgeInsets.only(left: leadingIsShow ? 12 : 24),
                         child: Text(
                           content,
-                          style: getTextTheme(context).s2b.copyWith(
+                          style: getTextTheme(context).s3b.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                           textAlign: TextAlign.start,

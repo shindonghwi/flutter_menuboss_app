@@ -47,7 +47,7 @@ class ResponsePlaylistModel {
     );
   }
 
-  ResponsePlaylistModel toUpDatedAtSimpleMapper() {
+  ResponsePlaylistModel toupdatedAtSimpleMapper() {
     return ResponsePlaylistModel(
       object: object,
       playlistId: playlistId,
@@ -55,12 +55,8 @@ class ResponsePlaylistModel {
       time: time,
       property: property,
       contents: contents,
-      updatedAt: _updatedAtMapper(updatedAt),
+      updatedAt: updatedAt,
     );
-  }
-
-  String _updatedAtMapper(String updatedAt) {
-    return StringUtil.formatSimpleDate(updatedAt);
   }
 
   @override

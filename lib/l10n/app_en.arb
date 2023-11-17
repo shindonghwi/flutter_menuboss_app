@@ -3,9 +3,15 @@
 
     "login_title": "Login",
     "login_welcome": "Welcome! Please enter your details",
+    "login_no_account": "No account?",
     "login_email_correct": "This is a valid email address",
     "login_email_invalid": "Email address entered incorrectly",
     "login_pw_invalid": "a-z, A-Z, 0-9, 4 to 20 characters",
+
+    "signup_email_address": "Email address",
+    "signup_password": "Password",
+    "signup_full_name": "Full name",
+    "signup_business_name": "Business name",
 
     "main_navigation_menu_schedules": "Schedules",
     "main_navigation_menu_playlists": "Playlists",
@@ -15,6 +21,7 @@
 
     "scan_qr_title": "Scan QR code",
     "scan_qr_enter_pin_code": "Enter PIN code",
+    "scan_qr_description": "Scan the QR code you see\non the Tv screen",
 
     "apply_screen_title": "Apply to Screens",
 
@@ -33,13 +40,12 @@
 
     "create_schedule_title": "Create schedule",
     "create_schedule_default_playlist_title_basic": "Basic",
-    "create_schedule_default_playlist_title_breakfast": "Breakfast",
+    "create_schedule_default_playlist_title_morning": "Morning",
     "create_schedule_default_playlist_title_lunch": "Lunch",
     "create_schedule_default_playlist_title_dinner": "Dinner",
-    "create_schedule_default_playlist_title_dawn": "Dawn",
     "create_schedule_add_playlist": "Add Playlist",
     "create_schedule_change_playlist": "Change Playlist",
-    "create_schedule_new_timeline": "New timeline",
+    "create_schedule_new_playlist": "New playlist",
 
     "edit_playlist_title": "Edit playlist",
 
@@ -52,8 +58,20 @@
     "my_page_setting_items_plan": "Plan",
 
     "my_page_profile_appbar_title": "Profile",
-    "my_page_profile_full_name": "Full Name",
-    "my_page_profile_business_name": "Business Name",
+    "my_page_profile_full_name": "Full name",
+    "my_page_profile_email": "Email address",
+    "my_page_profile_business_name": "Business name",
+    "my_page_profile_delete_account": "Delete account",
+
+    "delete_account_title": "Delete account",
+    "delete_account_description": "Are you sure you want to delete your account?",
+    "delete_account_description1": "When you delete your account, all of your information and data will be deleted.\nIf you want to delete it, please check the precautions and proceed",
+    "delete_account_reason_title": "Reason for deleting your account",
+    "delete_account_reason_menu1": "I don't use the service very often",
+    "delete_account_reason_menu2": "Service is inconvenient",
+    "delete_account_reason_menu3": "It's hard to use",
+    "delete_account_reason_menu4": "Other",
+    "delete_account_reason_menu4_hint": "Please tell me why you want to quit!",
 
     "media_info_title": "Media Information",
     "media_info_menu_input_title": "Title",
@@ -73,11 +91,15 @@
 
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_add_content": "Add content",
+    "blank_message_content_add_canvas": "Add canvas",
+    "blank_message_content_add_to_playlist": "Add to playlist",
     "blank_message_content_new_schedule": "New schedule",
     "blank_message_content_new_playlist": "New playlist",
     "blank_message_content_upload_file": "Upload file",
     "blank_message_description_add_screen": "There is currently no saved screen list\nPlease register the screen through QR code",
     "blank_message_description_add_content": "There is currently no content\nPlease add more content",
+    "blank_message_description_add_canvas": "No canvas currently saved\nPlease make a new canvas",
+    "blank_message_description_add_to_playlist": "",
     "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
@@ -92,11 +114,13 @@
     "popup_apply_screen_description": "Are you sure you want to apply it directly to the screens?",
     "popup_logout_description": "Are yor sure want to log out?",
     "popup_change_duration_title": "Please enter the duration of the media",
+    "popup_delete_account_title": "Delete account completed!",
+    "popup_delete_account_description": "Account deletion completed successfully. See you next time",
 
     "common_email": "Email",
     "common_address": "Address",
     "common_password": "Password",
-    "common_settings": "Settings",
+    "common_option": "Option",
     "common_refresh": "Refresh",
     "common_title": "Title",
     "common_total_duration": "Total duration",
@@ -104,7 +128,9 @@
     "common_horizontal": "Horizontal",
     "common_vertical": "Vertical",
     "common_fit": "Fit",
+    "common_stretch": "Stretch",
     "common_fill": "Fill",
+    "common_sign_up": "Sign up",
     "common_on": "On",
     "common_off": "Off",
     "common_or": "or",
@@ -115,7 +141,6 @@
     "common_confirm": "Confirm",
     "common_rename": "Rename",
     "common_logout": "Log out",
-    "common_delete": "Delete",
     "common_ok": "Ok",
     "common_cancel": "Cancel",
     "common_preview": "Preview",
@@ -125,6 +150,7 @@
     "common_delete": "Delete",
     "common_save": "Save",
     "common_time": "Time",
+    "common_timeline": "Timeline",
     "common_mode_all_day": "All day Mode",
     "common_mode_schedule": "Schedule Mode",
 
@@ -133,7 +159,9 @@
     "message_file_not_allow_404": "File extension you do not allowed\nPlease use it again",
     "message_permission_error_photos": "You need photo and video permissions to upload media files",
     "message_network_required": "The network connection is unstable",
+    "message_operation_timeout": "Operation is being delayed too much\nPlease try again in a few minutes",
     "message_not_found_user": "User information not found",
+    "message_add_media_content": "Please add media content",
     "message_api_success": "",
     "message_temp_login_fail": "A temporary failure has occurred\nPlease use a different login method",
     "message_time_setting_precede": "End time cannot precede start time",
@@ -147,6 +175,8 @@
     "message_remove_schedule_success": "Schedule deleted successfully",
     "message_register_schedule_success": "Schedule registered successfully",
     "message_update_schedule_success": "Schedule information has been changed",
+    "message_remove_media_success": "Media file deleted successfully",
+    "message_send_event_name_show_success": "Successfully Send show name event to Screen",
 
     "schedule_time_basic": "Basic Exposure",
     "schedule_time_morning": "Morning",

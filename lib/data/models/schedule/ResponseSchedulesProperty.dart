@@ -10,15 +10,13 @@ class ResponseSchedulesProperty {
   final int? count;
   final String? imageUrl;
   final List<ResponseSchedulesPropertyInfo>? contentTypes;
-  final ResponseSchedulesPropertyInfo? direction;
-  final ResponseSchedulesPropertyInfo? fill;
+  final String? direction;
 
   ResponseSchedulesProperty({
     required this.count,
     required this.imageUrl,
     required this.contentTypes,
     required this.direction,
-    required this.fill,
   });
 
   factory ResponseSchedulesProperty.fromJson(Map<String, dynamic> json) => _$ResponseSchedulesPropertyFromJson(json);

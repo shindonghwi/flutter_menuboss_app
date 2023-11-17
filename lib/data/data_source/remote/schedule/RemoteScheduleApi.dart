@@ -19,49 +19,58 @@ class RemoteScheduleApi {
 
   /// 스케줄 리스트 목록 조회
   Future<ApiListResponse<List<ResponseSchedulesModel>>> getSchedules() async {
-    final response = await Service.getApi(
-      type: ServiceType.Schedule,
-      endPoint: null,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiListResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        list: null,
-        count: 0,
+    try {
+      final response = await Service.getApi(
+        type: ServiceType.Schedule,
+        endPoint: null,
       );
-    } else {
-      return ApiListResponse.fromJson(
-        jsonDecode(response.body),
-        (json) {
-          return List<ResponseSchedulesModel>.from(
-            json.map((item) => ResponseSchedulesModel.fromJson(item as Map<String, dynamic>)),
-          );
-        },
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorListResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiListResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {
+            return List<ResponseSchedulesModel>.from(
+              json.map((item) => ResponseSchedulesModel.fromJson(item as Map<String, dynamic>)),
+            );
+          },
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorListResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// 스케줄 정보 조회
   Future<ApiResponse<ResponseScheduleModel>> getSchedule(int scheduleId) async {
-    final response = await Service.getApi(
-      type: ServiceType.Schedule,
-      endPoint: "$scheduleId",
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.getApi(
+        type: ServiceType.Schedule,
+        endPoint: "$scheduleId",
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseScheduleModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseScheduleModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
@@ -69,69 +78,84 @@ class RemoteScheduleApi {
   /// 스케줄 등록
   /// return scheduleId
   Future<ApiResponse<ResponseScheduleCreate>> postSchedule(RequestScheduleUpdateInfoModel data) async {
-    final response = await Service.postApi(
-      type: ServiceType.Schedule,
-      endPoint: null,
-      jsonBody: data.toJson(),
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postApi(
+        type: ServiceType.Schedule,
+        endPoint: null,
+        jsonBody: data.toJson(),
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseScheduleCreate.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseScheduleCreate.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// 스케줄 정보 업데이트
   Future<ApiResponse<void>> patchSchedule(int scheduleId, RequestScheduleUpdateInfoModel data) async {
-    final response = await Service.patchApi(
-      type: ServiceType.Schedule,
-      endPoint: "$scheduleId",
-      jsonBody: data.toJson(),
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Schedule,
+        endPoint: "$scheduleId",
+        jsonBody: data.toJson(),
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) {},
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
 
   /// 스케줄 삭제
   Future<ApiResponse<void>> delSchedule(int scheduleId) async {
-    final response = await Service.deleteApi(
-      type: ServiceType.Schedule,
-      endPoint: "$scheduleId",
-      jsonBody: null,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.deleteApi(
+        type: ServiceType.Schedule,
+        endPoint: "$scheduleId",
+        jsonBody: null,
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) {},
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }

@@ -55,21 +55,19 @@ class ImagePlaceholder extends StatelessWidget {
               );
             }),
           )
-        : Container(
+        : SizedBox(
             width: containerSize,
             height: containerSize,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: getColorScheme(context).colorGray100,
-            ),
             child: Center(
-              child: SvgPicture.asset("assets/imgs/image_logo_text.svg",
-                  width: imageSize.first,
-                  height: imageSize.second,
-                  colorFilter: ColorFilter.mode(
-                    getColorScheme(context).colorGray400,
-                    BlendMode.srcIn,
-                  )),
+              child: SvgPicture.asset(
+                "assets/imgs/image_logo_text.svg",
+                width: imageSize.first,
+                height: imageSize.second,
+                colorFilter: ColorFilter.mode(
+                  getColorScheme(context).colorGray400,
+                  BlendMode.srcIn,
+                ),
+              ),
             ),
           );
   }

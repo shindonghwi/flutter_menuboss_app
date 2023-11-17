@@ -21,6 +21,7 @@ import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
@@ -57,9 +58,10 @@ class MediaInFolderScreen extends HookConsumerWidget {
         requestMedias();
       });
       return () {
+        mediaList.value?.clear();
         mediaManager.init();
       };
-    }, []);  // 의존성 배열을 빈 배열로 설정하여 이 useEffect가 한 번만 실행되도록 합니다.
+    }, []); // 의존성 배열을 빈 배열로 설정하여 이 useEffect가 한 번만 실행되도록 합니다.
 
     useEffect(() {
       // mediaState가 변경될 때마다 실행될 로직
@@ -68,9 +70,12 @@ class MediaInFolderScreen extends HookConsumerWidget {
           success: (event) {
             mediaList.value = event.value;
             final count = mediaList.value?.length ?? 0;
-            final size = mediaList.value?.map((e) => e.property?.size ?? 0).reduce(
-                  (value, element) => value + element,
-            );
+            final sizeList = mediaList.value?.map((e) => e.property?.size ?? 0);
+            final size = sizeList!.isEmpty
+                ? 0
+                : sizeList.reduce(
+                    (value, element) => value + element,
+                  );
             debugPrint("count: $count, size: $size");
             rootMediaManager.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
           },
@@ -80,47 +85,63 @@ class MediaInFolderScreen extends HookConsumerWidget {
       return null;
     }, [mediaState]);
 
-    debugPrint("MediaInFolderScreen build ${mediaState}");
-
     void doMediaUploadAction() {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
 
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
-          GetIt.instance<PostUploadMediaImageUseCase>()
-              .call(
+          final controller = await uploadProgressProvider.uploadStart(
             xFile.path,
-            folderId: item!.mediaId,
-            streamController: controller,
-          )
-              .then((response) {
-            if (response.status == 200) {
-              requestMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+            isVideo: false,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaImageUseCase>()
+                .call(
+              xFile.path,
+              folderId: item!.mediaId,
+              streamController: controller,
+            )
+                .then((response) {
+              if (response.status == 200) {
+                requestMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         onVideoSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
-          GetIt.instance<PostUploadMediaVideoUseCase>()
-              .call(
+          final controller = await uploadProgressProvider.uploadStart(
             xFile.path,
-            folderId: item!.mediaId,
-            streamController: controller,
-          )
-              .then((response) {
-            if (response.status == 200) {
-              requestMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+            isVideo: true,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaVideoUseCase>()
+                .call(
+              xFile.path,
+              folderId: item!.mediaId,
+              streamController: controller,
+            )
+                .then((response) {
+              if (response.status == 200) {
+                requestMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         notAvailableFile: () {
           Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);
@@ -141,6 +162,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
               context,
               child: PopupRename(
                 hint: getAppLocalizations(context).popup_rename_media_hint,
+                name: folderName.value,
                 onClicked: (name) {
                   folderName.value = name;
                   rootMediaManager.renameItem(item?.mediaId ?? "", name);
@@ -154,6 +176,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
               child: PopupDelete(onClicked: () async {
                 final isRemoved = await rootMediaManager.removeItem([item?.mediaId ?? ""]);
                 if (isRemoved) {
+                  Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
                   Navigator.of(context).pop();
                 }
               }),
@@ -161,31 +184,33 @@ class MediaInFolderScreen extends HookConsumerWidget {
           }),
         ],
       ),
-      body: Column(
-        children: [
-          const MediaUploadProgress(),
-          Expanded(
-            child: Stack(
-              children: [
-                if (mediaState is Failure && mediaList.value == null)
-                  FailView(onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId))
-                else if (mediaList.value != null)
-                  _MediaContentList(
-                    folderId: item!.mediaId,
-                    items: mediaList.value!,
-                    onMediaUpload: () => doMediaUploadAction(),
-                  )
-                else if (mediaState is Success<List<ResponseMediaModel>>)
-                  _MediaContentList(
-                    folderId: item!.mediaId,
-                    items: mediaState.value,
-                    onMediaUpload: () => doMediaUploadAction(),
-                  ),
-                if (mediaState is Loading) const LoadingView(),
-              ],
+      body: SafeArea(
+        child: Column(
+          children: [
+            const MediaUploadProgress(),
+            Expanded(
+              child: Stack(
+                children: [
+                  if (mediaState is Failure && mediaList.value == null)
+                    FailView(onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId))
+                  else if (mediaList.value != null)
+                    _MediaContentList(
+                      folderId: item!.mediaId,
+                      items: mediaList.value!,
+                      onMediaUpload: () => doMediaUploadAction(),
+                    )
+                  else if (mediaState is Success<List<ResponseMediaModel>>)
+                    _MediaContentList(
+                      folderId: item!.mediaId,
+                      items: mediaState.value,
+                      onMediaUpload: () => doMediaUploadAction(),
+                    ),
+                  if (mediaState is Loading) const LoadingView(),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
@@ -211,54 +236,63 @@ class _MediaContentList extends HookConsumerWidget {
     return items.isNotEmpty
         ? Stack(
             children: [
-              ListView.builder(
-                padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-                physics: const BouncingScrollPhysics(),
-                shrinkWrap: true,
-                itemCount: items.length,
-                itemBuilder: (context, index) {
-                  final item = items[index];
-                  return ClickableScale(
-                    onPressed: () async {
-                      try {
-                        final newName = await Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(
-                            RoutingScreen.MediaInfo.route,
-                            parameter: item,
-                          ),
-                        );
-
-                        if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                          mediaManager.renameItem(item.mediaId, newName);
-                        }
-                      } catch (e) {
-                        debugPrint(e.toString());
-                      }
-                    },
-                    child: MediaItem(
-                      item: item,
-                      onRemove: () async {
-                        final isRemoved = await mediaManager.removeItem([item.mediaId]);
-                        if (isRemoved) {
-                          rootMediaManager.updateFolderCountAndSize(
-                            folderId,
-                            item.property?.size ?? 0,
-                            isIncrement: false,
-                            isUiUpdate: true,
-                          );
-                        }
-                      },
-                      onRename: (newName) {
-                        mediaManager.renameItem(item.mediaId, newName);
-                      },
-                    ),
-                  );
+              RefreshIndicator(
+                onRefresh: () async {
+                  mediaManager.initPageInfo();
+                  mediaManager.requestGetMedias(mediaId: folderId, delayed: 300);
                 },
+                color: getColorScheme(context).colorPrimary500,
+                backgroundColor: getColorScheme(context).white,
+                child: ListView.builder(
+                  padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  shrinkWrap: true,
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    final item = items[index];
+                    return ClickableScale(
+                      onPressed: () async {
+                        try {
+                          final newName = await Navigator.push(
+                            context,
+                            nextSlideHorizontalScreen(
+                              RoutingScreen.MediaInfo.route,
+                              parameter: item,
+                            ),
+                          );
+
+                          if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                            mediaManager.renameItem(item.mediaId, newName);
+                          }
+                        } catch (e) {
+                          debugPrint(e.toString());
+                        }
+                      },
+                      child: MediaItem(
+                        item: item,
+                        onRemove: () async {
+                          final isRemoved = await mediaManager.removeItem([item.mediaId]);
+                          if (isRemoved) {
+                            Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
+                            rootMediaManager.updateFolderCountAndSize(
+                              folderId,
+                              item.property?.size ?? 0,
+                              isIncrement: false,
+                              isUiUpdate: true,
+                            );
+                          }
+                        },
+                        onRename: (newName) {
+                          mediaManager.renameItem(item.mediaId, newName);
+                        },
+                      ),
+                    );
+                  },
+                ),
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                margin: const EdgeInsets.only(bottom: 48, right: 24),
                 child: FloatingPlusButton(
                   onPressed: () => onMediaUpload.call(),
                 ),

@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
+import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
@@ -25,7 +29,7 @@ class MainScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-
+    final meInfoManager = ref.read(meInfoProvider.notifier);
     final currentIndex = ref.watch(currentIndexProvider);
 
     List<Triple> iconList = [
@@ -46,6 +50,16 @@ class MainScreen extends HookConsumerWidget {
     useEffect(() {
       if (!executedCodeForIndex.value[currentIndex]) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
+
+          if (meInfoManager.getMeInfo() == null) {
+            Navigator.pushAndRemoveUntil(
+              context,
+              nextFadeInOutScreen(RoutingScreen.Login.route),
+                  (route) => false,
+            );
+            return;
+          }
+
           switch (currentIndex) {
             case 0:
               ref.read(schedulesProvider.notifier).requestGetSchedules();
@@ -111,8 +125,8 @@ class _BottomNavigationBar extends HookConsumerWidget {
               decoration: BoxDecoration(
                 border: Border(
                   top: BorderSide(
-                    color: getColorScheme(context).colorGray400,
-                    width: 0.5,
+                    color: getColorScheme(context).colorGray100,
+                    width: 1,
                   ),
                 ),
               ),
@@ -127,7 +141,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
                   child: BottomNavigationBar(
                     type: BottomNavigationBarType.fixed,
                     backgroundColor: getColorScheme(context).white,
-                    selectedItemColor: getColorScheme(context).colorPrimary900,
+                    selectedItemColor: getColorScheme(context).colorPrimary500,
                     unselectedItemColor: getColorScheme(context).colorGray400,
                     currentIndex: currentIndex,
                     onTap: (index) => ref.read(currentIndexProvider.notifier).state = index,
@@ -156,7 +170,7 @@ class _BottomNavigationBar extends HookConsumerWidget {
                               width: 24,
                               height: 24,
                               colorFilter: ColorFilter.mode(
-                                getColorScheme(context).colorPrimary900,
+                                getColorScheme(context).colorPrimary500,
                                 BlendMode.srcIn,
                               ),
                             ),

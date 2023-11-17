@@ -6,6 +6,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
   final String content;
   final String? leftIconPath;
@@ -42,7 +44,9 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                   margin: const EdgeInsets.only(left: 12.0),
                   child: Clickable(
                     onPressed: () {
-                      leftIconOnPressed != null ? leftIconOnPressed?.call() : Navigator.pop(context);
+                      popPage(context, () {
+                        leftIconOnPressed != null ? leftIconOnPressed?.call() : Navigator.pop(context);
+                      });
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
@@ -55,7 +59,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s2b.copyWith(
+                  style: getTextTheme(context).s3b.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,
@@ -72,7 +76,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           rightText ?? "",
-                          style: getTextTheme(context).b1sb.copyWith(
+                          style: getTextTheme(context).b3sb.copyWith(
                                 color: rightTextActivated! ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray400,
                               ),
                         ),

@@ -6,11 +6,11 @@ import 'package:menuboss/presentation/components/button/NeutralLineButton.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlayListRegisterProvider.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlayListUpdateProvider.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-
-import '../provider/PlaylistSaveInfoProvider.dart';
 
 class PlaylistBottomContent extends HookConsumerWidget {
   final int? playlistId;
@@ -27,7 +27,7 @@ class PlaylistBottomContent extends HookConsumerWidget {
     final mediaCart = ref.watch(mediaContentsCartProvider);
     final playListUpdateManager = ref.read(playListUpdateProvider.notifier);
     final playListRegisterManager = ref.read(playListRegisterProvider.notifier);
-    final playlistSaveInfo = ref.watch(playlistSaveInfoProvider);
+    final saveManager = ref.watch(playlistSaveInfoProvider);
 
     return mediaCart.isNotEmpty
         ? Container(
@@ -36,43 +36,16 @@ class PlaylistBottomContent extends HookConsumerWidget {
               child: Container(
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
-                child: Row(
-                  children: [
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 1,
-                      child: NeutralLineButton.largeRound8(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            nextSlideVerticalScreen(
-                              RoutingScreen.PreviewPlaylist.route,
-                            ),
-                          );
-                        },
-                        content: getAppLocalizations(context).common_preview,
-                        isActivated: true,
-                      ),
-                    ),
-                    const SizedBox(
-                      width: 12,
-                    ),
-                    Flexible(
-                      fit: FlexFit.tight,
-                      flex: 1,
-                      child: PrimaryFilledButton.largeRound8(
-                        onPressed: () {
-                          if (isEditMode) {
-                            playListUpdateManager.updatePlaylist(playlistId ?? -1, playlistSaveInfo);
-                          } else {
-                            playListRegisterManager.registerPlaylist(playlistSaveInfo);
-                          }
-                        },
-                        content: getAppLocalizations(context).common_save,
-                        isActivated: playlistSaveInfo.isCreateAvailable(),
-                      ),
-                    ),
-                  ],
+                child: PrimaryFilledButton.largeRound8(
+                  onPressed: () {
+                    if (isEditMode) {
+                      playListUpdateManager.updatePlaylist(playlistId ?? -1, saveManager);
+                    } else {
+                      playListRegisterManager.registerPlaylist(saveManager);
+                    }
+                  },
+                  content: getAppLocalizations(context).common_save,
+                  isActivated: saveManager.isCreateAvailable(),
                 ),
               ),
             ),

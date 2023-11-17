@@ -18,8 +18,9 @@ class GetSelectPlaylistProviderNotifier extends StateNotifier<UIState<List<Respo
 
   final List<int> addedPlaylistIds = [];
 
-  void requestPlaylists() {
+  void requestPlaylists() async{
     state = Loading();
+
     _playListsUseCase.call().then((response) async {
       if (response.status == 200) {
         List<ResponsePlaylistsModel> filteredList = response.list

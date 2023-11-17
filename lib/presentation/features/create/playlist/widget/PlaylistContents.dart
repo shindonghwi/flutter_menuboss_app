@@ -7,7 +7,9 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 
 import 'PlaylistContentItem.dart';
 
@@ -16,6 +18,7 @@ class PlaylistContents extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final mediaCartManger = ref.read(mediaContentsCartProvider.notifier);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
     final List<SimpleMediaContentModel> contentItems = ref.watch(mediaContentsCartProvider);
     final items = useState<List<SimpleMediaContentModel>>([]);
@@ -33,7 +36,7 @@ class PlaylistContents extends HookConsumerWidget {
         ? Padding(
             padding: const EdgeInsets.only(top: 60.0),
             child: EmptyView(
-              type: BlankMessageType.ADD_CONTENT,
+              type: BlankMessageType.ADD_TO_PLAYLIST,
               onPressed: () {
                 Navigator.push(
                   context,
@@ -47,7 +50,7 @@ class PlaylistContents extends HookConsumerWidget {
           )
         : Expanded(
             child: ReorderableListView(
-              physics: const BouncingScrollPhysics(),
+              physics: const AlwaysScrollableScrollPhysics(),
               children: items.value.map((item) {
                 return Container(
                   key: ValueKey(item.index),
@@ -61,9 +64,19 @@ class PlaylistContents extends HookConsumerWidget {
                 final item = items.value.removeAt(oldIndex);
                 items.value.insert(newIndex, item);
                 items.value = [...items.value];
+                mediaCartManger.changeItems(items.value);
                 saveManager.changeContents(items.value);
               },
-            ),
-          );
+              proxyDecorator: (child, index, animation) {
+                return Container(
+                  decoration: BoxDecoration(
+                    color: getColorScheme(context).colorGray50,
+                  ),
+                  child: child,
+                );
+              },
+            )
+
+    );
   }
 }

@@ -22,11 +22,13 @@ class MediaContentsInFolderNotifier extends StateNotifier<UIState<List<SimpleMed
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
 
   /// 미디어 리스트 요청
-  Future<void> requestGetMedias(String folderId) async {
+  Future<void> requestGetMedias(String folderId, {int delay = 0}) async {
     if (_hasNext) {
       if (_currentPage == 1) {
         state = Loading();
       }
+
+      await Future.delayed(Duration(milliseconds: delay));
 
       if (_isProcessing) return;
       _isProcessing = true;

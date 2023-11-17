@@ -14,7 +14,7 @@ class ResponseSchedulesModel {
   final String name;
   final ResponseSchedulesProperty? property;
   final List<ResponsePlaylistModel>? playlists;
-  String updatedAt;
+  String updatedDate;
 
   ResponseSchedulesModel({
     required this.object,
@@ -22,7 +22,7 @@ class ResponseSchedulesModel {
     required this.name,
     required this.property,
     required this.playlists,
-    required this.updatedAt,
+    required this.updatedDate,
   });
 
   factory ResponseSchedulesModel.fromJson(Map<String, dynamic> json) => _$ResponseSchedulesModelFromJson(json);
@@ -36,12 +36,8 @@ class ResponseSchedulesModel {
       name: name,
       property: property,
       playlists: playlists,
-      updatedAt: _updatedAtMapper(updatedAt),
+      updatedDate: updatedDate,
     );
-  }
-
-  String _updatedAtMapper(String updatedAt) {
-    return StringUtil.formatSimpleDate(updatedAt);
   }
 
   ResponseSchedulesModel copyWith({
@@ -50,7 +46,7 @@ class ResponseSchedulesModel {
     String? name,
     ResponseSchedulesProperty? property,
     List<ResponsePlaylistModel>? playlists,
-    String? updatedAt,
+    String? updatedDate,
   }) {
     return ResponseSchedulesModel(
       object: object ?? this.object,
@@ -58,7 +54,7 @@ class ResponseSchedulesModel {
       name: name ?? this.name,
       property: property ?? this.property,
       playlists: playlists ?? this.playlists,
-      updatedAt: updatedAt ?? this.updatedAt,
+      updatedDate: updatedDate ?? this.updatedDate,
     );
   }
 

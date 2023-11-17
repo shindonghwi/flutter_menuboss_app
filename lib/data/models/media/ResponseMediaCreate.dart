@@ -13,8 +13,8 @@ class ResponseMediaCreate {
   final ResponseMediaPropertyInfo? type;
   final String? name;
   final ResponseMediaProperty? property;
-  final String? updatedAt;
-  final String? createdAt;
+  final String? updatedDate;
+  final String? createdDate;
 
   ResponseMediaCreate({
     this.object,
@@ -22,8 +22,8 @@ class ResponseMediaCreate {
     this.name,
     this.type,
     this.property,
-    this.updatedAt,
-    this.createdAt,
+    this.updatedDate,
+    this.createdDate,
   });
 
   factory ResponseMediaCreate.fromJson(Map<String, dynamic> json) => _$ResponseMediaCreateFromJson(json);

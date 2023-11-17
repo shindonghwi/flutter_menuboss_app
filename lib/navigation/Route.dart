@@ -9,6 +9,7 @@ import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/features/apply_screen/ApplyToDeviceScreen.dart';
 import 'package:menuboss/presentation/features/create/playlist/CreatePlaylistScreen.dart';
 import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScreen.dart';
+import 'package:menuboss/presentation/features/delete_account/DeleteAccountScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
@@ -23,11 +24,13 @@ import 'package:menuboss/presentation/features/select/destination_folder/Destina
 import 'package:menuboss/presentation/features/select/media_file/SelectMediaFileScreen.dart';
 import 'package:menuboss/presentation/features/select/media_file/in_folder/SelectMediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScreen.dart';
+import 'package:menuboss/presentation/features/signup/SignUpScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
 enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
   Login(route: "/login"), // 로그인
+  SignUp(route: "/signup"), // 회원가입
   Main(route: "/main"), // 메인
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
@@ -48,7 +51,8 @@ enum RoutingScreen {
   SelectDestinationFolder(route: "/select/destination/folder"), // 폴더 선택
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
-  MyProfile(route: "/my/profile"); // 프로필 정보
+  MyProfile(route: "/my/profile"), // 프로필 정보
+  DeleteAccount(route: "/delete/account"); // 계정 삭제
 
   final String route;
 
@@ -60,6 +64,7 @@ enum RoutingScreen {
     return {
       RoutingScreen.Splash.route: (context) => const SplashScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
+      RoutingScreen.SignUp.route: (context) => const SignUpScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
@@ -76,6 +81,7 @@ enum RoutingScreen {
       RoutingScreen.SelectDestinationFolder.route: (context) => const DestinationFolderScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
+      RoutingScreen.DeleteAccount.route: (context) => const DeleteAccountScreen(),
     };
   }
 
@@ -84,6 +90,8 @@ enum RoutingScreen {
       return const SplashScreen();
     } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
+    }else if (route == RoutingScreen.SignUp.route) {
+      return const SignUpScreen();
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
     } else if (route == RoutingScreen.ScanQR.route) {
@@ -111,8 +119,8 @@ enum RoutingScreen {
       ResponseScheduleModel? model = parameter;
       return CreateScheduleScreen(item: model);
     } else if (route == RoutingScreen.SelectPlaylist.route) {
-      List<int> playlistIds = parameter;
-      return SelectPlaylistScreen(playlistIds: playlistIds);
+      SelectedPlaylistInfo? info = parameter;
+      return SelectPlaylistScreen(selectedPlaylistInfo: info);
     } else if (route == RoutingScreen.SelectMediaFile.route) {
       return const SelectMediaFileScreen();
     } else if (route == RoutingScreen.SelectMediaInFolder.route) {
@@ -126,6 +134,8 @@ enum RoutingScreen {
       return ApplyToDeviceScreen(item: model);
     } else if (route == RoutingScreen.MyProfile.route) {
       return const MyProfileScreen();
+    }else if (route == RoutingScreen.DeleteAccount.route) {
+      return const DeleteAccountScreen();
     } else {
       return const SplashScreen();
     }

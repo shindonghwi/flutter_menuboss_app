@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleText.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
+import 'package:menuboss/presentation/components/loader/LoadVideo.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
@@ -17,6 +18,7 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
+import 'package:video_player/video_player.dart';
 
 import 'provider/MediaInfoProvider.dart';
 import 'provider/MediaNameChangeProvider.dart';
@@ -114,7 +116,7 @@ class _InputFileName extends HookWidget {
           Text(
             getAppLocalizations(context).media_info_menu_input_title,
             style: getTextTheme(context).b3b.copyWith(
-                  color: getColorScheme(context).colorGray500,
+                  color: getColorScheme(context).colorGray900,
                 ),
           ),
           const SizedBox(height: 12),
@@ -129,7 +131,7 @@ class _InputFileName extends HookWidget {
   }
 }
 
-class _FileImage extends StatelessWidget {
+class _FileImage extends HookConsumerWidget {
   final ResponseMediaModel? item;
 
   const _FileImage({
@@ -138,23 +140,48 @@ class _FileImage extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Container(
-        margin: const EdgeInsets.only(top: 16, left: 24, right: 24),
-        decoration: BoxDecoration(
-          color: getColorScheme(context).colorGray100,
-          borderRadius: BorderRadius.circular(8),
-        ),
-        child: AspectRatio(
-          aspectRatio: 342 / 200,
-          child: LoadImage(
-            tag: item?.mediaId.toString(),
-            url: item?.property?.imageUrl,
-            type: ImagePlaceholderType.AUTO_16x9,
-          ),
-        ),
+  Widget build(BuildContext context, WidgetRef ref) {
+    final mediaInfoState = ref.watch(mediaInformationProvider);
+    final videoUrl = useState<String?>(null);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        mediaInfoState.when(
+          success: (event) async {
+            final data = event.value;
+
+            if (!CollectionUtil.isNullEmptyFromString(data?.property?.videoUrl)) {
+              videoUrl.value = data?.property?.videoUrl;
+            }
+          },
+          failure: (event) => Toast.showError(context, event.errorMessage),
+        );
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [mediaInfoState]);
+
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 24),
+      child: AspectRatio(
+        aspectRatio: 342 / 200,
+        child: item?.type?.code.toLowerCase() == "video"
+            ? ClipRRect(
+          borderRadius: BorderRadius.circular(4),
+              child: LoadVideo(
+                  mediaId: item?.mediaId,
+                  fit: BoxFit.cover,
+                  imageUrl: item?.property?.imageUrl ?? "",
+                  videoUrl: videoUrl.value,
+                  isHorizontal: true
+                ),
+            )
+            : LoadImage(
+                tag: item?.mediaId.toString(),
+                url: item?.property?.imageUrl,
+                type: ImagePlaceholderType.AUTO_16x9,
+              ),
       ),
     );
   }
@@ -185,7 +212,7 @@ class _MediaInformation extends HookConsumerWidget {
               items.add(
                 Pair(
                   getAppLocalizations(context).media_info_menu_modified_data,
-                  StringUtil.formatSimpleDate(data?.updatedAt.toString() ?? ""),
+                  data?.updatedAt.toString() ?? "",
                 ),
               );
 
@@ -263,7 +290,7 @@ class _MediaInformation extends HookConsumerWidget {
             child: Text(
               getAppLocalizations(context).media_info_title,
               style: getTextTheme(context).b3b.copyWith(
-                    color: getColorScheme(context).colorGray500,
+                    color: getColorScheme(context).colorGray900,
                   ),
             ),
           ),
@@ -271,14 +298,14 @@ class _MediaInformation extends HookConsumerWidget {
             children: mediaItems.value
                 .map(
                   (e) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
+                    padding: const EdgeInsets.symmetric(vertical: 12.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         if (!CollectionUtil.isNullEmptyFromString(e.second))
                           Text(
                             e.first,
-                            style: getTextTheme(context).b2sb.copyWith(
+                            style: getTextTheme(context).b3sb.copyWith(
                                   color: getColorScheme(context).colorGray900,
                                 ),
                           ),
@@ -288,8 +315,8 @@ class _MediaInformation extends HookConsumerWidget {
                               padding: const EdgeInsets.only(left: 52.0),
                               child: Text(
                                 e.second.toString(),
-                                style: getTextTheme(context).b2m.copyWith(
-                                      color: getColorScheme(context).colorGray500,
+                                style: getTextTheme(context).b3m.copyWith(
+                                      color: getColorScheme(context).colorGray600,
                                     ),
                                 overflow: TextOverflow.visible,
                                 textAlign: TextAlign.end,

@@ -3,6 +3,8 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../app/MenuBossApp.dart';
+
 class BaseScaffold extends HookWidget {
   final Widget body;
   final Widget? bottomNavigationBar;

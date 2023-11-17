@@ -30,13 +30,13 @@ class MyScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutState = ref.watch(LogoutProvider);
-    final meInfo = ref.watch(MeInfoProvider);
-    final meInfoProvider = ref.read(MeInfoProvider.notifier);
-    final logoutProvider = ref.read(LogoutProvider.notifier);
+    final logoutState = ref.watch(logoutProvider);
+    final meInfo = ref.watch(meInfoProvider);
+    final meInfoManager = ref.read(meInfoProvider.notifier);
+    final logoutManager = ref.read(logoutProvider.notifier);
 
     void goToLogin() {
-      meInfoProvider.updateMeInfo(null);
+      meInfoManager.updateMeInfo(null);
       Navigator.pushAndRemoveUntil(
         context,
         nextFadeInOutScreen(RoutingScreen.Login.route),
@@ -48,7 +48,7 @@ class MyScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         logoutState.when(
           success: (event) async {
-            logoutProvider.init();
+            logoutManager.init();
             goToLogin();
           },
           failure: (event) {
@@ -69,12 +69,18 @@ class MyScreen extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                SizedBox(height: 24),
-                _UserProfile(role: meInfo?.business?.role, name: meInfo?.name),
-                SizedBox(height: 24),
-                _UserPlanScreenInfo(),
-                DividerVertical(marginVertical: 12),
-                _SettingItems(),
+                const SizedBox(height: 24),
+                _UserProfile(
+                  imageUrl: meInfo?.profile?.imageUrl,
+                  role: meInfo?.business?.role,
+                  name: meInfo?.profile?.name,
+                  businessName: meInfo?.business?.title,
+                  email: meInfo?.email,
+                ),
+                // SizedBox(height: 24),
+                // _UserPlanScreenInfo(),
+                const DividerVertical(marginVertical: 12),
+                const _SettingItems(),
               ],
             ),
             if (logoutState is Loading) const LoadingView()
@@ -86,13 +92,19 @@ class MyScreen extends HookConsumerWidget {
 }
 
 class _UserProfile extends HookWidget {
+  final String? imageUrl;
   final String? role;
   final String? name;
+  final String? businessName;
+  final String? email;
 
   const _UserProfile({
     super.key,
+    required this.imageUrl,
     required this.role,
     required this.name,
+    required this.businessName,
+    required this.email,
   });
 
   @override
@@ -102,67 +114,72 @@ class _UserProfile extends HookWidget {
       margin: const EdgeInsets.only(left: 24, right: 12),
       child: Row(
         children: [
-          const LoadProfile(
-            url: 'https://img.freepik.com/free-photo/portrait-of-white-man-isolated_53876-40306.jpg',
+          LoadProfile(
+            url: imageUrl ?? "",
             type: ProfileImagePlaceholderType.Size100x100,
           ),
           const SizedBox(
             width: 24,
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(vertical: 4),
-            child: Column(
-              mainAxisSize: MainAxisSize.max,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        color: getColorScheme(context).colorPrimary500,
-                        borderRadius: BorderRadius.circular(100),
-                      ),
-                      margin: const EdgeInsets.only(bottom: 4),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                        child: Text(
-                          role ?? "",
-                          style: getTextTheme(context).c2m.copyWith(
-                                color: getColorScheme(context).white,
-                              ),
-                          overflow: TextOverflow.ellipsis,
-                        ),
-                      ),
-                    ),
-                    if (!CollectionUtil.isNullEmptyFromString(name))
-                      Text(
-                        name.toString(),
-                        style: getTextTheme(context).b2sb.copyWith(
-                              color: getColorScheme(context).colorGray900,
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.symmetric(vertical: 4),
+              child: Column(
+                mainAxisSize: MainAxisSize.max,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!CollectionUtil.isNullEmptyFromString(role))
+                        Container(
+                          decoration: BoxDecoration(
+                            color: getColorScheme(context).colorPrimary500,
+                            borderRadius: BorderRadius.circular(100),
+                          ),
+                          margin: const EdgeInsets.only(bottom: 4),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                            child: Text(
+                              role.toString(),
+                              style: getTextTheme(context).c2m.copyWith(
+                                    color: getColorScheme(context).white,
+                                  ),
+                              overflow: TextOverflow.ellipsis,
                             ),
-                      ),
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'MenuBoss',
-                      style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray700,
                           ),
-                    ),
-                    Text(
-                      'admin@menuboss.com',
-                      style: getTextTheme(context).c1sb.copyWith(
-                            color: getColorScheme(context).colorGray700,
-                          ),
-                    ),
-                  ],
-                ),
-              ],
+                        ),
+                      if (!CollectionUtil.isNullEmptyFromString(name))
+                        Text(
+                          name.toString(),
+                          style: getTextTheme(context).b2sb.copyWith(
+                                color: getColorScheme(context).colorGray900,
+                              ),
+                        ),
+                    ],
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      if (!CollectionUtil.isNullEmptyFromString(businessName))
+                        Text(
+                          businessName.toString(),
+                          style: getTextTheme(context).c1sb.copyWith(
+                                color: getColorScheme(context).colorGray700,
+                              ),
+                        ),
+                      if (!CollectionUtil.isNullEmptyFromString(email))
+                        Text(
+                          email.toString(),
+                          style: getTextTheme(context).c1sb.copyWith(
+                                color: getColorScheme(context).colorGray700,
+                              ),
+                        ),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ],
@@ -247,7 +264,7 @@ class _SettingItems extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutProvider = ref.read(LogoutProvider.notifier);
+    final logoutManager = ref.read(logoutProvider.notifier);
 
     final items = [
       Pair(getAppLocalizations(context).my_page_setting_items_profile, () {
@@ -261,7 +278,7 @@ class _SettingItems extends HookConsumerWidget {
           context,
           child: PopupLogout(onClicked: (isCompleted) {
             if (isCompleted) {
-              logoutProvider.requestLogout();
+              logoutManager.requestLogout();
             }
           }),
         );
@@ -279,8 +296,8 @@ class _SettingItems extends HookConsumerWidget {
               padding: const EdgeInsets.symmetric(vertical: 16.0),
               child: Text(
                 getAppLocalizations(context).my_page_setting_item,
-                style: getTextTheme(context).c1sb.copyWith(
-                      color: getColorScheme(context).colorGray500,
+                style: getTextTheme(context).b3b.copyWith(
+                      color: getColorScheme(context).colorGray900,
                     ),
                 textAlign: TextAlign.start,
               ),
@@ -304,14 +321,14 @@ class _SettingItems extends HookConsumerWidget {
                       children: [
                         Text(
                           item.first,
-                          style: getTextTheme(context).b2sb.copyWith(
+                          style: getTextTheme(context).b3sb.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),
                         SvgPicture.asset(
                           "assets/imgs/icon_next.svg",
                           colorFilter: ColorFilter.mode(
-                            getColorScheme(context).colorGray400,
+                            getColorScheme(context).colorGray600,
                             BlendMode.srcIn,
                           ),
                           width: 24,

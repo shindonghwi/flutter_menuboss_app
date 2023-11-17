@@ -1,4 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/data/models/media/ResponseMediaProperty.dart';
+import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
 part 'RequestPlaylistUpdateInfoContents.g.dart';
@@ -23,6 +25,19 @@ class RequestPlaylistUpdateInfoContents {
     return RequestPlaylistUpdateInfoContents(
       contentId: contentId ?? this.contentId,
       duration: duration ?? this.duration,
+    );
+  }
+
+
+  // create to SimpleMediaContentModel method
+  SimpleMediaContentModel toMapperMediaContentModel(String imageUrl) {
+    return SimpleMediaContentModel(
+      index: -1,
+      id: contentId,
+      property: ResponseMediaProperty(
+        duration: duration,
+        imageUrl: imageUrl,
+      ),
     );
   }
 

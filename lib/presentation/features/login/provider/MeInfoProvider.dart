@@ -5,7 +5,7 @@ import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/me/ResponseMeInfoModel.dart';
 import 'package:riverpod/riverpod.dart';
 
-final MeInfoProvider = StateNotifierProvider<MeInfoNotifier, ResponseMeInfoModel?>(
+final meInfoProvider = StateNotifierProvider<MeInfoNotifier, ResponseMeInfoModel?>(
   (_) => MeInfoNotifier(),
 );
 
@@ -23,9 +23,23 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
 
   void updateMeFullName(String name) {
     ResponseMeInfoModel meInfo = state!.copyWith(
-      name: name,
+      profile: state!.profile?.copyWith(
+        name: name,
+      ),
     );
     debugPrint("updateMeFullName : $meInfo");
     state = meInfo;
   }
+
+  void updateMeProfileImage(String imageUrl) {
+    ResponseMeInfoModel meInfo = state!.copyWith(
+      profile: state!.profile?.copyWith(
+        imageUrl: imageUrl,
+      ),
+    );
+    debugPrint("updateMeProfileImage : $meInfo");
+    state = meInfo;
+  }
+
+  ResponseMeInfoModel? getMeInfo() => state;
 }

@@ -81,6 +81,7 @@ class MediaItem extends HookWidget {
                   context,
                   child: PopupRename(
                     hint: getAppLocalizations(context).popup_rename_media_hint,
+                    name: item.name.toString(),
                     onClicked: (name) => onRename.call(name),
                   ),
                 );
@@ -106,9 +107,9 @@ class _MediaSimpleInfo extends HookWidget {
     final code = item.type?.code.toLowerCase();
     String content = "";
     if (code == "image" || code == "video") {
-      content = "$code - (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "$code - ${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)}";
     } else if (code == "folder") {
-      content = "${item.property?.count} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "${item.property?.count} File(${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     }
 
     return Column(

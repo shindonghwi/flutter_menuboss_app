@@ -12,12 +12,12 @@ class FileMoveNotifier extends StateNotifier<UIState<String?>> {
 
   final PostMediaMoveUseCase _getMediaMoveUseCase = GetIt.instance<PostMediaMoveUseCase>();
 
-  Future<void> requestFileMove(List<String> mediaIds, String? folderId) async {
+  Future<void> requestFileMove(List<String> mediaIds, String? folderId, String folderName) async {
     state = Loading();
 
     _getMediaMoveUseCase.call(mediaIds, folderId: folderId).then((response) {
       if (response.status == 200) {
-        state = Success(response.message);
+        state = Success(folderName);
       } else {
         state = Failure(response.message);
       }

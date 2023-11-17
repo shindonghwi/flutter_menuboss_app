@@ -10,7 +10,7 @@ import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
-final LogoutProvider = StateNotifierProvider<LogoutUiStateNotifier, UIState<String?>>(
+final logoutProvider = StateNotifierProvider<LogoutUiStateNotifier, UIState<String?>>(
   (_) => LogoutUiStateNotifier(),
 );
 

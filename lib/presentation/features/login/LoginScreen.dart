@@ -1,9 +1,7 @@
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/button/PrimaryFilledButton.dart';
@@ -26,9 +24,9 @@ class LoginScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginState = ref.watch(LoginProvider);
-    final loginProvider = ref.read(LoginProvider.notifier);
-    final meInfoProvider = ref.read(MeInfoProvider.notifier);
+    final loginState = ref.watch(loginProvider);
+    final loginManager = ref.read(loginProvider.notifier);
+    final meInfoManager = ref.read(meInfoProvider.notifier);
     final isEmailValid = useState(false);
     final isPwValid = useState(false);
 
@@ -43,9 +41,9 @@ class LoginScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         loginState.when(
           success: (event) async {
-            loginProvider.init();
-            if (loginProvider.meInfo != null) {
-              meInfoProvider.updateMeInfo(loginProvider.meInfo);
+            loginManager.init();
+            if (loginManager.meInfo != null) {
+              meInfoManager.updateMeInfo(loginManager.meInfo);
             }
             goToMainScreen();
           },
@@ -65,29 +63,30 @@ class LoginScreen extends HookConsumerWidget {
               child: Container(
                 margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
                 child: SingleChildScrollView(
-                  physics: const BouncingScrollPhysics(),
+                  physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
                       const _Title(),
                       const SizedBox(height: 40),
                       _InputEmail(
                         onChanged: (text) {
-                          loginProvider.updateEmail(text);
+                          loginManager.updateEmail(text);
                           isEmailValid.value = RegUtil.checkEmail(text);
                         },
                       ),
                       const SizedBox(height: 16),
                       _InputPassword(
                         onChanged: (text) {
-                          loginProvider.updatePassword(text);
-                          isPwValid.value = RegUtil.checkPw(text);
+                          loginManager.updatePassword(text);
+                          isPwValid.value = text.isNotEmpty;
                         },
                       ),
                       const SizedBox(height: 20),
                       _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
-                      const SizedBox(height: 24),
-                      const _SocialLoginButtons(),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 16),
+                      const _SignUpButton()
+                      // const _SocialLoginButtons(),
+                      // const SizedBox(height: 40),
                     ],
                   ),
                 ),
@@ -99,6 +98,45 @@ class LoginScreen extends HookConsumerWidget {
   }
 }
 
+class _SignUpButton extends StatelessWidget {
+  const _SignUpButton({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Text(
+          getAppLocalizations(context).login_no_account,
+          style: getTextTheme(context).b3sb.copyWith(
+                color: getColorScheme(context).colorGray500,
+              ),
+        ),
+        const SizedBox(width: 4),
+        Clickable(
+          onPressed: () {
+            Navigator.push(
+              context,
+              nextSlideHorizontalScreen(
+                RoutingScreen.SignUp.route,
+              ),
+            );
+          },
+          child: Padding(
+            padding: const EdgeInsets.all(4.0),
+            child: Text(
+              getAppLocalizations(context).common_sign_up,
+              style: getTextTheme(context).b3sb.copyWith(
+                    color: getColorScheme(context).colorPrimary500,
+                  ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
 class _SocialLoginButtons extends HookConsumerWidget {
   const _SocialLoginButtons({
     super.key,
@@ -106,7 +144,7 @@ class _SocialLoginButtons extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginProvider = ref.read(LoginProvider.notifier);
+    final loginManager = ref.read(loginProvider.notifier);
     return Column(
       children: [
         Padding(
@@ -135,13 +173,13 @@ class _SocialLoginButtons extends HookConsumerWidget {
           children: [
             Clickable(
               borderRadius: 8,
-              onPressed: () => loginProvider.doGoogleLogin(),
+              onPressed: () => loginManager.doGoogleLogin(),
               child: SvgPicture.asset("assets/imgs/icon_google.svg", width: 64, height: 64),
             ),
             const SizedBox(width: 32),
             Clickable(
               borderRadius: 8,
-              onPressed: () => loginProvider.doAppleLogin(),
+              onPressed: () => loginManager.doAppleLogin(),
               child: SvgPicture.asset("assets/imgs/icon_apple.svg", width: 64, height: 64),
             )
           ],
@@ -161,7 +199,7 @@ class _LoginButton extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final loginProvider = ref.read(LoginProvider.notifier);
+    final loginManager = ref.read(loginProvider.notifier);
 
     return SizedBox(
       width: double.infinity,
@@ -170,7 +208,7 @@ class _LoginButton extends HookConsumerWidget {
         isActivated: isActivated,
         onPressed: () {
           // FirebaseCrashlytics.instance.crash();
-          loginProvider.doEmailLogin();
+          loginManager.doEmailLogin();
         },
       ),
     );
@@ -199,7 +237,7 @@ class _Title extends StatelessWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               getAppLocalizations(context).login_welcome,
-              style: getTextTheme(context).b2sb.copyWith(
+              style: getTextTheme(context).b1sb.copyWith(
                     color: getColorScheme(context).colorGray700,
                   ),
             ),
@@ -276,10 +314,6 @@ class _InputPassword extends HookWidget {
             child: OutlineTextField.small(
               controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_password,
-              errorMessage: getAppLocalizations(context).login_pw_invalid,
-              checkRegList: const [
-                RegCheckType.PW,
-              ],
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.visiblePassword,
               showPwVisibleButton: true,

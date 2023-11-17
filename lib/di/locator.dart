@@ -8,6 +8,7 @@ import 'package:menuboss/data/data_source/remote/me/RemoteMeApi.dart';
 import 'package:menuboss/data/data_source/remote/media/RemoteMediaApi.dart';
 import 'package:menuboss/data/data_source/remote/playlist/RemotePlaylistApi.dart';
 import 'package:menuboss/data/data_source/remote/schedule/RemoteScheduleApi.dart';
+import 'package:menuboss/data/data_source/remote/validation/RemoteValidationApi.dart';
 import 'package:menuboss/data/repositories/local/app/LocalAppRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/auth/RemoteAuthRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/canvas/RemoteCanvasRepositoryImpl.dart';
@@ -17,6 +18,7 @@ import 'package:menuboss/data/repositories/remote/me/RemoteMeRepositoryImpl.dart
 import 'package:menuboss/data/repositories/remote/media/RemoteMediaRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/playlist/RemotePlaylistRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/schedule/RemoteScheduleRepositoryImpl.dart';
+import 'package:menuboss/data/repositories/remote/validation/RemoteValidationRepositoryImpl.dart';
 import 'package:menuboss/domain/repositories/local/app/LocalAppRepository.dart';
 import 'package:menuboss/domain/repositories/remote/auth/RemoteAuthRepository.dart';
 import 'package:menuboss/domain/repositories/remote/canvas/RemoteCanvasRepository.dart';
@@ -26,6 +28,7 @@ import 'package:menuboss/domain/repositories/remote/me/RemoteMeRepository.dart';
 import 'package:menuboss/domain/repositories/remote/media/RemoteMediaRepository.dart';
 import 'package:menuboss/domain/repositories/remote/playlist/RemotePlaylistRepository.dart';
 import 'package:menuboss/domain/repositories/remote/schedule/RemoteScheduleRepository.dart';
+import 'package:menuboss/domain/repositories/remote/validation/RemoteValidationRepository.dart';
 import 'package:menuboss/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/GetMediaFilterTypeUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
@@ -41,11 +44,15 @@ import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDevicesContentsUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/device/PostShowNameEventUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadProfileImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/me/PatchMeProfileImageUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/me/PostMeJoinUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/me/PostMeLeaveUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
@@ -62,6 +69,7 @@ import 'package:menuboss/domain/usecases/remote/schedule/GetScheduleUseCase.dart
 import 'package:menuboss/domain/usecases/remote/schedule/GetSchedulesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/schedule/PatchScheduleUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/schedule/PostPlaylistUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/validation/PostValidationSocialLoginUseCase.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 final serviceLocator = GetIt.instance;
@@ -92,6 +100,9 @@ void initServiceLocator() {
   // me
   GetIt.instance.registerLazySingleton<GetMeInfoUseCase>(() => GetMeInfoUseCase());
   GetIt.instance.registerLazySingleton<PatchMeNameUseCase>(() => PatchMeNameUseCase());
+  GetIt.instance.registerLazySingleton<PostMeJoinUseCase>(() => PostMeJoinUseCase());
+  GetIt.instance.registerLazySingleton<PostMeLeaveUseCase>(() => PostMeLeaveUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeProfileImageUseCase>(() => PatchMeProfileImageUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());
@@ -99,6 +110,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<DelDeviceUseCase>(() => DelDeviceUseCase());
   GetIt.instance.registerLazySingleton<PatchDeviceNameUseCase>(() => PatchDeviceNameUseCase());
   GetIt.instance.registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
+  GetIt.instance.registerLazySingleton<PostShowNameEventUseCase>(() => PostShowNameEventUseCase());
 
   // playlist
   GetIt.instance.registerLazySingleton<GetPlaylistsUseCase>(() => GetPlaylistsUseCase());
@@ -130,6 +142,9 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostUploadMediaVideoUseCase>(() => PostUploadMediaVideoUseCase());
   GetIt.instance.registerLazySingleton<PostUploadProfileImageUseCase>(() => PostUploadProfileImageUseCase());
 
+  // validation
+  GetIt.instance.registerLazySingleton<PostValidationSocialLoginUseCase>(() => PostValidationSocialLoginUseCase());
+
   /// -------
   /// repository
   /// -------
@@ -142,6 +157,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteCanvasRepository>(() => RemoteCanvasRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteFileRepository>(() => RemoteFileRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteValidationRepository>(() => RemoteValidationRepositoryImpl());
 
   /// -------
   /// api
@@ -155,4 +171,5 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteCanvasApi>(() => RemoteCanvasApi());
   GetIt.instance.registerLazySingleton<RemoteScheduleApi>(() => RemoteScheduleApi());
   GetIt.instance.registerLazySingleton<RemoteFileApi>(() => RemoteFileApi());
+  GetIt.instance.registerLazySingleton<RemoteValidationApi>(() => RemoteValidationApi());
 }

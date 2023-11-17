@@ -10,6 +10,7 @@ import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceShowNameEventProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
@@ -26,6 +27,7 @@ class DeviceItem extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceManager = ref.read(deviceListProvider.notifier);
+    final showNameEventManager = ref.read(deviceShowNameEventProvider.notifier);
 
     return Container(
       width: double.infinity,
@@ -91,15 +93,20 @@ class DeviceItem extends HookConsumerWidget {
           ),
           MoreButton(
             items: const [
+              ModifyType.ShowNameToScreen,
               ModifyType.Rename,
               ModifyType.Delete,
             ],
             onSelected: (type, text) {
+              if (type == ModifyType.ShowNameToScreen) {
+                showNameEventManager.requestSendNameShowEvent(item.screenId);
+              }
               if (type == ModifyType.Rename) {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
                     hint: getAppLocalizations(context).popup_rename_screen_hint,
+                    name: item.name,
                     onClicked: (name) {
                       if (name.isNotEmpty) {
                         deviceManager.requestPatchDeviceName(item.screenId, name);

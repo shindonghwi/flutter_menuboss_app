@@ -5,14 +5,16 @@ import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/divider/DividerVertical.dart';
-import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
-import '../../../components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
+import 'package:menuboss/presentation/features/create/playlist/provider/CreatePreviewItemProcessProvider.dart';
+import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+
+import '../../../components/view_state/LoadingView.dart';
 import 'provider/PlayListRegisterProvider.dart';
 import 'provider/PlayListUpdateProvider.dart';
 import 'provider/PlaylistSaveInfoProvider.dart';
@@ -42,16 +44,22 @@ class CreatePlaylistScreen extends HookConsumerWidget {
     final playListUpdateState = ref.watch(playListUpdateProvider);
     final playListUpdateManager = ref.read(playListUpdateProvider.notifier);
 
+    final createPreviewProcessState = ref.watch(createPreviewItemProcessProvider);
+    final createPreviewProcessManager = ref.read(createPreviewItemProcessProvider.notifier);
+
     final mediaCartManager = ref.read(mediaContentsCartProvider.notifier);
     final saveManager = ref.read(playlistSaveInfoProvider.notifier);
 
     useEffect(() {
-      return (){
-        Future((){
+      return () {
+        Future(() {
           playListRegisterManager.init();
           playListUpdateManager.init();
+
           mediaCartManager.init();
           saveManager.init();
+
+          createPreviewProcessManager.init();
         });
       };
     }, []);
@@ -59,22 +67,10 @@ class CreatePlaylistScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (isEditMode.value) {
-          debugPrint("item: ${item.toString()}");
-
           saveManager.changeName(item?.name ?? "");
-          saveManager.changeDirection(
-            item?.property?.direction?.code.toLowerCase() == "horizontal"
-                ? PlaylistSettingType.Horizontal
-                : PlaylistSettingType.Vertical,
-          );
-
-          saveManager.changeFill(
-            item?.property?.fill?.code.toLowerCase() == "fill" ? PlaylistSettingType.Fill : PlaylistSettingType.Fit,
-          );
-
-          mediaCartManager.addItems(
-            item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? [],
-          );
+          saveManager.changeDirection(getPlaylistDirectionTypeFromString(item?.property?.direction?.code));
+          saveManager.changeFill(getPlaylistScaleTypeFromString(item?.property?.fill?.code));
+          mediaCartManager.addItems(item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? []);
         }
       });
       return null;
@@ -120,7 +116,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
           child: Stack(
             children: [
               NestedScrollView(
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 headerSliverBuilder: (context, innerBoxIsScrolled) {
                   return [
                     SliverToBoxAdapter(
@@ -130,12 +126,8 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                             initTitle: item?.name ?? "",
                           ),
                           PlaylistSettings(
-                            direction: item?.property?.direction?.code.toLowerCase() == "vertical"
-                                ? PlaylistSettingType.Vertical
-                                : PlaylistSettingType.Horizontal,
-                            scale: item?.property?.fill?.code.toLowerCase() == "fill"
-                                ? PlaylistSettingType.Fill
-                                : PlaylistSettingType.Fit,
+                            direction: getPlaylistDirectionTypeFromString(item?.property?.direction?.code),
+                            scale: getPlaylistScaleTypeFromString(item?.property?.fill?.code),
                           ),
                         ],
                       ),
@@ -150,7 +142,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                   ],
                 ),
               ),
-              if (playListRegisterState is Loading || playListUpdateState is Loading) const LoadingView(),
+              if (playListRegisterState is Loading || playListUpdateState is Loading || createPreviewProcessState is Loading) const LoadingView(),
             ],
           ),
         ),

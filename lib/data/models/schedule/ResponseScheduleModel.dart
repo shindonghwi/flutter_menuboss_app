@@ -30,18 +30,14 @@ class ResponseScheduleModel {
 
   Map<String, dynamic> toJson() => _$ResponseScheduleModelToJson(this);
 
-  ResponseScheduleModel toUpDatedAtSimpleMapper() {
+  ResponseScheduleModel toupdatedAtSimpleMapper() {
     return ResponseScheduleModel(
       object: object,
       scheduleId: scheduleId,
       name: name,
       playlists: playlists,
-      updatedAt: _updatedAtMapper(updatedAt),
+      updatedAt: updatedAt,
     );
-  }
-
-  String _updatedAtMapper(String updatedAt) {
-    return StringUtil.formatSimpleDate(updatedAt);
   }
 
   @override

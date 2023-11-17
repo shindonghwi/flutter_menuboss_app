@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/features/media_content/widget/MediaContentTabVIew.dart';
@@ -22,7 +23,7 @@ class MediaContentScreen extends HookWidget {
     final selectFolderId = useState<String?>(null);
 
     return BaseScaffold(
-      appBar: TopBarIconTitleNone(content: getAppLocalizations(context).media_content_title),
+      appBar: TopBarNoneTitleIcon(content: getAppLocalizations(context).media_content_title),
       body: Column(
         children: [
           MediaContentTabView(

@@ -9,8 +9,8 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
-import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
+import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -186,24 +186,29 @@ class RemoteAuthApi {
   Future<ApiResponse<ResponseLoginModel>> postSocialLogin({
     required RequestSocialLoginModel requestSocialLoginModel,
   }) async {
-    Service.addHeader(key: HeaderKey.Authorization, value: "");
-    final response = await Service.postApi(
-      type: ServiceType.Auth,
-      endPoint: 'social/login',
-      jsonBody: requestSocialLoginModel.toJson(),
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      Service.addHeader(key: HeaderKey.Authorization, value: "");
+      final response = await Service.postApi(
+        type: ServiceType.Auth,
+        endPoint: 'social/login',
+        jsonBody: requestSocialLoginModel.toJson(),
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseLoginModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseLoginModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
@@ -213,24 +218,29 @@ class RemoteAuthApi {
   Future<ApiResponse<ResponseLoginModel>> postEmailLogin({
     required RequestEmailLoginModel requestEmailLoginModel,
   }) async {
-    Service.addHeader(key: HeaderKey.Authorization, value: "");
-    final response = await Service.postApi(
-      type: ServiceType.Auth,
-      endPoint: 'login',
-      jsonBody: requestEmailLoginModel.toJson(),
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      Service.addHeader(key: HeaderKey.Authorization, value: "");
+      final response = await Service.postApi(
+        type: ServiceType.Auth,
+        endPoint: 'login',
+        jsonBody: requestEmailLoginModel.toJson(),
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseLoginModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseLoginModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }
@@ -238,23 +248,28 @@ class RemoteAuthApi {
   /// @feature: API 로그아웃
   /// @author: 2023/09/11 6:31 PM donghwishin
   Future<ApiResponse<ResponseLoginModel>> postLogout() async {
-    final response = await Service.postApi(
-      type: ServiceType.Auth,
-      endPoint: 'logout',
-      jsonBody: null,
-    );
-
-    final errorResponse = BaseApiUtil.isErrorStatusCode(response);
-    if (errorResponse != null) {
-      return ApiResponse(
-        status: errorResponse.status,
-        message: errorResponse.message,
-        data: null,
+    try {
+      final response = await Service.postApi(
+        type: ServiceType.Auth,
+        endPoint: 'logout',
+        jsonBody: null,
       );
-    } else {
-      return ApiResponse.fromJson(
-        jsonDecode(response.body),
-        (json) => ResponseLoginModel.fromJson(json),
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) => ResponseLoginModel.fromJson(json),
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
       );
     }
   }

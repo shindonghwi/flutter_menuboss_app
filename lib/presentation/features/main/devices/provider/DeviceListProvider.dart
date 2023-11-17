@@ -21,8 +21,11 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   List<ResponseDeviceModel> currentDevices = [];
 
   /// 디바이스 리스트 조회
-  void requestGetDevices() {
+  void requestGetDevices() async{
     state = Loading();
+
+    await Future.delayed(const Duration(milliseconds: 600));
+
     _getDevicesUseCase.call().then((response) async {
       if (response.status == 200) {
         updateCurrentDevices(response.list?.toList() ?? []);
@@ -84,4 +87,6 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   void updateCurrentDevices(List<ResponseDeviceModel> devices) {
     currentDevices = devices;
   }
+
+  void init() => state = Idle();
 }

@@ -16,7 +16,7 @@ class NeutralLineButton extends HookWidget {
 
   /// @feature: extraSmall buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralLineButton.extraSmallRound4({
+  const NeutralLineButton.smallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -26,7 +26,7 @@ class NeutralLineButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const NeutralLineButton.extraSmallRound4Icon({
+  const NeutralLineButton.smallRound4Icon({
     Key? key,
     required this.leftIcon,
     required this.content,
@@ -36,7 +36,7 @@ class NeutralLineButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const NeutralLineButton.extraSmallRound100({
+  const NeutralLineButton.smallRound100({
     Key? key,
     required this.content,
     required this.isActivated,

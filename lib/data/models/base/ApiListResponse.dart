@@ -20,18 +20,31 @@ class ApiListResponse<T> {
       Map<String, dynamic>? json,
       T Function(dynamic) fromJsonT,
       ) {
-
-    debugPrint('ApiListResponse.fromJson: $json');
     try {
+      final int status = json!['status'] as int;
+      debugPrint('Parsed status: $status');
+
+      final String message = json['message'] as String;
+      debugPrint('Parsed message: $message');
+
+      final PageResponse? page = json['page'] == null ? null : PageResponse.fromJson(json['page']);
+      debugPrint('Parsed page: $page');
+
+      final T? list = fromJsonT(json['list']);
+      debugPrint('Parsed list: $list');
+
+      final int? count = json['count'] as int?;
+      debugPrint('Parsed count: $count');
+
       return ApiListResponse(
-        status: json!['status'] as int,
-        message: json['message'] as String,
-        page: json['page'] == null ? null : PageResponse.fromJson(json['page']),
-        list: fromJsonT(json['list']),
-        count: json['count'] as int?,
+        status: status,
+        message: message,
+        page: page,
+        list: list,
+        count: count,
       );
     } catch (e) {
-      debugPrint('Error parsing JSON: ${e.toString()}}');
+      debugPrint('Error at specific parsing point: ${e.toString()}');
       return ApiListResponse(
         status: json!['status'] as int,
         message: json['message'] as String,
@@ -41,5 +54,6 @@ class ApiListResponse<T> {
       );
     }
   }
+
 
 }

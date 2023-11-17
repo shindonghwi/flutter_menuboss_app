@@ -61,16 +61,16 @@ class MediaItemAdd extends HookConsumerWidget {
     String content = "";
     if (code == "image" || code == "video") {
       isFolderType = false;
-      content = "$code - (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "$code - ${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)}";
     } else if (code == "folder") {
       isFolderType = true;
-      content = "${item.property?.count ?? 0} File (${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
+      content = "${item.property?.count ?? 0} File(${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
     }
 
     return ClickableScale(
       onPressed: isFolderType ? () => onFolderTap.call() : null,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
+        padding: const EdgeInsets.fromLTRB(24, 16, 12, 16),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
@@ -108,21 +108,34 @@ class MediaItemAdd extends HookConsumerWidget {
                 ],
               ),
             ),
+            const SizedBox(
+              width: 12,
+            ),
             !isFolderType
-                ? PrimaryFilledButton.extraSmallRound100(
-                    content: getAppLocalizations(context).common_add,
-                    isActivated: true,
-                    onPressed: () {
-                      Toast.showSuccess(context, getAppLocalizations(context).message_add_media_in_playlist_success);
-                      mediaCartManager.addItem(item);
-                    },
+                ? Container(
+                    margin: const EdgeInsets.only(right: 12),
+                    child: PrimaryFilledButton.smallRound100(
+                      content: getAppLocalizations(context).common_add,
+                      isActivated: true,
+                      onPressed: () {
+                        Toast.showSuccess(
+                          context,
+                          getAppLocalizations(context).message_add_media_in_playlist_success,
+                        );
+                        mediaCartManager.addItem(item);
+                      },
+                    ),
                   )
                 : Container(
-                    margin: const EdgeInsets.only(right: 18),
+                    margin: const EdgeInsets.only(right: 12),
                     child: SvgPicture.asset(
-                      "assets/imgs/icon_arrow_right.svg",
+                      "assets/imgs/icon_next.svg",
                       width: 24,
                       height: 24,
+                      colorFilter: ColorFilter.mode(
+                        getColorScheme(context).colorGray600,
+                        BlendMode.srcIn,
+                      ),
                     ),
                   )
           ],

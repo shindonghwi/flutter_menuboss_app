@@ -89,6 +89,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
         onDeleteClick: () async{
           final isSuccess = await mediaListManager.removeItem(checkListState, folderId: item!.mediaId);
           if (isSuccess) {
+            Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
             mediaListManager.initPageInfo();
             mediaListManager.requestGetMedias();
           }
@@ -131,7 +132,7 @@ class _MediaContentList extends HookConsumerWidget {
             children: [
               ListView.builder(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-                physics: const BouncingScrollPhysics(),
+                physics: const AlwaysScrollableScrollPhysics(),
                 shrinkWrap: true,
                 controller: scrollController,
                 itemCount: items.length,

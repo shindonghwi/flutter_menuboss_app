@@ -7,9 +7,12 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
-enum ModifyType { Rename, Delete, ChangeDuration }
+import '../../../navigation/PageMoveUtil.dart';
+
+enum ModifyType { ShowNameToScreen, Rename, Delete, ChangeDuration }
 
 final Map<ModifyType, String> modifyDescriptions = {
+  ModifyType.ShowNameToScreen: "Display screen name",
   ModifyType.Rename: "Rename",
   ModifyType.Delete: "Delete",
   ModifyType.ChangeDuration: "Change duration",
@@ -33,6 +36,8 @@ class BottomSheetModifySelector extends HookWidget {
 
     String? getIconPath(ModifyType type) {
       switch (type) {
+        case ModifyType.ShowNameToScreen:
+          return "assets/imgs/icon_display_screen.svg";
         case ModifyType.Rename:
           return "assets/imgs/icon_rename.svg";
         case ModifyType.Delete:
@@ -46,6 +51,8 @@ class BottomSheetModifySelector extends HookWidget {
 
     Color? getIconColor(ModifyType type) {
       switch (type) {
+        case ModifyType.ShowNameToScreen:
+          return getColorScheme(context).black;
         case ModifyType.Rename:
           return getColorScheme(context).black;
         case ModifyType.Delete:
@@ -68,7 +75,9 @@ class BottomSheetModifySelector extends HookWidget {
             Color? color = getIconColor(type);
             return ClickableScale(
               onPressed: () {
-                Navigator.pop(context);
+                popPage(context, () {
+                  Navigator.pop(context);
+                });
                 onSelected(type, value);
               },
               child: Padding(

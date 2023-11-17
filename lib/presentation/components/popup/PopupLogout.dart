@@ -8,6 +8,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class PopupLogout extends HookWidget {
   final Function(bool isCompleted)? onClicked;
 
@@ -27,8 +29,8 @@ class PopupLogout extends HookWidget {
         children: [
           SvgPicture.asset(
             "assets/imgs/icon_warning.svg",
-            width: 36,
-            height: 36,
+            width: 32,
+            height: 32,
             colorFilter: ColorFilter.mode(
               getColorScheme(context).colorPrimary500,
               BlendMode.srcIn,
@@ -66,7 +68,9 @@ class PopupLogout extends HookWidget {
                   content: getAppLocalizations(context).common_cancel,
                   isActivated: true,
                   onPressed: () {
-                    Navigator.pop(context);
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                   },
                 ),
               ),
@@ -77,11 +81,13 @@ class PopupLogout extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: PrimaryFilledButton.mediumRound8(
-                  content: getAppLocalizations(context).common_delete,
+                  content: getAppLocalizations(context).common_logout,
                   isActivated: true,
                   onPressed: () {
+                    popPage(context, () {
+                      Navigator.pop(context);
+                    });
                     onClicked?.call(true);
-                    Navigator.pop(context);
                   },
                 ),
               ),

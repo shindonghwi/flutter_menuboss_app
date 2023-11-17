@@ -12,7 +12,7 @@ import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 
-final LoginProvider = StateNotifierProvider<LoginUiStateNotifier, UIState<String?>>(
+final loginProvider = StateNotifierProvider<LoginUiStateNotifier, UIState<String?>>(
   (_) => LoginUiStateNotifier(),
 );
 
@@ -37,12 +37,12 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   void updatePassword(String text) => _password = text;
 
-  void doEmailLogin() async {
+  void doEmailLogin({String? email, String? password}) async {
     state = Loading();
 
     final result = await _postEmailLoginInUseCase.call(
-      email: _email,
-      password: _password,
+      email: email ?? _email,
+      password: password ?? _password,
     );
 
     if (result.status == 200) {

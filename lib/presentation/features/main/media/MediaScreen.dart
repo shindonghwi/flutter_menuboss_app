@@ -17,6 +17,7 @@ import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/FilePickerUtil.dart';
@@ -37,6 +38,15 @@ class MediaScreen extends HookConsumerWidget {
     final mediaList = useState<List<ResponseMediaModel>?>(null);
 
     useEffect(() {
+      return () {
+        Future(() {
+          mediaManager.init();
+          mediaManager.initPageInfo();
+        });
+      };
+    }, []);
+
+    useEffect(() {
       void handleUiStateChange() async {
         await Future(() {
           mediaState.when(
@@ -52,35 +62,55 @@ class MediaScreen extends HookConsumerWidget {
       return null;
     }, [mediaState]);
 
-    void doMediaUploadAction() {
+    void doMediaUploadAction() async {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
 
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: false);
-          GetIt.instance<PostUploadMediaImageUseCase>().call(xFile.path, streamController: controller).then((response) {
-            if (response.status == 200) {
-              mediaManager.initPageInfo();
-              mediaManager.requestGetMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+          final controller = await uploadProgressProvider.uploadStart(
+            xFile.path,
+            isVideo: false,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaImageUseCase>()
+                .call(xFile.path, streamController: controller)
+                .then((response) {
+              if (response.status == 200) {
+                mediaManager.initPageInfo();
+                mediaManager.requestGetMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         onVideoSelected: (XFile xFile) async {
-          final controller = await uploadProgressProvider.uploadStart(xFile.path, isVideo: true);
-          GetIt.instance<PostUploadMediaVideoUseCase>().call(xFile.path, streamController: controller).then((response) {
-            if (response.status == 200) {
-              mediaManager.initPageInfo();
-              mediaManager.requestGetMedias();
-              uploadProgressProvider.uploadSuccess();
-            } else {
-              Toast.showError(context, response.message);
-              uploadProgressProvider.uploadFail();
-            }
-          });
+          final controller = await uploadProgressProvider.uploadStart(
+            xFile.path,
+            isVideo: true,
+            onNetworkError: () {
+              Toast.showError(context, getAppLocalizations(context).message_network_required);
+            },
+          );
+          if (controller != null) {
+            GetIt.instance<PostUploadMediaVideoUseCase>()
+                .call(xFile.path, streamController: controller)
+                .then((response) {
+              if (response.status == 200) {
+                mediaManager.initPageInfo();
+                mediaManager.requestGetMedias();
+                uploadProgressProvider.uploadSuccess();
+              } else {
+                Toast.showError(context, response.message);
+                uploadProgressProvider.uploadFail();
+              }
+            });
+          }
         },
         notAvailableFile: () {
           Toast.showSuccess(context, getAppLocalizations(context).message_file_not_allow_404);
@@ -109,7 +139,7 @@ class MediaScreen extends HookConsumerWidget {
                 () {
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(
+                    nextSlideVerticalScreen(
                       RoutingScreen.SelectMediaFile.route,
                     ),
                   );
@@ -187,61 +217,72 @@ class _MediaContentList extends HookConsumerWidget {
                     ),
                   ),
                   Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
-                      controller: scrollController,
-                      physics: const BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: items.length,
-                      itemBuilder: (context, index) {
-                        final item = items[index];
-                        final isFolderType = item.type?.code.toLowerCase() == "folder";
-                        return ClickableScale(
-                          onPressed: () async {
-                            if (isFolderType) {
-                              Navigator.push(
-                                context,
-                                nextSlideHorizontalScreen(
-                                  RoutingScreen.MediaDetailInFolder.route,
-                                  parameter: item,
-                                ),
-                              );
-                            } else {
-                              try {
-                                final newName = await Navigator.push(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        mediaManager.initPageInfo();
+                        mediaManager.requestGetMedias(delayed: 300);
+                      },
+                      color: getColorScheme(context).colorPrimary500,
+                      backgroundColor: getColorScheme(context).white,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          final isFolderType = item.type?.code.toLowerCase() == "folder";
+                          return ClickableScale(
+                            onPressed: () async {
+                              if (isFolderType) {
+                                Navigator.push(
                                   context,
                                   nextSlideHorizontalScreen(
-                                    RoutingScreen.MediaInfo.route,
+                                    RoutingScreen.MediaDetailInFolder.route,
                                     parameter: item,
                                   ),
                                 );
+                              } else {
+                                try {
+                                  final newName = await Navigator.push(
+                                    context,
+                                    nextSlideHorizontalScreen(
+                                      RoutingScreen.MediaInfo.route,
+                                      parameter: item,
+                                    ),
+                                  );
 
-                                if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                                  mediaManager.renameItem(item.mediaId ?? "", newName);
+                                  if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                                    mediaManager.renameItem(item.mediaId ?? "", newName);
+                                  }
+                                } catch (e) {
+                                  debugPrint(e.toString());
                                 }
-                              } catch (e) {
-                                debugPrint(e.toString());
                               }
-                            }
-                          },
-                          child: MediaItem(
-                            item: item,
-                            onRemove: () {
-                              mediaManager.removeItem([item.mediaId]);
                             },
-                            onRename: (newName) {
-                              mediaManager.renameItem(item.mediaId, newName);
-                            },
-                          ),
-                        );
-                      },
+                            child: MediaItem(
+                              item: item,
+                              onRemove: () async {
+                                final isRemoved = await mediaManager.removeItem([item.mediaId]);
+                                if (isRemoved) {
+                                  Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
+                                }
+                              },
+                              onRename: (newName) {
+                                mediaManager.renameItem(item.mediaId, newName);
+                              },
+                            ),
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ],
               ),
               Container(
                 alignment: Alignment.bottomRight,
-                margin: const EdgeInsets.only(bottom: 32, right: 24),
+                margin: const EdgeInsets.only(bottom: 16, right: 24),
                 child: FloatingPlusButton(
                   onPressed: () => onMediaUpload.call(),
                 ),

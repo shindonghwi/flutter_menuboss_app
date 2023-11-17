@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:intl/intl.dart';
 
 import 'dto/Triple.dart';
@@ -13,17 +14,20 @@ class StringUtil {
 
   /// bytes int 정보를 메가바이트로 변환하여 반환합니다.
   static String formatBytesToMegabytes(int bytes) {
-    double megabytes = bytes / (1024 * 1024);
-    double kilobytes = bytes / 1024;
 
-    if (megabytes >= 0.1) {
-      return '${megabytes.toStringAsFixed(1)}MB';
-    } else if (kilobytes >= 10) {
-      return '0.1MB';
-    } else if (kilobytes >= 1) {
-      return '${kilobytes.toStringAsFixed(0)}KB';
+    double kilobytes = bytes / 1024;
+    double megabytes = kilobytes / 1024;
+    double gigabytes = megabytes / 1024;
+
+    if (gigabytes >= 1) {
+      final gbSize = gigabytes.toStringAsFixed(1);
+      return gbSize.contains(".0") ? '${double.parse(gbSize).toInt()}GB' : '${gbSize}GB';
+    } else if (megabytes >= 1) {
+      final mbSize = megabytes.toStringAsFixed(1);
+      return mbSize.contains(".0") ? '${double.parse(mbSize).toInt()}MB' : '${mbSize}MB';
     } else {
-      return '${bytes}B';
+      final kbSize = kilobytes.toStringAsFixed(1);
+      return kbSize.contains(".0") ? '${double.parse(kbSize).toInt()}KB' : '${kbSize}KB';
     }
   }
 
@@ -60,12 +64,6 @@ class StringUtil {
   /// "00:01:01"를 받아서 초로 변환하여 반환합니다.
   static int convertToSeconds(int hours, int minutes, int seconds) {
     return hours * 3600 + minutes * 60 + seconds;
-  }
-
-  /// "Sep 15, 2023, 9:30 AM" 형식의 문자열을 "Sep 15, 2023"로 변환합니다.
-  static String formatSimpleDate(String input) {
-    DateTime parsedDate = DateFormat('MMM d, y, h:mm a').parse(input);
-    return DateFormat('MMM d, y').format(parsedDate);
   }
 
 }

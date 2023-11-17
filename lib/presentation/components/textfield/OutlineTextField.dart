@@ -38,10 +38,28 @@ class OutlineTextField extends HookWidget {
     this.textInputAction = TextInputAction.next,
     this.inputFormatters = const [],
     this.onChanged,
-  })  : height = 44,
+  })  : height = 32,
         super(key: key);
 
   const OutlineTextField.small({
+    Key? key,
+    this.controller,
+    required this.hint,
+    this.successMessage = '',
+    this.errorMessage = '',
+    this.checkRegList = const [],
+    this.showPwVisibleButton = false,
+    this.showSuffixStatusIcon = true,
+    this.forceRedCheck = false,
+    this.enable = true,
+    this.textInputType = TextInputType.text,
+    this.textInputAction = TextInputAction.next,
+    this.inputFormatters = const [],
+    this.onChanged,
+  })  : height = 44,
+        super(key: key);
+
+  const OutlineTextField.medium({
     Key? key,
     this.controller,
     required this.hint,
@@ -83,10 +101,14 @@ class OutlineTextField extends HookWidget {
 
     final isSuccess = useState<bool?>(null);
     final isPwVisible = useState(false);
-    EdgeInsets contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
+    EdgeInsets contentPadding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
     TextStyle textStyle = getTextTheme(context).b3m;
 
     switch (height) {
+      case 32:
+        contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
+        textStyle = getTextTheme(context).b3m;
+        break;
       case 44:
         contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
         textStyle = getTextTheme(context).b3m;

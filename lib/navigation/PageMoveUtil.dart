@@ -1,7 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/Route.dart';
 
 PageRoute nextSlideHorizontalScreen(String route, {dynamic parameter, fullScreen = false}) {
@@ -60,4 +60,50 @@ PageRoute nextSlideVerticalScreen(String route, {dynamic parameter, fullScreen =
       );
     },
   );
+}
+
+void popPage(BuildContext context, VoidCallback onPressed) {
+  if (Navigator.canPop(context)) {
+    onPressed.call();
+  } else {
+    Navigator.pushAndRemoveUntil(
+      context,
+      nextFadeInOutScreen(RoutingScreen.Main.route),
+      (route) => false,
+    );
+  }
+}
+
+void movePage(RoutingScreen screen, {dynamic parameter}) {
+  MenuBossGlobalVariable.navigatorKey.currentState!.pushReplacement(
+    nextFadeInOutScreen(screen.route, parameter: parameter),
+  );
+}
+
+void handleDeepLink(String? link, {dynamic parameter}) {
+  debugPrint("handleDeepLink: $link");
+
+  if (link == null) return;
+
+  if (link.contains(RoutingScreen.Login.route)) {
+    movePage(RoutingScreen.Login, parameter: parameter);
+  } else if (link.contains(RoutingScreen.SignUp.route)) {
+    movePage(RoutingScreen.SignUp, parameter: parameter);
+  } else if (link.contains(RoutingScreen.ScanQR.route)) {
+    movePage(RoutingScreen.ScanQR, parameter: parameter);
+  } else if (link.contains(RoutingScreen.DetailPlaylist.route)) {
+    movePage(RoutingScreen.DetailPlaylist, parameter: parameter);
+  } else if (link.contains(RoutingScreen.CreatePlaylist.route)) {
+    movePage(RoutingScreen.CreatePlaylist, parameter: parameter);
+  } else if (link.contains(RoutingScreen.PreviewPlaylist.route)) {
+    movePage(RoutingScreen.PreviewPlaylist, parameter: parameter);
+  } else if (link.contains(RoutingScreen.DetailSchedule.route)) {
+    movePage(RoutingScreen.DetailSchedule, parameter: parameter);
+  } else if (link.contains(RoutingScreen.CreateSchedule.route)) {
+    movePage(RoutingScreen.CreateSchedule, parameter: parameter);
+  } else if (link.contains(RoutingScreen.MediaInfo.route)) {
+    movePage(RoutingScreen.MediaInfo, parameter: parameter);
+  } else if (link.contains(RoutingScreen.MediaDetailInFolder.route)) {
+    movePage(RoutingScreen.MediaDetailInFolder, parameter: parameter);
+  }
 }

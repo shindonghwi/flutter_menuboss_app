@@ -6,6 +6,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
+import '../../../navigation/PageMoveUtil.dart';
+
 class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
   final String content;
   final String? rightIconPath;
@@ -36,8 +38,9 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s2b.copyWith(
-                        color: reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
+                  style: getTextTheme(context).s3b.copyWith(
+                        color:
+                            reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,
                 ),
@@ -50,17 +53,21 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
                   margin: const EdgeInsets.only(right: 12.0),
                   child: Clickable(
                     onPressed: () {
-                      rightIconOnPressed != null ? rightIconOnPressed?.call() : Navigator.pop(context);
+                      popPage(context, () {
+                        rightIconOnPressed != null ? rightIconOnPressed?.call() : Navigator.pop(context);
+                      });
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(rightIconPath ?? "assets/imgs/icon_close_line.svg",
-                          width: 24,
-                          height: 24,
-                          colorFilter: ColorFilter.mode(
-                            reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
-                            BlendMode.srcIn,
-                          )),
+                      child: SvgPicture.asset(
+                        rightIconPath ?? "assets/imgs/icon_close_line.svg",
+                        width: 24,
+                        height: 24,
+                        colorFilter: ColorFilter.mode(
+                          reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
+                          BlendMode.srcIn,
+                        ),
+                      ),
                     ),
                   ),
                 ),

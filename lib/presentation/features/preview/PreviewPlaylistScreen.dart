@@ -5,17 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
-import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
+import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
+import 'package:video_player/video_player.dart';
+
+import '../create/playlist/provider/CreatePreviewItemProcessProvider.dart';
+import '../detail/playlist/provider/DetailPreviewItemProcessProvider.dart';
 
 class PreviewPlaylistScreen extends HookConsumerWidget {
   const PreviewPlaylistScreen({
@@ -24,14 +27,47 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContentsCart = ref.watch(mediaContentsCartProvider);
-    final playlistSaveInfo = ref.watch(playlistSaveInfoProvider);
+    final previewState = ref.watch(previewListProvider);
+
+    final createPreviewProcessManager = ref.read(createPreviewItemProcessProvider.notifier);
+    final detailPreviewProcessManager = ref.read(detailPreviewItemProcessProvider.notifier);
 
     final currentPage = useState(0);
-    final isDirectionHorizontal = useState(playlistSaveInfo.property.direction.toLowerCase() == "horizontal");
-    final isScaleFit = useState(playlistSaveInfo.property.fill.toLowerCase() == "fit");
 
-    List<int?> durations = mediaContentsCart.map((e) => e.property?.duration?.toInt()).toList();
+    final directionType = useState(previewState?.direction);
+    final contentScale = useState(previewState?.fill);
+
+    List<int?> durations = previewState?.durations ?? [];
+
+    final videoControllers = useState<List<VideoPlayerController?>?>(null);
+
+    useEffect(() {
+      return () {
+        Future(() {
+          createPreviewProcessManager.init();
+          detailPreviewProcessManager.init();
+        });
+      };
+    }, []);
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        videoControllers.value = previewState?.previewItems.map((mediaContent) {
+          if (mediaContent.type?.toLowerCase() == "video") {
+            var controller = VideoPlayerController.networkUrl(Uri.parse(mediaContent.property!.videoUrl ?? ""))
+              ..initialize().then((_) {
+                debugPrint("video initialized");
+              }).catchError((e) {
+                debugPrint(e.toString());
+              });
+            controller.setLooping(true);
+            return controller;
+          }
+          return null;
+        }).toList();
+      });
+      return () => videoControllers.value?.forEach((controller) => controller?.dispose());
+    }, [previewState]);
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
@@ -41,87 +77,139 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
       ),
       backgroundColor: getColorScheme(context).black,
       body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           _Settings(
-            isDirectionHorizontal: isDirectionHorizontal,
-            isScaleFit: isScaleFit,
+            directionType: directionType,
+            contentScale: contentScale,
           ),
-          _ImageDisplay(
-            mediaContentsCart: mediaContentsCart,
-            currentPage: currentPage.value,
-            isDirectionHorizontal: isDirectionHorizontal.value,
-            isScaleFit: isScaleFit.value,
+          Expanded(
+            child: Align(
+              alignment: Alignment.center,
+              child: _Display(
+                currentPage: currentPage,
+                videoControllers: videoControllers.value,
+                durations: durations.map((e) => e ?? -1).toList(),
+                directionType: directionType.value,
+                contentScale: contentScale.value,
+              ),
+            ),
           ),
         ],
       ),
       bottomNavigationBar: SafeArea(
         child: TimerDivider(
-          durations: durations,
-          currentPageNotifier: currentPage,
-        ),
+            durations: durations,
+            currentPageNotifier: currentPage,
+            onStart: () {
+              videoControllers.value?[currentPage.value]?.play();
+            },
+            onStop: () {
+              videoControllers.value?[currentPage.value]?.pause();
+            }),
       ),
     );
   }
 }
 
-class _ImageDisplay extends HookConsumerWidget {
-  final int currentPage;
-  final bool isDirectionHorizontal;
-  final bool isScaleFit;
-  final List<SimpleMediaContentModel> mediaContentsCart;
+class _Display extends HookConsumerWidget {
+  final ValueNotifier<int> currentPage;
+  final List<VideoPlayerController?>? videoControllers;
+  final List<int> durations;
+  final PlaylistSettingType? directionType;
+  final PlaylistSettingType? contentScale;
 
-  const _ImageDisplay({
+  const _Display({
     super.key,
-    required this.mediaContentsCart,
     required this.currentPage,
-    required this.isDirectionHorizontal,
-    required this.isScaleFit,
+    required this.videoControllers,
+    required this.durations,
+    required this.directionType,
+    required this.contentScale,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 60.0),
-        child: Stack(
-          alignment: Alignment.center,
-          children: mediaContentsCart.map((mediaContent) {
-            int index = mediaContentsCart.indexOf(mediaContent);
-            return AnimatedOpacity(
-              opacity: currentPage == index ? 1.0 : 0.0,
-              duration: const Duration(milliseconds: 500),
-              child: Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: getColorScheme(context).colorGray800,
-                    width: 4,
-                  ),
-                ),
-                child: AspectRatio(
-                  aspectRatio: isDirectionHorizontal ? 16 / 9 : 9 / 16,
-                  child: LoadImage(
-                      tag: mediaContent.id.toString(),
-                      url: mediaContent.property?.imageUrl,
-                      type: ImagePlaceholderType.AUTO_16x9,
-                      fit: isScaleFit ? BoxFit.contain : BoxFit.cover),
-                ),
+    final previewState = ref.watch(previewListProvider);
+
+    var fitInfo = BoxFit.contain;
+    if (contentScale == PlaylistSettingType.Fit) {
+      fitInfo = BoxFit.contain;
+    } else if (contentScale == PlaylistSettingType.Fill) {
+      fitInfo = BoxFit.cover;
+    } else if (contentScale == PlaylistSettingType.Stretch) {
+      fitInfo = BoxFit.fill;
+    }
+
+    // duration에 따라 표시되는 로직을 추가하기 위해 사용될 State
+    final autoAdvanceTimer = useState<Timer?>(null);
+
+    useEffect(() {
+      autoAdvanceTimer.value?.cancel(); // 이전 타이머가 있다면 취소
+      if (durations.isNotEmpty && currentPage.value < durations.length) {
+        autoAdvanceTimer.value = Timer(Duration(seconds: durations[currentPage.value]), () {
+          currentPage.value = (currentPage.value + 1) % durations.length;
+        });
+      }
+      return () => autoAdvanceTimer.value?.cancel(); // 정리 함수
+    }, [currentPage, durations]); // currentPage와 durations 변경시 재실행
+
+    final maxWidth = getMediaQuery(context).size.width;
+    final maxHeight = getMediaQuery(context).size.height;
+
+    final renderWidth =  directionType == PlaylistSettingType.Horizontal ? maxWidth : maxWidth * (9 / 16);
+    final renderHeight =  directionType == PlaylistSettingType.Horizontal ? maxWidth * (9 / 16) : maxHeight;
+    debugPrint("renderWidth: $renderWidth, renderHeight: $renderHeight");
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 60),
+      child: SizedBox(
+          width: directionType == PlaylistSettingType.Horizontal ? maxWidth : maxWidth * (9 / 16),
+          height: directionType == PlaylistSettingType.Horizontal ? maxWidth * (9 / 16) : maxHeight,
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: getColorScheme(context).colorGray800,
+                width: 4,
               ),
-            );
-          }).toList(),
-        ),
-      ),
+            ),
+            child: Stack(
+              fit: StackFit.expand,
+              alignment: Alignment.center,
+              children: previewState?.previewItems.map((mediaContent) {
+                    int index = previewState.previewItems.indexOf(mediaContent);
+                    bool isCurrentPage = currentPage.value == index;
+
+                    return AnimatedOpacity(
+                      key: Key("${mediaContent.id}-$index}"),
+                      opacity: isCurrentPage ? 1.0 : 0.0,
+                      duration: const Duration(milliseconds: 500),
+                      child: LoadImage(
+                        tag: "${mediaContent.id}-$index",
+                        url: mediaContent.property?.imageUrl,
+                        type: ImagePlaceholderType.AUTO_16x9,
+                        fit: fitInfo,
+                        borderRadius: 0,
+                        borderWidth: 0,
+                        backgroundColor: getColorScheme(context).black,
+                      ),
+                    );
+                  }).toList() ??
+                  [],
+            ),
+          )),
     );
   }
 }
 
 class _Settings extends HookWidget {
-  final ValueNotifier<bool> isDirectionHorizontal;
-  final ValueNotifier<bool> isScaleFit;
+  final ValueNotifier<PlaylistSettingType?> directionType;
+  final ValueNotifier<PlaylistSettingType?> contentScale;
 
   const _Settings({
     super.key,
-    required this.isDirectionHorizontal,
-    required this.isScaleFit,
+    required this.directionType,
+    required this.contentScale,
   });
 
   @override
@@ -144,14 +232,14 @@ class _Settings extends HookWidget {
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_horizontal_line.svg',
                     content: getAppLocalizations(context).common_horizontal,
-                    isSelected: isDirectionHorizontal.value,
-                    onPressed: () => isDirectionHorizontal.value = true,
+                    isSelected: directionType.value == PlaylistSettingType.Horizontal,
+                    onPressed: () => directionType.value = PlaylistSettingType.Horizontal,
                   ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_vertical_line.svg',
                     content: getAppLocalizations(context).common_vertical,
-                    isSelected: !isDirectionHorizontal.value,
-                    onPressed: () => isDirectionHorizontal.value = false,
+                    isSelected: directionType.value == PlaylistSettingType.Vertical,
+                    onPressed: () => directionType.value = PlaylistSettingType.Vertical,
                   )
                 ],
               ),
@@ -159,26 +247,31 @@ class _Settings extends HookWidget {
             Container(
               width: 1,
               height: double.infinity,
-              margin: const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
+              margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               color: getColorScheme(context).white,
             ),
             Flexible(
               fit: FlexFit.tight,
               flex: 1,
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
+                  _PreviewSettingIcon(
+                    iconPath: 'assets/imgs/icon_fill_filled.svg',
+                    content: getAppLocalizations(context).common_fill,
+                    isSelected: contentScale.value == PlaylistSettingType.Fill,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Fill,
+                  ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fit.svg',
                     content: getAppLocalizations(context).common_fit,
-                    isSelected: isScaleFit.value,
-                    onPressed: () => isScaleFit.value = true,
+                    isSelected: contentScale.value == PlaylistSettingType.Fit,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Fit,
                   ),
                   _PreviewSettingIcon(
-                    iconPath: 'assets/imgs/icon_fill.svg',
-                    content: getAppLocalizations(context).common_fill,
-                    isSelected: !isScaleFit.value,
-                    onPressed: () => isScaleFit.value = false,
+                    iconPath: 'assets/imgs/icon_stretch.svg',
+                    content: getAppLocalizations(context).common_stretch,
+                    isSelected: contentScale.value == PlaylistSettingType.Stretch,
+                    onPressed: () => contentScale.value = PlaylistSettingType.Stretch,
                   )
                 ],
               ),
@@ -240,11 +333,15 @@ class _PreviewSettingIcon extends StatelessWidget {
 class TimerDivider extends HookWidget {
   final List<int?> durations;
   final ValueNotifier<int> currentPageNotifier;
+  final VoidCallback onStart;
+  final VoidCallback onStop;
 
   const TimerDivider({
     super.key,
     required this.durations,
     required this.currentPageNotifier,
+    required this.onStart,
+    required this.onStop,
   });
 
   @override
@@ -259,6 +356,7 @@ class TimerDivider extends HookWidget {
     }, const []);
 
     void startTimer() {
+      timer.value?.cancel(); // 이전 타이머가 있다면 취소
       timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
         progressValue.value += 1 / durations[currentPageNotifier.value]!;
         if (progressValue.value >= 1) {
@@ -364,8 +462,10 @@ class TimerDivider extends HookWidget {
                     if (timer.value != null) {
                       timer.value?.cancel();
                       timer.value = null;
+                      onStop.call();
                     } else {
                       startTimer();
+                      onStart.call();
                     }
                   },
                   child: Padding(

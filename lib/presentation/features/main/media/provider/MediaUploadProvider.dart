@@ -1,8 +1,12 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/data_source/remote/Service.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:video_thumbnail/video_thumbnail.dart';
@@ -18,9 +22,10 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   Timer? _timer;
 
   StreamController<double>? uploadProgressController;
+
   File? currentFile;
   File? thumbnailFile;
-  // String? thumbnailFilePath;
+  bool isLastUploadVideo = false;
 
   void setSmoothUploadProgress(double targetProgress) {
     final totalBytes = currentFile!.lengthSync().toDouble();
@@ -46,8 +51,15 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
     });
   }
 
-  Future<StreamController<double>> uploadStart(String filePath, {bool isVideo = false}) async {
-    uploadProgress = 0.0;
+  Future<StreamController<double>?> uploadStart(String filePath, {bool isVideo = false, VoidCallback? onNetworkError}) async {
+
+    if (!await Service.isNetworkAvailable()) {
+      onNetworkError?.call();
+      return Future(() => null);
+    }
+
+    isLastUploadVideo = isVideo;
+    uploadIdle();
 
     if (isVideo == true) {
       String? thumbnailFilePath = await generateThumbnail(filePath);
@@ -58,6 +70,7 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
       thumbnailFile = File(filePath);
     }
 
+    uploadProgressController?.close();
     uploadProgressController = StreamController<double>.broadcast();
     uploadStatusChange(UploadState.UPLOADING);
     uploadProgressController?.stream.listen((event) {
@@ -68,9 +81,10 @@ class MediaUploadProgressNotifier extends ChangeNotifier {
   }
 
   void uploadIdle() {
-    isUploading = UploadState.IDLE;
-    _timer?.cancel();
+    currentProgressByte =StringUtil.formatBytesToMegabytes(0);
     uploadProgress = 0.0;
+    _timer?.cancel();
+    isUploading = UploadState.IDLE;
     notifyListeners();
   }
 

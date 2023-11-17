@@ -17,8 +17,9 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String get apiUrl =>
-      _instance._buildType == BuildType.dev ? 'https://dev-app-api.themenuboss.com' : 'https://dev-app-api.themenuboss.com'; // api 주소
+  static String get apiUrl => _instance._buildType == BuildType.dev
+      ? 'https://dev-app-api.themenuboss.com'
+      : 'https://app-api.themenuboss.com'; // api 주소
 
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
@@ -30,7 +31,6 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() async {
-
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],
@@ -41,6 +41,12 @@ class Environment {
       statusBarBrightness: Brightness.light, // 혹은 Brightness.dark, 앱의 주요 배경색에 따라 선택
       statusBarIconBrightness: Brightness.dark, // 혹은 Brightness.light
     ));
+
+    await SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]); // 세로모드 고정
+
 
     initServiceLocator();
     Service.initializeHeaders();

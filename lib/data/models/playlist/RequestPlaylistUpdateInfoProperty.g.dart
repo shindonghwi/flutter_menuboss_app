@@ -10,7 +10,7 @@ RequestPlaylistUpdateInfoProperty _$RequestPlaylistUpdateInfoPropertyFromJson(
         Map<String, dynamic> json) =>
     RequestPlaylistUpdateInfoProperty(
       direction: json['direction'] as String? ?? "Horizontal",
-      fill: json['fill'] as String? ?? "Fit",
+      fill: json['fill'] as String? ?? "Fill",
     );
 
 Map<String, dynamic> _$RequestPlaylistUpdateInfoPropertyToJson(

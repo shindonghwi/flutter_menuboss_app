@@ -13,8 +13,11 @@ class SchedulesNotifier extends StateNotifier<UIState<List<ResponseSchedulesMode
 
   final GetSchedulesUseCase _getSchedulesUseCase = GetIt.instance<GetSchedulesUseCase>();
 
-  void requestGetSchedules() {
+  void requestGetSchedules({int delay = 0}) async{
     state = Loading();
+
+    await Future.delayed(Duration(milliseconds: delay));
+
     _getSchedulesUseCase.call().then((response) {
       if (response.status == 200) {
         state = Success(response.list?.map((e) => e.toUpDatedAtSimpleMapper()).toList() ?? []);

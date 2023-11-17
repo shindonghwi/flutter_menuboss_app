@@ -4,7 +4,8 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
-import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
+import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
+import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
@@ -34,7 +35,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
           mediaManager.updateCurrentItems(mediaManager.currentItems, isUiUpdate: true);
         }
       });
-      return (){
+      return () {
         Future(() {
           checkListManager.init();
           mediaManager.init();
@@ -43,7 +44,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
     }, []);
 
     return BaseScaffold(
-      appBar: TopBarIconTitleNone(
+      appBar: TopBarNoneTitleIcon(
         content: getAppLocalizations(context).select_media_file_title(checkListState.length),
       ),
       body: SafeArea(
@@ -69,9 +70,12 @@ class SelectMediaFileScreen extends HookConsumerWidget {
             ),
           );
         },
-        onDeleteClick: () {
-          mediaManager.removeItem(checkListState);
-          Navigator.of(context).pop();
+        onDeleteClick: () async {
+          final isRemoved = await mediaManager.removeItem(checkListState);
+          if (isRemoved) {
+            Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
+            Navigator.of(context).pop();
+          }
         },
       ),
     );
@@ -104,7 +108,7 @@ class _MediaList extends HookConsumerWidget {
     return ListView.builder(
       padding: const EdgeInsets.fromLTRB(24, 0, 24, 100),
       controller: scrollController,
-      physics: const BouncingScrollPhysics(),
+      physics: const AlwaysScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: items.length,
       itemBuilder: (context, index) {

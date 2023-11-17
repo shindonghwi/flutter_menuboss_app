@@ -22,7 +22,12 @@ class FloatingPlusButton extends StatelessWidget {
         shape: BoxShape.circle,
         boxShadow: [
           BoxShadow(
-            color: getColorScheme(context).colorPrimary200,
+            color: Colors.black.withOpacity(0.20),
+            blurRadius: 8,
+            offset: const Offset(4, 0),
+          ),
+          BoxShadow(
+            color: Colors.black.withOpacity(0.20),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
@@ -12,56 +13,47 @@ enum ToastType { Success, Error, Warning }
 class Toast {
   static OverlayEntry? _overlayEntry;
   static Timer? _timer;
+  static OverlayState? _overlayState;
 
-  static showError(
-    BuildContext context,
-    String message, {
-    Duration autoCloseTime = const Duration(seconds: 5),
-  }) {
-    if (CollectionUtil.isNullEmptyFromString(message)) return;
-    _removeExistingToast();
-    _addOverlayEntry(context, ToastType.Error, message);
-    _cancelTimer(autoCloseTime);
+  static void init(BuildContext context) {
+    _overlayState = Overlay.of(context, rootOverlay: true);
   }
 
-  static showSuccess(
-    BuildContext context,
-    String message, {
-    Duration autoCloseTime = const Duration(seconds: 5),
-  }) {
-    if (CollectionUtil.isNullEmptyFromString(message)) return;
-    _removeExistingToast();
-    _addOverlayEntry(context, ToastType.Success, message);
-    _cancelTimer(autoCloseTime);
+  static showError(BuildContext context, String message, {Duration autoCloseTime = const Duration(seconds: 5)}) {
+    _showToast(context, message, ToastType.Error, autoCloseTime);
   }
 
-  static showWarning(
-    BuildContext context,
-    String message, {
-    Duration autoCloseTime = const Duration(seconds: 5),
-  }) {
+  static showSuccess(BuildContext context, String message, {Duration autoCloseTime = const Duration(seconds: 5)}) {
+    _showToast(context, message, ToastType.Success, autoCloseTime);
+  }
+
+  static showWarning(BuildContext context, String message, {Duration autoCloseTime = const Duration(seconds: 5)}) {
+    _showToast(context, message, ToastType.Warning, autoCloseTime);
+  }
+
+  static void _showToast(BuildContext context, String message, ToastType type, Duration autoCloseTime) {
     if (CollectionUtil.isNullEmptyFromString(message)) return;
     _removeExistingToast();
-    _addOverlayEntry(context, ToastType.Warning, message);
+    _addOverlayEntry(context, type, message);
     _cancelTimer(autoCloseTime);
   }
 
   static void _addOverlayEntry(BuildContext context, ToastType type, String message) {
-    final overlay = Overlay.of(context, rootOverlay: true);
+    _overlayState ??= Overlay.of(context, rootOverlay: true);
     _overlayEntry = OverlayEntry(
       builder: (context) => _ToastWidget(message: message, onDismissed: _removeExistingToast, type: type),
     );
-    overlay.insert(_overlayEntry!);
+    _overlayState?.insert(_overlayEntry!);
   }
 
   static void _cancelTimer(Duration autoCloseTime) {
-    _timer?.cancel(); // 이전 Timer가 있으면 취소
+    _timer?.cancel();
     _timer = Timer(autoCloseTime, () {
       _removeExistingToast();
     });
   }
 
-  static _removeExistingToast() {
+  static void _removeExistingToast() {
     _overlayEntry?.remove();
     _overlayEntry = null;
   }
@@ -84,22 +76,27 @@ class _ToastWidget extends HookWidget {
     final animation = Tween(begin: 0.0, end: 1.0).animate(animationController);
 
     useEffect(() {
-      animationController.forward().whenComplete(() {
-        Timer(const Duration(seconds: 2), () {
-          if (animationController.status == AnimationStatus.completed) {
-            animationController.reverse().whenComplete(onDismissed);
-          }
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        animationController.forward().whenComplete(() {
+          Timer(const Duration(seconds: 2), () {
+            if (animationController.status == AnimationStatus.completed) {
+              animationController.reverse().whenComplete(onDismissed);
+            }
+          });
         });
       });
       return null;
     }, const []);
 
     Color backgroundColor = getColorScheme(context).colorGray800;
+    String iconPath = "assets/imgs/icon_check_filled.svg";
 
     if (type == ToastType.Warning) {
       backgroundColor = getColorScheme(context).colorYellow500;
+      iconPath = "assets/imgs/icon_warning.svg";
     } else if (type == ToastType.Error) {
       backgroundColor = getColorScheme(context).colorRed500;
+      iconPath = "assets/imgs/icon_warning.svg";
     }
 
     return Positioned(
@@ -107,27 +104,44 @@ class _ToastWidget extends HookWidget {
       right: 0,
       top: 52,
       child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24),
+        child: Container(
+          margin: const EdgeInsets.symmetric(horizontal: 24),
           child: FadeTransition(
             opacity: animation,
             child: Material(
               color: Colors.transparent,
               child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                 decoration: BoxDecoration(
                   color: backgroundColor,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                  child: Text(
-                    message,
-                    style: getTextTheme(context).b2sb.copyWith(
-                          color: getColorScheme(context).white,
-                          overflow: TextOverflow.visible,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SvgPicture.asset(
+                      iconPath,
+                      width: 20,
+                      height: 20,
+                      colorFilter: ColorFilter.mode(
+                        getColorScheme(context).white,
+                        BlendMode.srcIn,
+                      ),
+                    ),
+                    Flexible(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12.0),
+                        child: Text(
+                          message,
+                          style: getTextTheme(context).b3sb.copyWith(
+                                color: getColorScheme(context).white,
+                                overflow: TextOverflow.visible,
+                              ),
+                          textAlign: TextAlign.left,
                         ),
-                    textAlign: TextAlign.center,
-                  ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),

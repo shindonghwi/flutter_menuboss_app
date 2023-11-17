@@ -3,10 +3,13 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
+import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
+import 'package:menuboss/presentation/ui/colors.dart';
+import 'package:menuboss/presentation/utils/Common.dart';
 
 import 'MediaItemAdd.dart';
 
@@ -93,14 +96,27 @@ class _SimpleMediaList extends HookConsumerWidget {
       return null;
     }, []);
 
-    return ListView.builder(
-      controller: scrollController,
-      physics: const BouncingScrollPhysics(),
-      padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-      itemCount: items.length,
-      itemBuilder: (context, index) {
-        return MediaItemAdd(item: items[index], onFolderTap: () => onFolderTap.call(items[index].id ?? ""));
-      },
-    );
+    return items.isNotEmpty
+        ? RefreshIndicator(
+            onRefresh: () async {
+              mediaContentsManager.initPageInfo();
+              mediaContentsManager.requestGetMedias();
+            },
+            color: getColorScheme(context).colorPrimary500,
+            backgroundColor: getColorScheme(context).white,
+            child: ListView.builder(
+              controller: scrollController,
+              physics: const AlwaysScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+              itemCount: items.length,
+              itemBuilder: (context, index) {
+                return MediaItemAdd(item: items[index], onFolderTap: () => onFolderTap.call(items[index].id ?? ""));
+              },
+            ),
+          )
+        : const EmptyView(
+            type: BlankMessageType.ADD_CONTENT,
+            onPressed: null,
+          );
   }
 }
