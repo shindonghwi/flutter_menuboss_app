@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss/presentation/components/loader/LoadImage.dart';
+import 'package:menuboss/presentation/components/loader/LoadVideo.dart';
 import 'package:menuboss/presentation/components/placeholder/ImagePlaceholder.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
@@ -15,7 +16,6 @@ import 'package:menuboss/presentation/features/preview/provider/PreviewListProvi
 import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:video_player/video_player.dart';
 
 import '../create/playlist/provider/CreatePreviewItemProcessProvider.dart';
 import '../detail/playlist/provider/DetailPreviewItemProcessProvider.dart';
@@ -39,8 +39,6 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
     List<int?> durations = previewState?.durations ?? [];
 
-    final videoControllers = useState<List<VideoPlayerController?>?>(null);
-
     useEffect(() {
       return () {
         Future(() {
@@ -49,25 +47,6 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
         });
       };
     }, []);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
-        videoControllers.value = previewState?.previewItems.map((mediaContent) {
-          if (mediaContent.type?.toLowerCase() == "video") {
-            var controller = VideoPlayerController.networkUrl(Uri.parse(mediaContent.property!.videoUrl ?? ""))
-              ..initialize().then((_) {
-                debugPrint("video initialized");
-              }).catchError((e) {
-                debugPrint(e.toString());
-              });
-            controller.setLooping(true);
-            return controller;
-          }
-          return null;
-        }).toList();
-      });
-      return () => videoControllers.value?.forEach((controller) => controller?.dispose());
-    }, [previewState]);
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
@@ -88,7 +67,6 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
               alignment: Alignment.center,
               child: _Display(
                 currentPage: currentPage,
-                videoControllers: videoControllers.value,
                 durations: durations.map((e) => e ?? -1).toList(),
                 directionType: directionType.value,
                 contentScale: contentScale.value,
@@ -99,14 +77,11 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
       ),
       bottomNavigationBar: SafeArea(
         child: TimerDivider(
-            durations: durations,
-            currentPageNotifier: currentPage,
-            onStart: () {
-              videoControllers.value?[currentPage.value]?.play();
-            },
-            onStop: () {
-              videoControllers.value?[currentPage.value]?.pause();
-            }),
+          durations: durations,
+          currentPageNotifier: currentPage,
+          onStart: () {},
+          onStop: () {},
+        ),
       ),
     );
   }
@@ -114,7 +89,6 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
 class _Display extends HookConsumerWidget {
   final ValueNotifier<int> currentPage;
-  final List<VideoPlayerController?>? videoControllers;
   final List<int> durations;
   final PlaylistSettingType? directionType;
   final PlaylistSettingType? contentScale;
@@ -122,7 +96,6 @@ class _Display extends HookConsumerWidget {
   const _Display({
     super.key,
     required this.currentPage,
-    required this.videoControllers,
     required this.durations,
     required this.directionType,
     required this.contentScale,
@@ -131,6 +104,7 @@ class _Display extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final previewState = ref.watch(previewListProvider);
+    final currentDisplayItem = previewState?.previewItems[currentPage.value];
 
     var fitInfo = BoxFit.contain;
     if (contentScale == PlaylistSettingType.Fit) {
@@ -141,63 +115,42 @@ class _Display extends HookConsumerWidget {
       fitInfo = BoxFit.fill;
     }
 
-    // duration에 따라 표시되는 로직을 추가하기 위해 사용될 State
-    final autoAdvanceTimer = useState<Timer?>(null);
-
-    useEffect(() {
-      autoAdvanceTimer.value?.cancel(); // 이전 타이머가 있다면 취소
-      if (durations.isNotEmpty && currentPage.value < durations.length) {
-        autoAdvanceTimer.value = Timer(Duration(seconds: durations[currentPage.value]), () {
-          currentPage.value = (currentPage.value + 1) % durations.length;
-        });
-      }
-      return () => autoAdvanceTimer.value?.cancel(); // 정리 함수
-    }, [currentPage, durations]); // currentPage와 durations 변경시 재실행
-
     final maxWidth = getMediaQuery(context).size.width;
     final maxHeight = getMediaQuery(context).size.height;
 
-    final renderWidth =  directionType == PlaylistSettingType.Horizontal ? maxWidth : maxWidth * (9 / 16);
-    final renderHeight =  directionType == PlaylistSettingType.Horizontal ? maxWidth * (9 / 16) : maxHeight;
-    debugPrint("renderWidth: $renderWidth, renderHeight: $renderHeight");
-
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 60),
-      child: SizedBox(
+      child: AnimatedOpacity(
+        key: Key("${currentDisplayItem?.id}-$currentPage}"),
+        opacity: 1.0,
+        duration: const Duration(milliseconds: 500),
+        child: Container(
           width: directionType == PlaylistSettingType.Horizontal ? maxWidth : maxWidth * (9 / 16),
           height: directionType == PlaylistSettingType.Horizontal ? maxWidth * (9 / 16) : maxHeight,
-          child: Container(
-            decoration: BoxDecoration(
-              border: Border.all(
-                color: getColorScheme(context).colorGray800,
-                width: 4,
-              ),
+          decoration: BoxDecoration(
+            border: Border.all(
+              color: getColorScheme(context).colorGray800,
+              width: 4,
             ),
-            child: Stack(
-              fit: StackFit.expand,
-              alignment: Alignment.center,
-              children: previewState?.previewItems.map((mediaContent) {
-                    int index = previewState.previewItems.indexOf(mediaContent);
-                    bool isCurrentPage = currentPage.value == index;
-
-                    return AnimatedOpacity(
-                      key: Key("${mediaContent.id}-$index}"),
-                      opacity: isCurrentPage ? 1.0 : 0.0,
-                      duration: const Duration(milliseconds: 500),
-                      child: LoadImage(
-                        tag: "${mediaContent.id}-$index",
-                        url: mediaContent.property?.imageUrl,
-                        type: ImagePlaceholderType.AUTO_16x9,
-                        fit: fitInfo,
-                        borderRadius: 0,
-                        borderWidth: 0,
-                        backgroundColor: getColorScheme(context).black,
-                      ),
-                    );
-                  }).toList() ??
-                  [],
-            ),
-          )),
+          ),
+          child: currentDisplayItem?.type?.toLowerCase() == "video"
+              ? LoadVideo(
+                  imageUrl: currentDisplayItem!.property!.imageUrl.toString(),
+                  videoUrl: currentDisplayItem.property?.videoUrl.toString(),
+                  isHorizontal: directionType == PlaylistSettingType.Horizontal,
+                  fit: fitInfo,
+                )
+              : LoadImage(
+                  tag: "${currentDisplayItem?.id}-$currentPage",
+                  url: currentDisplayItem?.property?.imageUrl,
+                  type: ImagePlaceholderType.AUTO_16x9,
+                  fit: fitInfo,
+                  borderRadius: 0,
+                  borderWidth: 0,
+                  backgroundColor: getColorScheme(context).black,
+                ),
+        ),
+      ),
     );
   }
 }
@@ -349,17 +302,20 @@ class TimerDivider extends HookWidget {
     final progressValue = useState(0.0);
     final timer = useState<Timer?>(null);
 
-    useEffect(() {
-      return () {
-        timer.value?.cancel();
-      };
-    }, const []);
-
     void startTimer() {
       timer.value?.cancel(); // 이전 타이머가 있다면 취소
+
+      int elapsedSeconds = 0;
+      double totalMargin = 28; // 좌우 마진
+      double frameWidth = getMediaQuery(context).size.width;
+
+      double effectiveProgressBarWidth = frameWidth - totalMargin;
+      double scaledTargetValue = effectiveProgressBarWidth / frameWidth;
+
       timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
-        progressValue.value += 1 / durations[currentPageNotifier.value]!;
-        if (progressValue.value >= 1) {
+        elapsedSeconds++;
+        progressValue.value = (elapsedSeconds / durations[currentPageNotifier.value]!) * scaledTargetValue;
+        if (progressValue.value >= scaledTargetValue) {
           timer.cancel();
           if (currentPageNotifier.value < durations.length - 1) {
             currentPageNotifier.value++;
@@ -367,10 +323,20 @@ class TimerDivider extends HookWidget {
             currentPageNotifier.value = 0;
           }
           progressValue.value = 0;
+          elapsedSeconds = 0;
           startTimer();
         }
       });
     }
+
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        startTimer();
+      });
+      return () {
+        timer.value?.cancel();
+      };
+    }, const []);
 
     return Column(
       mainAxisSize: MainAxisSize.min,

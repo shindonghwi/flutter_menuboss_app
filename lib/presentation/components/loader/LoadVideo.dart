@@ -35,7 +35,6 @@ class LoadVideo extends HookWidget {
         if (!CollectionUtil.isNullEmptyFromString(videoUrl)) {
           controller.value = VideoPlayerController.networkUrl(Uri.parse(videoUrl.toString()));
           controller.value?.initialize().then((_) async {
-            await Future.delayed(const Duration(milliseconds: 1500));
             debugPrint("LoadVideo1: $controller");
             controller.value?.setLooping(true);
             controller.value?.play();
@@ -51,7 +50,6 @@ class LoadVideo extends HookWidget {
     useEffect(() {
       return () {
         Future(() {
-          debugPrint("Dispose: R");
           controller.value?.dispose();
         });
       };
@@ -98,18 +96,7 @@ class LoadVideo extends HookWidget {
               return SizedBox(
                 width: renderWidth,
                 height: renderHeight,
-                child: Stack(
-                  children: [
-                    if (isInitialized.value == false)
-                      LoadImage(
-                        tag: mediaId,
-                        url: imageUrl,
-                        type: ImagePlaceholderType.AUTO_16x9,
-                        fit: fit,
-                      ),
-                    VideoPlayer(controller.value!),
-                  ],
-                ),
+                child: VideoPlayer(controller.value!),
               );
             },
           )

@@ -134,7 +134,7 @@ class _SettingContents extends HookConsumerWidget {
                   getPlaylistDirectionTypeFromString(saveState.property.direction),
                   getPlaylistScaleTypeFromString(saveState.property.fill),
                   convertedItems,
-                  convertedItems.map((e) => e.property?.duration?.toInt()).toList(),
+                  convertedItems.map((e) => e.property?.duration?.ceil()).toList(),
                 ),
               );
 

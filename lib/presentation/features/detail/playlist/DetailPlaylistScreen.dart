@@ -105,7 +105,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
                   getPlaylistDirectionTypeFromString(item?.property?.direction),
                   detailPreviewProcessManager.scaleType,
                   convertedItems,
-                  convertedItems.map((e) => e.property?.duration?.toInt()).toList(),
+                  convertedItems.map((e) => e.property?.duration?.ceil()).toList(),
                 ),
               );
               Navigator.push(

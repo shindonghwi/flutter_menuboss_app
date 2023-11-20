@@ -174,7 +174,7 @@ class _FileImage extends HookConsumerWidget {
                   fit: BoxFit.cover,
                   imageUrl: item?.property?.imageUrl ?? "",
                   videoUrl: videoUrl.value,
-                  isHorizontal: true
+                  isHorizontal: true,
                 ),
             )
             : LoadImage(
