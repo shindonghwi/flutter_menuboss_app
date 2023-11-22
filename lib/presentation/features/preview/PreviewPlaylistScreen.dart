@@ -120,11 +120,10 @@ class _Display extends HookConsumerWidget {
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 60),
-      child: AnimatedOpacity(
-        key: Key("${currentDisplayItem?.id}-$currentPage}"),
-        opacity: 1.0,
-        duration: const Duration(milliseconds: 500),
+      child: AnimatedSwitcher(
+        duration: const Duration(milliseconds: 1000),
         child: Container(
+          key: Key("${currentDisplayItem?.id}-${currentPage.value}"),
           width: directionType == PlaylistSettingType.Horizontal ? maxWidth : maxWidth * (9 / 16),
           height: directionType == PlaylistSettingType.Horizontal ? maxWidth * (9 / 16) : maxHeight,
           decoration: BoxDecoration(
