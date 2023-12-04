@@ -35,6 +35,7 @@ class DevicesScreen extends HookConsumerWidget {
       return (){
         Future((){
           deviceManager.init();
+          deviceShowNameEventManager.init();
         });
       };
     }, []);
@@ -60,7 +61,6 @@ class DevicesScreen extends HookConsumerWidget {
           deviceShowNameEventState.when(
             success: (event) {
               Toast.showSuccess(context, getAppLocalizations(context).message_send_event_name_show_success);
-              deviceShowNameEventManager.init();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );

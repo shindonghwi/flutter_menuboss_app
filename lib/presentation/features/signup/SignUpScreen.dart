@@ -130,7 +130,7 @@ class SignUpScreen extends HookConsumerWidget {
 
                   // Full name
                   Text(
-                    getAppLocalizations(context).signup_full_name,
+                    getAppLocalizations(context).common_full_name,
                     style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),

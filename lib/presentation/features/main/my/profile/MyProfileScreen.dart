@@ -162,7 +162,7 @@ class MyProfileScreen extends HookConsumerWidget {
                         },
                         child: Text(
                           getAppLocalizations(context).my_page_profile_delete_account,
-                          style: getTextTheme(context).b3sb.copyWith(
+                          style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).colorGray600,
                               ),
                         ),
@@ -250,8 +250,8 @@ class _InputFullName extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          getAppLocalizations(context).my_page_profile_full_name,
-          style: getTextTheme(context).b2sb.copyWith(
+          getAppLocalizations(context).common_full_name,
+          style: getTextTheme(context).b2m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),
@@ -279,8 +279,8 @@ class _InputEmail extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          getAppLocalizations(context).my_page_profile_email,
-          style: getTextTheme(context).b2sb.copyWith(
+          "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
+          style: getTextTheme(context).b2m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),

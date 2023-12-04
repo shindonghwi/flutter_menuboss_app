@@ -8,7 +8,6 @@
     "login_email_invalid": "Email address entered incorrectly",
     "login_pw_invalid": "a-z, A-Z, 0-9, 4 to 20 characters",
 
-    "signup_full_name": "Full name",
     "signup_full_name_hint": "Please enter your name",
     "signup_business_name": "Business name",
     "signup_business_name_hint": "Please enter a business name",
@@ -51,15 +50,11 @@
 
     "edit_schedule_title": "Edit schedule",
 
-    "my_page_appbar_title": "My page",
     "my_page_setting_item": "Settings",
     "my_page_setting_items_profile": "Profile",
-    "my_page_setting_items_log_out": "Log out",
     "my_page_setting_items_plan": "Plan",
 
     "my_page_profile_appbar_title": "Profile",
-    "my_page_profile_full_name": "Full name",
-    "my_page_profile_email": "Email address",
     "my_page_profile_business_name": "Business name",
     "my_page_profile_delete_account": "Delete account",
 
@@ -136,6 +131,7 @@
     "common_off": "Off",
     "common_or": "or",
     "common_done": "Done",
+    "common_next": "Next",
     "common_do_login": "Log in",
     "common_edit": "Edit",
     "common_apply": "Apply",
@@ -154,6 +150,7 @@
     "common_timeline": "Timeline",
     "common_mode_all_day": "All day Mode",
     "common_mode_schedule": "Schedule Mode",
+    "common_full_name": "Full name",
 
     "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
     "message_file_not_found_404": "File not found\nPlease use it again",

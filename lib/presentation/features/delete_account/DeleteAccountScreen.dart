@@ -99,7 +99,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     children: [
                       Text(
                         getAppLocalizations(context).delete_account_description,
-                        style: getTextTheme(context).s3b.copyWith(
+                        style: getTextTheme(context).s3sb.copyWith(
                               color: getColorScheme(context).colorGray900,
                             ),
                         overflow: TextOverflow.visible,
@@ -110,7 +110,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                       ),
                       Text(
                         getAppLocalizations(context).delete_account_description1,
-                        style: getTextTheme(context).b2m.copyWith(
+                        style: getTextTheme(context).b2r.copyWith(
                               color: getColorScheme(context).colorGray700,
                             ),
                         overflow: TextOverflow.visible,
@@ -172,7 +172,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                                   padding: const EdgeInsets.only(left: 12.0),
                                   child: Text(
                                     reason,
-                                    style: getTextTheme(context).b2m.copyWith(
+                                    style: getTextTheme(context).b2r.copyWith(
                                           color: getColorScheme(context).colorGray700,
                                         ),
                                     overflow: TextOverflow.visible,
@@ -210,7 +210,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             child: PrimaryFilledButton.mediumRound8(
-              content: getAppLocalizations(context).delete_account_title,
+              content: isShowFirstDescription.value ? getAppLocalizations(context).common_next : getAppLocalizations(context).delete_account_title,
               isActivated: true,
               onPressed: () {
                 if (isShowFirstDescription.value) {

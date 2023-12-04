@@ -273,7 +273,7 @@ class _SettingItems extends HookConsumerWidget {
           nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
         );
       }),
-      Pair(getAppLocalizations(context).my_page_setting_items_log_out, () {
+      Pair(getAppLocalizations(context).common_logout, () {
         CommonPopup.showPopup(
           context,
           child: PopupLogout(onClicked: (isCompleted) {
@@ -297,7 +297,7 @@ class _SettingItems extends HookConsumerWidget {
               child: Text(
                 getAppLocalizations(context).my_page_setting_item,
                 style: getTextTheme(context).b3sb.copyWith(
-                      color: getColorScheme(context).colorGray900,
+                      color: getColorScheme(context).colorGray700,
                     ),
                 textAlign: TextAlign.start,
               ),
@@ -321,7 +321,7 @@ class _SettingItems extends HookConsumerWidget {
                       children: [
                         Text(
                           item.first,
-                          style: getTextTheme(context).b3sb.copyWith(
+                          style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),
