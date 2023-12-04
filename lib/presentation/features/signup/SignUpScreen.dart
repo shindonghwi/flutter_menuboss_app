@@ -13,7 +13,6 @@ import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
-import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/signup/provider/SignUpProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -86,8 +85,8 @@ class SignUpScreen extends HookConsumerWidget {
                 children: [
                   // Email
                   Text(
-                    getAppLocalizations(context).signup_email_address,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
@@ -107,8 +106,8 @@ class SignUpScreen extends HookConsumerWidget {
 
                   // Password
                   Text(
-                    getAppLocalizations(context).signup_password,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    getAppLocalizations(context).common_password,
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
@@ -132,7 +131,7 @@ class SignUpScreen extends HookConsumerWidget {
                   // Full name
                   Text(
                     getAppLocalizations(context).signup_full_name,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
@@ -140,7 +139,7 @@ class SignUpScreen extends HookConsumerWidget {
                     padding: const EdgeInsets.only(top: 12.0, bottom: 16),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
-                      hint: getAppLocalizations(context).signup_full_name,
+                      hint: getAppLocalizations(context).signup_full_name_hint,
                       onChanged: (text) => fullName.value = text,
                     ),
                   ),
@@ -148,7 +147,7 @@ class SignUpScreen extends HookConsumerWidget {
                   // Business name
                   Text(
                     getAppLocalizations(context).signup_business_name,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
@@ -156,7 +155,7 @@ class SignUpScreen extends HookConsumerWidget {
                     padding: const EdgeInsets.only(top: 12.0, bottom: 24),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
-                      hint: getAppLocalizations(context).signup_business_name,
+                      hint: getAppLocalizations(context).signup_business_name_hint,
                       onChanged: (text) => businessName.value = text,
                     ),
                   ),

@@ -133,7 +133,7 @@ class _ToastWidget extends HookWidget {
                         padding: const EdgeInsets.only(left: 12.0),
                         child: Text(
                           message,
-                          style: getTextTheme(context).b3sb.copyWith(
+                          style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).white,
                                 overflow: TextOverflow.visible,
                               ),

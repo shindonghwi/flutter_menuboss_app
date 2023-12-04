@@ -89,7 +89,7 @@ class PlaylistItem extends HookWidget {
               ],
             ),
           ),
-          PrimaryLineButton.extraSmallRound100(
+          PrimaryLineButton.smallRound100(
             content: getAppLocalizations(context).common_apply,
             isActivated: true,
             onPressed: () {

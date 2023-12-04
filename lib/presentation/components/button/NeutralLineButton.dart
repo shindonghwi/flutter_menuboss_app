@@ -111,28 +111,17 @@ class NeutralLineButton extends HookWidget {
         height = 52,
         super(key: key);
 
-
-  /// @feature: extraLarge buttons
+  /// @feature: extra large buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const NeutralLineButton.extraLargeRound8({
+  const NeutralLineButton.extraLargeRound100Icon({
     Key? key,
+    required this.leftIcon,
     required this.content,
     required this.isActivated,
     this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 8,
-        height = 60,
+  })  : borderRadius = 100,
+        height = 56,
         super(key: key);
-  const NeutralLineButton.extraLargeRound8Icon({
-    Key? key,
-    required this.content,
-    required this.isActivated,
-    this.onPressed,
-  })  : leftIcon = null,
-        borderRadius = 8,
-        height = 60,
-        super(key: key);
-
 
   @override
   Widget build(BuildContext context) {
@@ -141,10 +130,16 @@ class NeutralLineButton extends HookWidget {
 
     switch (height) {
       case 40:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
+        break;
+      case 52:
+        textStyle = getTextTheme(context).b2m.copyWith(color: textColor);
+        break;
+      case 56:
+        textStyle = getTextTheme(context).b1m.copyWith(color: textColor);
         break;
     }
 

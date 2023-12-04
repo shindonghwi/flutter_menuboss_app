@@ -69,7 +69,7 @@ class PopupChangeDuration extends HookWidget {
       children: [
         Text(
           getAppLocalizations(context).popup_change_duration_title,
-          style: getTextTheme(context).b2b.copyWith(
+          style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
           textAlign: TextAlign.center,

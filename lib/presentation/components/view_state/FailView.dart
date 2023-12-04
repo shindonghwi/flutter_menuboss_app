@@ -25,7 +25,7 @@ class FailView extends HookWidget {
           children: [
             Text(
               getAppLocalizations(context).message_server_error_5xx,
-              style: getTextTheme(context).c1m.copyWith(
+              style: getTextTheme(context).b3m.copyWith(
                     color: getColorScheme(context).colorGray400,
                   ),
               textAlign: TextAlign.center,

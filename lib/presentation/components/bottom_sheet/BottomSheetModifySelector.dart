@@ -9,14 +9,9 @@ import 'package:menuboss/presentation/utils/Common.dart';
 
 import '../../../navigation/PageMoveUtil.dart';
 
-enum ModifyType { ShowNameToScreen, Rename, Delete, ChangeDuration }
+enum ModifyType { ShowNameToScreen, Rename, Delete }
 
-final Map<ModifyType, String> modifyDescriptions = {
-  ModifyType.ShowNameToScreen: "Display screen name",
-  ModifyType.Rename: "Rename",
-  ModifyType.Delete: "Delete",
-  ModifyType.ChangeDuration: "Change duration",
-};
+
 
 class BottomSheetModifySelector extends HookWidget {
   final List<ModifyType> items;
@@ -30,6 +25,14 @@ class BottomSheetModifySelector extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    Locale currentLocale = Localizations.localeOf(context);
+
+    final Map<ModifyType, String> modifyDescriptions = {
+      ModifyType.ShowNameToScreen: getAppLocalizations(context).bottom_sheet_menu_display_show_name,
+      ModifyType.Rename: getAppLocalizations(context).common_rename,
+      ModifyType.Delete: getAppLocalizations(context).common_delete,
+    };
+
     String getModifyNameFromType(ModifyType type) {
       return modifyDescriptions[type] ?? "";
     }
@@ -42,8 +45,6 @@ class BottomSheetModifySelector extends HookWidget {
           return "assets/imgs/icon_rename.svg";
         case ModifyType.Delete:
           return "assets/imgs/icon_trash.svg";
-        case ModifyType.ChangeDuration:
-          return "assets/imgs/icon_time_edit.svg";
         default:
           return null;
       }
@@ -57,8 +58,6 @@ class BottomSheetModifySelector extends HookWidget {
           return getColorScheme(context).black;
         case ModifyType.Delete:
           return getColorScheme(context).colorRed500;
-        case ModifyType.ChangeDuration:
-          return getColorScheme(context).black;
         default:
           return null;
       }

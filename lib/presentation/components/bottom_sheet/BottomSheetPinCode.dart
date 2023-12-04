@@ -77,7 +77,7 @@ class BottomSheetPinCode extends HookWidget {
         ),
         Text(
           getAppLocalizations(context).bottom_sheet_pin_code_description,
-          style: getTextTheme(context).b2b.copyWith(
+          style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),

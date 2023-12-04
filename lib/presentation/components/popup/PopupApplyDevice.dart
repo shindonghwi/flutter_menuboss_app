@@ -42,7 +42,7 @@ class PopupApplyDevice extends HookWidget {
           ),
           Text(
             getAppLocalizations(context).popup_apply_screen_title,
-            style: getTextTheme(context).b2b.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),

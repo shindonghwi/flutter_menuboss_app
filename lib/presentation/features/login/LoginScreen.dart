@@ -108,7 +108,7 @@ class _SignUpButton extends StatelessWidget {
       children: [
         Text(
           getAppLocalizations(context).login_no_account,
-          style: getTextTheme(context).b3sb.copyWith(
+          style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray500,
               ),
         ),
@@ -126,7 +126,7 @@ class _SignUpButton extends StatelessWidget {
             padding: const EdgeInsets.all(4.0),
             child: Text(
               getAppLocalizations(context).common_sign_up,
-              style: getTextTheme(context).b3sb.copyWith(
+              style: getTextTheme(context).b3m.copyWith(
                     color: getColorScheme(context).colorPrimary500,
                   ),
             ),
@@ -229,15 +229,15 @@ class _Title extends StatelessWidget {
         children: [
           Text(
             getAppLocalizations(context).login_title,
-            style: getTextTheme(context).h3b.copyWith(
+            style: getTextTheme(context).h3sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 4.0),
+            padding: const EdgeInsets.only(top: 12.0),
             child: Text(
               getAppLocalizations(context).login_welcome,
-              style: getTextTheme(context).b1sb.copyWith(
+              style: getTextTheme(context).b1r.copyWith(
                     color: getColorScheme(context).colorGray700,
                   ),
             ),
@@ -265,7 +265,7 @@ class _InputEmail extends HookWidget {
         children: [
           Text(
             "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
-            style: getTextTheme(context).b3sb.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray800,
                 ),
           ),
@@ -305,7 +305,7 @@ class _InputPassword extends HookWidget {
         children: [
           Text(
             getAppLocalizations(context).common_password,
-            style: getTextTheme(context).b3sb.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray800,
                 ),
           ),

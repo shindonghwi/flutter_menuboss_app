@@ -69,7 +69,7 @@ class BasicBorderCheckBox extends StatelessWidget {
               padding: const EdgeInsets.only(left: 12.0),
               child: Text(
                 label,
-                style: getTextTheme(context).b1sb.copyWith(
+                style: getTextTheme(context).b3m.copyWith(
                       color: getColorScheme(context).black,
                     ),
               ),

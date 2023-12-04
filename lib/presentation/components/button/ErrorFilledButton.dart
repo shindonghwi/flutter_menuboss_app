@@ -37,14 +37,11 @@ class ErrorFilledButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var textColor = isActivated ? getColorScheme(context).white : getColorScheme(context).colorGray400;
-    var textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+    var textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
 
     switch (height) {
-      case 40:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
-        break;
       case 48:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
     }
 

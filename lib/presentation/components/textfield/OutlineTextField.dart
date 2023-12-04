@@ -107,7 +107,7 @@ class OutlineTextField extends HookWidget {
     switch (height) {
       case 32:
         contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
-        textStyle = getTextTheme(context).b3m;
+        textStyle = getTextTheme(context).c1m;
         break;
       case 44:
         contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
@@ -277,7 +277,7 @@ class OutlineTextField extends HookWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               successMessage.toString(),
-              style: getTextTheme(context).c2m.copyWith(
+              style: getTextTheme(context).c1m.copyWith(
                     color: getColorScheme(context).colorGreen500,
                   ),
             ),
@@ -287,7 +287,7 @@ class OutlineTextField extends HookWidget {
             padding: const EdgeInsets.only(top: 4.0),
             child: Text(
               errorMessage.toString(),
-              style: getTextTheme(context).c2m.copyWith(
+              style: getTextTheme(context).c1m.copyWith(
                     color: getColorScheme(context).colorRed500,
                   ),
             ),

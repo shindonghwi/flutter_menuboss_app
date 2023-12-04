@@ -16,17 +16,18 @@ class MediaContentsCanvasNotifier extends StateNotifier<UIState<List<SimpleMedia
 
   /// 캔버스 리스트 요청
   void requestGetCanvases({int? delayed}) {
-    state = Loading();
-    _getCanvasesUseCase.call().then((response) {
-      try {
-        if (response.status == 200) {
-          state = Success([...response.list?.map((e) => e.toMapperMediaContentModel()) ?? []]);
-        } else {
-          state = Failure(response.message);
-        }
-      } catch (e) {
-        state = Failure(response.message);
-      }
-    });
+    // state = Loading();
+    state = Success([]);
+    // _getCanvasesUseCase.call().then((response) {
+    //   try {
+    //     if (response.status == 200) {
+    //       state = Success([...response.list?.map((e) => e.toMapperMediaContentModel()) ?? []]);
+    //     } else {
+    //       state = Failure(response.message);
+    //     }
+    //   } catch (e) {
+    //     state = Failure(response.message);
+    //   }
+    // });
   }
 }

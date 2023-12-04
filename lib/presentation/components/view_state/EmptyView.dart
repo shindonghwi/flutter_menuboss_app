@@ -138,7 +138,7 @@ class EmptyView extends HookWidget {
           if (description != null)
             Text(
               description,
-              style: getTextTheme(context).c1m.copyWith(
+              style: getTextTheme(context).b3m.copyWith(
                     color: getColorScheme(context).colorGray300,
                   ),
               textAlign: TextAlign.center,

@@ -45,14 +45,17 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
                         margin: const EdgeInsets.only(left: 12),
                         child: Clickable(
                           onPressed: () {
-                            popPage(context, (){
+                            popPage(context, () {
                               leading != null ? leading?.second.call() : Navigator.pop(context);
                             });
                           },
                           child: Padding(
                             padding: const EdgeInsets.all(12.0),
-                            child:
-                                SvgPicture.asset(leading?.first ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+                            child: SvgPicture.asset(
+                              leading?.first ?? "assets/imgs/icon_back.svg",
+                              width: 24,
+                              height: 24,
+                            ),
                           ),
                         ),
                       ),
@@ -64,7 +67,7 @@ class TopBarIconTitleIcon extends HookWidget implements PreferredSizeWidget {
                         padding: EdgeInsets.only(left: leadingIsShow ? 12 : 24),
                         child: Text(
                           content,
-                          style: getTextTheme(context).s3b.copyWith(
+                          style: getTextTheme(context).s3sb.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                           textAlign: TextAlign.start,

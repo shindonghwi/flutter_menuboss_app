@@ -33,13 +33,13 @@ class DefaultTextArea extends HookWidget {
 
     EdgeInsets contentPadding = const EdgeInsets.symmetric(vertical: 8, horizontal: 16);
     int maxLines = 6;
-    TextStyle textStyle = getTextTheme(context).b3m;
+    TextStyle textStyle = getTextTheme(context).b3r;
 
     switch (height) {
       case 128:
         contentPadding = const EdgeInsets.symmetric(vertical: 12.5, horizontal: 16);
         maxLines = 6;
-        textStyle = getTextTheme(context).b3m;
+        textStyle = getTextTheme(context).b3r;
         break;
       default:
         break;

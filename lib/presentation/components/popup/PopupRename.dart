@@ -34,7 +34,7 @@ class PopupRename extends HookWidget {
         children: [
           Text(
             getAppLocalizations(context).common_rename,
-            style: getTextTheme(context).b2b.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),

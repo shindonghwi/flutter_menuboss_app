@@ -60,14 +60,14 @@ class ErrorLineButton extends HookWidget {
   @override
   Widget build(BuildContext context) {
     var textColor = isActivated ? getColorScheme(context).colorRed500 : getColorScheme(context).colorGray400;
-    var textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+    var textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
 
     switch (height) {
       case 40:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
     }
 

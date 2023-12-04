@@ -40,7 +40,7 @@ class PopupDeleteAccount extends HookWidget {
           ),
           Text(
             getAppLocalizations(context).popup_delete_account_title,
-            style: getTextTheme(context).b2b.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),

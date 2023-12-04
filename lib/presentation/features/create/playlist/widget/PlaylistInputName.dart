@@ -29,7 +29,7 @@ class PlaylistInputName extends HookConsumerWidget {
         children: [
           Text(
             getAppLocalizations(context).common_title,
-            style: getTextTheme(context).b3b.copyWith(
+            style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),

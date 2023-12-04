@@ -69,22 +69,26 @@ flutter:
     - assets/motions/
 
   fonts:
-    - family: manrope
+    - family: pretendard
       fonts:
-        - asset: assets/fonts/manrope_extralight.ttf
+        - asset: assets/fonts/pretendard_thin.ttf
+          weight: 100
+        - asset: assets/fonts/pretendard_extralight.ttf
           weight: 200
-        - asset: assets/fonts/manrope_light.ttf
+        - asset: assets/fonts/pretendard_light.ttf
           weight: 300
-        - asset: assets/fonts/manrope_regular.ttf
+        - asset: assets/fonts/pretendard_regular.ttf
           weight: 400
-        - asset: assets/fonts/manrope_medium.ttf
+        - asset: assets/fonts/pretendard_medium.ttf
           weight: 500
-        - asset: assets/fonts/manrope_semibold.ttf
+        - asset: assets/fonts/pretendard_semibold.ttf
           weight: 600
-        - asset: assets/fonts/manrope_bold.ttf
+        - asset: assets/fonts/pretendard_bold.ttf
           weight: 700
-        - asset: assets/fonts/manrope_extrabold.ttf
+        - asset: assets/fonts/pretendard_extrabold.ttf
           weight: 800
+        - asset: assets/fonts/pretendard_black.ttf
+          weight: 900
 
 flutter_native_splash:
   android: true

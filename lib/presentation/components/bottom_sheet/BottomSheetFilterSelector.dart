@@ -60,7 +60,7 @@ class BottomSheetFilterSelector extends HookWidget {
                   children: [
                     Text(
                       value,
-                      style: getTextTheme(context).b2sb.copyWith(
+                      style: getTextTheme(context).b2m.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                     ),

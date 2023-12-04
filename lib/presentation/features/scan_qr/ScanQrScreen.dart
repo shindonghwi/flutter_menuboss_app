@@ -118,12 +118,12 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
             children: [
               Text(
                 getAppLocalizations(context).scan_qr_description,
-                style: getTextTheme(context).b2sb.copyWith(
+                style: getTextTheme(context).b2m.copyWith(
                       color: getColorScheme(context).white,
                     ),
                 textAlign: TextAlign.center,
               ),
-              SizedBox(
+              const SizedBox(
                 height: 244,
               ),
               NeutralFilledButton.mediumRound100(

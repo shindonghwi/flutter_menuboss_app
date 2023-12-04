@@ -115,7 +115,7 @@ class _InputFileName extends HookWidget {
         children: [
           Text(
             getAppLocalizations(context).media_info_menu_input_title,
-            style: getTextTheme(context).b3b.copyWith(
+            style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
@@ -289,7 +289,7 @@ class _MediaInformation extends HookConsumerWidget {
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
               getAppLocalizations(context).media_info_title,
-              style: getTextTheme(context).b3b.copyWith(
+              style: getTextTheme(context).b3sb.copyWith(
                     color: getColorScheme(context).colorGray900,
                   ),
             ),

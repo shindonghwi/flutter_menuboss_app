@@ -61,7 +61,7 @@ class PlaylistSettings extends HookWidget {
               children: [
                 Text(
                   getAppLocalizations(context).common_option,
-                  style: getTextTheme(context).b3b.copyWith(
+                  style: getTextTheme(context).b3sb.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                 ),
