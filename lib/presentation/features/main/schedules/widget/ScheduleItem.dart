@@ -50,14 +50,14 @@ class ScheduleItem extends HookWidget {
                     children: [
                       Text(
                         item.name,
-                        style: getTextTheme(context).b2sb.copyWith(
+                        style: getTextTheme(context).b2m.copyWith(
                           color: getColorScheme(context).colorGray900,
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "Updated: ${item.updatedDate}",
+                          "${getAppLocalizations(context).common_updated}: ${item.updatedDate}",
                           style: getTextTheme(context).c1m.copyWith(
                             color: getColorScheme(context).colorGray500,
                           ),
@@ -76,7 +76,7 @@ class ScheduleItem extends HookWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              "${item.property?.count} pages",
+                              getAppLocalizations(context).count_playlist("${item.property?.count}"),
                               style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),

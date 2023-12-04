@@ -82,7 +82,7 @@ class PopupApplyDevice extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: PrimaryFilledButton.mediumRound8(
-                  content: getAppLocalizations(context).common_apply,
+                  content: getAppLocalizations(context).common_ok,
                   isActivated: true,
                   onPressed: () {
                     popPage(context, () {

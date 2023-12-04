@@ -120,7 +120,7 @@ class ScheduleContentItem extends HookConsumerWidget {
             return data.isAddButton
                 ? Container(
                     width: double.infinity,
-                    margin: const EdgeInsets.symmetric(vertical: 70, horizontal: 115),
+                    margin: const EdgeInsets.symmetric(vertical: 70, horizontal: 105),
                     child: PrimaryFilledButton.mediumRound100Icon(
                       leftIcon: SvgPicture.asset(
                         "assets/imgs/icon_plus_1.svg",
@@ -131,9 +131,11 @@ class ScheduleContentItem extends HookConsumerWidget {
                           BlendMode.srcIn,
                         ),
                       ),
-                      content: getAppLocalizations(context).create_schedule_new_playlist,
+                      content: getAppLocalizations(context).create_schedule_new_playlist_plus,
                       isActivated: true,
-                      onPressed: () => timelineProvider.addItem(),
+                      onPressed: () => timelineProvider.addItem(
+                        defaultTitle: getAppLocalizations(context).create_schedule_new_playlist,
+                      ),
                     ),
                   )
                 : SizedBox(
@@ -176,7 +178,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                             if (data.isRequired)
                                               Text(
                                                 "* ",
-                                                style: getTextTheme(context).s3b.copyWith(
+                                                style: getTextTheme(context).s3sb.copyWith(
                                                       color: getColorScheme(context).colorSecondary500,
                                                     ),
                                               ),
@@ -185,7 +187,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                 padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
                                                 child: Text(
                                                   data.playListName,
-                                                  style: getTextTheme(context).s3b.copyWith(
+                                                  style: getTextTheme(context).s3sb.copyWith(
                                                         color: getColorScheme(context).colorGray900,
                                                       ),
                                                 ),

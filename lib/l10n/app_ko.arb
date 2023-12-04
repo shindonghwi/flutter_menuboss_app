@@ -12,7 +12,7 @@
     "signup_business_name": "비즈니스 이름",
     "signup_business_name_hint": "비즈니스 이름을 입력해주세요",
 
-    "main_navigation_menu_schedules": "Schedules",
+    "main_navigation_menu_schedules": "스케줄",
     "main_navigation_menu_playlists": "Playlists",
     "main_navigation_menu_screens": "스크린",
     "main_navigation_menu_media": "Media",
@@ -22,11 +22,11 @@
     "scan_qr_enter_pin_code": "PIN 번호를 입력해주세요",
     "scan_qr_description": "TV 스크린에 보이는\nQR 코드를 인식해주세요",
 
-    "apply_screen_title": "Apply to Screens",
+    "apply_screen_title": "스크린 연결",
 
     "create_playlist_title": "Create playlist",
 
-    "select_playlist_title": "Playlist",
+    "select_playlist_title": "플레이리스트",
 
     "destination_folder_title": "Select destination folder",
 
@@ -37,18 +37,20 @@
         }
     },
 
-    "create_schedule_title": "Create schedule",
-    "create_schedule_default_playlist_title_basic": "Basic",
-    "create_schedule_default_playlist_title_morning": "Morning",
-    "create_schedule_default_playlist_title_lunch": "Lunch",
-    "create_schedule_default_playlist_title_dinner": "Dinner",
-    "create_schedule_add_playlist": "Add Playlist",
-    "create_schedule_change_playlist": "Change Playlist",
-    "create_schedule_new_playlist": "New playlist",
+    "create_schedule_title": "스케줄 생성",
+    "create_schedule_title_input": "제목을 입력해주세요",
+    "create_schedule_default_playlist_title_basic": "베이직",
+    "create_schedule_default_playlist_title_morning": "아침",
+    "create_schedule_default_playlist_title_lunch": "점심",
+    "create_schedule_default_playlist_title_dinner": "저녁",
+    "create_schedule_add_playlist": "플레이리스트 추가",
+    "create_schedule_change_playlist": "플레이스트 변경",
+    "create_schedule_new_playlist": "새 플레이리스트",
+    "create_schedule_new_playlist_plus": "새 플레이리스트 추가",
 
     "edit_playlist_title": "Edit playlist",
 
-    "edit_schedule_title": "Edit schedule",
+    "edit_schedule_title": "스케줄 수정",
 
     "my_page_setting_item": "설정",
     "my_page_setting_items_profile": "프로필",
@@ -89,14 +91,14 @@
     "blank_message_content_add_content": "Add content",
     "blank_message_content_add_canvas": "Add canvas",
     "blank_message_content_add_to_playlist": "Add to playlist",
-    "blank_message_content_new_schedule": "New schedule",
+    "blank_message_content_new_schedule": "스케줄 추가",
     "blank_message_content_new_playlist": "New playlist",
     "blank_message_content_upload_file": "Upload file",
     "blank_message_description_add_screen": "현재 저장된 화면목록이 없습니다\nQR코드를 통해 화면을 등록해주세요",
     "blank_message_description_add_content": "There is currently no content\nPlease add more content",
     "blank_message_description_add_canvas": "No canvas currently saved\nPlease make a new canvas",
     "blank_message_description_add_to_playlist": "",
-    "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
+    "blank_message_description_new_schedule": "현재 저장된 스케줄이 없습니다\n스케줄을 등록하거나 만들어주세요",
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
@@ -118,7 +120,7 @@
     "common_password": "비밀번호",
     "common_option": "Option",
     "common_refresh": "새로고침",
-    "common_title": "Title",
+    "common_title": "제목",
     "common_total_duration": "Total duration",
     "common_add": "Add",
     "common_horizontal": "Horizontal",
@@ -130,11 +132,11 @@
     "common_on": "On",
     "common_off": "Off",
     "common_or": "or",
-    "common_done": "Done",
+    "common_done": "완료",
     "common_next": "다음",
     "common_do_login": "로그인",
     "common_edit": "Edit",
-    "common_apply": "Apply",
+    "common_apply": "스크린 연결",
     "common_confirm": "확인",
     "common_rename": "이름 변경",
     "common_logout": "로그아웃",
@@ -146,11 +148,24 @@
     "common_move_here": "Move here",
     "common_delete": "삭제",
     "common_save": "저장",
-    "common_time": "Time",
-    "common_timeline": "Timeline",
-    "common_mode_all_day": "All day Mode",
-    "common_mode_schedule": "Schedule Mode",
+    "common_time": "시간",
+    "common_timeline": "플레이리스트 목록",
     "common_full_name": "이름",
+    "common_updated": "업데이트",
+
+    "count_playlist": "{count}개 플레이리스트",
+    "@count_playlist":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "count_pages": "{count}장",
+    "@count_pages":{
+        "placeholders": {
+            "count": {}
+        }
+    },
 
     "message_server_error_5xx": "데이터를 불러오는 동안 오류가 발생했습니다\n버튼을 눌러 다시 이용해 주세요",
     "message_file_not_found_404": "파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요",
@@ -163,7 +178,7 @@
     "message_api_success": "",
     "message_temp_login_fail": "일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요",
     "message_time_setting_precede": "종료시간은 시작 시간보다 빠를수 없습니다",
-    "message_time_setting_duplicated": "중복되는 시간을 확인해주세요",
+    "message_time_setting_duplicated": "시간이 중복되었습니다",
     "message_apply_screen_success": "스크린 적용에 성공했습니다",
     "message_register_screen_success": "스크린 등록에 성공했습니다",
     "message_remove_playlist_success": "플레이리스트 삭제에 성공했습니다",
@@ -174,13 +189,5 @@
     "message_register_schedule_success": "스케줄 등록에 성공했습니다",
     "message_update_schedule_success": "스케줄 정보가 변경되었습니다",
     "message_remove_media_success": "미디어 파일 삭제에 성공했습니다",
-    "message_send_event_name_show_success": "화면에 표시 이름 이벤트를 성공적으로 보냈습니다",
-
-    "schedule_time_basic": "Basic Exposure",
-    "schedule_time_morning": "Morning",
-    "schedule_time_lunch": "Lunch",
-    "schedule_time_dinner": "Dinner",
-    "schedule_time_dawn": "Dawn"
-
-
+    "message_send_event_name_show_success": "화면에 표시 이름 이벤트를 성공적으로 보냈습니다"
 }

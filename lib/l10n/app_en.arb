@@ -38,6 +38,7 @@
     },
 
     "create_schedule_title": "Create schedule",
+    "create_schedule_title_input": "Please enter a title",
     "create_schedule_default_playlist_title_basic": "Basic",
     "create_schedule_default_playlist_title_morning": "Morning",
     "create_schedule_default_playlist_title_lunch": "Lunch",
@@ -45,6 +46,7 @@
     "create_schedule_add_playlist": "Add Playlist",
     "create_schedule_change_playlist": "Change Playlist",
     "create_schedule_new_playlist": "New playlist",
+    "create_schedule_new_playlist_plus": "New playlist",
 
     "edit_playlist_title": "Edit playlist",
 
@@ -148,9 +150,22 @@
     "common_save": "Save",
     "common_time": "Time",
     "common_timeline": "Timeline",
-    "common_mode_all_day": "All day Mode",
-    "common_mode_schedule": "Schedule Mode",
     "common_full_name": "Full name",
+    "common_updated": "Updated",
+
+    "count_playlist": "{count} playlists",
+    "@count_playlist":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "count_pages": "{count}pages",
+    "@count_pages":{
+        "placeholders": {
+            "count": {}
+        }
+    },
 
     "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
     "message_file_not_found_404": "File not found\nPlease use it again",
@@ -174,13 +189,5 @@
     "message_register_schedule_success": "Schedule registered successfully",
     "message_update_schedule_success": "Schedule information has been changed",
     "message_remove_media_success": "Media file deleted successfully",
-    "message_send_event_name_show_success": "Successfully Send show name event to Screen",
-
-    "schedule_time_basic": "Basic Exposure",
-    "schedule_time_morning": "Morning",
-    "schedule_time_lunch": "Lunch",
-    "schedule_time_dinner": "Dinner",
-    "schedule_time_dawn": "Dawn"
-
-
+    "message_send_event_name_show_success": "Successfully Send show name event to Screen"
 }
