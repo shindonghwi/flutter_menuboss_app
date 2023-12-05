@@ -13,7 +13,8 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
-import 'package:menuboss/presentation/utils/StringUtil.dart';
+
+import '../../main/media/widget/MediaItem.dart';
 
 class MediaItemAdd extends HookConsumerWidget {
   final SimpleMediaContentModel item;
@@ -58,14 +59,14 @@ class MediaItemAdd extends HookConsumerWidget {
         );
     }
 
-    String content = "";
-    if (code == "image" || code == "video") {
-      isFolderType = false;
-      content = "$code - ${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)}";
-    } else if (code == "folder") {
-      isFolderType = true;
-      content = "${item.property?.count ?? 0} File(${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
-    }
+    String content = ParseMediaItem.convertTypeSizeFormat(
+      context,
+      code,
+      item.property?.count,
+      item.property?.size,
+    );
+
+    isFolderType = item.isFolder == true ? true : false;
 
     return ClickableScale(
       onPressed: isFolderType ? () => onFolderTap.call() : null,

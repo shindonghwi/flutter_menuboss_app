@@ -2,14 +2,13 @@ import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaProperty.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
-import 'package:menuboss/data/models/playlist/RequestPlaylistUpdateInfoModel.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/playlist/PostPlaylistUseCase.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final detailPreviewItemProcessProvider = StateNotifierProvider<DetailPreviewItemProcessNotifier, UIState<List<SimpleMediaContentModel>>>(
-      (ref) => DetailPreviewItemProcessNotifier(),
+final detailPreviewItemProcessProvider =
+    StateNotifierProvider<DetailPreviewItemProcessNotifier, UIState<List<SimpleMediaContentModel>>>(
+  (ref) => DetailPreviewItemProcessNotifier(),
 );
 
 class DetailPreviewItemProcessNotifier extends StateNotifier<UIState<List<SimpleMediaContentModel>>> {
@@ -37,6 +36,7 @@ class DetailPreviewItemProcessNotifier extends StateNotifier<UIState<List<Simple
               id: data?.mediaId,
               name: data?.name,
               type: data?.type?.code,
+              isFolder: data?.type?.code.toLowerCase() == "folder",
               property: ResponseMediaProperty(
                 count: data?.property?.count,
                 width: data?.property?.width,
@@ -60,7 +60,7 @@ class DetailPreviewItemProcessNotifier extends StateNotifier<UIState<List<Simple
     state = Success(resultList);
   }
 
-  void init(){
+  void init() {
     state = Idle();
   }
 }

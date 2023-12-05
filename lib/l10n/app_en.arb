@@ -150,6 +150,10 @@
     "common_full_name": "Full name",
     "common_updated": "Updated",
     "common_back": "Back",
+    "common_image": "image",
+    "common_video": "video",
+    "common_canvas": "canvas",
+    "common_folder": "folder",
 
     "count_playlist": "{count} playlists",
     "@count_playlist":{
@@ -162,6 +166,22 @@
     "@count_pages":{
         "placeholders": {
             "count": {}
+        }
+    },
+
+    "count_folder": "{count} Files{size}",
+    "@count_folder":{
+        "placeholders": {
+            "count": {},
+            "size": {}
+        }
+    },
+
+    "type_media_size": "{type} - {size}",
+    "@type_media_size":{
+        "placeholders": {
+            "type": {},
+            "size": {}
         }
     },
 

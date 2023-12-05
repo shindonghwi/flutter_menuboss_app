@@ -15,6 +15,34 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 
+class ParseMediaItem {
+  static String convertTypeSizeFormat(BuildContext context, String? type, int? count, int? size) {
+    switch (type?.toLowerCase()) {
+      case "image":
+        return getAppLocalizations(context).type_media_size(
+          getAppLocalizations(context).common_image,
+          StringUtil.formatBytesToMegabytes(size ?? 0),
+        );
+      case "video":
+        return getAppLocalizations(context).type_media_size(
+          getAppLocalizations(context).common_video,
+          StringUtil.formatBytesToMegabytes(size ?? 0),
+        );
+      case "folder":
+        return getAppLocalizations(context).count_folder(
+          count.toString(),
+          StringUtil.formatBytesToMegabytes(size ?? 0),
+        );
+      case "canvas":
+        return getAppLocalizations(context).type_media_size(
+          getAppLocalizations(context).common_canvas,
+          StringUtil.formatBytesToMegabytes(size ?? 0),
+        );
+    }
+    return "";
+  }
+}
+
 class MediaItem extends HookWidget {
   final ResponseMediaModel item;
   final Function(String) onRename;
@@ -108,12 +136,12 @@ class _MediaSimpleInfo extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final code = item.type?.code.toLowerCase();
-    String content = "";
-    if (code == "image" || code == "video") {
-      content = "$code - ${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)}";
-    } else if (code == "folder") {
-      content = "${item.property?.count} File(${StringUtil.formatBytesToMegabytes(item.property?.size ?? 0)})";
-    }
+    String content = ParseMediaItem.convertTypeSizeFormat(
+      context,
+      code,
+      item.property?.count,
+      item.property?.size,
+    );
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,

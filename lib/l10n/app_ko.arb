@@ -150,6 +150,10 @@
     "common_full_name": "이름",
     "common_updated": "업데이트",
     "common_back": "뒤로가기",
+    "common_image": "이미지",
+    "common_video": "비디오",
+    "common_canvas": "캔버스",
+    "common_folder": "폴더",
 
     "count_playlist": "{count}개 플레이리스트",
     "@count_playlist":{
@@ -162,6 +166,22 @@
     "@count_pages":{
         "placeholders": {
             "count": {}
+        }
+    },
+
+    "count_folder": "{count}개 파일({size})",
+    "@count_folder":{
+        "placeholders": {
+            "count": {},
+            "size": {}
+        }
+    },
+
+    "type_media_size": "{type} - {size}",
+    "@type_media_size":{
+        "placeholders": {
+            "type": {},
+            "size": {}
         }
     },
 

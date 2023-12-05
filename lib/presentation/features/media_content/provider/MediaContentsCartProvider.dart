@@ -1,7 +1,5 @@
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
-import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 
 final mediaContentsCartProvider = StateNotifierProvider<MediaContentsCartNotifier, List<SimpleMediaContentModel>>(
   (ref) => MediaContentsCartNotifier(),
