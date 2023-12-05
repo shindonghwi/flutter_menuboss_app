@@ -161,6 +161,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
             CommonPopup.showPopup(
               context,
               child: PopupRename(
+                title: getAppLocalizations(context).popup_rename_title,
                 hint: getAppLocalizations(context).popup_rename_media_hint,
                 name: folderName.value,
                 onClicked: (name) {

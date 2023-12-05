@@ -74,12 +74,15 @@ class MediaItem extends HookWidget {
               if (type == ModifyType.Delete) {
                 CommonPopup.showPopup(
                   context,
-                  child: PopupDelete(onClicked: () => onRemove.call()),
+                  child: PopupDelete(
+                    onClicked: () => onRemove.call(),
+                  ),
                 );
               } else if (type == ModifyType.Rename) {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
+                    title: getAppLocalizations(context).popup_rename_title,
                     hint: getAppLocalizations(context).popup_rename_media_hint,
                     name: item.name.toString(),
                     onClicked: (name) => onRename.call(name),

@@ -105,6 +105,7 @@ class DeviceItem extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
+                    title: getAppLocalizations(context).popup_rename_title,
                     hint: getAppLocalizations(context).popup_rename_screen_hint,
                     name: item.name,
                     onClicked: (name) {

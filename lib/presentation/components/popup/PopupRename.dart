@@ -10,12 +10,14 @@ import 'package:menuboss/presentation/utils/Common.dart';
 import '../../../navigation/PageMoveUtil.dart';
 
 class PopupRename extends HookWidget {
+  final String title;
   final String hint;
   final String name;
   final Function(String name)? onClicked;
 
   const PopupRename({
     super.key,
+    required this.title,
     required this.hint,
     required this.name,
     required this.onClicked,
@@ -33,7 +35,7 @@ class PopupRename extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Text(
-            getAppLocalizations(context).common_rename,
+            title,
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),

@@ -99,6 +99,7 @@
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
+    "popup_rename_title": "Rename",
     "popup_rename_media_hint": "Media name",
     "popup_rename_screen_hint": "Screen name",
     "popup_rename_schedule_hint": "Schedule name",
@@ -108,7 +109,7 @@
     "popup_apply_screen_title": "Apply to screens?",
     "popup_apply_screen_description": "Are you sure you want to apply it directly to the screens?",
     "popup_logout_description": "Are yor sure want to log out?",
-    "popup_change_duration_title": "Please enter the duration of the media",
+    "popup_change_duration_title": "Please enter the duration\nof the media",
     "popup_delete_account_title": "Delete account completed!",
     "popup_delete_account_description": "Account deletion completed successfully. See you next time",
 
