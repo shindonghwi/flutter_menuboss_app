@@ -85,7 +85,7 @@
     "media_content_tab_canvas": "캔버스",
 
     "bottom_sheet_pin_code_description": "PIN 번호를 입력해주세요",
-    "bottom_sheet_menu_display_show_name": "스크린 이름 표시하기",
+    "bottom_sheet_menu_display_show_name": "스크린 이름 표시",
 
     "blank_message_content_add_screen": "스크린 추가",
     "blank_message_content_add_content": "컨텐츠 추가",
@@ -169,7 +169,7 @@
         }
     },
 
-    "count_folder": "{count}개 파일({size})",
+    "count_folder": "{count}개 파름({size})",
     "@count_folder":{
         "placeholders": {
             "count": {},
