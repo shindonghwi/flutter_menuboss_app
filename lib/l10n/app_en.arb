@@ -25,6 +25,7 @@
     "apply_screen_title": "Apply to Screens",
 
     "create_playlist_title": "Create playlist",
+    "create_playlist_title_input": "Please enter a title",
 
     "select_playlist_title": "Playlist",
 
@@ -54,7 +55,6 @@
 
     "my_page_setting_item": "Settings",
     "my_page_setting_items_profile": "Profile",
-    "my_page_setting_items_plan": "Plan",
 
     "my_page_profile_appbar_title": "Profile",
     "my_page_profile_business_name": "Business name",
@@ -90,14 +90,11 @@
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_add_content": "Add content",
     "blank_message_content_add_canvas": "Add canvas",
-    "blank_message_content_add_to_playlist": "Add to playlist",
     "blank_message_content_new_schedule": "New schedule",
     "blank_message_content_new_playlist": "New playlist",
     "blank_message_content_upload_file": "Upload file",
     "blank_message_description_add_screen": "There is currently no saved screen list\nPlease register the screen through QR code",
-    "blank_message_description_add_content": "There is currently no content\nPlease add more content",
     "blank_message_description_add_canvas": "No canvas currently saved\nPlease make a new canvas",
-    "blank_message_description_add_to_playlist": "",
     "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
@@ -135,7 +132,6 @@
     "common_done": "Done",
     "common_next": "Next",
     "common_do_login": "Log in",
-    "common_edit": "Edit",
     "common_apply": "Apply",
     "common_confirm": "Confirm",
     "common_rename": "Rename",
@@ -152,6 +148,7 @@
     "common_timeline": "Timeline",
     "common_full_name": "Full name",
     "common_updated": "Updated",
+    "common_back": "Back",
 
     "count_playlist": "{count} playlists",
     "@count_playlist":{
@@ -189,5 +186,11 @@
     "message_register_schedule_success": "Schedule registered successfully",
     "message_update_schedule_success": "Schedule information has been changed",
     "message_remove_media_success": "Media file deleted successfully",
+    "message_move_media_success": "File moved to {folder}",
+    "@message_move_media_success":{
+        "placeholders": {
+            "folder": {}
+        }
+    },
     "message_send_event_name_show_success": "Successfully Send show name event to Screen"
 }

@@ -50,7 +50,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
       void handleUiStateChange() {
         fileMoveState.when(
           success: (event) async {
-            Toast.showSuccess(context, "File moved to '${event.value}'");
+            Toast.showSuccess(context, getAppLocalizations(context).message_move_media_success(event.value.toString()));
             mediaListManager.initPageInfo();
             mediaListManager.requestGetMedias();
             Navigator.of(context).pop();
@@ -184,7 +184,7 @@ class _FolderItem extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 12.0),
                   child: Text(
                     folderName,
-                    style: getTextTheme(context).b2sb.copyWith(
+                    style: getTextTheme(context).b2m.copyWith(
                           color: getColorScheme(context).colorGray900,
                         ),
                   ),

@@ -97,7 +97,7 @@ class PlaylistContentItem extends HookConsumerWidget {
                                   padding: const EdgeInsets.only(left: 4.0, right: 12),
                                   child: Text(
                                     "${item.name}",
-                                    style: getTextTheme(context).b2sb.copyWith(
+                                    style: getTextTheme(context).b3sb.copyWith(
                                           color: getColorScheme(context).colorGray900,
                                         ),
                                   ),

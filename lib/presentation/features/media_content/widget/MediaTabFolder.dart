@@ -81,7 +81,7 @@ class MediaTabFolder extends HookConsumerWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Text(
-                      "Back",
+                      getAppLocalizations(context).common_back,
                       style: getTextTheme(context).b3sb.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),

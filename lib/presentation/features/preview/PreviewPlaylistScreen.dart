@@ -271,7 +271,7 @@ class _PreviewSettingIcon extends StatelessWidget {
             ),
             Text(
               content,
-              style: getTextTheme(context).c1sb.copyWith(
+              style: getTextTheme(context).c1m.copyWith(
                     color: isSelected ? getColorScheme(context).white : getColorScheme(context).colorGray500,
                   ),
             )

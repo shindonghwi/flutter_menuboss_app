@@ -51,7 +51,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   StringUtil.formatDuration(totalDuration.value),
-                  style: getTextTheme(context).b3sb.copyWith(
+                  style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).colorGray500,
                       ),
                 ),

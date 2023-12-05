@@ -311,7 +311,7 @@ class _SettingSelectableIcon extends HookWidget {
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Text(
                     iconText,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray900,
                         ),
                   ),

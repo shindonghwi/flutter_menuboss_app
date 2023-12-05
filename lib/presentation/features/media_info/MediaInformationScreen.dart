@@ -305,7 +305,7 @@ class _MediaInformation extends HookConsumerWidget {
                         if (!CollectionUtil.isNullEmptyFromString(e.second))
                           Text(
                             e.first,
-                            style: getTextTheme(context).b3sb.copyWith(
+                            style: getTextTheme(context).b3m.copyWith(
                                   color: getColorScheme(context).colorGray900,
                                 ),
                           ),
@@ -315,7 +315,7 @@ class _MediaInformation extends HookConsumerWidget {
                               padding: const EdgeInsets.only(left: 52.0),
                               child: Text(
                                 e.second.toString(),
-                                style: getTextTheme(context).b3m.copyWith(
+                                style: getTextTheme(context).b3r.copyWith(
                                       color: getColorScheme(context).colorGray600,
                                     ),
                                 overflow: TextOverflow.visible,

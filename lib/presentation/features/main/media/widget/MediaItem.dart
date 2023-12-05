@@ -118,7 +118,7 @@ class _MediaSimpleInfo extends HookWidget {
       children: [
         Text(
           item.name.toString(),
-          style: getTextTheme(context).b1sb.copyWith(
+          style: getTextTheme(context).b2m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),
@@ -127,7 +127,7 @@ class _MediaSimpleInfo extends HookWidget {
                 padding: const EdgeInsets.only(top: 4.0),
                 child: Text(
                   content,
-                  style: getTextTheme(context).b3m.copyWith(
+                  style: getTextTheme(context).b3r.copyWith(
                         color: getColorScheme(context).colorGray500,
                       ),
                 ),

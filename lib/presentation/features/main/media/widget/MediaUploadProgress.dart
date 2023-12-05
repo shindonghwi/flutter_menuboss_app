@@ -71,7 +71,7 @@ class MediaUploadProgress extends HookConsumerWidget {
                               children: [
                                 Text(
                                   mediaUploadState.currentFile!.path.split('/').last,
-                                  style: getTextTheme(context).b3sb.copyWith(
+                                  style: getTextTheme(context).b3m.copyWith(
                                         color: getColorScheme(context).colorGray900,
                                       ),
                                 ),

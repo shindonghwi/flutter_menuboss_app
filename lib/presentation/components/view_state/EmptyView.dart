@@ -10,7 +10,6 @@ enum BlankMessageType {
   ADD_SCREEN,
   ADD_CONTENT,
   ADD_CANVAS,
-  ADD_TO_PLAYLIST,
   NEW_SCHEDULE,
   NEW_PLAYLIST,
   UPLOAD_FILE,
@@ -36,8 +35,6 @@ class EmptyView extends HookWidget {
           return getAppLocalizations(context).blank_message_content_add_content;
         case BlankMessageType.ADD_CANVAS:
           return getAppLocalizations(context).blank_message_content_add_canvas;
-        case BlankMessageType.ADD_TO_PLAYLIST:
-          return getAppLocalizations(context).blank_message_content_add_to_playlist;
         case BlankMessageType.NEW_SCHEDULE:
           return getAppLocalizations(context).blank_message_content_new_schedule;
         case BlankMessageType.NEW_PLAYLIST:
@@ -53,12 +50,8 @@ class EmptyView extends HookWidget {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return getAppLocalizations(context).blank_message_description_add_screen;
-        case BlankMessageType.ADD_CONTENT:
-          return getAppLocalizations(context).blank_message_description_add_content;
         case BlankMessageType.ADD_CANVAS:
           return getAppLocalizations(context).blank_message_description_add_canvas;
-        case BlankMessageType.ADD_TO_PLAYLIST:
-          return getAppLocalizations(context).blank_message_description_add_to_playlist;
         case BlankMessageType.NEW_SCHEDULE:
           return getAppLocalizations(context).blank_message_description_new_schedule;
         case BlankMessageType.NEW_PLAYLIST:
@@ -74,12 +67,8 @@ class EmptyView extends HookWidget {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return "assets/imgs/image_blank_device.svg";
-        case BlankMessageType.ADD_CONTENT:
-          return "assets/imgs/image_blank_upload.svg";
         case BlankMessageType.ADD_CANVAS:
           return "assets/imgs/image_blank_canvas.svg";
-        case BlankMessageType.ADD_TO_PLAYLIST:
-          return null;
         case BlankMessageType.NEW_SCHEDULE:
           return "assets/imgs/image_blank_schedule.svg";
         case BlankMessageType.NEW_PLAYLIST:
@@ -98,8 +87,6 @@ class EmptyView extends HookWidget {
         case BlankMessageType.ADD_CONTENT:
           return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.ADD_CONTENT:
-          return "assets/imgs/icon_plus_1.svg";
-        case BlankMessageType.ADD_TO_PLAYLIST:
           return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.NEW_SCHEDULE:
           return "assets/imgs/icon_plus_1.svg";

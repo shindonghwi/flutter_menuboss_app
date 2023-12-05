@@ -45,7 +45,7 @@ class MediaContentTabView extends HookConsumerWidget {
               child: Center(
                 child: Text(
                   getAppLocalizations(context).media_content_tab_media,
-                  style: getTextTheme(context).b2sb.copyWith(
+                  style: getTextTheme(context).b2m.copyWith(
                         color: mediaTabTextColor,
                       ),
                 ),
@@ -71,7 +71,7 @@ class MediaContentTabView extends HookConsumerWidget {
               child: Center(
                 child: Text(
                   getAppLocalizations(context).media_content_tab_canvas,
-                  style: getTextTheme(context).b2sb.copyWith(
+                  style: getTextTheme(context).b2m.copyWith(
                         color: canvasTabTextColor,
                       ),
                 ),
