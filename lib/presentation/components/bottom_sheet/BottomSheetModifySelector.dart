@@ -99,7 +99,7 @@ class BottomSheetModifySelector extends HookWidget {
                       padding: const EdgeInsets.only(left: 8.0),
                       child: Text(
                         value,
-                        style: getTextTheme(context).b2sb.copyWith(
+                        style: getTextTheme(context).b2m.copyWith(
                               color: color,
                             ),
                       ),

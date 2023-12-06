@@ -67,8 +67,6 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
   @override
   Widget build(BuildContext context) {
     const imageSize = 180.0;
-    const textHeight = 38;
-    const verticalPadding = 32;
 
     return Stack(
       children: [

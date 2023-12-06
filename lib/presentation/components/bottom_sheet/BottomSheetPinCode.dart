@@ -95,7 +95,7 @@ class BottomSheetPinCode extends HookWidget {
                 focusNode: focusNodes[index],
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
-                style: getTextTheme(context).s1b.copyWith(
+                style: getTextTheme(context).s2sb.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
                 decoration: InputDecoration(

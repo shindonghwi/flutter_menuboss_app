@@ -38,7 +38,7 @@ class PopupDelete extends HookWidget {
             ),
           ),
           const SizedBox(
-            height: 32,
+            height: 24,
           ),
           Text(
             getAppLocalizations(context).popup_delete_title,
@@ -58,7 +58,7 @@ class PopupDelete extends HookWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(
-            height: 32,
+            height: 24,
           ),
           Row(
             children: [

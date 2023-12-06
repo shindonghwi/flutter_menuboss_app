@@ -43,13 +43,13 @@ class PopupRename extends HookWidget {
           const SizedBox(
             height: 24,
           ),
-          OutlineTextField.small(
+          OutlineTextField.medium(
             hint: hint,
             controller: useTextEditingController(text: name),
             onChanged: (text) => renameText.value = text,
           ),
           const SizedBox(
-            height: 32,
+            height: 24,
           ),
           Row(
             children: [

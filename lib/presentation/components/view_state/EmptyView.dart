@@ -120,19 +120,19 @@ class EmptyView extends HookWidget {
               ),
             ),
           const SizedBox(
-            height: 16,
+            height: 12,
           ),
           if (description != null)
             Text(
               description,
               style: getTextTheme(context).b3m.copyWith(
-                    color: getColorScheme(context).colorGray300,
+                    color: getColorScheme(context).colorGray400,
                   ),
               textAlign: TextAlign.center,
             ),
           if (buttonIconPath != null && onPressed != null)
             Padding(
-              padding: const EdgeInsets.only(top: 20.0),
+              padding: const EdgeInsets.only(top: 24.0),
               child: PrimaryFilledButton.mediumRound100Icon(
                 leftIcon: SvgPicture.asset(
                   buttonIconPath,

@@ -100,6 +100,7 @@
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
     "popup_rename_title": "Rename",
+    "popup_rename_screen_hint": "Enter Screen name",
     "popup_rename_media_hint": "Media name",
     "popup_rename_screen_hint": "Screen name",
     "popup_rename_schedule_hint": "Schedule name",
