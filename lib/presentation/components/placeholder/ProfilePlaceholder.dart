@@ -4,7 +4,7 @@ import 'package:menuboss/presentation/ui/colors.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
 
-enum ProfileImagePlaceholderType { Size100x100, Size120x120 }
+enum ProfileImagePlaceholderType { Size80x80, Size100x100, Size120x120 }
 
 class ProfilePlaceholder extends StatelessWidget {
   final ProfileImagePlaceholderType type;
@@ -20,6 +20,9 @@ class ProfilePlaceholder extends StatelessWidget {
     Pair<double, double> imageSize = Pair(0.0, 0.0);
 
     switch (type) {
+      case ProfileImagePlaceholderType.Size80x80:
+        containerSize = 80;
+        imageSize = Pair(32, 16);
       case ProfileImagePlaceholderType.Size100x100:
         containerSize = 100;
         imageSize = Pair(40, 20);

@@ -109,72 +109,79 @@ class MyProfileScreen extends HookConsumerWidget {
       ),
       backgroundColor: getColorScheme(context).white,
       body: SafeArea(
-        child: Stack(
-          children: [
-            SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 24),
-                  Align(
-                    alignment: Alignment.center,
-                    child: SizedBox(
-                      width: 120,
-                      height: 120,
-                      child: Stack(
-                        children: [
-                          LoadProfile(
-                            url: meInfoState?.profile?.imageUrl ?? "",
-                            type: ProfileImagePlaceholderType.Size120x120,
+        child: Container(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
+          child: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 24),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: SizedBox(
+                          width: 120,
+                          height: 120,
+                          child: Stack(
+                            children: [
+                              LoadProfile(
+                                url: meInfoState?.profile?.imageUrl ?? "",
+                                type: ProfileImagePlaceholderType.Size120x120,
+                              ),
+                              const _CameraWidget()
+                            ],
                           ),
-                          const _CameraWidget()
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 24),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          _InputFullName(
+                            isNameChanged: (value) {
+                              isNameChangedState.value = value;
+                            },
+                          ),
+                          const SizedBox(height: 24),
+                          const _InputEmail(),
                         ],
                       ),
                     ),
-                  ),
-                  Container(
-                    alignment: Alignment.centerLeft,
-                    margin: const EdgeInsets.fromLTRB(24, 32, 24, 0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        _InputFullName(
-                          isNameChanged: (value) {
-                            isNameChangedState.value = value;
-                          },
-                        ),
-                        const SizedBox(height: 24),
-                        const _InputEmail(),
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: Container(
-                      margin: const EdgeInsets.all(24),
-                      child: Clickable(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            nextSlideHorizontalScreen(
-                              RoutingScreen.DeleteAccount.route,
-                            ),
-                          );
-                        },
-                        child: Text(
-                          getAppLocalizations(context).my_page_profile_delete_account,
-                          style: getTextTheme(context).b3m.copyWith(
-                                color: getColorScheme(context).colorGray600,
+                    Container(
+                      margin: const EdgeInsets.only(top: 12),
+                      child: Align(
+                        alignment: Alignment.centerLeft,
+                        child: Clickable(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              nextSlideHorizontalScreen(
+                                RoutingScreen.DeleteAccount.route,
                               ),
+                            );
+                          },
+                          child: Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 12, 12, 12),
+                            child: Text(
+                              getAppLocalizations(context).my_page_profile_delete_account,
+                              style: getTextTheme(context).b3m.copyWith(
+                                    color: getColorScheme(context).colorGray600,
+                                  ),
+                            ),
+                          ),
                         ),
                       ),
-                    ),
-                  )
-                ],
+                    )
+                  ],
+                ),
               ),
-            ),
-            if (nameChangeState is Loading || uploadState is Loading || updateProfileImageState is Loading)
-              const LoadingView()
-          ],
+              if (nameChangeState is Loading || uploadState is Loading || updateProfileImageState is Loading)
+                const LoadingView()
+            ],
+          ),
         ),
       ),
     );
@@ -256,7 +263,7 @@ class _InputFullName extends HookConsumerWidget {
               ),
         ),
         const SizedBox(height: 12),
-        OutlineTextField.small(
+        OutlineTextField.medium(
           controller: useTextEditingController(text: meInfoState?.profile?.name),
           hint: meInfoState?.profile?.name ?? "",
           onChanged: (value) {
@@ -285,7 +292,7 @@ class _InputEmail extends HookConsumerWidget {
               ),
         ),
         const SizedBox(height: 12),
-        OutlineTextField.small(
+        OutlineTextField.medium(
           hint: meInfoState?.email ?? "",
           enable: false,
         )

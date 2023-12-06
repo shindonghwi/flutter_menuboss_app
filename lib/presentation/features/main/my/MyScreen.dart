@@ -69,7 +69,6 @@ class MyScreen extends HookConsumerWidget {
           children: [
             Column(
               children: [
-                const SizedBox(height: 24),
                 _UserProfile(
                   imageUrl: meInfo?.profile?.imageUrl,
                   role: meInfo?.business?.role,
@@ -77,9 +76,11 @@ class MyScreen extends HookConsumerWidget {
                   businessName: meInfo?.business?.title,
                   email: meInfo?.email,
                 ),
-                // SizedBox(height: 24),
-                // _UserPlanScreenInfo(),
-                const DividerVertical(marginVertical: 12),
+                Container(
+                  width: double.infinity,
+                  height: 8,
+                  color: getColorScheme(context).colorGray100,
+                  ),
                 const _SettingItems(),
               ],
             ),
@@ -110,147 +111,71 @@ class _UserProfile extends HookWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 100,
-      margin: const EdgeInsets.only(left: 24, right: 12),
+      height: 120,
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
       child: Row(
         children: [
           LoadProfile(
             url: imageUrl ?? "",
-            type: ProfileImagePlaceholderType.Size100x100,
+            type: ProfileImagePlaceholderType.Size80x80,
           ),
-          const SizedBox(
-            width: 24,
-          ),
+          const SizedBox(width: 16),
           Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(vertical: 4),
-              child: Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (!CollectionUtil.isNullEmptyFromString(role))
-                        Container(
-                          decoration: BoxDecoration(
-                            color: getColorScheme(context).colorPrimary500,
-                            borderRadius: BorderRadius.circular(100),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (!CollectionUtil.isNullEmptyFromString(role))
+                      Container(
+                        decoration: BoxDecoration(
+                          color: getColorScheme(context).colorPrimary500,
+                          borderRadius: BorderRadius.circular(100),
+                        ),
+                        margin: const EdgeInsets.only(bottom: 4),
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                          child: Text(
+                            role.toString(),
+                            style: getTextTheme(context).c2m.copyWith(
+                                  color: getColorScheme(context).white,
+                                ),
+                            overflow: TextOverflow.ellipsis,
                           ),
-                          margin: const EdgeInsets.only(bottom: 4),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                            child: Text(
-                              role.toString(),
-                              style: getTextTheme(context).c2m.copyWith(
-                                    color: getColorScheme(context).white,
-                                  ),
-                              overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                    if (!CollectionUtil.isNullEmptyFromString(name))
+                      Text(
+                        name.toString(),
+                        style: getTextTheme(context).b2m.copyWith(
+                              color: getColorScheme(context).colorGray900,
                             ),
-                          ),
-                        ),
-                      if (!CollectionUtil.isNullEmptyFromString(name))
-                        Text(
-                          name.toString(),
-                          style: getTextTheme(context).b2m.copyWith(
-                                color: getColorScheme(context).colorGray900,
-                              ),
-                        ),
-                    ],
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      if (!CollectionUtil.isNullEmptyFromString(businessName))
-                        Text(
-                          businessName.toString(),
-                          style: getTextTheme(context).c1m.copyWith(
-                                color: getColorScheme(context).colorGray700,
-                              ),
-                        ),
-                      if (!CollectionUtil.isNullEmptyFromString(email))
-                        Text(
-                          email.toString(),
-                          style: getTextTheme(context).c1m.copyWith(
-                                color: getColorScheme(context).colorGray700,
-                              ),
-                        ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class _UserPlanScreenInfo extends HookWidget {
-  const _UserPlanScreenInfo({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(24, 0, 24, 12),
-      padding: const EdgeInsets.symmetric(vertical: 24, horizontal: 20),
-      decoration: BoxDecoration(
-        color: getColorScheme(context).colorGray50,
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: Column(
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Row(
-                children: [
-                  SvgPicture.asset(
-                    "assets/imgs/icon_premium.svg",
-                    width: 24,
-                    height: 24,
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 4.0),
-                    child: Text(
-                      'Premium',
-                      style: getTextTheme(context).b3sb.copyWith(
-                            color: getColorScheme(context).colorGray900,
-                          ),
-                    ),
-                  ),
-                ],
-              ),
-              Text(
-                'Payment : Aug 24th, 2023',
-                style: getTextTheme(context).c1sb.copyWith(
-                      color: getColorScheme(context).colorGray500,
-                    ),
-              ),
-            ],
-          ),
-          Container(
-            width: double.infinity,
-            margin: const EdgeInsets.only(top: 12.0),
-            child: const LinearAnimationProgressBar(
-              percentage: 0.5,
-            ),
-          ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                'Screens : 3 /4',
-                style: getTextTheme(context).c1m.copyWith(
-                      color: getColorScheme(context).colorGray500,
-                    ),
-              ),
+                      ),
+                  ],
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    if (!CollectionUtil.isNullEmptyFromString(businessName))
+                      Text(
+                        businessName.toString(),
+                        style: getTextTheme(context).c1m.copyWith(
+                              color: getColorScheme(context).colorGray700,
+                            ),
+                      ),
+                    if (!CollectionUtil.isNullEmptyFromString(email))
+                      Text(
+                        email.toString(),
+                        style: getTextTheme(context).c1m.copyWith(
+                              color: getColorScheme(context).colorGray700,
+                            ),
+                      ),
+                  ],
+                ),
+              ],
             ),
           ),
         ],
