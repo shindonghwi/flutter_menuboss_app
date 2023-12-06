@@ -91,7 +91,7 @@ class ScheduleItem extends HookWidget {
             ),
           ),
           PrimaryLineButton.smallRound100(
-            content: getAppLocalizations(context).common_apply,
+            content: getAppLocalizations(context).common_connect_screen,
             isActivated: true,
             onPressed: () {
               Navigator.push(

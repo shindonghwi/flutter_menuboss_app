@@ -47,7 +47,6 @@
     "create_schedule_add_playlist": "Add Playlist",
     "create_schedule_change_playlist": "Change Playlist",
     "create_schedule_new_playlist": "New playlist",
-    "create_schedule_new_playlist_plus": "New playlist",
 
     "edit_playlist_title": "Edit playlist",
 
@@ -133,7 +132,7 @@
     "common_done": "Done",
     "common_next": "Next",
     "common_do_login": "Log in",
-    "common_apply": "Apply",
+    "common_connect_screen": "Apply",
     "common_confirm": "Confirm",
     "common_rename": "Rename",
     "common_logout": "Log out",

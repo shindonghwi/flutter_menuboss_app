@@ -11,7 +11,7 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/button/FilterButton.dart';
-import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/components/button/FloatingPlusButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';

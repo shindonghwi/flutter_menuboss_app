@@ -72,7 +72,7 @@ class ApplyDeviceItem extends HookWidget {
                       padding: const EdgeInsets.only(top: 4),
                       child: Text(
                         item.content?.name ?? "",
-                        style: getTextTheme(context).b3r.copyWith(
+                        style: getTextTheme(context).b3m.copyWith(
                               color: getColorScheme(context).colorGray500,
                             ),
                       ),
