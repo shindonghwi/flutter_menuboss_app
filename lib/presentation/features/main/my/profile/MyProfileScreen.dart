@@ -251,7 +251,7 @@ class _InputFullName extends HookConsumerWidget {
       children: [
         Text(
           getAppLocalizations(context).common_full_name,
-          style: getTextTheme(context).b2m.copyWith(
+          style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),
@@ -280,7 +280,7 @@ class _InputEmail extends HookConsumerWidget {
       children: [
         Text(
           "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
-          style: getTextTheme(context).b2m.copyWith(
+          style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),

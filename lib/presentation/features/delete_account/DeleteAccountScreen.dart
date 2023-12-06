@@ -110,7 +110,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                       ),
                       Text(
                         getAppLocalizations(context).delete_account_description1,
-                        style: getTextTheme(context).b2r.copyWith(
+                        style: getTextTheme(context).b2m.copyWith(
                               color: getColorScheme(context).colorGray700,
                             ),
                         overflow: TextOverflow.visible,
@@ -127,14 +127,14 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     ),
                     Text(
                       getAppLocalizations(context).delete_account_reason_title,
-                      style: getTextTheme(context).s3b.copyWith(
+                      style: getTextTheme(context).s3sb.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                       overflow: TextOverflow.visible,
                       textAlign: TextAlign.center,
                     ),
                     const SizedBox(
-                      height: 24,
+                      height: 16,
                     ),
                     Column(
                       children: reasons.map((item) {
@@ -172,7 +172,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                                   padding: const EdgeInsets.only(left: 12.0),
                                   child: Text(
                                     reason,
-                                    style: getTextTheme(context).b2r.copyWith(
+                                    style: getTextTheme(context).b2m.copyWith(
                                           color: getColorScheme(context).colorGray700,
                                         ),
                                     overflow: TextOverflow.visible,

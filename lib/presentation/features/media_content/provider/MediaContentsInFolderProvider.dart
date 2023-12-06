@@ -19,6 +19,9 @@ class MediaContentsInFolderNotifier extends StateNotifier<UIState<List<SimpleMed
   bool _isProcessing = false;
   List<ResponseMediaModel> _originMediaItems = [];
 
+  Map<FilterType, String> filterKeys = {};
+  void updateFilterKeys(Map<FilterType, String> filterKeys) => this.filterKeys = filterKeys;
+
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
 
   /// 미디어 리스트 요청
@@ -34,8 +37,8 @@ class MediaContentsInFolderNotifier extends StateNotifier<UIState<List<SimpleMed
       _isProcessing = true;
 
       try {
-        final response =
-            await _getMediasUseCase.call(page: _currentPage, size: 20, mediaId: folderId, sort: filterParams[FilterType.NewestFirst]!);
+        final response = await _getMediasUseCase.call(
+            page: _currentPage, size: 20, mediaId: folderId, sort: filterKeys[FilterType.NewestFirst]!);
         if (response.status == 200) {
           final responseItems = response.list?.where((e) => e.type?.code.toLowerCase() != "folder").toList() ?? [];
 

@@ -28,8 +28,8 @@ class MediaUploadProgress extends HookConsumerWidget {
 
     return mediaUploadState.isUploading != UploadState.IDLE
         ? Column(
-          children: [
-            Padding(
+            children: [
+              Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
                 child: Column(
                   children: [
@@ -132,13 +132,13 @@ class MediaUploadProgress extends HookConsumerWidget {
                   ],
                 ),
               ),
-            Container(
-              width: double.infinity,
-              height: 1,
-              color: getColorScheme(context).colorGray100,
-            )
-          ],
-        )
+              Container(
+                width: double.infinity,
+                height: 1,
+                color: getColorScheme(context).colorGray100,
+              )
+            ],
+          )
         : Container();
   }
 }
@@ -192,8 +192,8 @@ class _SuffixFail extends HookConsumerWidget {
     /**
      * @feature: 이미지 또는 비디오를 업로드 한 뒤 응답처리
      * @author: 2023/11/16 8:02 PM donghwishin
-    */
-    void responseLogic(ApiResponse<ResponseFileModel> response){
+     */
+    void responseLogic(ApiResponse<ResponseFileModel> response) {
       if (response.status == 200) {
         mediaManager.initPageInfo();
         mediaManager.requestGetMedias();
@@ -217,13 +217,13 @@ class _SuffixFail extends HookConsumerWidget {
               ),
             );
             if (controller != null) {
-              if (uploadProgressProvider.isLastUploadVideo){
+              if (uploadProgressProvider.isLastUploadVideo) {
                 GetIt.instance<PostUploadMediaVideoUseCase>()
                     .call(uploadProgressProvider.currentFile!.path, streamController: controller)
                     .then((response) {
                   responseLogic(response);
                 });
-              }else{
+              } else {
                 GetIt.instance<PostUploadMediaImageUseCase>()
                     .call(uploadProgressProvider.currentFile!.path, streamController: controller)
                     .then((response) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -20,19 +19,18 @@ class LocalAppApi {
     await prefs.setString(accessTokenKey, token);
   }
 
-  Future<FilterType> getMediaFilterType() async {
+  Future<FilterType> getMediaFilterType(Map<FilterType, String> filterValues) async {
     final prefs = await SharedPreferences.getInstance();
     String? stringValue = prefs.getString(mediaFilterTypeKey);
-    return _stringToFilterType(stringValue ?? filterDescriptions[FilterType.NewestFirst]!);
+    return _stringToFilterType(stringValue ?? filterValues[FilterType.NewestFirst]!, filterValues);
   }
 
-  Future<void> setMediaFilterType(FilterType type) async {
+  Future<void> setMediaFilterType(FilterType type, Map<FilterType, String> filterValues) async {
     final prefs = await SharedPreferences.getInstance();
-    debugPrint("local mediaFilterType: ${filterDescriptions[type]!}");
-    await prefs.setString(mediaFilterTypeKey, filterDescriptions[type]!);
+    await prefs.setString(mediaFilterTypeKey, filterValues[type]!);
   }
 
-  FilterType _stringToFilterType(String value) {
-    return filterDescriptions.entries.firstWhere((entry) => entry.value == value).key;
+  FilterType _stringToFilterType(String value, Map<FilterType, String> filterValues) {
+    return filterValues.entries.firstWhere((entry) => entry.value == value).key;
   }
 }

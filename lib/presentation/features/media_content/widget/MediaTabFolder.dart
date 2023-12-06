@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/Clickable.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
@@ -35,6 +36,7 @@ class MediaTabFolder extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
+        mediaContentsManager.updateFilterKeys(FilterInfo.getFilterKey(context));
         mediaContentsManager.requestGetMedias(folderId);
       });
       return () {
@@ -95,7 +97,9 @@ class MediaTabFolder extends HookConsumerWidget {
             child: Stack(
               children: [
                 if (mediaContentsState is Failure)
-                  FailView(onPressed: () => mediaContentsManager.requestGetMedias(folderId))
+                  FailView(
+                    onPressed: () => mediaContentsManager.requestGetMedias(folderId),
+                  )
                 else if (mediaContentsState is Success<List<SimpleMediaContentModel>>)
                   _SimpleMediaList(
                     folderId: folderId,

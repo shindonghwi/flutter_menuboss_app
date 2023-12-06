@@ -26,12 +26,14 @@ class DestinationFolderListNotifier extends StateNotifier<UIState<List<ResponseM
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
   final PostCreateMediaFolderUseCase _createMediaFolderUseCase = GetIt.instance<PostCreateMediaFolderUseCase>();
 
-  Future<void> requestGetFolders() async {
+  Future<void> requestGetFolders({
+    required Map<FilterType, String> filterKeys,
+  }) async {
     updateCurrentItems([]);
     state = Loading();
 
     Future<void> fetchPages() async {
-      final response = await _getMediasUseCase.call(page: _currentPage, size: 50, sort: filterParams[_filterType]!);
+      final response = await _getMediasUseCase.call(page: _currentPage, size: 50, sort: filterKeys[_filterType]!);
 
       try {
         if (response.status == 200) {

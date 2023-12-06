@@ -9,8 +9,8 @@ class GetMediaFilterTypeUseCase {
 
   final LocalAppRepository _localAppRepository = GetIt.instance<LocalAppRepository>();
 
-  Future<FilterType> call() async {
-    final mediaFilterType = await _localAppRepository.getMediaFilterType();
+  Future<FilterType> call(Map<FilterType, String> filterValues) async {
+    final mediaFilterType = await _localAppRepository.getMediaFilterType(filterValues);
     debugPrint("local mediaFilterType: $mediaFilterType");
     return mediaFilterType;
   }

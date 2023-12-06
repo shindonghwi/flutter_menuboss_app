@@ -185,6 +185,15 @@
         }
     },
 
+    "filter_key_name_asc": "name_asc",
+    "filter_key_name_desc": "name_desc",
+    "filter_key_newest_first": "created_desc",
+    "filter_key_oldest_first": "created_asc",
+    "filter_value_name_asc": "Name (A->Z)",
+    "filter_value_name_desc": "Name (Z->A)",
+    "filter_value_newest_first": "Newest First",
+    "filter_value_oldest_first": "Oldest First",
+
     "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
     "message_file_not_found_404": "File not found\nPlease use it again",
     "message_file_not_allow_404": "File extension you do not allowed\nPlease use it again",

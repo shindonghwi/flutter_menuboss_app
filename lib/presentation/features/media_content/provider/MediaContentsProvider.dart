@@ -7,7 +7,7 @@ import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterS
 import 'package:menuboss/presentation/model/UiState.dart';
 
 final mediaContentsProvider = StateNotifierProvider<MediaContentsNotifier, UIState<List<SimpleMediaContentModel>>>(
-      (ref) => MediaContentsNotifier(),
+  (ref) => MediaContentsNotifier(),
 );
 
 class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaContentModel>>> {
@@ -17,6 +17,9 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
   bool _hasNext = true;
   bool _isProcessing = false;
   List<ResponseMediaModel> _originMediaItems = [];
+
+  Map<FilterType, String> filterKeys = {};
+  void updateFilterKeys(Map<FilterType, String> filterKeys) => this.filterKeys = filterKeys;
 
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
 
@@ -31,7 +34,8 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
       _isProcessing = true;
 
       try {
-        final response = await _getMediasUseCase.call(page: _currentPage, size: 20, sort: filterParams[FilterType.NewestFirst]!);
+        final response =
+            await _getMediasUseCase.call(page: _currentPage, size: 20, sort: filterKeys[FilterType.NewestFirst]!);
         if (response.status == 200) {
           final responseItems = response.list?.toList() ?? [];
           List<SimpleMediaContentModel> updateItems = [];
@@ -72,5 +76,4 @@ class MediaContentsNotifier extends StateNotifier<UIState<List<SimpleMediaConten
   void init() {
     state = Idle();
   }
-
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get_it/get_it.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/domain/usecases/local/app/GetMediaFilterTypeUseCase.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/bottom_sheet/CommonBottomSheet.dart';
@@ -11,20 +12,22 @@ import 'package:menuboss/presentation/ui/typography.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 
 class FilterButton extends HookWidget {
+  final Map<FilterType, String> filterValues;
   final Function(FilterType type, String text) onSelected;
 
   const FilterButton({
     super.key,
+    required this.filterValues,
     required this.onSelected,
   });
 
   @override
   Widget build(BuildContext context) {
-    final filterText = useState(filterDescriptions[FilterType.NewestFirst]);
+    final filterText = useState(filterValues[FilterType.NewestFirst]);
 
     useEffect(() {
-      GetIt.instance<GetMediaFilterTypeUseCase>().call().then((response) {
-        filterText.value = filterDescriptions[response];
+      GetIt.instance<GetMediaFilterTypeUseCase>().call(filterValues).then((response) {
+        filterText.value = filterValues[response];
       });
       return null;
     }, []);
@@ -35,7 +38,7 @@ class FilterButton extends HookWidget {
           context,
           child: BottomSheetFilterSelector(
             checkedFilterType: FilterType.values.firstWhere(
-              (element) => filterDescriptions[element] == filterText.value,
+              (element) => filterValues[element] == filterText.value,
             ),
             onSelected: (FilterType type, String text) {
               filterText.value = text;

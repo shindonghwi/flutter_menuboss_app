@@ -153,7 +153,7 @@ class _UserProfile extends HookWidget {
                       if (!CollectionUtil.isNullEmptyFromString(name))
                         Text(
                           name.toString(),
-                          style: getTextTheme(context).b2sb.copyWith(
+                          style: getTextTheme(context).b2m.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),
@@ -165,14 +165,14 @@ class _UserProfile extends HookWidget {
                       if (!CollectionUtil.isNullEmptyFromString(businessName))
                         Text(
                           businessName.toString(),
-                          style: getTextTheme(context).c1sb.copyWith(
+                          style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray700,
                               ),
                         ),
                       if (!CollectionUtil.isNullEmptyFromString(email))
                         Text(
                           email.toString(),
-                          style: getTextTheme(context).c1sb.copyWith(
+                          style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray700,
                               ),
                         ),
