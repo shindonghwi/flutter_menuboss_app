@@ -59,7 +59,7 @@ class SignUpScreen extends HookConsumerWidget {
             Navigator.pushAndRemoveUntil(
               context,
               nextFadeInOutScreen(RoutingScreen.Main.route),
-                  (route) => false,
+              (route) => false,
             );
           },
           failure: (event) {
@@ -78,20 +78,20 @@ class SignUpScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 60),
+              padding: const EdgeInsets.fromLTRB(24, 40, 24, 60),
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Email
                   Text(
-                    "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
+                    getAppLocalizations(context).common_email,
                     style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 16),
+                    padding: const EdgeInsets.only(top: 12),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
                       hint: getAppLocalizations(context).common_email,
@@ -103,6 +103,7 @@ class SignUpScreen extends HookConsumerWidget {
                       onChanged: (text) => email.value = text,
                     ),
                   ),
+                  const SizedBox(height: 16),
 
                   // Password
                   Text(
@@ -112,7 +113,7 @@ class SignUpScreen extends HookConsumerWidget {
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 16),
+                    padding: const EdgeInsets.only(top: 12),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
                       hint: getAppLocalizations(context).common_password,
@@ -127,6 +128,7 @@ class SignUpScreen extends HookConsumerWidget {
                       onChanged: (text) => password.value = text,
                     ),
                   ),
+                  const SizedBox(height: 16),
 
                   // Full name
                   Text(
@@ -136,13 +138,14 @@ class SignUpScreen extends HookConsumerWidget {
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 16),
+                    padding: const EdgeInsets.only(top: 12.0),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
                       hint: getAppLocalizations(context).signup_full_name_hint,
                       onChanged: (text) => fullName.value = text,
                     ),
                   ),
+                  const SizedBox(height: 16),
 
                   // Business name
                   Text(
@@ -152,13 +155,14 @@ class SignUpScreen extends HookConsumerWidget {
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 24),
+                    padding: const EdgeInsets.only(top: 12.0),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
                       hint: getAppLocalizations(context).signup_business_name_hint,
                       onChanged: (text) => businessName.value = text,
                     ),
                   ),
+                  const SizedBox(height: 24),
 
                   SizedBox(
                     width: double.infinity,

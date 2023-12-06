@@ -9,8 +9,8 @@
     "login_pw_invalid": "a-z, A-Z, 0-9, 4~20 자리",
 
     "signup_full_name_hint": "이름을 입력해주세요",
-    "signup_business_name": "비즈니스 이름",
-    "signup_business_name_hint": "비즈니스 이름을 입력해주세요",
+    "signup_business_name": "사업자 이름",
+    "signup_business_name_hint": "사업자 이름을 입력해주세요",
 
     "main_navigation_menu_schedules": "스케줄",
     "main_navigation_menu_playlists": "플레이리스트",
@@ -114,7 +114,6 @@
     "popup_delete_account_description": "계정 삭제가 완료되었습니다!\n아쉽지만 다음에 또 만나요",
 
     "common_email": "이메일",
-    "common_address": "주소",
     "common_password": "비밀번호",
     "common_option": "옵션",
     "common_refresh": "새로고침",
