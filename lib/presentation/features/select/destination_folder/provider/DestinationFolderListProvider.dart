@@ -27,6 +27,7 @@ class DestinationFolderListNotifier extends StateNotifier<UIState<List<ResponseM
   final PostCreateMediaFolderUseCase _createMediaFolderUseCase = GetIt.instance<PostCreateMediaFolderUseCase>();
 
   Future<void> requestGetFolders({
+    required String rootFolderName,
     required Map<FilterType, String> filterKeys,
   }) async {
     updateCurrentItems([]);
@@ -38,17 +39,21 @@ class DestinationFolderListNotifier extends StateNotifier<UIState<List<ResponseM
       try {
         if (response.status == 200) {
           final responseItems = response.list ?? [];
+          if (responseItems.isEmpty) {
+            _currentItems.insert(0, ResponseMediaModel(name: rootFolderName));
+            state = Success([..._currentItems]); // null은 루트폴더
+            return;
+          }
           final lastItemIsFolder = responseItems.last.type?.code.toLowerCase() == "folder";
           final folderItems = responseItems.where((element) => element.type?.code.toLowerCase() == "folder").toList();
-
           updateCurrentItems([..._currentItems, ...folderItems]);
 
           if (lastItemIsFolder) {
             _currentPage = response.page!.currentPage + 1;
             await fetchPages();
           } else {
-            if (!_currentItems.any((item) => item.name == "Media")) {
-              _currentItems.insert(0, ResponseMediaModel(name: "Media"));
+            if (!_currentItems.any((item) => item.name == rootFolderName)) {
+              _currentItems.insert(0, ResponseMediaModel(name: rootFolderName));
             }
             state = Success([..._currentItems]); // null은 루트폴더
           }

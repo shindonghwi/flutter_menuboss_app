@@ -11,15 +11,9 @@ const defaultTextStyle =
     TextStyle(fontFamily: 'pretendard', overflow: TextOverflow.ellipsis, letterSpacing: 0, height: 1);
 
 extension StyleText on TextTheme {
-  TextStyle get h1b => defaultTextStyle.copyWith(fontSize: 60, fontWeight: FontWeight.w700, height: 1.233);
-
-  TextStyle get h2b => defaultTextStyle.copyWith(fontSize: 48, fontWeight: FontWeight.w700, height: 1.229);
-
-  TextStyle get h3b => defaultTextStyle.copyWith(fontSize: 32, fontWeight: FontWeight.w700, height: 1.250);
-
-  TextStyle get h3sb => defaultTextStyle.copyWith(fontSize: 32, fontWeight: FontWeight.w600, height: 1.250);
-
   TextStyle get s1b => defaultTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w700, height: 1.250);
+
+  TextStyle get s1sb => defaultTextStyle.copyWith(fontSize: 28, fontWeight: FontWeight.w600, height: 1.250);
 
   TextStyle get s2b => defaultTextStyle.copyWith(fontSize: 24, fontWeight: FontWeight.w700, height: 1.291);
 

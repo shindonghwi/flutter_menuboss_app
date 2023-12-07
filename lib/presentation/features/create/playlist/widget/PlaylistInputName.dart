@@ -35,7 +35,7 @@ class PlaylistInputName extends HookConsumerWidget {
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
-            child: OutlineTextField.small(
+            child: OutlineTextField.medium(
               controller: useTextEditingController(text: initTitle),
               hint: getAppLocalizations(context).create_playlist_title_input,
               textInputAction: TextInputAction.done,

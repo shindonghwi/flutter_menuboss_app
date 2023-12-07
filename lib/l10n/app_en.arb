@@ -30,6 +30,7 @@
     "select_playlist_title": "Playlist",
 
     "destination_folder_title": "Select destination folder",
+    "destination_folder_root": "Media",
 
     "select_media_file_title": "Select file({count})",
     "@select_media_file_title":{
@@ -70,9 +71,10 @@
     "delete_account_reason_menu4_hint": "Please tell me why you want to quit!",
 
     "media_info_title": "Media Information",
+    "media_info_menu_title": "Information",
     "media_info_menu_input_title": "Title",
     "media_info_menu_input_file_name_hint": "Input file name",
-    "media_info_menu_modified_data": "Modified date",
+    "media_info_menu_register_date": "Uploaded date",
     "media_info_menu_file_size": "File size",
     "media_info_menu_file_type": "File type",
     "media_info_menu_file_capacity": "File capacity",
@@ -145,7 +147,6 @@
     "common_delete": "Delete",
     "common_save": "Save",
     "common_time": "Time",
-    "common_timeline": "Timeline",
     "common_full_name": "Full name",
     "common_updated": "Updated",
     "common_back": "Back",

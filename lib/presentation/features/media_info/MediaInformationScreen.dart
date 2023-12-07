@@ -18,8 +18,6 @@ import 'package:menuboss/presentation/utils/CollectionUtil.dart';
 import 'package:menuboss/presentation/utils/Common.dart';
 import 'package:menuboss/presentation/utils/StringUtil.dart';
 import 'package:menuboss/presentation/utils/dto/Pair.dart';
-import 'package:video_player/video_player.dart';
-
 import 'provider/MediaInfoProvider.dart';
 import 'provider/MediaNameChangeProvider.dart';
 
@@ -116,11 +114,11 @@ class _InputFileName extends HookWidget {
           Text(
             getAppLocalizations(context).media_info_menu_input_title,
             style: getTextTheme(context).b3sb.copyWith(
-                  color: getColorScheme(context).colorGray900,
+                  color: getColorScheme(context).colorGray700,
                 ),
           ),
           const SizedBox(height: 12),
-          OutlineTextField.small(
+          OutlineTextField.medium(
             controller: useTextEditingController(text: item?.name),
             hint: item?.name ?? getAppLocalizations(context).media_info_menu_input_file_name_hint,
             onChanged: onChanged,
@@ -211,7 +209,7 @@ class _MediaInformation extends HookConsumerWidget {
 
               items.add(
                 Pair(
-                  getAppLocalizations(context).media_info_menu_modified_data,
+                  getAppLocalizations(context).media_info_menu_register_date,
                   data?.updatedAt.toString() ?? "",
                 ),
               );

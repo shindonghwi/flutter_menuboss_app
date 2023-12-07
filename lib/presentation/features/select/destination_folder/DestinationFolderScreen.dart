@@ -43,6 +43,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         destinationFolderProvider.requestGetFolders(
+          rootFolderName: getAppLocalizations(context).destination_folder_root,
           filterKeys: FilterInfo.getFilterKey(context),
         );
       });
@@ -82,6 +83,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
             if (destinationFolderState is Failure)
               FailView(
                 onPressed: () => destinationFolderProvider.requestGetFolders(
+                  rootFolderName: getAppLocalizations(context).destination_folder_root,
                   filterKeys: FilterInfo.getFilterKey(context),
                 ),
               )
@@ -140,7 +142,10 @@ class DestinationFolderScreen extends HookConsumerWidget {
           fileMoveProvider.requestFileMove(
             mediaIds,
             isSelectFolderId.value,
-            mediaListManager.getFolderName(isSelectFolderId.value),
+            mediaListManager.getFolderName(
+              getAppLocalizations(context).destination_folder_root,
+              isSelectFolderId.value,
+            ),
           );
         },
       ),

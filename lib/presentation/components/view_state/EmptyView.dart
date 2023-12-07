@@ -17,12 +17,14 @@ enum BlankMessageType {
 
 class EmptyView extends HookWidget {
   final BlankMessageType type;
+  final bool onlyButtonMode;
   final VoidCallback? onPressed;
 
   const EmptyView({
     super.key,
     required this.type,
     required this.onPressed,
+    this.onlyButtonMode = false,
   });
 
   @override
@@ -47,9 +49,12 @@ class EmptyView extends HookWidget {
     }
 
     String? getDescription() {
+      if (onlyButtonMode) return null;
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return getAppLocalizations(context).blank_message_description_add_screen;
+        case BlankMessageType.ADD_CONTENT:
+          return getAppLocalizations(context).blank_message_description_upload_file;
         case BlankMessageType.ADD_CANVAS:
           return getAppLocalizations(context).blank_message_description_add_canvas;
         case BlankMessageType.NEW_SCHEDULE:
@@ -64,9 +69,12 @@ class EmptyView extends HookWidget {
     }
 
     String? getIconPath() {
+      if (onlyButtonMode) return null;
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return "assets/imgs/image_blank_device.svg";
+        case BlankMessageType.ADD_CONTENT:
+          return "assets/imgs/image_blank_upload.svg";
         case BlankMessageType.ADD_CANVAS:
           return "assets/imgs/image_blank_canvas.svg";
         case BlankMessageType.NEW_SCHEDULE:

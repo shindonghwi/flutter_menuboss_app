@@ -217,10 +217,10 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     }
   }
 
-  String getFolderName(String? folderId) {
+  String getFolderName(String rootFolderName, String? folderId) {
     debugPrint("getFolderName: $folderId ${folderId == null}");
     if (CollectionUtil.isNullEmptyFromString(folderId)) {
-      return "Media"; // root로 이동함.
+      return rootFolderName; // root로 이동함.
     } else {
       ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
       return folderItem.name ?? "";

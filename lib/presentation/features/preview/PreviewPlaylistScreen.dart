@@ -170,25 +170,24 @@ class _Settings extends HookWidget {
       width: double.infinity,
       height: 66,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0),
+        padding: const EdgeInsets.symmetric(horizontal: 0.0),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
+            Expanded(
               child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   _PreviewSettingIcon(
-                    iconPath: 'assets/imgs/icon_horizontal_line.svg',
+                    horizontalPadding: 16,
+                    iconPath: 'assets/imgs/icon_horizontal_filled.svg',
                     content: getAppLocalizations(context).common_horizontal,
                     isSelected: directionType.value == PlaylistSettingType.Horizontal,
                     onPressed: () => directionType.value = PlaylistSettingType.Horizontal,
                   ),
+                  SizedBox(width: 4),
                   _PreviewSettingIcon(
-                    iconPath: 'assets/imgs/icon_vertical_line.svg',
+                    horizontalPadding: 16,
+                    iconPath: 'assets/imgs/icon_vertical_filled.svg',
                     content: getAppLocalizations(context).common_vertical,
                     isSelected: directionType.value == PlaylistSettingType.Vertical,
                     onPressed: () => directionType.value = PlaylistSettingType.Vertical,
@@ -202,10 +201,9 @@ class _Settings extends HookWidget {
               margin: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
               color: getColorScheme(context).white,
             ),
-            Flexible(
-              fit: FlexFit.tight,
-              flex: 1,
+            Expanded(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fill_filled.svg',
@@ -227,7 +225,7 @@ class _Settings extends HookWidget {
                   )
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -239,6 +237,7 @@ class _PreviewSettingIcon extends StatelessWidget {
   final String iconPath;
   final String content;
   final bool isSelected;
+  final double horizontalPadding;
   final VoidCallback onPressed;
 
   const _PreviewSettingIcon({
@@ -247,15 +246,15 @@ class _PreviewSettingIcon extends StatelessWidget {
     required this.content,
     required this.isSelected,
     required this.onPressed,
+    this.horizontalPadding = 12.0,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Flexible(
-      flex: 1,
-      fit: FlexFit.tight,
-      child: Clickable(
-        onPressed: () => onPressed.call(),
+    return Clickable(
+      onPressed: () => onPressed.call(),
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
