@@ -53,9 +53,9 @@ class BottomSheetModifySelector extends HookWidget {
     Color? getIconColor(ModifyType type) {
       switch (type) {
         case ModifyType.ShowNameToScreen:
-          return getColorScheme(context).black;
+          return getColorScheme(context).colorGray900;
         case ModifyType.Rename:
-          return getColorScheme(context).black;
+          return getColorScheme(context).colorGray900;
         case ModifyType.Delete:
           return getColorScheme(context).colorRed500;
         default:

@@ -22,7 +22,7 @@
     "scan_qr_enter_pin_code": "PIN 번호 입력",
     "scan_qr_description": "TV 화면에 보이는\nQR 코드를 인식해주세요",
 
-    "apply_screen_title": "TV에 연결",
+    "apply_screen_title": "TV에 적용",
 
     "create_playlist_title": "재생목록 생성",
     "create_playlist_title_input": "제목을 입력해주세요",
@@ -107,7 +107,7 @@
     "popup_rename_playlist_hint": "재생목록 이름",
     "popup_delete_title": "삭제",
     "popup_delete_description": "해당 내용을 삭제하시겠습니까?\n삭제된 내용은 복구할 수 없습니다",
-    "popup_apply_screen_title": "TV 연결",
+    "popup_apply_screen_title": "TV 적용",
     "popup_apply_screen_description": "TV에 바로 적용하시겠습니까?",
     "popup_logout_description": "로그아웃 하시겠습니까?",
     "popup_change_duration_title": "재생 시간을 입력해주세요",
@@ -205,7 +205,7 @@
     "message_temp_login_fail": "일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요",
     "message_time_setting_precede": "종료시간은 시작 시간보다 빠를수 없습니다",
     "message_time_setting_duplicated": "시간이 중복되었습니다",
-    "message_apply_screen_success": "TV에 연결되었습니다",
+    "message_apply_screen_success": "TV에 적용되었습니다",
     "message_register_screen_success": "TV 등록에 성공했습니다",
     "message_remove_playlist_success": "재생목록 삭제에 성공했습니다",
     "message_register_playlist_success": "재생목록 등록에 성공했습니다",

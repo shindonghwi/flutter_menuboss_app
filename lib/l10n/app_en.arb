@@ -68,7 +68,7 @@
     "delete_account_reason_menu2": "Service is inconvenient",
     "delete_account_reason_menu3": "It's hard to use",
     "delete_account_reason_menu4": "Other",
-    "delete_account_reason_menu4_hint": "Please tell me why you want to quit!",
+    "delete_account_reason_menu4_hint": "Please tell me why you want to quit",
 
     "media_info_title": "Media Information",
     "media_info_menu_title": "Information",

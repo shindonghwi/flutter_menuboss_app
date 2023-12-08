@@ -115,7 +115,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                     borderType: BorderType.RRect,
                     color: getColorScheme(context).colorGray400,
                     radius: const Radius.circular(8),
-                    dashPattern: [4, 4],
+                    dashPattern: const [4, 4],
                     child: ClipRRect(
                       borderRadius: const BorderRadius.all(Radius.circular(8)),
                       child: SizedBox(
@@ -125,9 +125,11 @@ class ScheduleContentItem extends HookConsumerWidget {
                           alignment: Alignment.center,
                           child: IgnorePointer(
                             child: SizedBox(
-                              width: 60,
-                              height: 60,
+                              width: 48,
+                              height: 48,
                               child: FloatingPlusButton(
+                                size: 48,
+                                isShadowMode: false,
                                 onPressed: () {},
                               ),
                             ),

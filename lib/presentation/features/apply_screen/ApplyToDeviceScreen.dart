@@ -120,7 +120,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
                         child: PrimaryFilledButton.largeRound8(
-                          content: getAppLocalizations(context).common_done,
+                          content: getAppLocalizations(context).common_confirm,
                           isActivated: checkList.isNotEmpty,
                           onPressed: () {
                             CommonPopup.showPopup(
