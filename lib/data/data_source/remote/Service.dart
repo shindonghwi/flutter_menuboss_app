@@ -25,10 +25,10 @@ class Service {
 
   static Map<String, String> headers = {
     HeaderKey.ContentType: 'application/json',
-    HeaderKey.AcceptLanguage: 'en-US',
+    HeaderKey.AcceptLanguage: '',
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
-    HeaderKey.ApplicationTimeZone: 'Asia/Seoul',
+    HeaderKey.ApplicationTimeZone: '',
   };
 
   static Future<void> initializeHeaders() async {
