@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/ui/colors.dart';
@@ -18,8 +19,11 @@ class MenuBossApp extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+
+
         Future.delayed(Duration.zero, () {
           Toast.init(context);
         });
@@ -35,6 +39,9 @@ class MenuBossApp extends HookWidget {
         if (constraints.maxWidth != 0) {
           return MaterialApp(
             builder: (context, child) {
+              Locale locale = Localizations.localeOf(context);
+              Environment.setApiUrl(locale.languageCode == 'ko');
+
               return ScrollConfiguration(
                 behavior: AppScrollBehavior(),
                 child: child!,
