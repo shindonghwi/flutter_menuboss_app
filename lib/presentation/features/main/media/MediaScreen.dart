@@ -9,8 +9,9 @@ import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/button/FilterButton.dart';
-import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/components/button/FloatingPlusButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
@@ -38,6 +39,9 @@ class MediaScreen extends HookConsumerWidget {
     final mediaList = useState<List<ResponseMediaModel>?>(null);
 
     useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) async {
+        mediaManager.updateFilterKeys(FilterInfo.getFilterKey(context));
+      });
       return () {
         Future(() {
           mediaManager.init();
@@ -211,8 +215,9 @@ class _MediaContentList extends HookConsumerWidget {
                   Align(
                     alignment: Alignment.centerLeft,
                     child: FilterButton(
+                      filterValues: FilterInfo.getFilterValue(context),
                       onSelected: (type, text) {
-                        mediaManager.changeFilterType(type);
+                        mediaManager.changeFilterType(type, filterValue: FilterInfo.getFilterValue(context));
                       },
                     ),
                   ),

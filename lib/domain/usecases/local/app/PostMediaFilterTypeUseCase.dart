@@ -8,7 +8,7 @@ class PostMediaFilterTypeUseCase {
 
   final LocalAppRepository _localAppRepository = GetIt.instance<LocalAppRepository>();
 
-  Future<void> call(FilterType type) async {
-    return await _localAppRepository.setMediaFilterType(type);
+  Future<void> call(FilterType type, Map<FilterType, String> filterValues) async {
+    return await _localAppRepository.setMediaFilterType(type, filterValues);
   }
 }

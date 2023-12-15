@@ -2,7 +2,7 @@ name: menuboss
 description: MenuBoss Mobile App - TV Controller
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.1.0+15
+version: 1.2.0+17
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -50,6 +50,7 @@ dependencies:
   video_thumbnail: ^0.5.3
   path_provider: ^2.1.1
   video_player: ^2.7.2
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
@@ -69,22 +70,26 @@ flutter:
     - assets/motions/
 
   fonts:
-    - family: manrope
+    - family: pretendard
       fonts:
-        - asset: assets/fonts/manrope_extralight.ttf
+        - asset: assets/fonts/pretendard_thin.ttf
+          weight: 100
+        - asset: assets/fonts/pretendard_extralight.ttf
           weight: 200
-        - asset: assets/fonts/manrope_light.ttf
+        - asset: assets/fonts/pretendard_light.ttf
           weight: 300
-        - asset: assets/fonts/manrope_regular.ttf
+        - asset: assets/fonts/pretendard_regular.ttf
           weight: 400
-        - asset: assets/fonts/manrope_medium.ttf
+        - asset: assets/fonts/pretendard_medium.ttf
           weight: 500
-        - asset: assets/fonts/manrope_semibold.ttf
+        - asset: assets/fonts/pretendard_semibold.ttf
           weight: 600
-        - asset: assets/fonts/manrope_bold.ttf
+        - asset: assets/fonts/pretendard_bold.ttf
           weight: 700
-        - asset: assets/fonts/manrope_extrabold.ttf
+        - asset: assets/fonts/pretendard_extrabold.ttf
           weight: 800
+        - asset: assets/fonts/pretendard_black.ttf
+          weight: 900
 
 flutter_native_splash:
   android: true

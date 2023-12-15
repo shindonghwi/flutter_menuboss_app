@@ -20,6 +20,8 @@ class LoadProfile extends StatelessWidget {
     double containerSize = 0.0;
 
     switch (type) {
+      case ProfileImagePlaceholderType.Size80x80:
+        containerSize = 80;
       case ProfileImagePlaceholderType.Size100x100:
         containerSize = 100;
       case ProfileImagePlaceholderType.Size120x120:

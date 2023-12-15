@@ -66,7 +66,7 @@ class DeviceItem extends HookConsumerWidget {
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
                                 item.name,
-                                style: getTextTheme(context).b2sb.copyWith(
+                                style: getTextTheme(context).b2m.copyWith(
                                       color: getColorScheme(context).colorGray900,
                                     ),
                                 overflow: TextOverflow.ellipsis,
@@ -77,7 +77,7 @@ class DeviceItem extends HookConsumerWidget {
                       ),
                       if (!CollectionUtil.isNullEmptyFromString(item.content?.name))
                         Padding(
-                          padding: const EdgeInsets.only(top: 4.0),
+                          padding: const EdgeInsets.only(top: 5.5),
                           child: Text(
                             item.content?.name ?? "",
                             style: getTextTheme(context).b3m.copyWith(
@@ -105,6 +105,7 @@ class DeviceItem extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
+                    title: getAppLocalizations(context).popup_rename_title,
                     hint: getAppLocalizations(context).popup_rename_screen_hint,
                     name: item.name,
                     onClicked: (name) {

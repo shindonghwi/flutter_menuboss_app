@@ -13,7 +13,6 @@ import 'package:menuboss/presentation/components/textfield/OutlineTextField.dart
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/view_state/LoadingView.dart';
-import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/signup/provider/SignUpProvider.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
@@ -60,7 +59,7 @@ class SignUpScreen extends HookConsumerWidget {
             Navigator.pushAndRemoveUntil(
               context,
               nextFadeInOutScreen(RoutingScreen.Main.route),
-                  (route) => false,
+              (route) => false,
             );
           },
           failure: (event) {
@@ -79,20 +78,20 @@ class SignUpScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             SingleChildScrollView(
-              padding: const EdgeInsets.fromLTRB(24, 24, 24, 60),
+              padding: const EdgeInsets.fromLTRB(24, 40, 24, 60),
               physics: const AlwaysScrollableScrollPhysics(),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   // Email
                   Text(
-                    getAppLocalizations(context).signup_email_address,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    getAppLocalizations(context).common_email,
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 16),
+                    padding: const EdgeInsets.only(top: 12),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
                       hint: getAppLocalizations(context).common_email,
@@ -104,16 +103,17 @@ class SignUpScreen extends HookConsumerWidget {
                       onChanged: (text) => email.value = text,
                     ),
                   ),
+                  const SizedBox(height: 16),
 
                   // Password
                   Text(
-                    getAppLocalizations(context).signup_password,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    getAppLocalizations(context).common_password,
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 16),
+                    padding: const EdgeInsets.only(top: 12),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
                       hint: getAppLocalizations(context).common_password,
@@ -128,38 +128,41 @@ class SignUpScreen extends HookConsumerWidget {
                       onChanged: (text) => password.value = text,
                     ),
                   ),
+                  const SizedBox(height: 16),
 
                   // Full name
                   Text(
-                    getAppLocalizations(context).signup_full_name,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    getAppLocalizations(context).common_full_name,
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 16),
+                    padding: const EdgeInsets.only(top: 12.0),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
-                      hint: getAppLocalizations(context).signup_full_name,
+                      hint: getAppLocalizations(context).signup_full_name_hint,
                       onChanged: (text) => fullName.value = text,
                     ),
                   ),
+                  const SizedBox(height: 16),
 
                   // Business name
                   Text(
                     getAppLocalizations(context).signup_business_name,
-                    style: getTextTheme(context).b3sb.copyWith(
+                    style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).colorGray800,
                         ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.only(top: 12.0, bottom: 24),
+                    padding: const EdgeInsets.only(top: 12.0),
                     child: OutlineTextField.medium(
                       controller: useTextEditingController(),
-                      hint: getAppLocalizations(context).signup_business_name,
+                      hint: getAppLocalizations(context).signup_business_name_hint,
                       onChanged: (text) => businessName.value = text,
                     ),
                   ),
+                  const SizedBox(height: 24),
 
                   SizedBox(
                     width: double.infinity,

@@ -109,7 +109,7 @@ class _TimeSelector extends HookWidget {
                 children: [
                   Text(
                     "Start Time",
-                    style: getTextTheme(context).b2b.copyWith(
+                    style: getTextTheme(context).b2sb.copyWith(
                           color: isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                         ),
                   ),
@@ -117,7 +117,7 @@ class _TimeSelector extends HookWidget {
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
                       "${startInfo.first.value.toString().padLeft(2, '0')}:${startInfo.second.value.toString().padLeft(2, '0')}",
-                      style: getTextTheme(context).b2b.copyWith(
+                      style: getTextTheme(context).b2sb.copyWith(
                             color: isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                           ),
                     ),
@@ -136,7 +136,7 @@ class _TimeSelector extends HookWidget {
                 children: [
                   Text(
                     "End Time",
-                    style: getTextTheme(context).b2b.copyWith(
+                    style: getTextTheme(context).b2sb.copyWith(
                           color: !isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                         ),
                   ),
@@ -144,7 +144,7 @@ class _TimeSelector extends HookWidget {
                     padding: const EdgeInsets.only(top: 2.0),
                     child: Text(
                       "${endInfo.first.value.toString().padLeft(2, '0')}:${endInfo.second.value.toString().padLeft(2, '0')}",
-                      style: getTextTheme(context).b2b.copyWith(
+                      style: getTextTheme(context).b2sb.copyWith(
                             color: !isFocusStartTime.value ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray200,
                           ),
                     ),

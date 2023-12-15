@@ -35,6 +35,7 @@ class ResponseCanvasModel {
       id: canvasId,
       name: name ?? "",
       type: "canvas",
+      isFolder: false,
       property: ResponseMediaProperty(
         size: 0,
         duration: 10,

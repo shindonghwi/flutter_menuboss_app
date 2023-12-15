@@ -170,14 +170,14 @@ class _PlaylistContent extends HookWidget {
                                   children: [
                                     Text(
                                       data.name,
-                                      style: getTextTheme(context).b2sb.copyWith(
+                                      style: getTextTheme(context).b2m.copyWith(
                                             color: getColorScheme(context).colorGray900,
                                           ),
                                     ),
                                     Padding(
                                       padding: const EdgeInsets.symmetric(vertical: 4.0),
                                       child: Text(
-                                        "Updated: ${data.updatedDate}",
+                                        "${getAppLocalizations(context).common_updated}: ${data.updatedDate}",
                                         style: getTextTheme(context).c1m.copyWith(
                                               color: getColorScheme(context).colorGray500,
                                             ),
@@ -198,7 +198,7 @@ class _PlaylistContent extends HookWidget {
                                           Padding(
                                             padding: const EdgeInsets.only(left: 4.0),
                                             child: Text(
-                                              "${data.property?.count ?? 0} pages",
+                                              getAppLocalizations(context).count_pages("${data.property?.count ?? 0}"),
                                               style: getTextTheme(context).c1m.copyWith(
                                                     color: getColorScheme(context).colorGray500,
                                                   ),

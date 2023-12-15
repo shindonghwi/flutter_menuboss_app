@@ -4,7 +4,7 @@ import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/domain/usecases/remote/canvas/GetCanvasesUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final MediaContentsCanvasProvider =
+final mediaContentsCanvasProvider =
     StateNotifierProvider<MediaContentsCanvasNotifier, UIState<List<SimpleMediaContentModel>>>(
   (ref) => MediaContentsCanvasNotifier(),
 );

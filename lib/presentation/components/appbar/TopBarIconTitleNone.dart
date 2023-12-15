@@ -44,7 +44,11 @@ class TopBarIconTitleNone extends HookWidget implements PreferredSizeWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(leftIconPath ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+                      child: SvgPicture.asset(
+                        leftIconPath ?? "assets/imgs/icon_back.svg",
+                        width: 24,
+                        height: 24,
+                      ),
                     ),
                   ),
                 ),
@@ -53,7 +57,7 @@ class TopBarIconTitleNone extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s3b.copyWith(
+                  style: getTextTheme(context).s3sb.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,

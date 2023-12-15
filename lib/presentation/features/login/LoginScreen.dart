@@ -61,7 +61,7 @@ class LoginScreen extends HookConsumerWidget {
           children: [
             SafeArea(
               child: Container(
-                margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
+                margin: const EdgeInsets.fromLTRB(24, 96, 24, 0),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
@@ -81,9 +81,9 @@ class LoginScreen extends HookConsumerWidget {
                           isPwValid.value = text.isNotEmpty;
                         },
                       ),
-                      const SizedBox(height: 20),
+                      const SizedBox(height: 32),
                       _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 24),
                       const _SignUpButton()
                       // const _SocialLoginButtons(),
                       // const SizedBox(height: 40),
@@ -108,7 +108,7 @@ class _SignUpButton extends StatelessWidget {
       children: [
         Text(
           getAppLocalizations(context).login_no_account,
-          style: getTextTheme(context).b3sb.copyWith(
+          style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray500,
               ),
         ),
@@ -229,15 +229,15 @@ class _Title extends StatelessWidget {
         children: [
           Text(
             getAppLocalizations(context).login_title,
-            style: getTextTheme(context).h3b.copyWith(
+            style: getTextTheme(context).s1sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 4.0),
+            padding: const EdgeInsets.only(top: 8),
             child: Text(
               getAppLocalizations(context).login_welcome,
-              style: getTextTheme(context).b1sb.copyWith(
+              style: getTextTheme(context).b2m.copyWith(
                     color: getColorScheme(context).colorGray700,
                   ),
             ),
@@ -264,14 +264,14 @@ class _InputEmail extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            "${getAppLocalizations(context).common_email} ${getAppLocalizations(context).common_address}",
-            style: getTextTheme(context).b3sb.copyWith(
+            getAppLocalizations(context).common_email,
+            style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray800,
                 ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
-            child: OutlineTextField.small(
+            child: OutlineTextField.medium(
               controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_email,
               successMessage: getAppLocalizations(context).login_email_correct,
@@ -305,13 +305,13 @@ class _InputPassword extends HookWidget {
         children: [
           Text(
             getAppLocalizations(context).common_password,
-            style: getTextTheme(context).b3sb.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray800,
                 ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
-            child: OutlineTextField.small(
+            child: OutlineTextField.medium(
               controller: useTextEditingController(),
               hint: getAppLocalizations(context).common_password,
               textInputAction: TextInputAction.done,

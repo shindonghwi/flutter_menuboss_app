@@ -1,0 +1,225 @@
+{
+    "appTitle": "메뉴보스",
+
+    "login_title": "로그인",
+    "login_welcome": "반갑습니다! 회원 정보를 입력해주세요",
+    "login_no_account": "메뉴보스가 처음이신가요?",
+    "login_email_correct": "올바른 이메일 입니다",
+    "login_email_invalid": "올바른 이메일을 입력해주세요",
+    "login_pw_invalid": "a-z, A-Z, 0-9, 4~20 자리",
+
+    "signup_full_name_hint": "이름을 입력해주세요",
+    "signup_business_name": "사업자 이름",
+    "signup_business_name_hint": "사업자 이름을 입력해주세요",
+
+    "main_navigation_menu_schedules": "시간표",
+    "main_navigation_menu_playlists": "재생목록",
+    "main_navigation_menu_screens": "TV",
+    "main_navigation_menu_media": "보관함",
+    "main_navigation_menu_my": "내 정보",
+
+    "scan_qr_title": "QR 코드 인식",
+    "scan_qr_enter_pin_code": "PIN 번호 입력",
+    "scan_qr_description": "TV 화면에 보이는\nQR 코드를 인식해주세요",
+
+    "apply_screen_title": "TV에 적용",
+
+    "create_playlist_title": "재생목록 생성",
+    "create_playlist_title_input": "제목을 입력해주세요",
+
+    "select_playlist_title": "재생목록",
+
+    "destination_folder_title": "폴더 선택",
+    "destination_folder_root": "보관함",
+
+    "select_media_file_title": "파일 선택({count})",
+    "@select_media_file_title":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "create_schedule_title": "시간표 생성",
+    "create_schedule_title_input": "제목을 입력해주세요",
+    "create_schedule_default_playlist_title_basic": "기본",
+    "create_schedule_default_playlist_title_morning": "아침",
+    "create_schedule_default_playlist_title_lunch": "점심",
+    "create_schedule_default_playlist_title_dinner": "저녁",
+    "create_schedule_add_playlist": "재생목록 추가",
+    "create_schedule_change_playlist": "재생목록 변경",
+    "create_schedule_new_playlist": "새 재생목록",
+
+    "edit_playlist_title": "재생목록 수정",
+
+    "edit_schedule_title": "시간표 수정",
+
+    "my_page_setting_item": "설정",
+    "my_page_setting_items_profile": "프로필",
+
+    "my_page_profile_appbar_title": "프로필",
+    "my_page_profile_business_name": "비즈니스 이름",
+    "my_page_profile_delete_account": "탈퇴하기",
+
+    "delete_account_title": "탈퇴",
+    "delete_account_description": "메뉴보스를 탈퇴하시나요?",
+    "delete_account_description1": "탈퇴하시면 모든 정보와 데이터가 삭제됩니다\n해당 주의사항을 확인하시고 다음버튼을 눌러주세요",
+    "delete_account_reason_title": "탈퇴 사유를 선택해주세요",
+    "delete_account_reason_menu1": "서비스를 자주 사용하지 않습니다",
+    "delete_account_reason_menu2": "서비스 사용이 불편합니다",
+    "delete_account_reason_menu3": "사용하기 어렵습니다",
+    "delete_account_reason_menu4": "기타",
+    "delete_account_reason_menu4_hint": "탈퇴 이유를 적어주세요",
+
+    "media_info_title": "상세정보",
+    "media_info_menu_title": "상세",
+    "media_info_menu_input_title": "제목",
+    "media_info_menu_input_file_name_hint": "파일 이름을 입력해주세요",
+    "media_info_menu_register_date": "등록일",
+    "media_info_menu_file_size": "파일 크기",
+    "media_info_menu_file_type": "파일 유",
+    "media_info_menu_file_capacity": "파일 용량",
+    "media_info_menu_file_codec": "코덱",
+    "media_info_menu_file_running_time": "재생시간",
+
+    "media_content_title": "콘텐츠 목록",
+    "media_content_tab_media": "보관함",
+    "media_content_tab_canvas": "캔버스",
+
+    "bottom_sheet_pin_code_description": "PIN 번호를 입력해주세요",
+    "bottom_sheet_menu_display_show_name": "TV에 이름 표시",
+
+    "blank_message_content_add_screen": "TV 추가",
+    "blank_message_content_add_content": "콘텐츠 추가",
+    "blank_message_content_add_canvas": "캔버스 추가",
+    "blank_message_content_new_schedule": "시간표 추가",
+    "blank_message_content_new_playlist": "재생목록 추가",
+    "blank_message_content_upload_file": "파일 업로드",
+    "blank_message_description_add_screen": "현재 저장된 TV목록이 없습니다\nQR코드 인식을 통해 TV를 만들어주세요",
+    "blank_message_description_add_canvas": "현재 저장된 캔버스 없습니다\n캔버스를 만들어 추가해주세요",
+    "blank_message_description_new_schedule": "현재 저장된 시간표가 없습니다\n시간표를 추가하여 만들어주세요",
+    "blank_message_description_new_playlist": "현재 저장된 재생목록이 없습니다\n재생목록을 추가하여 만들어주세요",
+    "blank_message_description_upload_file": "현재 저장된 파일 및 폴더가 없습니다\n파일 또는 폴더를 추가하여 만들어주세요",
+
+    "popup_rename_title": "이름 변경",
+    "popup_rename_screen_hint": "TV 이름을 입력해주세요",
+    "popup_rename_media_hint": "파일 이름을 입력해주세요",
+    "popup_rename_schedule_hint": "시간 이름",
+    "popup_rename_playlist_hint": "재생목록 이름",
+    "popup_delete_title": "삭제",
+    "popup_delete_description": "해당 내용을 삭제하시겠습니까?\n삭제된 내용은 복구할 수 없습니다",
+    "popup_apply_screen_title": "TV 적용",
+    "popup_apply_screen_description": "TV에 바로 적용하시겠습니까?",
+    "popup_logout_description": "로그아웃 하시겠습니까?",
+    "popup_change_duration_title": "재생 시간을 입력해주세요",
+    "popup_delete_account_title": "탈퇴 완료",
+    "popup_delete_account_description": "탈퇴가 완료되었습니다!\n아쉽지만 다음에 또 만나요",
+
+    "common_email": "이메일",
+    "common_password": "비밀번호",
+    "common_option": "옵션",
+    "common_refresh": "새로고침",
+    "common_title": "제목",
+    "common_total_duration": "총 재생시간",
+    "common_add": "추가",
+    "common_horizontal": "가로",
+    "common_vertical": "세로",
+    "common_fit": "맞추기",
+    "common_stretch": "늘리기",
+    "common_fill": "채우기",
+    "common_sign_up": "회원가입",
+    "common_on": "On",
+    "common_off": "Off",
+    "common_or": "또는",
+    "common_done": "완료",
+    "common_next": "다음",
+    "common_do_login": "로그인",
+    "common_connect_screen": "TV 적용",
+    "common_confirm": "확인",
+    "common_rename": "이름 변경",
+    "common_logout": "로그아웃",
+    "common_ok": "확인",
+    "common_cancel": "취소",
+    "common_preview": "미리보기",
+    "common_move": "이동",
+    "common_new_folder": "새 폴더",
+    "common_move_here": "여기로 이동",
+    "common_delete": "삭제",
+    "common_save": "저장",
+    "common_time": "시간",
+    "common_full_name": "이름",
+    "common_updated": "수정일",
+    "common_back": "뒤로가기",
+    "common_image": "이미지",
+    "common_video": "비디오",
+    "common_canvas": "캔버스",
+    "common_folder": "폴더",
+
+    "count_playlist": "{count}개 재생목록",
+    "@count_playlist":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "count_pages": "콘텐츠 {count}개",
+    "@count_pages":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "count_folder": "{count}개 파일({size})",
+    "@count_folder":{
+        "placeholders": {
+            "count": {},
+            "size": {}
+        }
+    },
+
+    "type_media_size": "{type} - {size}",
+    "@type_media_size":{
+        "placeholders": {
+            "type": {},
+            "size": {}
+        }
+    },
+
+    "filter_key_name_asc": "name_asc",
+    "filter_key_name_desc": "name_desc",
+    "filter_key_newest_first": "created_desc",
+    "filter_key_oldest_first": "created_asc",
+    "filter_value_name_asc": "이름 (가 -> 하)",
+    "filter_value_name_desc": "이름 (하 -> 가)",
+    "filter_value_newest_first": "최신순",
+    "filter_value_oldest_first": "과거순",
+
+    "message_server_error_5xx": "데이터를 불러오는 동안 오류가 발생했습니다\n잠시후 다시 이용해 주세요",
+    "message_file_not_found_404": "파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요",
+    "message_file_not_allow_404": "허용되지 않는 확장자입니다\n다시 시도해주세요",
+    "message_permission_error_photos": "미디어 파일을 업로드하려면 사진 및 비디오 권한이 필요합니다",
+    "message_network_required": "네트워크 연결이 불안정합니다",
+    "message_operation_timeout": "작업이 너무 지연되고 있습니다\n잠시 후에 다시 시도해주세요",
+    "message_not_found_user": "사용자 정보를 찾을 수 없습니다",
+    "message_add_media_content": "콘텐츠를 추가해주세요",
+    "message_api_success": "",
+    "message_temp_login_fail": "일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요",
+    "message_time_setting_precede": "종료시간은 시작 시간보다 빠를수 없습니다",
+    "message_time_setting_duplicated": "시간이 중복되었습니다",
+    "message_apply_screen_success": "TV에 적용되었습니다",
+    "message_register_screen_success": "TV 등록에 성공했습니다",
+    "message_remove_playlist_success": "재생목록 삭제에 성공했습니다",
+    "message_register_playlist_success": "재생목록 등록에 성공했습니다",
+    "message_update_playlist_success": "재생목록 정보가 변경되었습니다",
+    "message_add_media_in_playlist_success": "재생목록에 추가되었습니다",
+    "message_remove_schedule_success": "시간표 삭제에 성공했습니다",
+    "message_register_schedule_success": "시간표 등록에 성공했습니다",
+    "message_update_schedule_success": "시간표 정보가 변경되었습니다",
+    "message_remove_media_success": "미디어 파일 삭제에 성공했습니다",
+    "message_move_media_success": "파일이 {folder}로 이동되었습니다",
+    "@message_move_media_success":{
+        "placeholders": {
+            "folder": {}
+        }
+    },
+    "message_send_event_name_show_success": "화면에 표시이름 이벤트를 보냈습니다"
+}

@@ -14,7 +14,7 @@ class PrimaryLineButton extends HookWidget {
 
   /// @feature: extraSmall buttons
   /// @author: 2023/09/05 3:13 PM donghwishin
-  const PrimaryLineButton.extraSmallRound4({
+  const PrimaryLineButton.smallRound4({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -24,7 +24,7 @@ class PrimaryLineButton extends HookWidget {
         height = 40,
         super(key: key);
 
-  const PrimaryLineButton.extraSmallRound100({
+  const PrimaryLineButton.smallRound100({
     Key? key,
     required this.content,
     required this.isActivated,
@@ -77,7 +77,7 @@ class PrimaryLineButton extends HookWidget {
     this.onPressed,
   })  : leftIcon = null,
         borderRadius = 8,
-        height = 60,
+        height = 56,
         super(key: key);
 
   @override
@@ -87,16 +87,16 @@ class PrimaryLineButton extends HookWidget {
 
     switch (height) {
       case 40:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 52:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b2m.copyWith(color: textColor);
         break;
-      case 60:
-        textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
+      case 56:
+        textStyle = getTextTheme(context).b1m.copyWith(color: textColor);
         break;
     }
 

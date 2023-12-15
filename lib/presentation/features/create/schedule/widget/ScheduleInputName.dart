@@ -31,15 +31,15 @@ class ScheduleInputName extends HookConsumerWidget {
         children: [
           Text(
             getAppLocalizations(context).common_title,
-            style: getTextTheme(context).b3b.copyWith(
-                  color: getColorScheme(context).colorGray900,
+            style: getTextTheme(context).b3sb.copyWith(
+                  color: getColorScheme(context).colorGray700,
                 ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
-            child: OutlineTextField.small(
+            child: OutlineTextField.medium(
               controller: useTextEditingController(text: initTitle),
-              hint: getAppLocalizations(context).popup_rename_schedule_hint,
+              hint: getAppLocalizations(context).create_schedule_title_input,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.text,
               showPwVisibleButton: false,

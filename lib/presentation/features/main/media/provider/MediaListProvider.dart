@@ -32,7 +32,11 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   final DelMediaUseCase _delMediaUseCase = GetIt.instance<DelMediaUseCase>();
   final PostCreateMediaFolderUseCase _createMediaFolderUseCase = GetIt.instance<PostCreateMediaFolderUseCase>();
   final PatchMediaNameUseCase _mediaNameUseCase = GetIt.instance<PatchMediaNameUseCase>();
-  final PostMediaFilterTypeUseCase _filterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
+  final PostMediaFilterTypeUseCase _saveFilterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
+
+  Map<FilterType, String> filterKeys = {};
+
+  void updateFilterKeys(Map<FilterType, String> filterKeys) => this.filterKeys = filterKeys;
 
   /// 미디어 리스트 요청
   void requestGetMedias({int? delayed}) async {
@@ -46,7 +50,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (!_isProcessing) {
         _isProcessing = true;
         try {
-          final response = await _getMediasUseCase.call(page: _currentPage, size: 30, sort: filterParams[_filterType]!);
+          final response = await _getMediasUseCase.call(page: _currentPage, size: 30, sort: filterKeys[_filterType]!);
 
           if (response.status == 200) {
             final responseItems = response.list?.toList() ?? [];
@@ -196,8 +200,11 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   }
 
   /// 미디어 정렬 순서 변경
-  void changeFilterType(FilterType type) async {
-    await _filterTypeUseCase.call(type);
+  void changeFilterType(
+    FilterType type, {
+    required Map<FilterType, String> filterValue,
+  }) async {
+    await _saveFilterTypeUseCase.call(type, filterValue);
     _filterType = type;
     initPageInfo();
     requestGetMedias(delayed: 600);
@@ -210,11 +217,11 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
     }
   }
 
-  String getFolderName(String? folderId) {
+  String getFolderName(String rootFolderName, String? folderId) {
     debugPrint("getFolderName: $folderId ${folderId == null}");
     if (CollectionUtil.isNullEmptyFromString(folderId)) {
-      return "Media"; // root로 이동함.
-    }else{
+      return rootFolderName; // root로 이동함.
+    } else {
       ResponseMediaModel? folderItem = currentItems.firstWhere((item) => item.mediaId == folderId);
       return folderItem.name ?? "";
     }

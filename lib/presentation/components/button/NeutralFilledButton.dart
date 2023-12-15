@@ -63,10 +63,10 @@ class NeutralFilledButton extends HookWidget {
 
     switch (height) {
       case 40:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
     }
 

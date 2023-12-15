@@ -149,7 +149,7 @@ class PrimaryFilledButton extends HookWidget {
     this.onPressed,
   })  : leftIcon = null,
         borderRadius = 100,
-        height = 60,
+        height = 56,
         super(key: key);
 
   const PrimaryFilledButton.extraLargeRound100Icon({
@@ -159,7 +159,7 @@ class PrimaryFilledButton extends HookWidget {
     required this.isActivated,
     this.onPressed,
   })  : borderRadius = 100,
-        height = 60,
+        height = 56,
         super(key: key);
 
   @override
@@ -169,19 +169,19 @@ class PrimaryFilledButton extends HookWidget {
 
     switch (height) {
       case 32:
-        textStyle = getTextTheme(context).c1sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).c1m.copyWith(color: textColor);
         break;
       case 40:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 48:
-        textStyle = getTextTheme(context).b3sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b3m.copyWith(color: textColor);
         break;
       case 52:
-        textStyle = getTextTheme(context).b2sb.copyWith(color: textColor);
+        textStyle = getTextTheme(context).b2m.copyWith(color: textColor);
         break;
-      case 60:
-        textStyle = getTextTheme(context).b1sb.copyWith(color: textColor);
+      case 56:
+        textStyle = getTextTheme(context).b1m.copyWith(color: textColor);
         break;
     }
 

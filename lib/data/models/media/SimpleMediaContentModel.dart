@@ -13,6 +13,7 @@ class SimpleMediaContentModel {
   final String? id;
   final String? name;
   final String? type;
+  final bool? isFolder;
   final ResponseMediaProperty? property;
 
   SimpleMediaContentModel({
@@ -21,6 +22,7 @@ class SimpleMediaContentModel {
     this.id,
     this.name,
     this.type,
+    this.isFolder,
     this.property,
   });
 
@@ -34,6 +36,7 @@ class SimpleMediaContentModel {
     String? id,
     String? name,
     String? type,
+    bool? isFolder,
     ResponseMediaProperty? property,
   }) {
     return SimpleMediaContentModel(
@@ -42,6 +45,7 @@ class SimpleMediaContentModel {
       id: id ?? this.id,
       name: name ?? this.name,
       type: type ?? this.type,
+      isFolder: isFolder ?? this.isFolder,
       property: property ?? this.property,
     );
   }

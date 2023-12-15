@@ -48,7 +48,7 @@ class DestinationFolderBottomContent extends HookConsumerWidget {
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
                           getAppLocalizations(context).common_new_folder,
-                          style: getTextTheme(context).c1sb.copyWith(
+                          style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),
@@ -78,7 +78,7 @@ class DestinationFolderBottomContent extends HookConsumerWidget {
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
                           getAppLocalizations(context).common_move_here,
-                          style: getTextTheme(context).c1sb.copyWith(
+                          style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray900,
                               ),
                         ),

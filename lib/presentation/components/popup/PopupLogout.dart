@@ -41,7 +41,7 @@ class PopupLogout extends HookWidget {
           ),
           Text(
             getAppLocalizations(context).common_logout,
-            style: getTextTheme(context).b2b.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
             ),
           ),
@@ -50,7 +50,7 @@ class PopupLogout extends HookWidget {
           ),
           Text(
             getAppLocalizations(context).popup_logout_description,
-            style: getTextTheme(context).b3m.copyWith(
+            style: getTextTheme(context).b3r.copyWith(
               color: getColorScheme(context).colorGray500,
               overflow: TextOverflow.visible,
             ),

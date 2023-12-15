@@ -38,11 +38,11 @@ class PopupApplyDevice extends HookWidget {
             ),
           ),
           const SizedBox(
-            height: 32,
+            height: 24,
           ),
           Text(
             getAppLocalizations(context).popup_apply_screen_title,
-            style: getTextTheme(context).b2b.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
@@ -58,7 +58,7 @@ class PopupApplyDevice extends HookWidget {
             textAlign: TextAlign.center,
           ),
           const SizedBox(
-            height: 32,
+            height: 24,
           ),
           Row(
             children: [
@@ -82,7 +82,7 @@ class PopupApplyDevice extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: PrimaryFilledButton.mediumRound8(
-                  content: getAppLocalizations(context).common_apply,
+                  content: getAppLocalizations(context).common_ok,
                   isActivated: true,
                   onPressed: () {
                     popPage(context, () {

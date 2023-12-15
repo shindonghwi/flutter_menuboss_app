@@ -9,7 +9,8 @@ import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleIcon.dart';
-import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
+import 'package:menuboss/presentation/components/button/FloatingPlusButton.dart';
 import 'package:menuboss/presentation/components/popup/CommonPopup.dart';
 import 'package:menuboss/presentation/components/popup/PopupDelete.dart';
 import 'package:menuboss/presentation/components/popup/PopupRename.dart';
@@ -50,6 +51,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
 
     void requestMedias() {
       mediaManager.initPageInfo();
+      mediaManager.updateFilterKeys(FilterInfo.getFilterKey(context));
       mediaManager.requestGetMedias(mediaId: item!.mediaId);
     }
 
@@ -161,6 +163,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
             CommonPopup.showPopup(
               context,
               child: PopupRename(
+                title: getAppLocalizations(context).popup_rename_title,
                 hint: getAppLocalizations(context).popup_rename_media_hint,
                 name: folderName.value,
                 onClicked: (name) {
@@ -192,7 +195,9 @@ class MediaInFolderScreen extends HookConsumerWidget {
               child: Stack(
                 children: [
                   if (mediaState is Failure && mediaList.value == null)
-                    FailView(onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId))
+                    FailView(
+                      onPressed: () => mediaManager.requestGetMedias(mediaId: item!.mediaId),
+                    )
                   else if (mediaList.value != null)
                     _MediaContentList(
                       folderId: item!.mediaId,

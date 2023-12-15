@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
@@ -22,13 +21,19 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
   List<ResponseMediaModel> _currentItems = [];
   FilterType _filterType = FilterType.NewestFirst;
 
+  Map<FilterType, String> filterKeys = {};
+  void updateFilterKeys(Map<FilterType, String> filterKeys) => this.filterKeys = filterKeys;
+
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
   final DelMediaUseCase _delMediaUseCase = GetIt.instance<DelMediaUseCase>();
   final PatchMediaNameUseCase _mediaNameUseCase = GetIt.instance<PatchMediaNameUseCase>();
-  final PostMediaFilterTypeUseCase _filterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
+  final PostMediaFilterTypeUseCase _saveFilterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
 
   /// 미디어 리스트 요청
-  Future<void> requestGetMedias({required String mediaId, int? delayed}) async {
+  Future<void> requestGetMedias({
+    required String mediaId,
+    int? delayed,
+  }) async {
     if (_currentPage == 1) {
       state = Loading();
     }
@@ -38,7 +43,9 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
     if (_hasNext) {
       if (_isProcessing) return;
       _isProcessing = true;
-      _getMediasUseCase.call(page: _currentPage, size: 30, sort: filterParams[_filterType]!, mediaId: mediaId).then((response) {
+      _getMediasUseCase
+          .call(page: _currentPage, size: 30, sort: filterKeys[_filterType]!, mediaId: mediaId)
+          .then((response) {
         try {
           if (response.status == 200) {
             final responseItems = response.list?.where((e) => e.type?.code.toLowerCase() != "folder").toList() ?? [];
@@ -86,7 +93,7 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
   }
 
   /// 미디어 삭제
-  Future<bool> removeItem(List<String> mediaIds) async{
+  Future<bool> removeItem(List<String> mediaIds) async {
     state = Loading();
     return await _delMediaUseCase.call(mediaIds).then((response) {
       if (response.status == 200) {
@@ -102,8 +109,12 @@ class MediaInFolderListNotifier extends StateNotifier<UIState<List<ResponseMedia
   }
 
   /// 미디어 정렬 순서 변경
-  void changeFilterType(String mediaId, FilterType type) async {
-    await _filterTypeUseCase.call(type);
+  void changeFilterType(
+    String mediaId,
+    FilterType type, {
+    required Map<FilterType, String> filterValue,
+  }) async {
+    await _saveFilterTypeUseCase.call(type, filterValue);
     _filterType = type;
     initPageInfo();
     requestGetMedias(mediaId: mediaId, delayed: 600);

@@ -50,7 +50,11 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                     },
                     child: Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: SvgPicture.asset(leftIconPath ?? "assets/imgs/icon_back.svg", width: 24, height: 24),
+                      child: SvgPicture.asset(
+                        leftIconPath ?? "assets/imgs/icon_back.svg",
+                        width: 24,
+                        height: 24,
+                      ),
                     ),
                   ),
                 ),
@@ -59,7 +63,7 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s3b.copyWith(
+                  style: getTextTheme(context).s3sb.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                   textAlign: TextAlign.center,
@@ -76,8 +80,10 @@ class TopBarIconTitleText extends HookWidget implements PreferredSizeWidget {
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
                           rightText ?? "",
-                          style: getTextTheme(context).b3sb.copyWith(
-                                color: rightTextActivated! ? getColorScheme(context).colorPrimary500 : getColorScheme(context).colorGray400,
+                          style: getTextTheme(context).b3m.copyWith(
+                                color: rightTextActivated!
+                                    ? getColorScheme(context).colorPrimary500
+                                    : getColorScheme(context).colorGray400,
                               ),
                         ),
                       ),

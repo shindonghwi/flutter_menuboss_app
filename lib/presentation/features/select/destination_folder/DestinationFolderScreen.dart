@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarNoneTitleIcon.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/checkbox/radio/BasicBorderRadioButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
@@ -41,7 +42,10 @@ class DestinationFolderScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        destinationFolderProvider.requestGetFolders();
+        destinationFolderProvider.requestGetFolders(
+          rootFolderName: getAppLocalizations(context).destination_folder_root,
+          filterKeys: FilterInfo.getFilterKey(context),
+        );
       });
       return null;
     }, []);
@@ -50,7 +54,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
       void handleUiStateChange() {
         fileMoveState.when(
           success: (event) async {
-            Toast.showSuccess(context, "File moved to '${event.value}'");
+            Toast.showSuccess(context, getAppLocalizations(context).message_move_media_success(event.value.toString()));
             mediaListManager.initPageInfo();
             mediaListManager.requestGetMedias();
             Navigator.of(context).pop();
@@ -77,7 +81,12 @@ class DestinationFolderScreen extends HookConsumerWidget {
         child: Stack(
           children: [
             if (destinationFolderState is Failure)
-              FailView(onPressed: () => destinationFolderProvider.requestGetFolders())
+              FailView(
+                onPressed: () => destinationFolderProvider.requestGetFolders(
+                  rootFolderName: getAppLocalizations(context).destination_folder_root,
+                  filterKeys: FilterInfo.getFilterKey(context),
+                ),
+              )
             else if (destinationFolderState is Success<List<ResponseMediaModel?>>)
               ListView.builder(
                 padding: const EdgeInsets.only(bottom: 100),
@@ -133,7 +142,10 @@ class DestinationFolderScreen extends HookConsumerWidget {
           fileMoveProvider.requestFileMove(
             mediaIds,
             isSelectFolderId.value,
-            mediaListManager.getFolderName(isSelectFolderId.value),
+            mediaListManager.getFolderName(
+              getAppLocalizations(context).destination_folder_root,
+              isSelectFolderId.value,
+            ),
           );
         },
       ),
@@ -184,7 +196,7 @@ class _FolderItem extends StatelessWidget {
                   padding: const EdgeInsets.only(left: 12.0),
                   child: Text(
                     folderName,
-                    style: getTextTheme(context).b2sb.copyWith(
+                    style: getTextTheme(context).b2m.copyWith(
                           color: getColorScheme(context).colorGray900,
                         ),
                   ),
@@ -195,8 +207,8 @@ class _FolderItem extends StatelessWidget {
         ),
         if (isSelected)
           SizedBox(
-            width: 24,
-            height: 24,
+            width: 20,
+            height: 20,
             child: BasicBorderRadioButton(
               isChecked: true,
               onChange: (value) {},

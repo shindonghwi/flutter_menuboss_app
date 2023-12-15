@@ -5,6 +5,7 @@ import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarIconTitleNone.dart';
+import 'package:menuboss/presentation/components/bottom_sheet/BottomSheetFilterSelector.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/utils/BaseScaffold.dart';
 import 'package:menuboss/presentation/components/utils/ClickableScale.dart';
@@ -37,9 +38,12 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        selectMediaListManager.requestGetMedias(mediaId: item!.mediaId);
+        selectMediaListManager.requestGetMedias(
+          filterKeys: FilterInfo.getFilterKey(context),
+          mediaId: item!.mediaId,
+        );
       });
-      return (){
+      return () {
         Future(() {
           selectMediaListManager.initPageInfo();
         });
@@ -66,7 +70,12 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
       body: Stack(
         children: [
           if (selectMediaState is Failure)
-            FailView(onPressed: () => selectMediaListManager.requestGetMedias(mediaId: item!.mediaId))
+            FailView(
+              onPressed: () => selectMediaListManager.requestGetMedias(
+                filterKeys: FilterInfo.getFilterKey(context),
+                mediaId: item!.mediaId,
+              ),
+            )
           else if (selectMediaState is Success<List<ResponseMediaModel>>)
             _MediaContentList(
               folderId: item!.mediaId,
@@ -86,7 +95,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
             ),
           );
         },
-        onDeleteClick: () async{
+        onDeleteClick: () async {
           final isSuccess = await mediaListManager.removeItem(checkListState, folderId: item!.mediaId);
           if (isSuccess) {
             Toast.showSuccess(context, getAppLocalizations(context).message_remove_media_success);
@@ -120,12 +129,14 @@ class _MediaContentList extends HookConsumerWidget {
     useEffect(() {
       scrollController.addListener(() {
         if (scrollController.position.maxScrollExtent * 0.7 <= scrollController.position.pixels) {
-          mediaListManager.requestGetMedias(mediaId: folderId);
+          mediaListManager.requestGetMedias(
+            filterKeys: FilterInfo.getFilterKey(context),
+            mediaId: folderId,
+          );
         }
       });
       return null;
     }, []);
-
 
     return items.isNotEmpty
         ? Stack(

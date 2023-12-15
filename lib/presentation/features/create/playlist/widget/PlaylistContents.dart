@@ -36,7 +36,8 @@ class PlaylistContents extends HookConsumerWidget {
         ? Padding(
             padding: const EdgeInsets.only(top: 60.0),
             child: EmptyView(
-              type: BlankMessageType.ADD_TO_PLAYLIST,
+              type: BlankMessageType.ADD_CONTENT,
+              onlyButtonMode: true,
               onPressed: () {
                 Navigator.push(
                   context,

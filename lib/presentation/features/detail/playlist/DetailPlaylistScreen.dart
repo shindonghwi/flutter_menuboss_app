@@ -274,7 +274,7 @@ class _Options extends StatelessWidget {
         children: [
           Text(
             getAppLocalizations(context).common_option,
-            style: getTextTheme(context).b3b.copyWith(
+            style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
@@ -312,7 +312,7 @@ class _TotalDuration extends HookConsumerWidget {
             children: [
               Text(
                 getAppLocalizations(context).common_total_duration,
-                style: getTextTheme(context).b3b.copyWith(
+                style: getTextTheme(context).b3sb.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
               ),

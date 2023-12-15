@@ -49,14 +49,14 @@ class PlaylistItem extends HookWidget {
                     children: [
                       Text(
                         item.name,
-                        style: getTextTheme(context).b2sb.copyWith(
+                        style: getTextTheme(context).b2m.copyWith(
                               color: getColorScheme(context).colorGray900,
                             ),
                       ),
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "Updated: ${item.updatedDate}",
+                          "${getAppLocalizations(context).common_updated}: ${item.updatedDate}",
                           style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),
@@ -75,7 +75,7 @@ class PlaylistItem extends HookWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              "${item.property?.count ?? 0} pages",
+                              getAppLocalizations(context).count_pages(item.property?.count ?? 0),
                               style: getTextTheme(context).c1m.copyWith(
                                     color: getColorScheme(context).colorGray500,
                                   ),
@@ -89,8 +89,8 @@ class PlaylistItem extends HookWidget {
               ],
             ),
           ),
-          PrimaryLineButton.extraSmallRound100(
-            content: getAppLocalizations(context).common_apply,
+          PrimaryLineButton.smallRound100(
+            content: getAppLocalizations(context).common_connect_screen,
             isActivated: true,
             onPressed: () {
               Navigator.push(

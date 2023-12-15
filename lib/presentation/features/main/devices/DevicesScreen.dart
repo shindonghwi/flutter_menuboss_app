@@ -7,7 +7,7 @@ import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/components/appbar/TopBarTitle.dart';
-import 'package:menuboss/presentation/components/button/FloatingButton.dart';
+import 'package:menuboss/presentation/components/button/FloatingPlusButton.dart';
 import 'package:menuboss/presentation/components/toast/Toast.dart';
 import 'package:menuboss/presentation/components/view_state/EmptyView.dart';
 import 'package:menuboss/presentation/components/view_state/FailView.dart';
@@ -35,6 +35,7 @@ class DevicesScreen extends HookConsumerWidget {
       return (){
         Future((){
           deviceManager.init();
+          deviceShowNameEventManager.init();
         });
       };
     }, []);
@@ -60,7 +61,6 @@ class DevicesScreen extends HookConsumerWidget {
           deviceShowNameEventState.when(
             success: (event) {
               Toast.showSuccess(context, getAppLocalizations(context).message_send_event_name_show_success);
-              deviceShowNameEventManager.init();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );

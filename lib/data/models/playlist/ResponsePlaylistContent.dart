@@ -34,6 +34,7 @@ class ResponsePlaylistContent {
       id: contentId,
       name: name,
       type: type.code,
+      isFolder: type.code.toLowerCase() == "folder",
       property: ResponseMediaProperty(
         size: property.size,
         duration: duration,

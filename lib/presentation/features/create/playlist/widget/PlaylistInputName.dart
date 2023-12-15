@@ -29,15 +29,15 @@ class PlaylistInputName extends HookConsumerWidget {
         children: [
           Text(
             getAppLocalizations(context).common_title,
-            style: getTextTheme(context).b3b.copyWith(
+            style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
-            child: OutlineTextField.small(
+            child: OutlineTextField.medium(
               controller: useTextEditingController(text: initTitle),
-              hint: getAppLocalizations(context).popup_rename_playlist_hint,
+              hint: getAppLocalizations(context).create_playlist_title_input,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.text,
               showPwVisibleButton: false,

@@ -22,7 +22,11 @@ class SelectMediaInFolderListNotifier extends StateNotifier<UIState<List<Respons
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
 
   /// 미디어 리스트 요청
-  Future<void> requestGetMedias({required String mediaId, int? delayed}) async {
+  Future<void> requestGetMedias({
+    required Map<FilterType, String> filterKeys,
+    required String mediaId,
+    int? delayed,
+  }) async {
     if (_hasNext) {
       if (_currentPage == 1) {
         state = Loading();
@@ -35,7 +39,7 @@ class SelectMediaInFolderListNotifier extends StateNotifier<UIState<List<Respons
 
       try {
         final response = await _getMediasUseCase.call(
-            page: _currentPage, size: 50, sort: filterParams[_filterType]!, mediaId: mediaId);
+            page: _currentPage, size: 50, sort: filterKeys[_filterType]!, mediaId: mediaId);
         if (response.status == 200) {
           final responseItems = response.list?.where((e) => e.type?.code.toLowerCase() != "folder").toList() ?? [];
           List<ResponseMediaModel> updateItems = [];

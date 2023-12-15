@@ -77,7 +77,7 @@ class BottomSheetPinCode extends HookWidget {
         ),
         Text(
           getAppLocalizations(context).bottom_sheet_pin_code_description,
-          style: getTextTheme(context).b2b.copyWith(
+          style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
         ),
@@ -95,7 +95,7 @@ class BottomSheetPinCode extends HookWidget {
                 focusNode: focusNodes[index],
                 keyboardType: TextInputType.number,
                 textAlign: TextAlign.center,
-                style: getTextTheme(context).s1b.copyWith(
+                style: getTextTheme(context).s2sb.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
                 decoration: InputDecoration(

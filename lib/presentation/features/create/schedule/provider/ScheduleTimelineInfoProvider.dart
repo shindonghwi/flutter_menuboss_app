@@ -53,9 +53,11 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
     state = [...items, lastItem];
   }
 
-  void addItem() {
+  void addItem({
+    required String defaultTitle,
+  }) {
     int newId = state.map((item) => item.playlistId).reduce((curr, next) => curr! < next! ? curr : next)! - 1;
-    SimpleSchedulesModel newItem = _createScheduleItem(newId, false, false, "New playlist", "00:00", "00:00");
+    SimpleSchedulesModel newItem = _createScheduleItem(newId, false, false, defaultTitle, "00:00", "00:00");
 
     int addButtonIndex = state.indexWhere((item) => item.isAddButton);
     List<SimpleSchedulesModel> newState = [...state];

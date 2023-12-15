@@ -10,19 +10,27 @@ import '../../../navigation/PageMoveUtil.dart';
 
 enum FilterType { NameAsc, NameDesc, NewestFirst, OldestFirst }
 
-final Map<FilterType, String> filterDescriptions = {
-  FilterType.NameAsc: "Name (A->Z)",
-  FilterType.NameDesc: "Name (Z->A)",
-  FilterType.NewestFirst: "Newest First",
-  FilterType.OldestFirst: "Oldest First"
-};
+class FilterInfo {
 
-final Map<FilterType, String> filterParams = {
-  FilterType.NameAsc: "name_asc",
-  FilterType.NameDesc: "name_desc",
-  FilterType.NewestFirst: "created_desc",
-  FilterType.OldestFirst: "created_asc"
-};
+  static Map<FilterType, String> getFilterKey(BuildContext context) {
+    return {
+      FilterType.NameAsc: getAppLocalizations(context).filter_key_name_asc,
+      FilterType.NameDesc: getAppLocalizations(context).filter_key_name_desc,
+      FilterType.NewestFirst: getAppLocalizations(context).filter_key_newest_first,
+      FilterType.OldestFirst: getAppLocalizations(context).filter_key_oldest_first
+    };
+  }
+
+  static Map<FilterType, String> getFilterValue(BuildContext context) {
+    return {
+      FilterType.NameAsc: getAppLocalizations(context).filter_value_name_asc,
+      FilterType.NameDesc: getAppLocalizations(context).filter_value_name_desc,
+      FilterType.NewestFirst: getAppLocalizations(context).filter_value_newest_first,
+      FilterType.OldestFirst: getAppLocalizations(context).filter_value_oldest_first
+    };
+  }
+}
+
 
 class BottomSheetFilterSelector extends HookWidget {
   final FilterType checkedFilterType;
@@ -43,7 +51,7 @@ class BottomSheetFilterSelector extends HookWidget {
       child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.center,
-          children: filterDescriptions.entries.map((e) {
+          children: FilterInfo.getFilterValue(context).entries.map((e) {
             int index = filterTypeList.indexOf(e.key);
             String value = e.value;
             return Clickable(
@@ -60,7 +68,7 @@ class BottomSheetFilterSelector extends HookWidget {
                   children: [
                     Text(
                       value,
-                      style: getTextTheme(context).b2sb.copyWith(
+                      style: getTextTheme(context).b2m.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                     ),

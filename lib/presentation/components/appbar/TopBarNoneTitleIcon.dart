@@ -38,7 +38,7 @@ class TopBarNoneTitleIcon extends HookWidget implements PreferredSizeWidget {
                 alignment: Alignment.center,
                 child: Text(
                   content,
-                  style: getTextTheme(context).s3b.copyWith(
+                  style: getTextTheme(context).s3sb.copyWith(
                         color:
                             reverseContentColor ? getColorScheme(context).white : getColorScheme(context).colorGray900,
                       ),

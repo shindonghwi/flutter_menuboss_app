@@ -8,10 +8,9 @@
     "login_email_invalid": "Email address entered incorrectly",
     "login_pw_invalid": "a-z, A-Z, 0-9, 4 to 20 characters",
 
-    "signup_email_address": "Email address",
-    "signup_password": "Password",
-    "signup_full_name": "Full name",
+    "signup_full_name_hint": "Please enter your name",
     "signup_business_name": "Business name",
+    "signup_business_name_hint": "Please enter a business name",
 
     "main_navigation_menu_schedules": "Schedules",
     "main_navigation_menu_playlists": "Playlists",
@@ -26,10 +25,12 @@
     "apply_screen_title": "Apply to Screens",
 
     "create_playlist_title": "Create playlist",
+    "create_playlist_title_input": "Please enter a title",
 
     "select_playlist_title": "Playlist",
 
     "destination_folder_title": "Select destination folder",
+    "destination_folder_root": "Media",
 
     "select_media_file_title": "Select file({count})",
     "@select_media_file_title":{
@@ -39,6 +40,7 @@
     },
 
     "create_schedule_title": "Create schedule",
+    "create_schedule_title_input": "Please enter a title",
     "create_schedule_default_playlist_title_basic": "Basic",
     "create_schedule_default_playlist_title_morning": "Morning",
     "create_schedule_default_playlist_title_lunch": "Lunch",
@@ -51,15 +53,10 @@
 
     "edit_schedule_title": "Edit schedule",
 
-    "my_page_appbar_title": "My page",
     "my_page_setting_item": "Settings",
     "my_page_setting_items_profile": "Profile",
-    "my_page_setting_items_log_out": "Log out",
-    "my_page_setting_items_plan": "Plan",
 
     "my_page_profile_appbar_title": "Profile",
-    "my_page_profile_full_name": "Full name",
-    "my_page_profile_email": "Email address",
     "my_page_profile_business_name": "Business name",
     "my_page_profile_delete_account": "Delete account",
 
@@ -71,12 +68,13 @@
     "delete_account_reason_menu2": "Service is inconvenient",
     "delete_account_reason_menu3": "It's hard to use",
     "delete_account_reason_menu4": "Other",
-    "delete_account_reason_menu4_hint": "Please tell me why you want to quit!",
+    "delete_account_reason_menu4_hint": "Please tell me why you want to quit",
 
     "media_info_title": "Media Information",
+    "media_info_menu_title": "Information",
     "media_info_menu_input_title": "Title",
     "media_info_menu_input_file_name_hint": "Input file name",
-    "media_info_menu_modified_data": "Modified date",
+    "media_info_menu_register_date": "Uploaded date",
     "media_info_menu_file_size": "File size",
     "media_info_menu_file_type": "File type",
     "media_info_menu_file_capacity": "File capacity",
@@ -88,22 +86,22 @@
     "media_content_tab_canvas": "Canvas",
 
     "bottom_sheet_pin_code_description": "Please enter your PIN code",
+    "bottom_sheet_menu_display_show_name": "Display screen name",
 
     "blank_message_content_add_screen": "Add screen",
     "blank_message_content_add_content": "Add content",
     "blank_message_content_add_canvas": "Add canvas",
-    "blank_message_content_add_to_playlist": "Add to playlist",
     "blank_message_content_new_schedule": "New schedule",
     "blank_message_content_new_playlist": "New playlist",
     "blank_message_content_upload_file": "Upload file",
     "blank_message_description_add_screen": "There is currently no saved screen list\nPlease register the screen through QR code",
-    "blank_message_description_add_content": "There is currently no content\nPlease add more content",
     "blank_message_description_add_canvas": "No canvas currently saved\nPlease make a new canvas",
-    "blank_message_description_add_to_playlist": "",
     "blank_message_description_new_schedule": "There are currently no saved schedules\nPlease register or create a schedule",
     "blank_message_description_new_playlist": "There are currently no saved playlists\nPlease register or create a playlist",
     "blank_message_description_upload_file": "There are no current files or folders\nPlease create a file or folder",
 
+    "popup_rename_title": "Rename",
+    "popup_rename_screen_hint": "Enter Screen name",
     "popup_rename_media_hint": "Media name",
     "popup_rename_screen_hint": "Screen name",
     "popup_rename_schedule_hint": "Schedule name",
@@ -113,12 +111,11 @@
     "popup_apply_screen_title": "Apply to screens?",
     "popup_apply_screen_description": "Are you sure you want to apply it directly to the screens?",
     "popup_logout_description": "Are yor sure want to log out?",
-    "popup_change_duration_title": "Please enter the duration of the media",
+    "popup_change_duration_title": "Please enter the duration\nof the media",
     "popup_delete_account_title": "Delete account completed!",
     "popup_delete_account_description": "Account deletion completed successfully. See you next time",
 
     "common_email": "Email",
-    "common_address": "Address",
     "common_password": "Password",
     "common_option": "Option",
     "common_refresh": "Refresh",
@@ -135,9 +132,9 @@
     "common_off": "Off",
     "common_or": "or",
     "common_done": "Done",
+    "common_next": "Next",
     "common_do_login": "Log in",
-    "common_edit": "Edit",
-    "common_apply": "Apply",
+    "common_connect_screen": "Apply",
     "common_confirm": "Confirm",
     "common_rename": "Rename",
     "common_logout": "Log out",
@@ -150,9 +147,52 @@
     "common_delete": "Delete",
     "common_save": "Save",
     "common_time": "Time",
-    "common_timeline": "Timeline",
-    "common_mode_all_day": "All day Mode",
-    "common_mode_schedule": "Schedule Mode",
+    "common_full_name": "Full name",
+    "common_updated": "Updated",
+    "common_back": "Back",
+    "common_image": "image",
+    "common_video": "video",
+    "common_canvas": "canvas",
+    "common_folder": "folder",
+
+    "count_playlist": "{count} playlists",
+    "@count_playlist":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "count_pages": "{count}pages",
+    "@count_pages":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "count_folder": "{count} Files{size}",
+    "@count_folder":{
+        "placeholders": {
+            "count": {},
+            "size": {}
+        }
+    },
+
+    "type_media_size": "{type} - {size}",
+    "@type_media_size":{
+        "placeholders": {
+            "type": {},
+            "size": {}
+        }
+    },
+
+    "filter_key_name_asc": "name_asc",
+    "filter_key_name_desc": "name_desc",
+    "filter_key_newest_first": "created_desc",
+    "filter_key_oldest_first": "created_asc",
+    "filter_value_name_asc": "Name (A->Z)",
+    "filter_value_name_desc": "Name (Z->A)",
+    "filter_value_newest_first": "Newest First",
+    "filter_value_oldest_first": "Oldest First",
 
     "message_server_error_5xx": "An error occurred while loading data.\nPlease use it again",
     "message_file_not_found_404": "File not found\nPlease use it again",
@@ -176,13 +216,11 @@
     "message_register_schedule_success": "Schedule registered successfully",
     "message_update_schedule_success": "Schedule information has been changed",
     "message_remove_media_success": "Media file deleted successfully",
-    "message_send_event_name_show_success": "Successfully Send show name event to Screen",
-
-    "schedule_time_basic": "Basic Exposure",
-    "schedule_time_morning": "Morning",
-    "schedule_time_lunch": "Lunch",
-    "schedule_time_dinner": "Dinner",
-    "schedule_time_dawn": "Dawn"
-
-
+    "message_move_media_success": "File moved to {folder}",
+    "@message_move_media_success":{
+        "placeholders": {
+            "folder": {}
+        }
+    },
+    "message_send_event_name_show_success": "Successfully Send show name event to Screen"
 }

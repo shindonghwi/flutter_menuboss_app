@@ -17,11 +17,26 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String get apiUrl => _instance._buildType == BuildType.dev
-      ? 'https://dev-app-api.themenuboss.com'
-      : 'https://app-api.themenuboss.com'; // api 주소
+  static String apiUrl = '';
 
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
+
+  static void setApiUrl(bool isKr) {
+    // if (isKr) {
+    //   if (_instance._buildType == BuildType.dev){
+    //     apiUrl = 'https://dev-app-api.menuboss.kr';
+    //   } else {
+    //     apiUrl = 'https://app-api.menuboss.kr';
+    //   }
+    // } else {
+      if (_instance._buildType == BuildType.dev){
+        apiUrl = 'https://dev-app-api.themenuboss.com';
+      } else {
+        apiUrl = 'https://app-api.themenuboss.com';
+      }
+    // }
+    debugPrint('apiUrl: $apiUrl');
+  }
 
   factory Environment.newInstance(BuildType buildType) {
     _instance = Environment._internal(buildType);

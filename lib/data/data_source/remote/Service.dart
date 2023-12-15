@@ -25,10 +25,10 @@ class Service {
 
   static Map<String, String> headers = {
     HeaderKey.ContentType: 'application/json',
-    HeaderKey.AcceptLanguage: 'en-US',
+    HeaderKey.AcceptLanguage: '',
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
-    HeaderKey.ApplicationTimeZone: 'Asia/Seoul',
+    HeaderKey.ApplicationTimeZone: '',
   };
 
   static Future<void> initializeHeaders() async {
@@ -84,6 +84,7 @@ class Service {
     String? query,
   }) async {
     try {
+      debugPrint('baseUrl: $baseUrl');
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/'
             '${_ServiceTypeHelper.fromString(type)}'

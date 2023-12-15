@@ -14,6 +14,7 @@ SimpleMediaContentModel _$SimpleMediaContentModelFromJson(
       id: json['id'] as String?,
       name: json['name'] as String?,
       type: json['type'] as String?,
+      isFolder: json['isFolder'] as bool?,
       property: json['property'] == null
           ? null
           : ResponseMediaProperty.fromJson(
@@ -28,5 +29,6 @@ Map<String, dynamic> _$SimpleMediaContentModelToJson(
       'id': instance.id,
       'name': instance.name,
       'type': instance.type,
+      'isFolder': instance.isFolder,
       'property': instance.property,
     };
