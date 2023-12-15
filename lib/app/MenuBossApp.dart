@@ -39,8 +39,10 @@ class MenuBossApp extends HookWidget {
           return MaterialApp(
             builder: (context, child) {
               Locale locale = Localizations.localeOf(context);
-              Environment.setApiUrl(locale.languageCode == 'ko');
-              Service.addHeader(key: HeaderKey.AcceptLanguage, value: locale.languageCode == 'ko' ? 'ko-KR' : 'en-US');
+              // Environment.setApiUrl(locale.languageCode == 'ko');
+              // Service.addHeader(key: HeaderKey.AcceptLanguage, value: locale.languageCode == 'ko' ? 'ko-KR' : 'en-US');
+              Environment.setApiUrl(false);
+              Service.addHeader(key: HeaderKey.AcceptLanguage, value: 'en-US');
               return ScrollConfiguration(
                 behavior: AppScrollBehavior(),
                 child: child!,
@@ -60,7 +62,8 @@ class MenuBossApp extends HookWidget {
               ),
             ),
             themeMode: ThemeMode.system,
-            supportedLocales: AppLocalizations.supportedLocales,
+            // supportedLocales: AppLocalizations.supportedLocales,
+            supportedLocales: const [Locale('en')],
             localizationsDelegates: AppLocalizations.localizationsDelegates,
             debugShowCheckedModeBanner: true,
             initialRoute: RoutingScreen.Splash.route,

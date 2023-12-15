@@ -4,7 +4,7 @@ import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/domain/usecases/remote/canvas/GetCanvasesUseCase.dart';
 import 'package:menuboss/presentation/model/UiState.dart';
 
-final MediaContentsCanvasProvider =
+final mediaContentsCanvasProvider =
     StateNotifierProvider<MediaContentsCanvasNotifier, UIState<List<SimpleMediaContentModel>>>(
   (ref) => MediaContentsCanvasNotifier(),
 );
@@ -16,18 +16,17 @@ class MediaContentsCanvasNotifier extends StateNotifier<UIState<List<SimpleMedia
 
   /// 캔버스 리스트 요청
   void requestGetCanvases({int? delayed}) {
-    // state = Loading();
-    state = Success([]);
-    // _getCanvasesUseCase.call().then((response) {
-    //   try {
-    //     if (response.status == 200) {
-    //       state = Success([...response.list?.map((e) => e.toMapperMediaContentModel()) ?? []]);
-    //     } else {
-    //       state = Failure(response.message);
-    //     }
-    //   } catch (e) {
-    //     state = Failure(response.message);
-    //   }
-    // });
+    state = Loading();
+    _getCanvasesUseCase.call().then((response) {
+      try {
+        if (response.status == 200) {
+          state = Success([...response.list?.map((e) => e.toMapperMediaContentModel()) ?? []]);
+        } else {
+          state = Failure(response.message);
+        }
+      } catch (e) {
+        state = Failure(response.message);
+      }
+    });
   }
 }

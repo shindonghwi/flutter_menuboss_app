@@ -153,8 +153,7 @@ class _SaveButton extends HookConsumerWidget {
 
     final isSaveAvailable = timelineState
             .where((element) => !element.isAddButton)
-            .every((element) => element.playlistId! > 0 && !element.timeIsDuplicate) &&
-        !CollectionUtil.isNullEmptyFromString(saveState.name);
+            .every((element) => element.playlistId! > 0 && !element.timeIsDuplicate);
 
     return SafeArea(
       child: Padding(

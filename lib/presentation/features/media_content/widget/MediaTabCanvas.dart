@@ -22,8 +22,8 @@ class MediaTabCanvas extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     useAutomaticKeepAlive();
 
-    final mediaContentsState = ref.watch(MediaContentsCanvasProvider);
-    final mediaContentsManager = ref.read(MediaContentsCanvasProvider.notifier);
+    final mediaContentsState = ref.watch(mediaContentsCanvasProvider);
+    final mediaContentsManager = ref.read(mediaContentsCanvasProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -67,7 +67,7 @@ class _SimpleMediaList extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mediaContentsManager = ref.read(MediaContentsCanvasProvider.notifier);
+    final mediaContentsManager = ref.read(mediaContentsCanvasProvider.notifier);
     return items.isNotEmpty
         ? RefreshIndicator(
             onRefresh: () async {

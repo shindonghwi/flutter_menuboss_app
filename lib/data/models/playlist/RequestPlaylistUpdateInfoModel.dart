@@ -34,7 +34,6 @@ class RequestPlaylistUpdateInfoModel {
   }
 
   bool isCreateAvailable() {
-    if (name.isEmpty) return false;
     if (property.direction.isEmpty) return false;
     if (property.fill.isEmpty) return false;
     if (contents.isEmpty) return false;
