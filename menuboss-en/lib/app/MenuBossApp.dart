@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
@@ -53,7 +54,12 @@ class MenuBossApp extends HookWidget {
               ),
             ),
             themeMode: ThemeMode.system,
-            supportedLocales: const [Locale('en')],
+            localizationsDelegates: const [
+              GlobalMaterialLocalizations.delegate,
+              GlobalWidgetsLocalizations.delegate,
+              GlobalCupertinoLocalizations.delegate,
+            ],
+            supportedLocales: const [Locale('en', 'US')],
             debugShowCheckedModeBanner: true,
             initialRoute: RoutingScreen.Splash.route,
             routes: RoutingScreen.getAppRoutes(),
