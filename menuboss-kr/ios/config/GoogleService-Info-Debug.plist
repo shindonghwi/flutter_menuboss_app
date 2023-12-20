@@ -3,23 +3,23 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f.apps.googleusercontent.com</string>
+	<string>922858947237-5l6poa73hhachqdijn2k59h1v2rb7r7b.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f</string>
+	<string>com.googleusercontent.apps.922858947237-5l6poa73hhachqdijn2k59h1v2rb7r7b</string>
 	<key>ANDROID_CLIENT_ID</key>
-	<string>845007593508-fdsp665ba4s33opll2g75fc9gfs21aob.apps.googleusercontent.com</string>
+	<string>922858947237-qti9p87mlmqg195iqeqae73egnq8ok8e.apps.googleusercontent.com</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBtJjJn6AkK241UrtM5aMUfP_8ctiRLLYc</string>
+	<string>AIzaSyBuf8vxwnlpLpqiSx1C-XaXb-LL9Bg68oQ</string>
 	<key>GCM_SENDER_ID</key>
-	<string>845007593508</string>
+	<string>922858947237</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.orot.menuboss.dev</string>
+	<string>com.orot.menuboss.kr.dev</string>
 	<key>PROJECT_ID</key>
-	<string>orotcode-menuboss</string>
+	<string>menuboss-app-dev</string>
 	<key>STORAGE_BUCKET</key>
-	<string>orotcode-menuboss.appspot.com</string>
+	<string>menuboss-app-dev.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -31,6 +31,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:845007593508:ios:0f03764e9f2e1e263bb8b1</string>
+	<string>1:922858947237:ios:abd000816b5f49bb83434c</string>
 </dict>
 </plist>
