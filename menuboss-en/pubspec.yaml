@@ -1,0 +1,87 @@
+name: menuboss
+description: MenuBoss Mobile App - TV Controller
+publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+
+version: 1.2.0+18
+
+environment:
+  sdk: '>=3.0.6 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  menuboss_common:
+    path: ../menuboss-common
+  cupertino_icons: ^1.0.2
+  flutter_hooks: ^0.18.6
+  flutter_svg: ^2.0.4
+  hooks_riverpod: ^2.3.2
+  get_it: ^7.6.0
+  http: ^0.13.6
+  shared_preferences: ^2.1.1
+  firebase_core: ^2.13.0
+  google_sign_in: ^6.1.0
+  json_annotation: ^4.8.1
+  firebase_auth: ^4.6.1
+  flutter_launcher_icons: ^0.13.1
+  firebase_crashlytics: ^3.3.6
+  firebase_analytics: ^10.4.3
+  package_info_plus: ^4.0.2
+  url_launcher: ^6.1.12
+  permission_handler: ^11.0.0
+  sign_in_with_apple: ^4.3.0
+  visibility_detector: ^0.4.0+2
+  qr_code_scanner: ^1.0.1
+  image_picker: ^1.0.4
+  cached_network_image: ^3.2.3
+  connectivity_plus: ^4.0.2
+  crypto: ^3.0.3
+  firebase_messaging: ^14.6.7
+  rive: ^0.11.4
+  flutter_reorderable_list: ^1.3.1
+  uni_links: ^0.5.1
+  flutter_native_timezone: ^2.0.0
+  numberpicker: ^2.1.2
+  lottie: ^2.6.0
+  device_info_plus: ^9.0.3
+  uuid: ^4.1.0
+  flutter_image_compress: ^2.0.4
+  video_thumbnail: ^0.5.3
+  path_provider: ^2.1.1
+  video_player: ^2.7.2
+  dotted_border: ^2.1.0
+  intl: ^0.18.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  flutter_native_splash: ^2.2.17
+  json_serializable: ^6.6.2
+  build_runner: ^2.3.3
+
+flutter:
+  uses-material-design: true
+
+flutter_native_splash:
+  android: true
+  ios: true
+  android_gravity: fill
+  ios_content_mode: scaleAspectFill
+  image: assets/imgs/splash.png
+  image_dark: assets/imgs/splash.png
+  color: "#482409"
+  color_dark: "#482409"
+
+  # Android 12 이상 버전에서 적용
+  android_12:
+    android: true
+    ios: true
+    android_gravity: fill
+    ios_content_mode: scaleAspectFill
+    image: assets/imgs/splash.png
+    image_dark: assets/imgs/splash.png
+    color: "#482409"
+    color_dark: "#482409"
