@@ -56,14 +56,6 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        final deviceIds = deviceManager.currentDevices.map((e) => e.screenId).toList();
-        applyItem.value = applyItem.value.copyWith(screenIds: deviceIds);
-      });
-      return null;
-    }, [checkList]);
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) {
         deviceList.value = [...deviceManager.currentDevices];
       });
       return null;
@@ -132,6 +124,12 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                               child: PopupApplyDevice(
                                 onClicked: (isApply) {
                                   if (isApply) {
+                                    final deviceIds = deviceManager.currentDevices.map((e) => e.screenId).toList();
+                                    final applyDeviceIds = [
+                                      for (var i = 0; i < deviceIds.length; i++)
+                                        if (checkList.contains(i)) deviceIds[i]
+                                    ];
+                                    applyItem.value = applyItem.value.copyWith(screenIds: applyDeviceIds);
                                     applyScreenManager.applyToScreen(applyItem.value);
                                   }
                                 },
