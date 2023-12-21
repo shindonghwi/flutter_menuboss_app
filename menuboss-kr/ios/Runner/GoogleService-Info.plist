@@ -2,22 +2,18 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>CLIENT_ID</key>
-	<string>845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f.apps.googleusercontent.com</string>
-	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f</string>
 	<key>API_KEY</key>
-	<string>AIzaSyBtJjJn6AkK241UrtM5aMUfP_8ctiRLLYc</string>
+	<string>AIzaSyB7Y_zFbfajGR2Jl3CvYsoje5X-7Mm3BTc</string>
 	<key>GCM_SENDER_ID</key>
-	<string>845007593508</string>
+	<string>1060430673784</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.orot.menuboss.dev</string>
+	<string>com.orot.menuboss.kr</string>
 	<key>PROJECT_ID</key>
-	<string>orotcode-menuboss</string>
+	<string>menuboss-app-prod</string>
 	<key>STORAGE_BUCKET</key>
-	<string>orotcode-menuboss.appspot.com</string>
+	<string>menuboss-app-prod.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +25,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:845007593508:ios:0f03764e9f2e1e263bb8b1</string>
+	<string>1:1060430673784:ios:96cfe20c4caa8906b9ba8d</string>
 </dict>
 </plist>

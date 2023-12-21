@@ -287,7 +287,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SRC_ROOT_PATH=\"/Users/donghwishin/AndroidStudioProjects/flutter/ody-flutter-app/ios\"\nif [ \"${CONFIGURATION}\" == \"Debug-dev\" ]\nthen\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Debug.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nelse\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Release.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nfi\n\n\n";
+			shellScript = "SRC_ROOT_PATH=\"/Users/donghwishin/AndroidStudioProjects/menuboss-flutter-app/menuboss-en/ios\"\nif [ \"${CONFIGURATION}\" == \"Debug-dev\" ]\nthen\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Debug.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nelse\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Release.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nfi\n\n\n";
 		};
 		31FD11BD9DDE645F043E916F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -377,7 +377,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug-dev\" ]\nthen\n    \"$PODS_ROOT/FirebaseCrashlytics/upload-symbols\" --flutter-project \"$PROJECT_DIR/firebase_app_id_file_dev.json\" \nelse\n    \"$PODS_ROOT/FirebaseCrashlytics/upload-symbols\" --flutter-project \"$PROJECT_DIR/firebase_app_id_file.json\" \nfi\n";
+			shellScript = "${PODS_ROOT}/FirebaseCrashlytics/run\n\nif [ \"${CONFIGURATION}\" == \"Debug-dev\" ]\nthen\n    \"$PODS_ROOT/FirebaseCrashlytics/upload-symbols\" --flutter-project \"$PROJECT_DIR/firebase_app_id_file_dev.json\" \nelse\n    \"$PODS_ROOT/FirebaseCrashlytics/upload-symbols\" --flutter-project \"$PROJECT_DIR/firebase_app_id_file.json\" \nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
