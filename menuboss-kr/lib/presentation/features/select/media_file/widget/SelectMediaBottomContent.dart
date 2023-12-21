@@ -54,7 +54,7 @@ class SelectMediaBottomContent extends HookConsumerWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 4.0),
                         child: Text(
-                          Strings.of(context).commonSave,
+                          Strings.of(context).commonMove,
                           style: getTextTheme(context).c1sb.copyWith(
                                 color: checkListState.isNotEmpty
                                     ? getColorScheme(context).colorGray900
