@@ -28,4 +28,14 @@ class LocalAppRepositoryImpl implements LocalAppRepository {
   Future<void> setMediaFilterType(FilterType type, Map<FilterType, String> filterValues) {
     return localAppApi.setMediaFilterType(type, filterValues);
   }
+
+  @override
+  Future<bool> hasViewedTutorial(String screenKey) {
+    return localAppApi.hasViewedTutorial(screenKey);
+  }
+
+  @override
+  Future<void> setTutorialViewed(String screenKey) {
+    return localAppApi.setTutorialViewed(screenKey);
+  }
 }

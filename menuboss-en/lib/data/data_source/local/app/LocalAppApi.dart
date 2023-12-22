@@ -1,13 +1,20 @@
 import 'package:menuboss_common/components/bottom_sheet/BottomSheetFilterSelector.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../SharedKey.dart';
+import '../TutorialKey.dart';
 
 class LocalAppApi {
   LocalAppApi();
 
   final String accessTokenKey = SharedKeyHelper.fromString(SharedKey.ACCESS_TOKEN);
   final String mediaFilterTypeKey = SharedKeyHelper.fromString(SharedKey.MEDIA_FILTER_TYPE);
+
+  // 튜튜리얼
+  final String tutorialScreenRegisterKey = TutorialKeyHelper.fromString(TutorialKey.ScreenRegisterKey);
+  final String tutorialScreenQrCodeKey = TutorialKeyHelper.fromString(TutorialKey.ScreenQrCode);
+  final String tutorialScreenAddedKey = TutorialKeyHelper.fromString(TutorialKey.ScreenAdded);
 
   Future<String> getLoginAccessToken() async {
     final prefs = await SharedPreferences.getInstance();
@@ -32,5 +39,15 @@ class LocalAppApi {
 
   FilterType _stringToFilterType(String value, Map<FilterType, String> filterValues) {
     return filterValues.entries.firstWhere((entry) => entry.value == value).key;
+  }
+
+  Future<bool> hasViewedTutorial(String screenKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(screenKey) ?? false;
+  }
+
+  Future<void> setTutorialViewed(String screenKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(screenKey, true);
   }
 }
