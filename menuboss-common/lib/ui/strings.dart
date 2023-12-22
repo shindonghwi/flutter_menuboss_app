@@ -109,6 +109,29 @@ class Strings {
       'tutorial_screen_description4':
           isKr() ? 'TV 화면에 이름을 표시하거나 수정 및 삭제가 가능합니다' : 'or editing and deletion are possible',
 
+      'tutorial_playlist_add_new': isKr() ? '재생목록을 추가해서 등록해주세요' : 'Add and register a new playlist',
+      'tutorial_playlist_description1': isKr() ? '재생목록의 제목을 입력해주세요' : 'Please write the title of the playlist',
+      'tutorial_playlist_description2':
+          isKr() ? '옵션에서 TV 화면의 모습을 설정할 수 있습니다' : 'Set the playlist settings in the options',
+      'tutorial_playlist_description3': isKr() ? '콘텐츠를 추가 및 정렬하고 시간 설정이 가능합니다' : 'Add and sort content, set time',
+      'tutorial_playlist_description4':
+          isKr() ? '연결할 재생목록의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
+      'tutorial_playlist_description5':
+          isKr() ? '켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!' : 'that is turned on. Screen and playlist connected!',
+
+      'tutorial_schedule_add_new': isKr() ? '시간표를 추가해서 등록해주세요' : 'Add and register a new schedule',
+      'tutorial_schedule_description1': isKr() ? '시간표의 제목을 입력해주세요' : 'Please write the title of the schedule',
+      'tutorial_schedule_description2':
+          isKr() ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을' : '1. Add playlist 2. Schedule by setting time',
+      'tutorial_schedule_description3':
+          isKr() ? '눌러 해당 재생목록을 삭제 할 수 있습니다.' : 'You can delete it using the trash can icon',
+      'tutorial_schedule_description4':
+          isKr() ? '연결할 시간표의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
+      'tutorial_schedule_description5':
+          isKr() ? '켜져있는 TV를 선택하면, TV와 시간표 연결 완료!' : 'that is turned on. Screen and schedule connected!',
+      'tutorial_schedule_description6':
+          isKr() ? '[+] 버튼을 눌러 새 시간표를 만들 수 있습니다' : 'Press the [Plus] button to add a new schedule',
+
       'blank_message_content_add_screen': isKr() ? 'TV 추가' : 'Add screen',
       'blank_message_content_upload_file': isKr() ? '파일 업로드' : 'Upload file',
       'blank_message_content_add_content': isKr() ? '콘텐츠 추가' : 'Add content',
@@ -378,6 +401,32 @@ class Strings {
   String get tutorialScreenDescription3 => _localizedValue('tutorial_screen_description3');
 
   String get tutorialScreenDescription4 => _localizedValue('tutorial_screen_description4');
+
+  String get tutorialPlaylistAddNew => _localizedValue('tutorial_playlist_add_new');
+
+  String get tutorialPlaylistDescription1 => _localizedValue('tutorial_playlist_description1');
+
+  String get tutorialPlaylistDescription2 => _localizedValue('tutorial_playlist_description2');
+
+  String get tutorialPlaylistDescription3 => _localizedValue('tutorial_playlist_description3');
+
+  String get tutorialPlaylistDescription4 => _localizedValue('tutorial_playlist_description4');
+
+  String get tutorialPlaylistDescription5 => _localizedValue('tutorial_playlist_description5');
+
+  String get tutorialScheduleAddNew => _localizedValue('tutorial_schedule_add_new');
+
+  String get tutorialScheduleDescription1 => _localizedValue('tutorial_schedule_description1');
+
+  String get tutorialScheduleDescription2 => _localizedValue('tutorial_schedule_description2');
+
+  String get tutorialScheduleDescription3 => _localizedValue('tutorial_schedule_description3');
+
+  String get tutorialScheduleDescription4 => _localizedValue('tutorial_schedule_description4');
+
+  String get tutorialScheduleDescription5 => _localizedValue('tutorial_schedule_description5');
+
+  String get tutorialScheduleDescription6 => _localizedValue('tutorial_schedule_description6');
 
   String get blankMessageContentAddScreen => _localizedValue('blank_message_content_add_screen');
 

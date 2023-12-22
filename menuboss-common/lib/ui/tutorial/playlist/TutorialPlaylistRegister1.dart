@@ -1,0 +1,108 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss_common/components/utils/Clickable.dart';
+import 'package:menuboss_common/ui/colors.dart';
+import 'package:menuboss_common/ui/typography.dart';
+import 'package:menuboss_common/utils/Common.dart';
+
+import '../../../components/button/PrimaryFilledButton.dart';
+import '../../../components/loader/LoadSvg.dart';
+import '../../Strings.dart';
+
+class TutorialPlaylistRegister1 extends HookWidget {
+  final VoidCallback onPressed;
+
+  const TutorialPlaylistRegister1({
+    super.key,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
+    return SafeArea(
+      child: Clickable(
+        onPressed: () => onPressed.call(),
+        child: Container(
+          margin: EdgeInsets.only(top: isKr ? 94 : 88, bottom: 73),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                const SizedBox(
+                  width: 60,
+                  height: 60,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "\n",
+                  style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).colorGray400,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                IgnorePointer(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            const SizedBox(
+                              width: 32,
+                            ),
+                            PrimaryFilledButton.mediumRound100Icon(
+                              leftIcon: LoadSvg(
+                                path: "assets/imgs/icon_plus_1.svg",
+                                width: 20,
+                                height: 20,
+                                color: getColorScheme(context).white,
+                              ),
+                              content: Strings.of(context).blankMessageContentNewPlaylist,
+                              isActivated: true,
+                              onPressed: () {},
+                            ),
+                            const SizedBox(
+                              width: 12,
+                            ),
+                            Container(
+                              width: 20,
+                              height: 44,
+                              margin: const EdgeInsets.only(top: 12),
+                              child: Transform.rotate(
+                                angle: 3.14,
+                                child: LoadSvg(
+                                  width: 20,
+                                  height: 44,
+                                  path: "assets/imgs/icon_tutorial_arrow.svg",
+                                  color: getColorScheme(context).white,
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Text(
+                    Strings.of(context).tutorialPlaylistAddNew,
+                    style: getTextTheme(context).b3m.copyWith(
+                      color: getColorScheme(context).white,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}

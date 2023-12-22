@@ -10,6 +10,8 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister1.dart';
+import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistRegister1.dart';
+import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleRegister1.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/dto/Triple.dart';
 
@@ -104,7 +106,9 @@ class MainScreen extends HookConsumerWidget {
         Container(
           color: getColorScheme(context).black.withOpacity(0.7),
         ),
-        TutorialDeviceRegister1(onPressed: () {}),
+        // TutorialDeviceRegister1(onPressed: () {}),
+        TutorialPlaylistRegister1(onPressed: () {}),
+        // TutorialScheduleRegister1(onPressed: () {}),
       ],
     );
   }
