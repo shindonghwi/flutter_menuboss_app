@@ -103,11 +103,11 @@ class MainScreen extends HookConsumerWidget {
             onTap: (index) => currentIndexManager.state = index,
           ),
         ),
-        Container(
-          color: getColorScheme(context).black.withOpacity(0.7),
-        ),
+        // Container(
+        //   color: getColorScheme(context).black.withOpacity(0.7),
+        // ),
         // TutorialDeviceRegister1(onPressed: () {}),
-        TutorialPlaylistRegister1(onPressed: () {}),
+        // TutorialPlaylistRegister1(onPressed: () {}),
         // TutorialScheduleRegister1(onPressed: () {}),
       ],
     );
