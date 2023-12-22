@@ -117,7 +117,7 @@ class Strings {
       'blank_message_content_new_playlist': isKr() ? '새로운 플레이리스트' : 'New playlist',
       'blank_message_description_add_screen': isKr()
           ? '현재 저장된 TV목록이 없습니다\nQR코드 인식을 통해 TV를 만들어주세요'
-          : 'There are currently no saved TV screens\nPlease create a TV screen through QR code recognition',
+          : 'There are currently no saved screen list\nPlease register the screen through QR code',
       'blank_message_description_add_canvas': isKr()
           ? '현재 저장된 캔버스 없습니다\n캔버스를 만들어 추가해주세요'
           : 'There are currently no saved canvases\nPlease create and add a canvas',

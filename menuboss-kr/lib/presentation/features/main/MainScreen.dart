@@ -6,12 +6,10 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss_common/components/bottomNav/BottomNavBar.dart';
-import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister1.dart';
-import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/dto/Triple.dart';
 
@@ -57,7 +55,7 @@ class MainScreen extends HookConsumerWidget {
             Navigator.pushAndRemoveUntil(
               context,
               nextFadeInOutScreen(RoutingScreen.Login.route),
-              (route) => false,
+                  (route) => false,
             );
             return;
           }
@@ -84,12 +82,10 @@ class MainScreen extends HookConsumerWidget {
       return null;
     }, [currentIndex]);
 
-    final isTutorial = useState(true);
-
-    return BaseScaffold(
-      body: Stack(
-        children: [
-          IndexedStack(
+    return Stack(
+      children: [
+        BaseScaffold(
+          body: IndexedStack(
             index: currentIndex,
             children: const [
               SchedulesScreen(),
@@ -99,20 +95,17 @@ class MainScreen extends HookConsumerWidget {
               MyScreen(),
             ],
           ),
-          if (isTutorial.value)
-            TutorialDeviceRegister1(
-              onPressed: () {
-                isTutorial.value = false;
-              },
-            ),
-        ],
-      ),
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: currentIndex,
-        iconList: iconList,
-        isTutorialMode: isTutorial.value,
-        onTap: (index) => currentIndexManager.state = index,
-      ),
+          bottomNavigationBar: BottomNavBar(
+            currentIndex: currentIndex,
+            iconList: iconList,
+            onTap: (index) => currentIndexManager.state = index,
+          ),
+        ),
+        Container(
+          color: getColorScheme(context).black.withOpacity(0.7),
+        ),
+        TutorialDeviceRegister1(onPressed: () {}),
+      ],
     );
   }
 }

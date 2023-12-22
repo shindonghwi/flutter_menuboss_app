@@ -19,69 +19,41 @@ class TutorialDeviceRegister1 extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: getColorScheme(context).black.withOpacity(0.7),
-      child: SafeArea(
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
+    return SafeArea(
+      child: Clickable(
+        onPressed: () => onPressed.call(),
         child: Container(
-          color: getColorScheme(context).white,
-          child: Clickable(
-            onPressed: () => onPressed.call(),
-            child: IgnorePointer(
-              child: Stack(
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 56),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          LoadSvg(
-                            path: "assets/imgs/image_blank_device.svg",
-                            width: 60,
-                            height: 60,
-                            color: getColorScheme(context).colorGray300,
-                          ),
-                          const SizedBox(
-                            height: 12,
-                          ),
-                          Text(
-                            Strings.of(context).blankMessageDescriptionAddScreen,
-                            style: getTextTheme(context).b3m.copyWith(
-                                  color: getColorScheme(context).colorGray400,
-                                ),
-                            textAlign: TextAlign.center,
-                          ),
-                          const SizedBox(
-                            height: 72,
-                          ),
-                        ],
+          margin: EdgeInsets.only(top: isKr ? 94 : 88, bottom: 73),
+          child: Center(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  width: 60,
+                  height: 60,
+                ),
+                const SizedBox(height: 12),
+                Text(
+                  "\n",
+                  style: getTextTheme(context).b3m.copyWith(
+                        color: getColorScheme(context).colorGray400,
                       ),
-                    ),
-                  ),
-                  Container(
-                    color: getColorScheme(context).black.withOpacity(0.7),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 56),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 72,
-                          ),
-                          Text(
-                            " \n ",
-                            style: getTextTheme(context).b3m.copyWith(
-                                  color: getColorScheme(context).colorGray400,
-                                ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 24),
-                            child: PrimaryFilledButton.mediumRound100Icon(
+                  textAlign: TextAlign.center,
+                ),
+                IgnorePointer(
+                  child: Padding(
+                    padding: const EdgeInsets.only(top: 24),
+                    child: Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              width: 32,
+                            ),
+                            PrimaryFilledButton.mediumRound100Icon(
                               leftIcon: LoadSvg(
                                 path: "assets/imgs/icon_plus_1.svg",
                                 width: 20,
@@ -90,115 +62,43 @@ class TutorialDeviceRegister1 extends HookWidget {
                               ),
                               content: Strings.of(context).blankMessageContentAddScreen,
                               isActivated: true,
-                              onPressed: () => onPressed.call(),
+                              onPressed: () {},
                             ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 56, left: 142),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 72,
-                          ),
-                          Text(
-                            " \n ",
-                            style: getTextTheme(context).b3m.copyWith(
-                                  color: getColorScheme(context).colorGray400,
+                            SizedBox(
+                              width: 12,
+                            ),
+                            Container(
+                              width: 20,
+                              height: 44,
+                              margin: const EdgeInsets.only(top: 12),
+                              child: Transform.rotate(
+                                angle: 3.14,
+                                child: LoadSvg(
+                                  width: 20,
+                                  height: 44,
+                                  path: "assets/imgs/icon_tutorial_arrow.svg",
+                                  color: getColorScheme(context).white,
+                                  fit: BoxFit.cover,
                                 ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 36),
-                            child: Transform.rotate(
-                              // -180 degree
-                              angle: 3.14,
-                              child: LoadSvg(
-                                path: "assets/imgs/icon_tutorial_arrow.svg",
-                                width: 20,
-                                height: 44,
-                                color: getColorScheme(context).white,
                               ),
                             ),
-                          ),
-                        ],
-                      ),
+                          ],
+                        ),
+                      ],
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                      margin: const EdgeInsets.only(top: 56 + 48 + 36),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          const SizedBox(
-                            height: 72,
-                          ),
-                          Text(
-                            " \n ",
-                            style: getTextTheme(context).b3m.copyWith(
-                                  color: getColorScheme(context).colorGray400,
-                                ),
-                            textAlign: TextAlign.center,
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(top: 24),
-                            child: Text(
-                              Strings.of(context).tutorialScreenAddNew,
-                              style: getTextTheme(context).b3m.copyWith(
-                                    color: getColorScheme(context).white,
-                                  ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(top: 12),
+                  child: Text(
+                    Strings.of(context).tutorialScreenAddNew,
+                    style: getTextTheme(context).b3m.copyWith(
+                          color: getColorScheme(context).white,
+                        ),
+                    textAlign: TextAlign.center,
                   ),
-                  // Align(
-                  //   alignment: Alignment.center,
-                  //   child: Container(
-                  //     margin: const EdgeInsets.only(top: 56),
-                  //     child: Column(
-                  //       mainAxisSize: MainAxisSize.min,
-                  //       crossAxisAlignment: CrossAxisAlignment.end,
-                  //       mainAxisAlignment: MainAxisAlignment.center,
-                  //       children: [
-                  //         const SizedBox(
-                  //           height: 72,
-                  //         ),
-                  //         Text(
-                  //           " \n ",
-                  //           style: getTextTheme(context).b3m.copyWith(
-                  //                 color: getColorScheme(context).colorGray400,
-                  //               ),
-                  //           textAlign: TextAlign.center,
-                  //         ),
-                  //         Padding(
-                  //           padding: const EdgeInsets.only(top: 88),
-                  //           child: Text(
-                  //             Strings.of(context).tutorialScreenAddNew,
-                  //             style: getTextTheme(context).b3m.copyWith(
-                  //               color: getColorScheme(context).colorGray400,
-                  //             ),
-                  //             textAlign: TextAlign.center,
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     ),
-                  //   ),
-                  // ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),
