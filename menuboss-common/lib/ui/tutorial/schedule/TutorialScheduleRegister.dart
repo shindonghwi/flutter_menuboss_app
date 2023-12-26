@@ -11,10 +11,10 @@ import '../../../components/button/PrimaryFilledButton.dart';
 import '../../../components/loader/LoadSvg.dart';
 import '../../Strings.dart';
 
-class TutorialScheduleRegister1 extends HookWidget {
+class TutorialScheduleRegister extends HookWidget {
   final VoidCallback onPressed;
 
-  const TutorialScheduleRegister1({
+  const TutorialScheduleRegister({
     super.key,
     required this.onPressed,
   });
@@ -37,10 +37,9 @@ class TutorialScheduleRegister1 extends HookWidget {
                   margin: EdgeInsets.only(
                     top: isKr
                         ? Platform.isIOS
-                            ? 90
-                            : 94
-                        : 88,
-                    bottom: 73,
+                            ? 18
+                            : 14
+                        : 14,
                   ),
                   child: Center(
                     child: Column(

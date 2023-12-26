@@ -11,10 +11,10 @@ import '../../../components/button/PrimaryFilledButton.dart';
 import '../../../components/loader/LoadSvg.dart';
 import '../../Strings.dart';
 
-class TutorialDeviceRegister1 extends HookWidget {
+class TutorialPlaylistRegister extends HookWidget {
   final VoidCallback onPressed;
 
-  const TutorialDeviceRegister1({
+  const TutorialPlaylistRegister({
     super.key,
     required this.onPressed,
   });
@@ -37,10 +37,9 @@ class TutorialDeviceRegister1 extends HookWidget {
                   margin: EdgeInsets.only(
                     top: isKr
                         ? Platform.isIOS
-                            ? 90
-                            : 94
-                        : 88,
-                    bottom: 73,
+                            ? 18
+                            : 14
+                        : 14,
                   ),
                   child: Center(
                     child: Column(
@@ -76,7 +75,7 @@ class TutorialDeviceRegister1 extends HookWidget {
                                         height: 20,
                                         color: getColorScheme(context).white,
                                       ),
-                                      content: Strings.of(context).blankMessageContentAddScreen,
+                                      content: Strings.of(context).blankMessageContentNewPlaylist,
                                       isActivated: true,
                                       onPressed: () {},
                                     ),
@@ -107,7 +106,7 @@ class TutorialDeviceRegister1 extends HookWidget {
                         Padding(
                           padding: const EdgeInsets.only(top: 12),
                           child: Text(
-                            Strings.of(context).tutorialScreenAddNew,
+                            Strings.of(context).tutorialPlaylistAddNew,
                             style: getTextTheme(context).b3m.copyWith(
                                   color: getColorScheme(context).white,
                                 ),
@@ -129,7 +128,7 @@ class TutorialDeviceRegister1 extends HookWidget {
                       color: getColorScheme(context).white,
                     ),
                   ),
-                ),
+                )
               ],
             ),
           ),

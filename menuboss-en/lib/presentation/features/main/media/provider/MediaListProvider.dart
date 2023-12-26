@@ -39,7 +39,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   void updateFilterKeys(Map<FilterType, String> filterKeys) => this.filterKeys = filterKeys;
 
   /// 미디어 리스트 요청
-  void requestGetMedias({int? delayed}) async {
+  Future<List<dynamic>> requestGetMedias({int? delayed}) async {
     if (_hasNext) {
       if (_currentPage == 1) {
         state = Loading();
@@ -66,6 +66,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
             _hasNext = response.page!.hasNext;
             _currentPage = response.page!.currentPage + 1;
             state = Success([...updateItems]);
+            return updateItems;
           } else {
             initPageInfo();
             state = Failure(response.message);
@@ -78,6 +79,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
         _isProcessing = false;
       }
     }
+    return [];
   }
 
   /// 미디어 폴더 생성

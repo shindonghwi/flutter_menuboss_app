@@ -38,7 +38,8 @@ class Strings {
 
       'scan_qr_title': isKr() ? 'QR 코드 인식' : 'Scan QR code',
       'scan_qr_enter_pin_code': isKr() ? 'PIN 번호 입력' : 'Enter PIN code',
-      'scan_qr_description': isKr() ? 'TV 화면에 보이는\nQR 코드를 인식해주세요' : 'Scan the QR code you see\non the TV screen',
+      'scan_qr_description':
+          isKr() ? 'TV 화면에 보이는\nQR 코드를 인식해주세요' : 'Scan the QR code you see\non the TV screen',
 
       'apply_screen_title': isKr() ? 'TV에 적용' : 'Apply to Screens',
 
@@ -70,16 +71,19 @@ class Strings {
       'my_page_profile_delete_account': isKr() ? '탈퇴하기' : 'Delete account',
 
       'delete_account_title': isKr() ? '탈퇴' : 'Delete account',
-      'delete_account_description': isKr() ? '메뉴보스를 탈퇴하시나요?' : 'Are you sure you want to delete your account?',
+      'delete_account_description':
+          isKr() ? '메뉴보스를 탈퇴하시나요?' : 'Are you sure you want to delete your account?',
       'delete_account_description1': isKr()
           ? '탈퇴하시면 모든 정보와 데이터가 삭제됩니다.\n삭제하시려면 주의 사항을 확인하고 진행해 주세요'
           : 'When you delete your account, all of your information and data will be deleted.\nIf you want to delete it, please check the precautions and proceed',
       'delete_account_reason_title': isKr() ? '탈퇴 사유를 선택해주세요' : 'Reason for deleting your account',
-      'delete_account_reason_menu1': isKr() ? '서비스를 자주 사용하지 않음' : "I don't use the service very often",
+      'delete_account_reason_menu1':
+          isKr() ? '서비스를 자주 사용하지 않음' : "I don't use the service very often",
       'delete_account_reason_menu2': isKr() ? '서비스가 불편함' : 'Service is inconvenient',
       'delete_account_reason_menu3': isKr() ? '사용하기 어려움' : "It's hard to use",
       'delete_account_reason_menu4': isKr() ? '기타' : 'Other',
-      'delete_account_reason_menu4_hint': isKr() ? '탈퇴 이유를 알려주세요' : 'Please tell me why you want to quit',
+      'delete_account_reason_menu4_hint':
+          isKr() ? '탈퇴 이유를 알려주세요' : 'Please tell me why you want to quit',
 
       'media_info_title': isKr() ? '미디어 정보' : 'Media Information',
       'media_info_menu_title': isKr() ? '정보' : 'Information',
@@ -100,37 +104,57 @@ class Strings {
       'bottom_sheet_menu_display_show_name': isKr() ? '화면 이름 표시' : 'Display screen name',
 
       'tutorial_screen_add_new': isKr() ? 'TV를 추가해서 등록해주세요' : 'Add and register a new screen',
-      'tutorial_screen_enter_pin_code':
-          isKr() ? 'QR 코드를 스캔하거나\nPIN 번호를 입력해 주세요' : 'Scan the QR code or\nplease enter the PIN code',
-      'tutorial_screen_description1': isKr() ? 'TV의 On, Off 상태와 TV 화면에 연결된' : 'Through On and Off of the screen',
-      'tutorial_screen_description2': isKr() ? '시간표, 재생목록을 살펴볼 수 있습니다' : 'you can check the status of the screen',
-      'tutorial_screen_description3':
-          isKr() ? '자세히보기 아이콘을 눌러 [TV에 이름 표시]을 통해' : 'Display your name on the screen via the [More] icon',
+      'tutorial_screen_enter_pin_code': isKr()
+          ? 'QR 코드를 스캔하거나\nPIN 번호를 입력해 주세요'
+          : 'Scan the QR code or\nplease enter the PIN code',
+      'tutorial_screen_description1':
+          isKr() ? 'TV의 On, Off 상태와 TV 화면에 연결된' : 'Through On and Off of the screen',
+      'tutorial_screen_description2':
+          isKr() ? '시간표, 재생목록을 살펴볼 수 있습니다' : 'you can check the status of the screen',
+      'tutorial_screen_description3': isKr()
+          ? '자세히보기 아이콘을 눌러 [TV에 이름 표시]을 통해'
+          : 'Display your name on the screen via the [More] icon',
       'tutorial_screen_description4':
           isKr() ? 'TV 화면에 이름을 표시하거나 수정 및 삭제가 가능합니다' : 'or editing and deletion are possible',
 
       'tutorial_playlist_add_new': isKr() ? '재생목록을 추가해서 등록해주세요' : 'Add and register a new playlist',
-      'tutorial_playlist_description1': isKr() ? '재생목록의 제목을 입력해주세요' : 'Please write the title of the playlist',
+      'tutorial_playlist_description1':
+          isKr() ? '재생목록의 제목을 입력해주세요' : 'Please write the title of the playlist',
       'tutorial_playlist_description2':
           isKr() ? '옵션에서 TV 화면의 모습을 설정할 수 있습니다' : 'Set the playlist settings in the options',
-      'tutorial_playlist_description3': isKr() ? '콘텐츠를 추가 및 정렬하고 시간 설정이 가능합니다' : 'Add and sort content, set time',
+      'tutorial_playlist_description3':
+          isKr() ? '콘텐츠를 추가 및 정렬하고 시간 설정이 가능합니다' : 'Add and sort content, set time',
       'tutorial_playlist_description4':
           isKr() ? '연결할 재생목록의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
-      'tutorial_playlist_description5':
-          isKr() ? '켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!' : 'that is turned on. Screen and playlist connected!',
+      'tutorial_playlist_description5': isKr()
+          ? '켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!'
+          : 'that is turned on. Screen and playlist connected!',
 
       'tutorial_schedule_add_new': isKr() ? '시간표를 추가해서 등록해주세요' : 'Add and register a new schedule',
-      'tutorial_schedule_description1': isKr() ? '시간표의 제목을 입력해주세요' : 'Please write the title of the schedule',
+      'tutorial_schedule_description1':
+          isKr() ? '시간표의 제목을 입력해주세요' : 'Please write the title of the schedule',
       'tutorial_schedule_description2':
           isKr() ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을' : '1. Add playlist 2. Schedule by setting time',
       'tutorial_schedule_description3':
           isKr() ? '눌러 해당 재생목록을 삭제 할 수 있습니다.' : 'You can delete it using the trash can icon',
       'tutorial_schedule_description4':
           isKr() ? '연결할 시간표의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
-      'tutorial_schedule_description5':
-          isKr() ? '켜져있는 TV를 선택하면, TV와 시간표 연결 완료!' : 'that is turned on. Screen and schedule connected!',
+      'tutorial_schedule_description5': isKr()
+          ? '켜져있는 TV를 선택하면, TV와 시간표 연결 완료!'
+          : 'that is turned on. Screen and schedule connected!',
       'tutorial_schedule_description6':
           isKr() ? '[+] 버튼을 눌러 새 시간표를 만들 수 있습니다' : 'Press the [Plus] button to add a new schedule',
+
+      'tutorial_media_add_new': isKr() ? '이미지, 동영상 파일을 업로드해주세요' : 'Upload image and video files',
+      'tutorial_media_description1': isKr() ? '새 폴더 만들기' : 'Create a new folder',
+      'tutorial_media_description2':
+          isKr() ? '파일 또는 폴더를 선택한 뒤 이동 및 삭제가 가능합니다' : 'Select, move, and delete files and folders',
+      'tutorial_media_description3':
+          isKr() ? '[+] 버튼을 눌러 파일을 업로드할 수 있습니다' : 'Press the [Plus] button to upload file',
+      'tutorial_media_description4': isKr() ? '폴더 이름 수정' : 'Editing folder name',
+      'tutorial_media_description5': isKr() ? '폴더 삭제' : 'Delete folder',
+      'tutorial_media_description6':
+          isKr() ? '파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다' : 'Select a file to see detailed information',
 
       'blank_message_content_add_screen': isKr() ? 'TV 추가' : 'Add screen',
       'blank_message_content_upload_file': isKr() ? '파일 업로드' : 'Upload file',
@@ -164,13 +188,16 @@ class Strings {
           ? '이 레코드를 정말로 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다'
           : 'Do you really want to delete these records?\nThis process cannot be undone',
       'popup_apply_screen_title': isKr() ? '스크린에 적용하시겠습니까?' : 'Apply to screens?',
-      'popup_apply_screen_description':
-          isKr() ? '이것을 스크린에 직접 적용하시겠습니까?' : 'Are you sure you want to apply it directly to the screens?',
+      'popup_apply_screen_description': isKr()
+          ? '이것을 스크린에 직접 적용하시겠습니까?'
+          : 'Are you sure you want to apply it directly to the screens?',
       'popup_logout_description': isKr() ? '로그아웃 하시겠습니까?' : 'Are you sure you want to log out?',
-      'popup_change_duration_title': isKr() ? '미디어의 지속 시간을 입력하세요' : 'Please enter the duration\nof the media',
+      'popup_change_duration_title':
+          isKr() ? '미디어의 지속 시간을 입력하세요' : 'Please enter the duration\nof the media',
       'popup_delete_account_title': isKr() ? '계정 삭제 완료!' : 'Delete account completed!',
-      'popup_delete_account_description':
-          isKr() ? '계정 삭제가 성공적으로 완료되었습니다. 다음에 다시 만나요' : 'Account deletion completed successfully. See you next time',
+      'popup_delete_account_description': isKr()
+          ? '계정 삭제가 성공적으로 완료되었습니다. 다음에 다시 만나요'
+          : 'Account deletion completed successfully. See you next time',
 
       // Common Strings
       'common_email': isKr() ? '이메일' : 'Email',
@@ -224,13 +251,17 @@ class Strings {
       'filter_value_oldest_first': isKr() ? "오래된 순" : "Oldest First",
 
       // Messages
-      'message_server_error_5xx':
-          isKr() ? '데이터를 불러오는 중 오류가 발생했습니다.\n다시 사용해주세요' : 'An error occurred while loading data.\nPlease use it again',
-      'message_file_not_found_404': isKr() ? '파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요' : 'File not found.\nPlease use it again',
-      'message_file_not_allow_404':
-          isKr() ? '허용되지 않는 파일 확장자입니다.\n다시 사용해주세요' : 'File extension you do not allowed.\nPlease use it again',
-      'message_permission_error_photos':
-          isKr() ? '미디어 파일을 업로드하려면 사진 및 비디오 권한이 필요합니다' : 'You need photo and video permissions to upload media files',
+      'message_server_error_5xx': isKr()
+          ? '데이터를 불러오는 중 오류가 발생했습니다.\n다시 사용해주세요'
+          : 'An error occurred while loading data.\nPlease use it again',
+      'message_file_not_found_404':
+          isKr() ? '파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요' : 'File not found.\nPlease use it again',
+      'message_file_not_allow_404': isKr()
+          ? '허용되지 않는 파일 확장자입니다.\n다시 사용해주세요'
+          : 'File extension you do not allowed.\nPlease use it again',
+      'message_permission_error_photos': isKr()
+          ? '미디어 파일을 업로드하려면 사진 및 비디오 권한이 필요합니다'
+          : 'You need photo and video permissions to upload media files',
       'message_network_required': isKr() ? '네트워크 연결이 불안정합니다' : 'The network connection is unstable',
       'message_operation_timeout': isKr()
           ? '작업이 너무 지연되고 있습니다.\n잠시 후에 다시 시도해주세요'
@@ -241,18 +272,29 @@ class Strings {
       'message_temp_login_fail': isKr()
           ? '일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요'
           : 'A temporary failure has occurred.\nPlease use a different login method',
-      'message_time_setting_precede': isKr() ? '종료시간은 시작 시간보다 빠를수 없습니다' : 'End time cannot precede start time',
-      'message_time_setting_duplicated': isKr() ? '중복된 시간을 수정해주세요' : 'Please correct the duplicate time',
+      'message_time_setting_precede':
+          isKr() ? '종료시간은 시작 시간보다 빠를수 없습니다' : 'End time cannot precede start time',
+      'message_time_setting_duplicated':
+          isKr() ? '중복된 시간을 수정해주세요' : 'Please correct the duplicate time',
       'message_apply_screen_success': isKr() ? 'TV에 적용되었습니다' : 'Successfully applied to screens',
-      'message_register_screen_success': isKr() ? 'TV 등록에 성공했습니다' : 'Successfully added to the screens',
-      'message_remove_playlist_success': isKr() ? '재생목록 삭제에 성공했습니다' : 'Playlist deleted successfully',
-      'message_register_playlist_success': isKr() ? '재생목록 등록에 성공했습니다' : 'Playlist registered successfully',
-      'message_update_playlist_success': isKr() ? '재생목록 정보가 변경되었습니다' : 'Playlist information has been changed',
-      'message_add_media_in_playlist_success': isKr() ? '재생목록에 추가되었습니다' : 'Successfully Add Media to Playlist',
-      'message_remove_schedule_success': isKr() ? '시간표 삭제에 성공했습니다' : 'Schedule deleted successfully',
-      'message_register_schedule_success': isKr() ? '시간표 등록에 성공했습니다' : 'Schedule registered successfully',
-      'message_update_schedule_success': isKr() ? '시간표 정보가 변경되었습니다' : 'Schedule information has been changed',
-      'message_remove_media_success': isKr() ? '미디어 파일 삭제에 성공했습니다' : 'Media file deleted successfully',
+      'message_register_screen_success':
+          isKr() ? 'TV 등록에 성공했습니다' : 'Successfully added to the screens',
+      'message_remove_playlist_success':
+          isKr() ? '재생목록 삭제에 성공했습니다' : 'Playlist deleted successfully',
+      'message_register_playlist_success':
+          isKr() ? '재생목록 등록에 성공했습니다' : 'Playlist registered successfully',
+      'message_update_playlist_success':
+          isKr() ? '재생목록 정보가 변경되었습니다' : 'Playlist information has been changed',
+      'message_add_media_in_playlist_success':
+          isKr() ? '재생목록에 추가되었습니다' : 'Successfully Add Media to Playlist',
+      'message_remove_schedule_success':
+          isKr() ? '시간표 삭제에 성공했습니다' : 'Schedule deleted successfully',
+      'message_register_schedule_success':
+          isKr() ? '시간표 등록에 성공했습니다' : 'Schedule registered successfully',
+      'message_update_schedule_success':
+          isKr() ? '시간표 정보가 변경되었습니다' : 'Schedule information has been changed',
+      'message_remove_media_success':
+          isKr() ? '미디어 파일 삭제에 성공했습니다' : 'Media file deleted successfully',
       'message_send_event_name_show_success':
           isKr() ? '스크린에 이름을 표시하였습니다' : 'Successfully Send show name event to Screen',
     };
@@ -312,12 +354,14 @@ class Strings {
 
   String get createScheduleTitleInput => _localizedValue('create_schedule_title_input');
 
-  String get createScheduleDefaultPlaylistTitleBasic => _localizedValue('create_schedule_default_playlist_title_basic');
+  String get createScheduleDefaultPlaylistTitleBasic =>
+      _localizedValue('create_schedule_default_playlist_title_basic');
 
   String get createScheduleDefaultPlaylistTitleMorning =>
       _localizedValue('create_schedule_default_playlist_title_morning');
 
-  String get createScheduleDefaultPlaylistTitleLunch => _localizedValue('create_schedule_default_playlist_title_lunch');
+  String get createScheduleDefaultPlaylistTitleLunch =>
+      _localizedValue('create_schedule_default_playlist_title_lunch');
 
   String get createScheduleDefaultPlaylistTitleDinner =>
       _localizedValue('create_schedule_default_playlist_title_dinner');
@@ -366,7 +410,8 @@ class Strings {
 
   String get mediaInfoMenuInputTitle => _localizedValue('media_info_menu_input_title');
 
-  String get mediaInfoMenuInputFileNameHint => _localizedValue('media_info_menu_input_file_name_hint');
+  String get mediaInfoMenuInputFileNameHint =>
+      _localizedValue('media_info_menu_input_file_name_hint');
 
   String get mediaInfoMenuRegisterDate => _localizedValue('media_info_menu_register_date');
 
@@ -388,7 +433,8 @@ class Strings {
 
   String get bottomSheetPinCodeDescription => _localizedValue('bottom_sheet_pin_code_description');
 
-  String get bottomSheetMenuDisplayShowName => _localizedValue('bottom_sheet_menu_display_show_name');
+  String get bottomSheetMenuDisplayShowName =>
+      _localizedValue('bottom_sheet_menu_display_show_name');
 
   String get tutorialScreenAddNew => _localizedValue('tutorial_screen_add_new');
 
@@ -428,27 +474,48 @@ class Strings {
 
   String get tutorialScheduleDescription6 => _localizedValue('tutorial_schedule_description6');
 
+  String get tutorialMediaAddNew => _localizedValue('tutorial_media_add_new');
+
+  String get tutorialMediaDescription1 => _localizedValue('tutorial_media_description1');
+
+  String get tutorialMediaDescription2 => _localizedValue('tutorial_media_description2');
+
+  String get tutorialMediaDescription3 => _localizedValue('tutorial_media_description3');
+
+  String get tutorialMediaDescription4 => _localizedValue('tutorial_media_description4');
+
+  String get tutorialMediaDescription5 => _localizedValue('tutorial_media_description5');
+
+  String get tutorialMediaDescription6 => _localizedValue('tutorial_media_description6');
+
   String get blankMessageContentAddScreen => _localizedValue('blank_message_content_add_screen');
 
   String get blankMessageContentAddContent => _localizedValue('blank_message_content_add_content');
 
   String get blankMessageContentAddCanvas => _localizedValue('blank_message_content_add_canvas');
 
-  String get blankMessageContentNewSchedule => _localizedValue('blank_message_content_new_schedule');
+  String get blankMessageContentNewSchedule =>
+      _localizedValue('blank_message_content_new_schedule');
 
-  String get blankMessageContentNewPlaylist => _localizedValue('blank_message_content_new_playlist');
+  String get blankMessageContentNewPlaylist =>
+      _localizedValue('blank_message_content_new_playlist');
 
   String get blankMessageContentUploadFile => _localizedValue('blank_message_content_upload_file');
 
-  String get blankMessageDescriptionAddScreen => _localizedValue('blank_message_description_add_screen');
+  String get blankMessageDescriptionAddScreen =>
+      _localizedValue('blank_message_description_add_screen');
 
-  String get blankMessageDescriptionAddCanvas => _localizedValue('blank_message_description_add_canvas');
+  String get blankMessageDescriptionAddCanvas =>
+      _localizedValue('blank_message_description_add_canvas');
 
-  String get blankMessageDescriptionNewSchedule => _localizedValue('blank_message_description_new_schedule');
+  String get blankMessageDescriptionNewSchedule =>
+      _localizedValue('blank_message_description_new_schedule');
 
-  String get blankMessageDescriptionNewPlaylist => _localizedValue('blank_message_description_new_playlist');
+  String get blankMessageDescriptionNewPlaylist =>
+      _localizedValue('blank_message_description_new_playlist');
 
-  String get blankMessageDescriptionUploadFile => _localizedValue('blank_message_description_upload_file');
+  String get blankMessageDescriptionUploadFile =>
+      _localizedValue('blank_message_description_upload_file');
 
   String get popupRenameTitle => _localizedValue('popup_rename_title');
 
@@ -602,7 +669,8 @@ class Strings {
 
   String get messageUpdatePlaylistSuccess => _localizedValue('message_update_playlist_success');
 
-  String get messageAddMediaInPlaylistSuccess => _localizedValue('message_add_media_in_playlist_success');
+  String get messageAddMediaInPlaylistSuccess =>
+      _localizedValue('message_add_media_in_playlist_success');
 
   String get messageRemoveScheduleSuccess => _localizedValue('message_remove_schedule_success');
 
@@ -612,7 +680,8 @@ class Strings {
 
   String get messageRemoveMediaSuccess => _localizedValue('message_remove_media_success');
 
-  String get messageSendEventNameShowSuccess => _localizedValue('message_send_event_name_show_success');
+  String get messageSendEventNameShowSuccess =>
+      _localizedValue('message_send_event_name_show_success');
 
   String select_media_file_title(int count) => isKr() ? "파일 선택 ($count)" : "Select file ($count)";
 
@@ -626,5 +695,6 @@ class Strings {
 
   String type_media_size(String type, String size) => "$type - $size";
 
-  String message_move_media_success(String folder) => isKr() ? "파일이 $folder로 이동되었습니다" : "File moved to $folder";
+  String message_move_media_success(String folder) =>
+      isKr() ? "파일이 $folder로 이동되었습니다" : "File moved to $folder";
 }

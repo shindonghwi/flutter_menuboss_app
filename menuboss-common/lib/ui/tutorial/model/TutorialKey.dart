@@ -13,4 +13,9 @@ enum TutorialKey {
   ScheduleRegisterKey, // 스케줄 등록과정 튜토리얼
   ScheduleMakeKey, // 스케줄 만들기 튜토리얼
   ScheduleAddedKey, // 추가된 스케줄 튜토리얼
+
+  // 스케줄
+  MediaRegisterKey, // 미디어 등록과정 튜토리얼
+  MediaInFolderKey, // 미디어 폴더 내부 튜토리얼
+  MediaAddedKey, // 추가된 미디어 튜토리얼
 }
