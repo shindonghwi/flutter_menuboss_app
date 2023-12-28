@@ -40,7 +40,7 @@ class RemoteAuthApi {
 
       final redirectURL = Environment.buildType == BuildType.dev
           ? "https://dev-app-api.themenuboss.com/v1/external/apple/callback"
-          : "https://dev-app-api.themenuboss.com/v1/external/apple/callback";
+          : "https://app-api.themenuboss.com/v1/external/apple/callback";
       final clientID = packageInfo.packageName.split(".").reversed.join(".");
 
       debugPrint("redirectURL: $redirectURL");
@@ -74,7 +74,8 @@ class RemoteAuthApi {
         if (user != null) {
           return ApiResponse<SocialLoginModel>(
             status: 200,
-            message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+            message:
+                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
             data: SocialLoginModel(
               LoginPlatform.Apple,
               appleIdCredential.identityToken,
@@ -83,7 +84,8 @@ class RemoteAuthApi {
         } else {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message:
+                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
             data: null,
           );
         }
@@ -101,7 +103,8 @@ class RemoteAuthApi {
           "doAppleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message:
+            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
         data: null,
       );
     }
@@ -117,7 +120,8 @@ class RemoteAuthApi {
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message:
+                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
             data: null,
           );
         } else {
@@ -139,7 +143,8 @@ class RemoteAuthApi {
               (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
-                  message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+                  message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
+                      .messageApiSuccess,
                   data: SocialLoginModel(
                     LoginPlatform.Google,
                     value.idToken,
@@ -150,7 +155,8 @@ class RemoteAuthApi {
           } else {
             return ApiResponse<SocialLoginModel>(
               status: 404,
-              message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+              message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
+                  .messageNotFoundUser,
               data: null,
             );
           }
@@ -160,7 +166,8 @@ class RemoteAuthApi {
             "doGoogleLogin: 500 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
         return ApiResponse<SocialLoginModel>(
           status: 500,
-          message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
+          message:
+              Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
           data: null,
         );
       }
@@ -169,7 +176,8 @@ class RemoteAuthApi {
           "doGoogleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message:
+            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
         data: null,
       );
     }

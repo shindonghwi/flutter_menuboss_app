@@ -66,18 +66,16 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     }
   }
 
-  void doAppleLogin() async {
+  Future<RequestMeSocialJoinModel?> doAppleLogin() async {
     state = Loading();
     final result = await _postAppleSignInUseCase.call();
     if (result.status == 200) {
       final accessToken = result.data?.accessToken;
-      if (!CollectionUtil.isNullEmptyFromString(accessToken)) {
-        await saveAccessToken(accessToken.toString());
-      }
-      requestMeInfo();
+      return await proceedSocialLogin(LoginPlatform.Apple, accessToken);
     } else {
       state = Failure(result.message);
     }
+    return Future(() => null);
   }
 
   Future<RequestMeSocialJoinModel?> doGoogleLogin() async {

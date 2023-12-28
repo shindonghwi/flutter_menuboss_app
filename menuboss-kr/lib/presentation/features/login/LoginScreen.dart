@@ -187,13 +187,11 @@ class _SocialLoginButtons extends HookConsumerWidget {
               borderRadius: 8,
               onPressed: () async {
                 RequestMeSocialJoinModel? socialJoinModel = await loginManager.doGoogleLogin();
-                if (socialJoinModel != null){
+                if (socialJoinModel != null) {
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(
-                        RoutingScreen.SignUp.route,
-                        parameter: socialJoinModel
-                    ),
+                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
+                        parameter: socialJoinModel),
                   );
                 }
               },
@@ -206,7 +204,16 @@ class _SocialLoginButtons extends HookConsumerWidget {
             const SizedBox(width: 32),
             Clickable(
               borderRadius: 8,
-              onPressed: () => loginManager.doAppleLogin(),
+              onPressed: () async {
+                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doAppleLogin();
+                if (socialJoinModel != null) {
+                  Navigator.push(
+                    context,
+                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
+                        parameter: socialJoinModel),
+                  );
+                }
+              },
               child: const LoadSvg(
                 path: "assets/imgs/icon_apple.svg",
                 width: 64,
