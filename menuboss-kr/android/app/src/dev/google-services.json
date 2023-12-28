@@ -58,14 +58,6 @@
       },
       "oauth_client": [
         {
-          "client_id": "922858947237-umv9gm2656l2kcj7gatp95meje8cn5ku.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.orot.menuboss.kr.dev",
-            "certificate_hash": "c089b29023d6a7dbebb21e145cbef535c94f9716"
-          }
-        },
-        {
           "client_id": "922858947237-dh2mjsan4jts4otjr6h97ro7m3ufj4l1.apps.googleusercontent.com",
           "client_type": 3
         }

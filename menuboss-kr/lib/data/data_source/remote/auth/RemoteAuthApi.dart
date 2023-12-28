@@ -112,11 +112,8 @@ class RemoteAuthApi {
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
     if (await Service.isNetworkAvailable()) {
       try {
-        debugPrint("doGoogleLogin: asdsaddsadsdsa");
         // 구글 로그인 후 유저정보를 받아온다.
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-        debugPrint("doGoogleLogin googleUser: $googleUser");
-
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
@@ -130,7 +127,6 @@ class RemoteAuthApi {
             accessToken: googleAuth.accessToken,
             idToken: googleAuth.idToken,
           );
-
           debugPrint("doGoogleLogin accessToken: ${googleAuth.accessToken}");
           debugPrint("doGoogleLogin idToken: ${googleAuth.idToken}");
 
@@ -138,12 +134,9 @@ class RemoteAuthApi {
           final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
           final User? user = userCredential.user;
 
-          debugPrint("doGoogleLogin userCredential: $userCredential");
-          debugPrint("doGoogleLogin user: $user");
-
           if (user != null) {
             return await googleUser.authentication.then(
-              (value) {
+                  (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
                   message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
@@ -204,7 +197,7 @@ class RemoteAuthApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-          (json) => ResponseLoginModel.fromJson(json),
+              (json) => ResponseLoginModel.fromJson(json),
         );
       }
     } catch (e) {
@@ -236,7 +229,7 @@ class RemoteAuthApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-          (json) => ResponseLoginModel.fromJson(json),
+              (json) => ResponseLoginModel.fromJson(json),
         );
       }
     } catch (e) {
@@ -265,7 +258,7 @@ class RemoteAuthApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-          (json) => ResponseLoginModel.fromJson(json),
+              (json) => ResponseLoginModel.fromJson(json),
         );
       }
     } catch (e) {

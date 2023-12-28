@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
@@ -85,9 +86,9 @@ class LoginScreen extends HookConsumerWidget {
                       const SizedBox(height: 32),
                       _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
                       const SizedBox(height: 24),
-                      const _SignUpButton()
-                      // const _SocialLoginButtons(),
-                      // const SizedBox(height: 40),
+                      const _SignUpButton(),
+                      const SizedBox(height: 28),
+                      const _SocialLoginButtons(),
                     ],
                   ),
                 ),
@@ -153,7 +154,12 @@ class _SocialLoginButtons extends HookConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray300)),
+              Flexible(
+                child: Container(
+                  height: 1,
+                  color: getColorScheme(context).colorGray300,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
@@ -164,18 +170,34 @@ class _SocialLoginButtons extends HookConsumerWidget {
                   textAlign: TextAlign.center,
                 ),
               ),
-              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray300)),
+              Flexible(
+                child: Container(
+                  height: 1,
+                  color: getColorScheme(context).colorGray300,
+                ),
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Clickable(
               borderRadius: 8,
-              onPressed: () => loginManager.doGoogleLogin(),
-              child: LoadSvg(
+              onPressed: () async {
+                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doGoogleLogin();
+                if (socialJoinModel != null){
+                  Navigator.push(
+                    context,
+                    nextSlideHorizontalScreen(
+                        RoutingScreen.SignUp.route,
+                        parameter: socialJoinModel
+                    ),
+                  );
+                }
+              },
+              child: const LoadSvg(
                 path: "assets/imgs/icon_google.svg",
                 width: 64,
                 height: 64,
@@ -185,7 +207,7 @@ class _SocialLoginButtons extends HookConsumerWidget {
             Clickable(
               borderRadius: 8,
               onPressed: () => loginManager.doAppleLogin(),
-              child: LoadSvg(
+              child: const LoadSvg(
                 path: "assets/imgs/icon_apple.svg",
                 width: 64,
                 height: 64,

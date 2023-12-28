@@ -4,6 +4,7 @@ import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/auth/RequestSocialLoginModel.dart';
 import 'package:menuboss/data/models/auth/ResponseLoginModel.dart';
+import 'package:menuboss/domain/models/auth/LoginPlatform.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
 
 import '../../../../domain/repositories/remote/auth/RemoteAuthRepository.dart';
@@ -16,7 +17,7 @@ class RemoteValidationRepositoryImpl implements RemoteValidationRepository {
   final RemoteValidationApi _remoteValidationApi = GetIt.instance<RemoteValidationApi>();
 
   @override
-  Future<ApiResponse<void>> verifySocialLogin(String type, String accessToken) {
-    return _remoteValidationApi.postSocialVerify(type, accessToken);
+  Future<ApiResponse<void>> verifySocialLogin(LoginPlatform platform, String accessToken) {
+    return _remoteValidationApi.postSocialVerify(platform, accessToken);
   }
 }

@@ -112,11 +112,8 @@ class RemoteAuthApi {
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
     if (await Service.isNetworkAvailable()) {
       try {
-        debugPrint("doGoogleLogin: asdsaddsadsdsa");
         // 구글 로그인 후 유저정보를 받아온다.
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-        debugPrint("doGoogleLogin googleUser: $googleUser");
-
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
@@ -130,16 +127,12 @@ class RemoteAuthApi {
             accessToken: googleAuth.accessToken,
             idToken: googleAuth.idToken,
           );
-
           debugPrint("doGoogleLogin accessToken: ${googleAuth.accessToken}");
           debugPrint("doGoogleLogin idToken: ${googleAuth.idToken}");
 
           // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
           final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
           final User? user = userCredential.user;
-
-          debugPrint("doGoogleLogin userCredential: $userCredential");
-          debugPrint("doGoogleLogin user: $user");
 
           if (user != null) {
             return await googleUser.authentication.then(

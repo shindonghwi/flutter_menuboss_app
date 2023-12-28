@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
+import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
 import 'package:menuboss/data/models/me/ResponseMeUpdateProfile.dart';
 
@@ -26,6 +27,10 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   @override
   Future<ApiResponse<ResponseMeAuthorization>> postJoin(RequestMeJoinModel model) {
     return remoteMeApi.postJoin(model);
+  }
+  @override
+  Future<ApiResponse<ResponseMeAuthorization>> postSocialJoin(RequestMeSocialJoinModel model) {
+    return remoteMeApi.postSocialJoin(model);
   }
 
   @override

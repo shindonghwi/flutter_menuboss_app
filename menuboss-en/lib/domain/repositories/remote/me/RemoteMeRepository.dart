@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
+import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
 import 'package:menuboss/data/models/me/ResponseMeUpdateProfile.dart';
 
@@ -16,6 +17,9 @@ abstract class RemoteMeRepository {
 
   /// 이메일 회원가입
   Future<ApiResponse<ResponseMeAuthorization>> postJoin(RequestMeJoinModel model);
+
+  /// 소셜 회원가입
+  Future<ApiResponse<ResponseMeAuthorization>> postSocialJoin(RequestMeSocialJoinModel model);
 
   /// 계정 삭제
   Future<ApiResponse<void>> postMeLeave(String? reason);

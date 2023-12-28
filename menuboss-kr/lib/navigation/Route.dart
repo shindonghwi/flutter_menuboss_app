@@ -26,6 +26,8 @@ import 'package:menuboss/presentation/features/select/playlist/SelectPlaylistScr
 import 'package:menuboss/presentation/features/signup/SignUpScreen.dart';
 import 'package:menuboss/presentation/features/splash/SplashScreen.dart';
 
+import '../data/models/me/RequestMeSocialJoinModel.dart';
+
 enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
   Login(route: "/login"), // 로그인
@@ -90,7 +92,8 @@ enum RoutingScreen {
     } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
     }else if (route == RoutingScreen.SignUp.route) {
-      return const SignUpScreen();
+      RequestMeSocialJoinModel? socialJoinModel = parameter;
+      return SignUpScreen(socialJoinModel: socialJoinModel);
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
     } else if (route == RoutingScreen.ScanQR.route) {

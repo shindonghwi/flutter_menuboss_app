@@ -30,20 +30,10 @@
 				<key>CFBundleTypeRole</key>
 				<string>Editor</string>
 				<key>CFBundleURLName</key>
-				<string>com.orot.menuboss</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>menuboss</string>
-				</array>
-			</dict>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLName</key>
 				<string>com.orot.menuboss.dev</string>
 				<key>CFBundleURLSchemes</key>
 				<array>
-					<string>com.googleusercontent.apps.845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f</string>
+					<string>com.googleusercontent.apps.922858947237-5l6poa73hhachqdijn2k59h1v2rb7r7b</string>
 				</array>
 			</dict>
 			<dict>
@@ -54,16 +44,6 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>com.googleusercontent.apps.845007593508-mpc74g4d1d5mf9hgeqd333tqqq05agku</string>
-				</array>
-			</dict>
-			<dict>
-				<key>CFBundleTypeRole</key>
-				<string>Editor</string>
-				<key>CFBundleURLName</key>
-				<string>com.orot.menuboss.dev</string>
-				<key>CFBundleURLSchemes</key>
-				<array>
-					<string>menuboss</string>
 				</array>
 			</dict>
 		</array>
