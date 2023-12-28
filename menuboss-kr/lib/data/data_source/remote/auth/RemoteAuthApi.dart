@@ -14,6 +14,7 @@ import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
 import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -62,22 +63,11 @@ class RemoteAuthApi {
           nonce: nonce,
         );
 
-        final oAuthProvider = OAuthProvider('apple.com');
-        final credential = oAuthProvider.credential(
-          idToken: appleIdCredential.identityToken,
-          accessToken: appleIdCredential.authorizationCode,
-          rawNonce: rawNonce,
-        );
-
-        final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-
-        final User? user = userCredential.user;
-
-        if (user != null) {
+        if (!CollectionUtil.isNullEmptyFromString(appleIdCredential.identityToken)) {
           return ApiResponse<SocialLoginModel>(
             status: 200,
             message:
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
             data: SocialLoginModel(
               LoginPlatform.Apple,
               appleIdCredential.identityToken,
@@ -87,7 +77,7 @@ class RemoteAuthApi {
           return ApiResponse<SocialLoginModel>(
             status: 404,
             message:
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
             data: null,
           );
         }
