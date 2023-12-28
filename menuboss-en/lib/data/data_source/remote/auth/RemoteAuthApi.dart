@@ -113,6 +113,7 @@ class RemoteAuthApi {
   /// @feature: 구글 로그인
   /// @author: 2023/09/11 6:31 PM donghwishin
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
+    await GoogleSignIn().signOut();
     if (await Service.isNetworkAvailable()) {
       try {
         // 구글 로그인 후 유저정보를 받아온다.
