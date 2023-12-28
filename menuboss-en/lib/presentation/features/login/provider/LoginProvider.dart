@@ -27,6 +27,8 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   PostEmailLoginUseCase get _postEmailLoginInUseCase => GetIt.instance<PostEmailLoginUseCase>();
 
+  PostSocialLoginInUseCase get _postSocialLoginInUseCase => GetIt.instance<PostSocialLoginInUseCase>();
+
   PostValidationSocialLoginUseCase get _postValidationSocialLoginInUseCase =>
       GetIt.instance<PostValidationSocialLoginUseCase>();
 
@@ -97,11 +99,20 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     );
 
     if (res.status == 200) {
-      // 로그인 가능
-      if (!CollectionUtil.isNullEmptyFromString(token)) {
-        await saveAccessToken(token.toString());
+      final result = await _postSocialLoginInUseCase.call(
+        platform: platform,
+        accessToken: token ?? "",
+      );
+
+      if (result.status == 200) {
+        final accessToken = result.data?.accessToken;
+        if (!CollectionUtil.isNullEmptyFromString(accessToken)) {
+          await saveAccessToken(accessToken.toString());
+        }
+        requestMeInfo();
+      } else {
+        state = Failure(result.message);
       }
-      requestMeInfo();
     } else if (res.status == 404) {
       // 회원가입 필요
       state = Idle();

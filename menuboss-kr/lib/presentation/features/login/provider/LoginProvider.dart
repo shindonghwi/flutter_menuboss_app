@@ -11,12 +11,12 @@ import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.d
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/auth/PostKakaoSignInUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/validation/PostValidationSocialLoginUseCase.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
-
-import '../../../../domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 
 final loginProvider = StateNotifierProvider<LoginUiStateNotifier, UIState<String?>>(
       (_) => LoginUiStateNotifier(),
@@ -27,12 +27,14 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   PostEmailLoginUseCase get _postEmailLoginInUseCase => GetIt.instance<PostEmailLoginUseCase>();
 
+  PostSocialLoginInUseCase get _postSocialLoginInUseCase => GetIt.instance<PostSocialLoginInUseCase>();
+
   PostValidationSocialLoginUseCase get _postValidationSocialLoginInUseCase =>
       GetIt.instance<PostValidationSocialLoginUseCase>();
 
   PostAppleSignInUseCase get _postAppleSignInUseCase => GetIt.instance<PostAppleSignInUseCase>();
 
-  PostGoogleSignInUseCase get _postGoogleSignInUseCase => GetIt.instance<PostGoogleSignInUseCase>();
+  PostKakaoSignInUseCase get _postKakaoSignInUseCase => GetIt.instance<PostKakaoSignInUseCase>();
 
   PostLoginAccessTokenUseCase get _postLoginAccessToken =>
       GetIt.instance<PostLoginAccessTokenUseCase>();
@@ -78,12 +80,12 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     return Future(() => null);
   }
 
-  Future<RequestMeSocialJoinModel?> doGoogleLogin() async {
+  Future<RequestMeSocialJoinModel?> doKakaoLogin() async {
     state = Loading();
-    final result = await _postGoogleSignInUseCase.call();
+    final result = await _postKakaoSignInUseCase.call();
     if (result.status == 200) {
       final accessToken = result.data?.accessToken;
-      return await proceedSocialLogin(LoginPlatform.Google, accessToken);
+      return await proceedSocialLogin(LoginPlatform.Kakao, accessToken);
     } else {
       state = Failure(result.message);
     }
@@ -97,11 +99,20 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     );
 
     if (res.status == 200) {
-      // 로그인 가능
-      if (!CollectionUtil.isNullEmptyFromString(token)) {
-        await saveAccessToken(token.toString());
+      final result = await _postSocialLoginInUseCase.call(
+        platform: platform,
+        accessToken: token ?? "",
+      );
+
+      if (result.status == 200) {
+        final accessToken = result.data?.accessToken;
+        if (!CollectionUtil.isNullEmptyFromString(accessToken)) {
+          await saveAccessToken(accessToken.toString());
+        }
+        requestMeInfo();
+      } else {
+        state = Failure(result.message);
       }
-      requestMeInfo();
     } else if (res.status == 404) {
       // 회원가입 필요
       state = Idle();

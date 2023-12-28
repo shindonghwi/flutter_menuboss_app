@@ -186,7 +186,7 @@ class _SocialLoginButtons extends HookConsumerWidget {
             Clickable(
               borderRadius: 8,
               onPressed: () async {
-                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doGoogleLogin();
+                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doKakaoLogin();
                 if (socialJoinModel != null) {
                   Navigator.push(
                     context,
@@ -196,7 +196,7 @@ class _SocialLoginButtons extends HookConsumerWidget {
                 }
               },
               child: const LoadSvg(
-                path: "assets/imgs/icon_google.svg",
+                path: "assets/imgs/icon_kakao.svg",
                 width: 64,
                 height: 64,
               ),

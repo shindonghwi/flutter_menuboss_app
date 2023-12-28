@@ -36,6 +36,7 @@ import 'package:menuboss/domain/usecases/local/app/PostMediaFilterTypeUseCase.da
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/auth/PostKakaoSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/canvas/GetCanvasesUseCase.dart';
@@ -88,6 +89,7 @@ void initServiceLocator() {
   // auth
   GetIt.instance.registerLazySingleton<PostAppleSignInUseCase>(() => PostAppleSignInUseCase());
   GetIt.instance.registerLazySingleton<PostGoogleSignInUseCase>(() => PostGoogleSignInUseCase());
+  GetIt.instance.registerLazySingleton<PostKakaoSignInUseCase>(() => PostKakaoSignInUseCase());
   GetIt.instance.registerLazySingleton<PostSocialLoginInUseCase>(() => PostSocialLoginInUseCase());
   GetIt.instance.registerLazySingleton<PostEmailLoginUseCase>(() => PostEmailLoginUseCase());
   GetIt.instance.registerLazySingleton<PostLogoutUseCase>(() => PostLogoutUseCase());
