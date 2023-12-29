@@ -42,8 +42,8 @@ class RemoteAuthApi {
       final packageInfo = await PackageInfo.fromPlatform();
 
       final redirectURL = Environment.buildType == BuildType.dev
-          ? "https://dev-app-api.themenuboss.com/v1/external/apple/callback"
-          : "https://app-api.themenuboss.com/v1/external/apple/callback";
+          ? "https://dev-app-api.menuboss.kr/v1/external/apple/callback"
+          : "https://app-api.menuboss.kr/v1/external/apple/callback";
       final clientID = packageInfo.packageName.split(".").reversed.join(".");
 
       debugPrint("redirectURL: $redirectURL");
