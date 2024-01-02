@@ -9,7 +9,9 @@ import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceAdded.dart';
 import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister.dart';
 import 'package:menuboss_common/ui/tutorial/media/TutorialMediaRegister.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
+import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistAdded.dart';
 import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistRegister.dart';
+import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleAdded.dart';
 import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleRegister.dart';
 
 class TutorialView extends HookWidget {
@@ -75,9 +77,7 @@ class TutorialView extends HookWidget {
             }
             break;
           case TutorialKey.ScreenAdded:
-            debugPrint("TutorialKey.ScreenAdded");
             bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
-            debugPrint("TutorialKey.hasViewed $hasViewed");
             if (!hasViewed) {
               return TutorialDeviceAdded(
                 onPressed: () {
@@ -88,10 +88,26 @@ class TutorialView extends HookWidget {
             }
             break;
           case TutorialKey.PlaylistAddedKey:
-            // TODO: Handle this case.
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
+            if (!hasViewed) {
+              return TutorialPlaylistAdded(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
+                },
+              );
+            }
             break;
           case TutorialKey.ScheduleAddedKey:
-            // TODO: Handle this case.
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
+            if (!hasViewed) {
+              return TutorialScheduleAdded(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
+                },
+              );
+            }
             break;
           case TutorialKey.MediaAddedKey:
             bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
