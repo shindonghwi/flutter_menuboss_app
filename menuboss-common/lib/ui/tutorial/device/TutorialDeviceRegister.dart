@@ -31,34 +31,34 @@ class TutorialDeviceRegister extends HookWidget {
         SafeArea(
           child: Clickable(
             onPressed: () => onPressed.call(),
-            child: Stack(
-              children: [
-                Container(
-                  margin: EdgeInsets.only(
-                    top: isKr
-                        ? Platform.isIOS
-                            ? 12
-                            : 14
-                        : 14,
-                  ),
-                  child: Center(
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const SizedBox(
-                          width: 60,
-                          height: 60,
-                        ),
-                        const SizedBox(height: 12),
-                        Text(
-                          "\n",
-                          style: getTextTheme(context).b3m.copyWith(
-                                color: getColorScheme(context).colorGray400,
-                              ),
-                          textAlign: TextAlign.center,
-                        ),
-                        IgnorePointer(
-                          child: Padding(
+            child: IgnorePointer(
+              child: Stack(
+                children: [
+                  Container(
+                    margin: EdgeInsets.only(
+                      top: isKr
+                          ? Platform.isIOS
+                              ? 12
+                              : 14
+                          : 14,
+                    ),
+                    child: Center(
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          const SizedBox(
+                            width: 60,
+                            height: 60,
+                          ),
+                          const SizedBox(height: 12),
+                          Text(
+                            "\n",
+                            style: getTextTheme(context).b3m.copyWith(
+                                  color: getColorScheme(context).colorGray400,
+                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Padding(
                             padding: const EdgeInsets.only(top: 24),
                             child: Stack(
                               children: [
@@ -102,34 +102,34 @@ class TutorialDeviceRegister extends HookWidget {
                               ],
                             ),
                           ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: Text(
-                            Strings.of(context).tutorialScreenAddNew,
-                            style: getTextTheme(context).b3m.copyWith(
-                                  color: getColorScheme(context).white,
-                                ),
-                            textAlign: TextAlign.center,
+                          Padding(
+                            padding: const EdgeInsets.only(top: 12),
+                            child: Text(
+                              Strings.of(context).tutorialScreenAddNew,
+                              style: getTextTheme(context).b3m.copyWith(
+                                    color: getColorScheme(context).white,
+                                  ),
+                              textAlign: TextAlign.center,
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    height: 72,
-                    child: LoadSvg(
-                      path: "assets/imgs/icon_tutorial_close.svg",
-                      width: 36,
-                      height: 36,
-                      color: getColorScheme(context).white,
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      height: 72,
+                      child: LoadSvg(
+                        path: "assets/imgs/icon_tutorial_close.svg",
+                        width: 36,
+                        height: 36,
+                        color: getColorScheme(context).white,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),

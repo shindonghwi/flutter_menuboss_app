@@ -138,7 +138,7 @@ class Strings {
       'tutorial_schedule_description2':
           isKr() ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을' : '1. Add playlist 2. Schedule by setting time',
       'tutorial_schedule_description3':
-          isKr() ? '눌러 해당 재생목록을 삭제 할 수 있습니다.' : 'You can delete it using the trash can icon',
+          isKr() ? '눌러 해당 재생목록을 삭제 할 수 있습니다' : 'You can delete it using the trash can icon',
       'tutorial_schedule_description4':
           isKr() ? '연결할 시간표의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
       'tutorial_schedule_description5': isKr()

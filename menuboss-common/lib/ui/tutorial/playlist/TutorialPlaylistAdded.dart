@@ -39,11 +39,13 @@ class TutorialPlaylistAdded extends HookWidget {
         SafeArea(
           child: Clickable(
             onPressed: () => onPressed.call(),
-            child: Stack(
-              children: [
-                _EnableContents(isKr: isKr),
-                const _BottomContent(),
-              ],
+            child: IgnorePointer(
+              child: Stack(
+                children: [
+                  _EnableContents(isKr: isKr),
+                  const _BottomContent(),
+                ],
+              ),
             ),
           ),
         ),
@@ -134,12 +136,10 @@ class _EnableContents extends StatelessWidget {
                     ],
                   ),
                 ),
-                IgnorePointer(
-                  child: PrimaryLineButton.smallRound100(
-                    content: Strings.of(context).commonConnectScreen,
-                    isActivated: true,
-                    onPressed: () => null,
-                  ),
+                PrimaryLineButton.smallRound100(
+                  content: Strings.of(context).commonConnectScreen,
+                  isActivated: true,
+                  onPressed: () => null,
                 )
               ],
             ),
@@ -275,10 +275,8 @@ class _BottomContent extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: IgnorePointer(
-                          child: FloatingPlusButton(
-                            onPressed: () {},
-                          ),
+                        child: FloatingPlusButton(
+                          onPressed: () {},
                         ),
                       )
                     ],

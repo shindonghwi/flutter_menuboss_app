@@ -32,11 +32,13 @@ class TutorialMediaAdded extends HookWidget {
         SafeArea(
           child: Clickable(
             onPressed: () => onPressed.call(),
-            child: const Stack(
-              children: [
-                _TopContent(),
-                _BottomContent(),
-              ],
+            child: const IgnorePointer(
+              child: Stack(
+                children: [
+                  _TopContent(),
+                  _BottomContent(),
+                ],
+              ),
             ),
           ),
         ),
@@ -269,10 +271,8 @@ class _BottomContent extends StatelessWidget {
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
-                        child: IgnorePointer(
-                          child: FloatingPlusButton(
-                            onPressed: () {},
-                          ),
+                        child: FloatingPlusButton(
+                          onPressed: () {},
                         ),
                       )
                     ],

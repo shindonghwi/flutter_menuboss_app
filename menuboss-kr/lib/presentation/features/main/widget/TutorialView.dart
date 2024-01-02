@@ -11,8 +11,10 @@ import 'package:menuboss_common/ui/tutorial/media/TutorialMediaAdded.dart';
 import 'package:menuboss_common/ui/tutorial/media/TutorialMediaRegister.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistAdded.dart';
+import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistMake.dart';
 import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistRegister.dart';
 import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleAdded.dart';
+import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleMake.dart';
 import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleRegister.dart';
 
 class TutorialView extends HookWidget {
@@ -44,6 +46,17 @@ class TutorialView extends HookWidget {
               );
             }
             break;
+          case TutorialKey.ScreenAdded:
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
+            if (!hasViewed) {
+              return TutorialDeviceAdded(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
+                },
+              );
+            }
+            break;
           case TutorialKey.PlaylistRegisterKey:
             bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistRegisterKey);
             if (!hasViewed) {
@@ -51,41 +64,6 @@ class TutorialView extends HookWidget {
                 onPressed: () {
                   onTutorialClosed.call();
                   postTutorialViewedUseCase.call(TutorialKey.PlaylistRegisterKey);
-                },
-              );
-            }
-            break;
-          case TutorialKey.ScheduleRegisterKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleRegisterKey);
-            if (!hasViewed) {
-              return TutorialScheduleRegister(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.ScheduleRegisterKey);
-                },
-              );
-            }
-            break;
-          case TutorialKey.MediaRegisterKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaRegisterKey);
-            if (!hasViewed) {
-              return TutorialMediaRegister(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.MediaRegisterKey);
-                },
-              );
-            }
-            break;
-          case TutorialKey.ScreenAdded:
-            debugPrint("TutorialKey.ScreenAdded");
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
-            debugPrint("TutorialKey.hasViewed $hasViewed");
-            if (!hasViewed) {
-              return TutorialDeviceAdded(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
                 },
               );
             }
@@ -101,6 +79,28 @@ class TutorialView extends HookWidget {
               );
             }
             break;
+          case TutorialKey.PlaylistMakeKey:
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistMakeKey);
+            if (!hasViewed) {
+              return TutorialPlaylistMake(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.PlaylistMakeKey);
+                },
+              );
+            }
+            break;
+          case TutorialKey.ScheduleRegisterKey:
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleRegisterKey);
+            if (!hasViewed) {
+              return TutorialScheduleRegister(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.ScheduleRegisterKey);
+                },
+              );
+            }
+            break;
           case TutorialKey.ScheduleAddedKey:
             bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
             if (!hasViewed) {
@@ -108,6 +108,29 @@ class TutorialView extends HookWidget {
                 onPressed: () {
                   onTutorialClosed.call();
                   postTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
+                },
+              );
+            }
+            break;
+
+          case TutorialKey.ScheduleMakeKey:
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleMakeKey);
+            if (!hasViewed) {
+              return TutorialScheduleMake(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.ScheduleMakeKey);
+                },
+              );
+            }
+            break;
+          case TutorialKey.MediaRegisterKey:
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaRegisterKey);
+            if (!hasViewed) {
+              return TutorialMediaRegister(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.MediaRegisterKey);
                 },
               );
             }

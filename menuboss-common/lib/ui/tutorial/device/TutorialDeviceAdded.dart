@@ -33,28 +33,30 @@ class TutorialDeviceAdded extends HookWidget {
         SafeArea(
           child: Clickable(
             onPressed: () => onPressed.call(),
-            child: Stack(
-              children: [
-                const Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    _Content(),
-                    _TopDescription(),
-                  ],
-                ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: SizedBox(
-                    height: 72,
-                    child: LoadSvg(
-                      path: "assets/imgs/icon_tutorial_close.svg",
-                      width: 36,
-                      height: 36,
-                      color: getColorScheme(context).white,
+            child: IgnorePointer(
+              child: Stack(
+                children: [
+                  const Column(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      _Content(),
+                      _TopDescription(),
+                    ],
+                  ),
+                  Align(
+                    alignment: Alignment.bottomCenter,
+                    child: SizedBox(
+                      height: 72,
+                      child: LoadSvg(
+                        path: "assets/imgs/icon_tutorial_close.svg",
+                        width: 36,
+                        height: 36,
+                        color: getColorScheme(context).white,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
