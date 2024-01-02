@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/LoginProvider.dart';
@@ -85,9 +86,9 @@ class LoginScreen extends HookConsumerWidget {
                       const SizedBox(height: 32),
                       _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
                       const SizedBox(height: 24),
-                      const _SignUpButton()
-                      // const _SocialLoginButtons(),
-                      // const SizedBox(height: 40),
+                      const _SignUpButton(),
+                      const SizedBox(height: 28),
+                      const _SocialLoginButtons(),
                     ],
                   ),
                 ),
@@ -110,8 +111,8 @@ class _SignUpButton extends StatelessWidget {
         Text(
           Strings.of(context).loginNoAccount,
           style: getTextTheme(context).b3m.copyWith(
-                color: getColorScheme(context).colorGray500,
-              ),
+            color: getColorScheme(context).colorGray500,
+          ),
         ),
         const SizedBox(width: 4),
         Clickable(
@@ -128,8 +129,8 @@ class _SignUpButton extends StatelessWidget {
             child: Text(
               Strings.of(context).commonSignUp,
               style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorPrimary500,
-                  ),
+                color: getColorScheme(context).colorPrimary500,
+              ),
             ),
           ),
         ),
@@ -153,30 +154,49 @@ class _SocialLoginButtons extends HookConsumerWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray300)),
+              Flexible(
+                child: Container(
+                  height: 1,
+                  color: getColorScheme(context).colorGray300,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
                   Strings.of(context).commonOr,
                   style: getTextTheme(context).b3m.copyWith(
-                        color: getColorScheme(context).colorGray500,
-                      ),
+                    color: getColorScheme(context).colorGray500,
+                  ),
                   textAlign: TextAlign.center,
                 ),
               ),
-              Flexible(child: Container(height: 1, color: getColorScheme(context).colorGray300)),
+              Flexible(
+                child: Container(
+                  height: 1,
+                  color: getColorScheme(context).colorGray300,
+                ),
+              ),
             ],
           ),
         ),
-        const SizedBox(height: 32),
+        const SizedBox(height: 24),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Clickable(
               borderRadius: 8,
-              onPressed: () => loginManager.doGoogleLogin(),
-              child: LoadSvg(
-                path: "assets/imgs/icon_google.svg",
+              onPressed: () async {
+                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doKakaoLogin();
+                if (socialJoinModel != null) {
+                  Navigator.push(
+                    context,
+                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
+                        parameter: socialJoinModel),
+                  );
+                }
+              },
+              child: const LoadSvg(
+                path: "assets/imgs/icon_kakao.svg",
                 width: 64,
                 height: 64,
               ),
@@ -184,8 +204,17 @@ class _SocialLoginButtons extends HookConsumerWidget {
             const SizedBox(width: 32),
             Clickable(
               borderRadius: 8,
-              onPressed: () => loginManager.doAppleLogin(),
-              child: LoadSvg(
+              onPressed: () async {
+                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doAppleLogin();
+                if (socialJoinModel != null) {
+                  Navigator.push(
+                    context,
+                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
+                        parameter: socialJoinModel),
+                  );
+                }
+              },
+              child: const LoadSvg(
                 path: "assets/imgs/icon_apple.svg",
                 width: 64,
                 height: 64,
@@ -239,16 +268,16 @@ class _Title extends StatelessWidget {
           Text(
             Strings.of(context).loginTitle,
             style: getTextTheme(context).s1sb.copyWith(
-                  color: getColorScheme(context).colorGray900,
-                ),
+              color: getColorScheme(context).colorGray900,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               Strings.of(context).loginWelcome,
               style: getTextTheme(context).b2m.copyWith(
-                    color: getColorScheme(context).colorGray700,
-                  ),
+                color: getColorScheme(context).colorGray700,
+              ),
             ),
           ),
         ],
@@ -275,8 +304,8 @@ class _InputEmail extends HookWidget {
           Text(
             Strings.of(context).commonEmail,
             style: getTextTheme(context).b3m.copyWith(
-                  color: getColorScheme(context).colorGray800,
-                ),
+              color: getColorScheme(context).colorGray800,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
@@ -315,8 +344,8 @@ class _InputPassword extends HookWidget {
           Text(
             Strings.of(context).commonPassword,
             style: getTextTheme(context).b3m.copyWith(
-                  color: getColorScheme(context).colorGray800,
-                ),
+              color: getColorScheme(context).colorGray800,
+            ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),

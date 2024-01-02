@@ -51,20 +51,12 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:922858947237:android:dea460691d139c6c83434c",
+        "mobilesdk_app_id": "1:922858947237:android:efbd03ca1d9fb9f683434c",
         "android_client_info": {
           "package_name": "com.orot.menuboss.kr.dev"
         }
       },
       "oauth_client": [
-        {
-          "client_id": "922858947237-rjqgcb3b0n567sc914o27vukhu3b2oe1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.orot.menuboss.kr.dev",
-            "certificate_hash": "523c544ba706646ff47d5698d5bb1cf691210c5d"
-          }
-        },
         {
           "client_id": "922858947237-dh2mjsan4jts4otjr6h97ro7m3ufj4l1.apps.googleusercontent.com",
           "client_type": 3

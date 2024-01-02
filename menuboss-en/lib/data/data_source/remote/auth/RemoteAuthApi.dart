@@ -12,6 +12,7 @@ import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
 import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
@@ -40,7 +41,7 @@ class RemoteAuthApi {
 
       final redirectURL = Environment.buildType == BuildType.dev
           ? "https://dev-app-api.themenuboss.com/v1/external/apple/callback"
-          : "https://dev-app-api.themenuboss.com/v1/external/apple/callback";
+          : "https://app-api.themenuboss.com/v1/external/apple/callback";
       final clientID = packageInfo.packageName.split(".").reversed.join(".");
 
       debugPrint("redirectURL: $redirectURL");
@@ -60,21 +61,11 @@ class RemoteAuthApi {
           nonce: nonce,
         );
 
-        final oAuthProvider = OAuthProvider('apple.com');
-        final credential = oAuthProvider.credential(
-          idToken: appleIdCredential.identityToken,
-          accessToken: appleIdCredential.authorizationCode,
-          rawNonce: rawNonce,
-        );
-
-        final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-
-        final User? user = userCredential.user;
-
-        if (user != null) {
+        if (!CollectionUtil.isNullEmptyFromString(appleIdCredential.identityToken)) {
           return ApiResponse<SocialLoginModel>(
             status: 200,
-            message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+            message:
+                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
             data: SocialLoginModel(
               LoginPlatform.Apple,
               appleIdCredential.identityToken,
@@ -83,7 +74,8 @@ class RemoteAuthApi {
         } else {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message:
+                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
             data: null,
           );
         }
@@ -101,7 +93,8 @@ class RemoteAuthApi {
           "doAppleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message:
+            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
         data: null,
       );
     }
@@ -110,17 +103,16 @@ class RemoteAuthApi {
   /// @feature: 구글 로그인
   /// @author: 2023/09/11 6:31 PM donghwishin
   Future<ApiResponse<SocialLoginModel>> doGoogleLogin() async {
+    await GoogleSignIn().signOut();
     if (await Service.isNetworkAvailable()) {
       try {
-        debugPrint("doGoogleLogin: asdsaddsadsdsa");
         // 구글 로그인 후 유저정보를 받아온다.
         final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-        debugPrint("doGoogleLogin googleUser: $googleUser");
-
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message:
+                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
             data: null,
           );
         } else {
@@ -130,7 +122,6 @@ class RemoteAuthApi {
             accessToken: googleAuth.accessToken,
             idToken: googleAuth.idToken,
           );
-
           debugPrint("doGoogleLogin accessToken: ${googleAuth.accessToken}");
           debugPrint("doGoogleLogin idToken: ${googleAuth.idToken}");
 
@@ -138,15 +129,13 @@ class RemoteAuthApi {
           final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
           final User? user = userCredential.user;
 
-          debugPrint("doGoogleLogin userCredential: $userCredential");
-          debugPrint("doGoogleLogin user: $user");
-
           if (user != null) {
             return await googleUser.authentication.then(
               (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
-                  message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+                  message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
+                      .messageApiSuccess,
                   data: SocialLoginModel(
                     LoginPlatform.Google,
                     value.idToken,
@@ -157,7 +146,8 @@ class RemoteAuthApi {
           } else {
             return ApiResponse<SocialLoginModel>(
               status: 404,
-              message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+              message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
+                  .messageNotFoundUser,
               data: null,
             );
           }
@@ -167,7 +157,8 @@ class RemoteAuthApi {
             "doGoogleLogin: 500 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
         return ApiResponse<SocialLoginModel>(
           status: 500,
-          message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
+          message:
+              Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
           data: null,
         );
       }
@@ -176,7 +167,8 @@ class RemoteAuthApi {
           "doGoogleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message:
+            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
         data: null,
       );
     }

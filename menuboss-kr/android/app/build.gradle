@@ -81,13 +81,13 @@ android {
             dimension "app"
             applicationIdSuffix ".dev"
             versionNameSuffix ".dev"
-            manifestPlaceholders = [appName: "메뉴보스(Dev)"]
+            manifestPlaceholders = [appName: "메뉴보스(Dev)", kakaoNativeAppKey: "87e95076a7810aa93854080bab89a56f"]
         }
         prod {
             dimension "app"
             applicationIdSuffix ""
             versionNameSuffix ""
-            manifestPlaceholders = [appName: "메뉴보스"]
+            manifestPlaceholders = [appName: "메뉴보스", kakaoNativeAppKey: "782a9583e5428ca708d3feae7b536359"]
         }
     }
 

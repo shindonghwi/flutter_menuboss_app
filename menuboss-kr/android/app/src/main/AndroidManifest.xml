@@ -9,7 +9,7 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.READ_MEDIA_IMAGES" />
     <uses-permission android:name="android.permission.READ_MEDIA_VIDEO" />
 
@@ -36,12 +36,39 @@
 
             <!-- 딥링크를 위한 인텐트 필터 -->
             <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data android:scheme="menuboss" />
             </intent-filter>
 
+        </activity>
+
+        <activity
+            android:name="com.aboutyou.dart_packages.sign_in_with_apple.SignInWithAppleCallback"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data android:scheme="signinwithapple" />
+                <data android:path="callback" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name="com.kakao.sdk.flutter.AuthCodeCustomTabsActivity">
+            <intent-filter android:label="flutter_web_auth">
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <!-- Redirect URI, "kakao${YOUR_NATIVE_APP_KEY}://oauth" 형식 -->
+                <data android:scheme="kakao${kakaoNativeAppKey}" android:host="oauth"/>
+            </intent-filter>
         </activity>
 
         <meta-data

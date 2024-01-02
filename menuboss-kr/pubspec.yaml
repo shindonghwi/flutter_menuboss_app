@@ -2,7 +2,7 @@ name: menuboss
 description: MenuBoss Mobile App - TV Controller
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.0.0+1
+version: 0.0.1+1
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
@@ -53,6 +53,7 @@ dependencies:
   video_player: ^2.7.2
   dotted_border: ^2.1.0
   intl: ^0.18.0
+  kakao_flutter_sdk_user: ^1.8.0
 
 dev_dependencies:
   flutter_test:

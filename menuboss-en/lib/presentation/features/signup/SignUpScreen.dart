@@ -22,15 +22,21 @@ import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/RegUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
+import '../../../data/models/me/RequestMeSocialJoinModel.dart';
 import 'provider/GetMeProvider.dart';
 
 class SignUpScreen extends HookConsumerWidget {
-  const SignUpScreen({super.key});
+  final RequestMeSocialJoinModel? socialJoinModel;
+
+  const SignUpScreen({super.key, this.socialJoinModel});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // only email login
     final email = useState("");
     final password = useState("");
+
+    // common (email, social)
     final fullName = useState("");
     final businessName = useState("");
 
@@ -85,109 +91,145 @@ class SignUpScreen extends HookConsumerWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Email
-                  Text(
-                    Strings.of(context).commonEmail,
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray800,
+                  if (socialJoinModel == null)
+                    // Email
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Strings.of(context).commonEmail,
+                          style: getTextTheme(context).b3m.copyWith(
+                                color: getColorScheme(context).colorGray800,
+                              ),
                         ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: OutlineTextField.medium(
-                      controller: useTextEditingController(),
-                      hint: Strings.of(context).commonEmail,
-                      successMessage: Strings.of(context).loginEmailCorrect,
-                      errorMessage: Strings.of(context).loginEmailInvalid,
-                      checkRegList: const [
-                        RegCheckType.Email,
-                      ],
-                      onChanged: (text) => email.value = text,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-
-                  // Password
-                  Text(
-                    Strings.of(context).commonPassword,
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray800,
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: OutlineTextField.medium(
+                            controller: useTextEditingController(),
+                            hint: Strings.of(context).commonEmail,
+                            successMessage: Strings.of(context).loginEmailCorrect,
+                            errorMessage: Strings.of(context).loginEmailInvalid,
+                            checkRegList: const [
+                              RegCheckType.Email,
+                            ],
+                            onChanged: (text) => email.value = text,
+                          ),
                         ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12),
-                    child: OutlineTextField.medium(
-                      controller: useTextEditingController(),
-                      hint: Strings.of(context).commonPassword,
-                      errorMessage: Strings.of(context).loginPwInvalid,
-                      checkRegList: const [
-                        RegCheckType.PW,
+                        const SizedBox(height: 16),
                       ],
-                      textInputAction: TextInputAction.next,
-                      textInputType: TextInputType.visiblePassword,
-                      showPwVisibleButton: true,
-                      showSuffixStatusIcon: false,
-                      onChanged: (text) => password.value = text,
                     ),
-                  ),
-                  const SizedBox(height: 16),
 
+                  if (socialJoinModel == null)
+                    // Password
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          Strings.of(context).commonPassword,
+                          style: getTextTheme(context).b3m.copyWith(
+                                color: getColorScheme(context).colorGray800,
+                              ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 12),
+                          child: OutlineTextField.medium(
+                            controller: useTextEditingController(),
+                            hint: Strings.of(context).commonPassword,
+                            errorMessage: Strings.of(context).loginPwInvalid,
+                            checkRegList: const [
+                              RegCheckType.PW,
+                            ],
+                            textInputAction: TextInputAction.next,
+                            textInputType: TextInputType.visiblePassword,
+                            showPwVisibleButton: true,
+                            showSuffixStatusIcon: false,
+                            onChanged: (text) => password.value = text,
+                          ),
+                        ),
+                        const SizedBox(height: 16),
+                      ],
+                    ),
                   // Full name
-                  Text(
-                    Strings.of(context).commonFullName,
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray800,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Strings.of(context).commonFullName,
+                        style: getTextTheme(context).b3m.copyWith(
+                              color: getColorScheme(context).colorGray800,
+                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0),
+                        child: OutlineTextField.medium(
+                          controller: useTextEditingController(),
+                          hint: Strings.of(context).signupFullNameHint,
+                          onChanged: (text) => fullName.value = text,
                         ),
+                      ),
+                      const SizedBox(height: 16),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: OutlineTextField.medium(
-                      controller: useTextEditingController(),
-                      hint: Strings.of(context).signupFullNameHint,
-                      onChanged: (text) => fullName.value = text,
-                    ),
-                  ),
-                  const SizedBox(height: 16),
 
                   // Business name
-                  Text(
-                    Strings.of(context).signupBusinessName,
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray800,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        Strings.of(context).signupBusinessName,
+                        style: getTextTheme(context).b3m.copyWith(
+                              color: getColorScheme(context).colorGray800,
+                            ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 12.0),
+                        child: OutlineTextField.medium(
+                          controller: useTextEditingController(),
+                          hint: Strings.of(context).signupBusinessNameHint,
+                          onChanged: (text) => businessName.value = text,
                         ),
+                      ),
+                      const SizedBox(height: 24),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 12.0),
-                    child: OutlineTextField.medium(
-                      controller: useTextEditingController(),
-                      hint: Strings.of(context).signupBusinessNameHint,
-                      onChanged: (text) => businessName.value = text,
-                    ),
-                  ),
-                  const SizedBox(height: 24),
 
                   SizedBox(
                     width: double.infinity,
                     child: PrimaryFilledButton.mediumRound8(
                       content: Strings.of(context).commonSignUp,
-                      isActivated: RegUtil.checkEmail(email.value) &&
-                          email.value.isNotEmpty &&
-                          RegUtil.checkPw(password.value) &&
-                          password.value.isNotEmpty &&
-                          fullName.value.isNotEmpty &&
-                          businessName.value.isNotEmpty,
+                      isActivated: socialJoinModel == null
+                          ? RegUtil.checkEmail(email.value) &&
+                              email.value.isNotEmpty &&
+                              RegUtil.checkPw(password.value) &&
+                              password.value.isNotEmpty &&
+                              fullName.value.isNotEmpty &&
+                              businessName.value.isNotEmpty
+                          : fullName.value.isNotEmpty && businessName.value.isNotEmpty,
                       onPressed: () async {
                         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();
                         Service.addHeader(key: HeaderKey.ApplicationTimeZone, value: timeZone);
-                        signUpManager.requestMeJoin(
-                          RequestMeJoinModel(
-                            email: email.value,
-                            name: fullName.value,
-                            password: password.value,
-                            business: businessName.value,
-                            timeZone: timeZone,
-                          ),
-                        );
+
+                        if (socialJoinModel == null) {
+                          signUpManager.requestMeJoin(
+                            RequestMeJoinModel(
+                              email: email.value,
+                              name: fullName.value,
+                              password: password.value,
+                              business: businessName.value,
+                              timeZone: timeZone,
+                            ),
+                          );
+                        } else {
+                          signUpManager.requestMeSocialJoin(
+                            RequestMeSocialJoinModel(
+                              type: socialJoinModel!.type,
+                              accessToken: socialJoinModel!.accessToken,
+                              name: fullName.value,
+                              business: businessName.value,
+                              timeZone: timeZone,
+                            ),
+                          );
+                        }
                       },
                     ),
                   )
