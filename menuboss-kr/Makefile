@@ -27,11 +27,10 @@ run:
 
 # DebugDev Rebuild
 run-rebuild:
-	flutter clean
-	flutter pub get
-	cd ios && pod install
-	flutter pub run build_runner build --delete-conflicting-outputs
-	make run
+	cd ios && rm -rf Pods && rm -rf Podfile.lock \
+	&& pod install && cd .. && flutter clean && flutter pub get \
+	&& flutter pub run build_runner build --delete-conflicting-outputs \
+	&& make run
 
 # ProdRelease Run
 run-prod:
@@ -39,12 +38,10 @@ run-prod:
 
 # ProdRelease Rebuild
 run-prod-rebuild:
-	flutter clean
-	flutter pub get
-	cd ios && pod install
-	flutter pub run build_runner build --delete-conflicting-outputs
-	make run-prod
-
+	cd ios && rm -rf Pods && rm -rf Podfile.lock \
+	&& pod install && cd .. && flutter clean && flutter pub get \
+	&& flutter pub run build_runner build --delete-conflicting-outputs \
+	&& make run-prod
 
 ########################
 ##### Distribution #####
