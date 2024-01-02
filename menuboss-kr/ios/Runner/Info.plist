@@ -51,7 +51,7 @@
 			<string>com.orot.menuboss.kr.dev</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>87e95076a7810aa93854080bab89a56f</string>
+				<string>kakao87e95076a7810aa93854080bab89a56f</string>
 			</array>
 		</dict>
 		<dict>
@@ -61,7 +61,7 @@
 			<string>com.orot.menuboss.kr</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>782a9583e5428ca708d3feae7b536359</string>
+				<string>kakao782a9583e5428ca708d3feae7b536359</string>
 			</array>
 		</dict>
 	</array>
