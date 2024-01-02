@@ -14,11 +14,13 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
 import '../../../../data/models/schedule/ResponseScheduleModel.dart';
 import '../../../../navigation/PageMoveUtil.dart';
+import '../../main/widget/TutorialView.dart';
 import 'provider/ScheduleTimelineInfoProvider.dart';
 import 'widget/ScheduleInputName.dart';
 
@@ -45,15 +47,17 @@ class CreateScheduleScreen extends HookConsumerWidget {
     final timelineManager = ref.read(scheduleTimelineInfoProvider.notifier);
     final saveManager = ref.read(ScheduleSaveInfoProvider.notifier);
 
+    final tutorialOpacity = useState(0.0);
+
     final initialItems = [
       timelineManager.createScheduleItem(
           -1, true, false, Strings.of(context).createScheduleDefaultPlaylistTitleBasic, null, null),
-      timelineManager.createScheduleItem(
-          -2, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
-      timelineManager.createScheduleItem(
-          -3, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
-      timelineManager.createScheduleItem(
-          -4, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
+      timelineManager.createScheduleItem(-2, false, false,
+          Strings.of(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
+      timelineManager.createScheduleItem(-3, false, false,
+          Strings.of(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
+      timelineManager.createScheduleItem(-4, false, false,
+          Strings.of(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
       timelineManager.createScheduleItem(-5, false, true, "", null, null),
     ];
 
@@ -74,13 +78,14 @@ class CreateScheduleScreen extends HookConsumerWidget {
           saveManager.changeName(item?.name ?? "");
 
           final newPlaylistItems = item?.playlists?.asMap().entries.map((e) {
-                int index = e.key;
-                return e.value.toSimpleSchedulesModelMapper(isRequired: index == 0);
-              }).toList() ??
+            int index = e.key;
+            return e.value.toSimpleSchedulesModelMapper(isRequired: index == 0);
+          }).toList() ??
               [];
 
           timelineManager.replaceItems(newPlaylistItems);
         } else {
+          tutorialOpacity.value = 1.0;
           timelineManager.setInitialItems(initialItems);
         }
       });
@@ -114,41 +119,58 @@ class CreateScheduleScreen extends HookConsumerWidget {
       return null;
     }, [scheduleRegisterState, scheduleUpdateState]);
 
-    return BaseScaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: isEditMode.value
-            ? TopBarIconTitleNone(
-                content: Strings.of(context).editScheduleTitle,
-                onBack: () => popPageWrapper(context: context),
-              )
-            : TopBarNoneTitleIcon(
-                content: Strings.of(context).createScheduleTitle,
-                onBack: () => popPageWrapper(context: context),
+    return Stack(
+      children: [
+        BaseScaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(56.0),
+            child: isEditMode.value
+                ? TopBarIconTitleNone(
+              content: Strings.of(context).editScheduleTitle,
+              onBack: () => popPageWrapper(context: context),
+            )
+                : TopBarNoneTitleIcon(
+              content: Strings.of(context).createScheduleTitle,
+              onBack: () => popPageWrapper(context: context),
+            ),
+          ),
+          body: Container(
+            color: getColorScheme(context).white,
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ScheduleInputName(initTitle: item?.name ?? ""),
+                        ScheduleContentItem(playlists: item?.playlists),
+                      ],
+                    ),
+                  ),
+                  if (scheduleRegisterState is Loading) const LoadingView(),
+                ],
               ),
-      ),
-      body: Container(
-        color: getColorScheme(context).white,
-        child: SafeArea(
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ScheduleInputName(initTitle: item?.name ?? ""),
-                    ScheduleContentItem(playlists: item?.playlists),
-                  ],
-                ),
-              ),
-              if (scheduleRegisterState is Loading) const LoadingView(),
-            ],
+            ),
+          ),
+          bottomNavigationBar: _SaveButton(
+            scheduleId: item?.scheduleId,
+            isEditMode: isEditMode.value,
           ),
         ),
-      ),
-      bottomNavigationBar: _SaveButton(
-        scheduleId: item?.scheduleId,
-        isEditMode: isEditMode.value,
-      ),
+
+        // 튜토리얼 화면
+        AnimatedOpacity(
+          opacity: tutorialOpacity.value,
+          duration: const Duration(milliseconds: 300),
+          child: IgnorePointer(
+            ignoring: tutorialOpacity.value == 0,
+            child: TutorialView(
+              tutorialKey: TutorialKey.ScheduleMakeKey,
+              onTutorialClosed: () => tutorialOpacity.value = 0.0,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

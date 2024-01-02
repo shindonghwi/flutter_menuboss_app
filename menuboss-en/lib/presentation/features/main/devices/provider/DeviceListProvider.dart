@@ -21,18 +21,20 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   List<ResponseDeviceModel> currentDevices = [];
 
   /// 디바이스 리스트 조회
-  void requestGetDevices() async{
+  Future<List<dynamic>> requestGetDevices() async{
     state = Loading();
 
     await Future.delayed(const Duration(milliseconds: 600));
 
-    _getDevicesUseCase.call().then((response) async {
+    return await _getDevicesUseCase.call().then((response) async {
       if (response.status == 200) {
         updateCurrentDevices(response.list?.toList() ?? []);
         state = Success(currentDevices);
+        return currentDevices;
       } else {
         state = Failure(response.message);
       }
+      return [];
     });
   }
 
