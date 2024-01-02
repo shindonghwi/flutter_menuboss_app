@@ -239,6 +239,7 @@ class _BackgroundContents extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(top: 56),
           child: Scaffold(
+            backgroundColor: getColorScheme(context).white,
             bottomNavigationBar: Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),

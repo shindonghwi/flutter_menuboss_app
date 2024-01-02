@@ -52,12 +52,12 @@ class CreateScheduleScreen extends HookConsumerWidget {
     final initialItems = [
       timelineManager.createScheduleItem(
           -1, true, false, Strings.of(context).createScheduleDefaultPlaylistTitleBasic, null, null),
-      timelineManager.createScheduleItem(
-          -2, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
-      timelineManager.createScheduleItem(
-          -3, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
-      timelineManager.createScheduleItem(
-          -4, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
+      timelineManager.createScheduleItem(-2, false, false,
+          Strings.of(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
+      timelineManager.createScheduleItem(-3, false, false,
+          Strings.of(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
+      timelineManager.createScheduleItem(-4, false, false,
+          Strings.of(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
       timelineManager.createScheduleItem(-5, false, true, "", null, null),
     ];
 
@@ -78,9 +78,9 @@ class CreateScheduleScreen extends HookConsumerWidget {
           saveManager.changeName(item?.name ?? "");
 
           final newPlaylistItems = item?.playlists?.asMap().entries.map((e) {
-            int index = e.key;
-            return e.value.toSimpleSchedulesModelMapper(isRequired: index == 0);
-          }).toList() ??
+                int index = e.key;
+                return e.value.toSimpleSchedulesModelMapper(isRequired: index == 0);
+              }).toList() ??
               [];
 
           timelineManager.replaceItems(newPlaylistItems);
@@ -126,13 +126,13 @@ class CreateScheduleScreen extends HookConsumerWidget {
             preferredSize: const Size.fromHeight(56.0),
             child: isEditMode.value
                 ? TopBarIconTitleNone(
-              content: Strings.of(context).editScheduleTitle,
-              onBack: () => popPageWrapper(context: context),
-            )
+                    content: Strings.of(context).editScheduleTitle,
+                    onBack: () => popPageWrapper(context: context),
+                  )
                 : TopBarNoneTitleIcon(
-              content: Strings.of(context).createScheduleTitle,
-              onBack: () => popPageWrapper(context: context),
-            ),
+                    content: Strings.of(context).createScheduleTitle,
+                    onBack: () => popPageWrapper(context: context),
+                  ),
           ),
           body: Container(
             color: getColorScheme(context).white,

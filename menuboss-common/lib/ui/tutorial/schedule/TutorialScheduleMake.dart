@@ -55,7 +55,7 @@ class _ForegroundContents extends StatelessWidget {
               children: [
                 const SizedBox(height: 56),
                 SizedBox(
-                  height: 110 + 43,
+                  height: 110 + 45,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -107,8 +107,7 @@ class _ForegroundContents extends StatelessWidget {
                 ),
                 const SizedBox(height: 70),
                 Container(
-                  width: 300,
-                  margin: const EdgeInsets.only(left: 52, right: 20),
+                  margin: const EdgeInsets.only(left: 36 ,right: 20),
                   child: Stack(
                     children: [
                       Column(
@@ -196,6 +195,7 @@ class _BackgroundContents extends StatelessWidget {
         child: Container(
           margin: const EdgeInsets.only(top: 56),
           child: Scaffold(
+            backgroundColor: getColorScheme(context).white,
             bottomNavigationBar: Container(
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),

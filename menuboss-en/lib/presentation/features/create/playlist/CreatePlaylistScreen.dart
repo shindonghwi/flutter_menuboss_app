@@ -72,12 +72,13 @@ class CreatePlaylistScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
-        tutorialOpacity.value = 1.0;
         if (isEditMode.value) {
           saveManager.changeName(item?.name ?? "");
           saveManager.changeDirection(getPlaylistDirectionTypeFromString(item?.property?.direction?.code));
           saveManager.changeFill(getPlaylistScaleTypeFromString(item?.property?.fill?.code));
           mediaCartManager.addItems(item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? []);
+        }else{
+          tutorialOpacity.value = 1.0;
         }
       });
       return null;
