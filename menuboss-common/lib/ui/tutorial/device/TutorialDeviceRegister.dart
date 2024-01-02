@@ -37,7 +37,7 @@ class TutorialDeviceRegister extends HookWidget {
                   margin: EdgeInsets.only(
                     top: isKr
                         ? Platform.isIOS
-                            ? 18
+                            ? 12
                             : 14
                         : 14,
                   ),

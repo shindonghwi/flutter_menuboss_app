@@ -94,7 +94,15 @@ class TutorialView extends HookWidget {
             // TODO: Handle this case.
             break;
           case TutorialKey.MediaAddedKey:
-            // TODO: Handle this case.
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+            if (!hasViewed) {
+              return TutorialMediaRegister(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                },
+              );
+            }
             break;
           default:
             break;

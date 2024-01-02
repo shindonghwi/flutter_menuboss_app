@@ -1,7 +1,6 @@
 enum TutorialKey {
   // 스크린
   ScreenRegisterKey, // 스크린 등록과정 튜토리얼
-  ScreenQrCode, // QR코드 튜토리얼
   ScreenAdded, // 추가된 스크린 튜토리얼
 
   // 플레이리스트
@@ -16,6 +15,5 @@ enum TutorialKey {
 
   // 스케줄
   MediaRegisterKey, // 미디어 등록과정 튜토리얼
-  MediaInFolderKey, // 미디어 폴더 내부 튜토리얼
   MediaAddedKey, // 추가된 미디어 튜토리얼
 }

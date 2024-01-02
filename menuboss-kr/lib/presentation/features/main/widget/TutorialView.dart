@@ -7,6 +7,7 @@ import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart
 import 'package:menuboss/domain/usecases/local/app/PostTutorialViewedUseCase.dart';
 import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceAdded.dart';
 import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister.dart';
+import 'package:menuboss_common/ui/tutorial/media/TutorialMediaAdded.dart';
 import 'package:menuboss_common/ui/tutorial/media/TutorialMediaRegister.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistRegister.dart';
@@ -94,7 +95,15 @@ class TutorialView extends HookWidget {
           // TODO: Handle this case.
             break;
           case TutorialKey.MediaAddedKey:
-          // TODO: Handle this case.
+            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+            if (!hasViewed) {
+              return TutorialMediaAdded(
+                onPressed: () {
+                  onTutorialClosed.call();
+                  postTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                },
+              );
+            }
             break;
           default:
             break;

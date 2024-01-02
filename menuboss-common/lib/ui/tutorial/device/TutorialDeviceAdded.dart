@@ -1,3 +1,5 @@
+import 'dart:math' as math;
+
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
@@ -68,6 +70,8 @@ class _Content extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Container(
       margin: const EdgeInsets.only(top: 56),
       padding: const EdgeInsets.symmetric(horizontal: 24),
@@ -105,7 +109,7 @@ class _Content extends HookWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
-                                "Screen name",
+                                isKr ? "TV 이름": "Screen name",
                                 style: getTextTheme(context).b2m.copyWith(
                                       color: getColorScheme(context).colorGray900,
                                     ),
@@ -118,7 +122,7 @@ class _Content extends HookWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.5),
                         child: Text(
-                          "Schedule name",
+                          isKr ? "시간표 이름": "Schedule name",
                           style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),
@@ -162,14 +166,14 @@ class _TopDescription extends HookWidget {
                 children: [
                   WidgetSpan(
                     child: Container(
-                      width: 36,
-                      height: 18,
+                      width: 24,
+                      height: 12,
                       margin: const EdgeInsets.only(top: 20),
                       child: Transform.rotate(
-                        angle: 60 * 3.141592653589793238 / 180,
+                        angle: 60 * math.pi / 180,
                         child: LoadSvg(
-                          width: 36,
-                          height: 18,
+                          width: 24,
+                          height: 12,
                           path: "assets/imgs/icon_tutorial_arrow1.svg",
                           color: getColorScheme(context).white,
                           fit: BoxFit.cover,
@@ -345,16 +349,16 @@ class _BottomMenuEnable extends HookWidget {
                         children: [
                           WidgetSpan(
                             child: Container(
-                              width: 36,
-                              height: 18,
+                              width: 24,
+                              height: 12,
                               margin: const EdgeInsets.only(top: 8),
                               child: Transform.flip(
                                 flipY: true,
                                 child: Transform.rotate(
-                                  angle: 60 * 3.141592653589793238 / 180,
+                                  angle: 60 * math.pi / 180,
                                   child: LoadSvg(
-                                    width: 36,
-                                    height: 18,
+                                    width: 24,
+                                    height: 12,
                                     path: "assets/imgs/icon_tutorial_arrow1.svg",
                                     color: getColorScheme(context).white,
                                     fit: BoxFit.cover,
