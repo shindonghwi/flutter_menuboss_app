@@ -31,7 +31,7 @@ class MediaGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_media1.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_media1.png"),
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailMedia1SubDescription1,
@@ -64,7 +64,7 @@ class MediaGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_media2.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_media2.png"),
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailMedia3Title,
@@ -82,7 +82,7 @@ class MediaGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_media3.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_media3.png"),
         ],
       ),
     );

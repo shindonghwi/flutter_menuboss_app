@@ -31,7 +31,7 @@ class PlaylistGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_playlist1.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_playlist1.png"),
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailPlaylist1SubDescription1,
@@ -64,7 +64,7 @@ class PlaylistGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_playlist2.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_playlist2.png"),
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailPlaylist3Title,
@@ -82,7 +82,7 @@ class PlaylistGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_playlist3.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_playlist3.png"),
         ],
       ),
     );

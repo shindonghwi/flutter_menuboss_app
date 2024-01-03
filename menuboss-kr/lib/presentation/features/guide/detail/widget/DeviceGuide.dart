@@ -31,7 +31,7 @@ class DeviceGuide extends HookWidget {
                 ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_device1.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_device1.png"),
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailDevice2Title,
@@ -49,7 +49,7 @@ class DeviceGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_device2.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_device2.png"),
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailDevice3Title,
@@ -67,7 +67,7 @@ class DeviceGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_device3.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_device3.png"),
         ],
       ),
     );

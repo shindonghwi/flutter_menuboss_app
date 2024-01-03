@@ -31,7 +31,7 @@ class ScheduleGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_schedule1.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_schedule1.png"),
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailSchedule1SubDescription1,
@@ -57,7 +57,7 @@ class ScheduleGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_schedule2.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_schedule2.png"),
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailSchedule3Title,
@@ -75,7 +75,7 @@ class ScheduleGuide extends HookWidget {
             ),
           ),
           const SizedBox(height: 20),
-          Image.asset("packages/menuboss_common/assets/imgs/image_guide_schedule3.png"),
+          Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_schedule3.png"),
         ],
       ),
     );
