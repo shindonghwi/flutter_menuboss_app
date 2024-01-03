@@ -133,7 +133,12 @@ class MyScreen extends HookConsumerWidget {
                   menuList: [
                     _SettingContent(
                       content: Strings.of(context).myPageSettingSubmenuMenual,
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          nextSlideHorizontalScreen(RoutingScreen.GuideList.route),
+                        );
+                      },
                     ),
                     DividerVertical(
                       marginVertical: 8,

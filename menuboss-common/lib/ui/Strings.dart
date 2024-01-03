@@ -85,6 +85,65 @@ class Strings {
       'my_page_profile_business_name': isKr() ? '비즈니스 이름' : 'Business name',
       'my_page_profile_delete_account': isKr() ? '탈퇴하기' : 'Delete account',
 
+      'guide_list_title': isKr() ? '사용방법' : 'Profile',
+      'guide_list_item_device_title': isKr() ? 'TV' : 'Profile',
+      'guide_list_item_device_description': isKr() ? 'TV를 추가하고 관리' : 'Profile',
+      'guide_list_item_schedule_title': isKr() ? '시간표' : 'Profile',
+      'guide_list_item_schedule_description': isKr() ? '시간별로 TV 화면을 다르게 설정' : 'Profile',
+      'guide_list_item_playlist_title': isKr() ? '재생목록' : 'Profile',
+      'guide_list_item_playlist_description': isKr() ? '콘텐츠 순서를 정렬하고 시간 설정' : 'Profile',
+      'guide_list_item_media_title': isKr() ? '보관함' : 'Profile',
+      'guide_list_item_media_description': isKr() ? '파일 업로드 및 이동, 상세보기' : 'Profile',
+      'guide_list_detail_view': isKr() ? '모바일 앱 가이드 자세히 보기' : 'Profile',
+
+      'guide_detail_device_1_title': isKr() ? '1. TV앱 다운로드' : 'Profile',
+      'guide_detail_device_1_description': isKr()
+          ? '구글 플레이스토어에서 [MenuBossTV - Digital Signage All in one Service] 다운받아주세요'
+          : 'Profile',
+      'guide_detail_device_1_sub_description_1': isKr() ? '· 리모컨 역할 : 모바일 휴대폰 또는 태블릿' : 'Profile',
+      'guide_detail_device_1_sub_description_2': isKr() ? '· 디지털 메뉴판 역할 : TV' : 'Profile',
+      'guide_detail_device_2_title': isKr() ? '2. TV 연결 - QR 코드 스캔 / PIN 번호 입력' : 'Profile',
+      'guide_detail_device_2_description': isKr() ? '두 가지 방법을 통해 TV와 모바일 앱을 연결해주세요' : 'Profile',
+      'guide_detail_device_3_title': isKr() ? '3. TV에 이름 표시' : 'Profile',
+      'guide_detail_device_3_description':
+          isKr() ? 'TV화면 구분이 어려울 경우, 더보기의 [TV에 이름 표시] 기능을 이용해서 TV를 구분할 수 있습니다' : 'Profile',
+
+      'guide_detail_schedule_1_title': isKr() ? '1. 시간표 만들기' : 'Profile',
+      'guide_detail_schedule_1_description':
+          isKr() ? '시간표에 재생목록을 추가하고 해당 시간을 설정할 수 있습니다' : 'Profile',
+      'guide_detail_schedule_1_sub_description_1':
+          isKr() ? '· 기본 설정은 시간을 수정하거나 삭제할 수 없습니다' : 'Profile',
+      'guide_detail_schedule_2_title': isKr() ? '2. TV에 시간표 적용' : 'Profile',
+      'guide_detail_schedule_2_description': isKr() ? '[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!' : 'Profile',
+      'guide_detail_schedule_3_title': isKr() ? '3. 시간표 수정' : 'Profile',
+      'guide_detail_schedule_3_description':
+          isKr() ? '하단의 [+] 버튼을 통해 새 재생목록을 추가하고 시간 수정 및 삭제할 수 있습니다' : 'Profile',
+
+      'guide_detail_playlist_1_title': isKr() ? '1. 재생목록 만들기' : 'Profile',
+      'guide_detail_playlist_1_description':
+          isKr() ? '콘텐츠의 순서를 정렬하고 옵션을 통해 화면 모양을 원하는대로 설정할 수 있습니다' : 'Profile',
+      'guide_detail_playlist_1_sub_description_1':
+          isKr() ? '· 옵션 : 가로 / 세로 그리고 채우기 / 맞추기 / 늘리기' : 'Profile',
+      'guide_detail_playlist_1_sub_description_2': isKr() ? '· 동영상은 시간 설정이 불가합니다' : 'Profile',
+      'guide_detail_playlist_2_title': isKr() ? '2. 미리보기' : 'Profile',
+      'guide_detail_playlist_2_description':
+          isKr() ? '옵션의 [미리보기] 를 통해 TV 화면의 모습을 미리 볼 수 있습니다' : 'Profile',
+      'guide_detail_playlist_3_title': isKr() ? '3. TV에 재생목록 적용' : 'Profile',
+      'guide_detail_playlist_3_description': isKr() ? '[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!' : 'Profile',
+
+      'guide_detail_media_1_title': isKr() ? '1. 콘텐츠 파일 업로드' : 'Profile',
+      'guide_detail_media_1_description':
+          isKr() ? '이미지, 동영상 파일을 업로드 하거나 새 폴더를 만들어 파일을 정리 할 수 있습니다' : 'Profile',
+      'guide_detail_media_1_sub_description_1':
+          isKr() ? '· [+] : 새 폴더 만들기 / [체크 아이콘] : 파일 이동 및 삭제' : 'Profile',
+      'guide_detail_media_1_sub_description_2': isKr() ? '· 폴더 안에서 또 다른 폴더를 생성할 수 없습니다' : 'Profile',
+      'guide_detail_media_2_title': isKr() ? '2. 파일 상세' : 'Profile',
+      'guide_detail_media_2_description':
+          isKr() ? '업로드한 파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다' : 'Profile',
+      'guide_detail_media_3_title': isKr() ? '3. 파일 이동' : 'Profile',
+      'guide_detail_media_3_description':
+          isKr() ? '메인화면 상단의 [체크 아이콘] 을 선택하여 파일을 이동 및 삭제할 수 있습니다' : 'Profile',
+
       'delete_account_title': isKr() ? '탈퇴' : 'Delete account',
       'delete_account_description':
           isKr() ? '메뉴보스를 탈퇴하시나요?' : 'Are you sure you want to delete your account?',
@@ -430,6 +489,104 @@ class Strings {
   String get myPageProfileBusinessName => _localizedValue('my_page_profile_business_name');
 
   String get myPageProfileDeleteAccount => _localizedValue('my_page_profile_delete_account');
+
+  String get guideListTitle => _localizedValue('guide_list_title');
+
+  String get guideListItemDeviceTitle => _localizedValue('guide_list_item_device_title');
+
+  String get guideListItemDeviceDescription =>
+      _localizedValue('guide_list_item_device_description');
+
+  String get guideListItemScheduleTitle => _localizedValue('guide_list_item_schedule_title');
+
+  String get guideListItemScheduleDescription =>
+      _localizedValue('guide_list_item_schedule_description');
+
+  String get guideListItemPlaylistTitle => _localizedValue('guide_list_item_playlist_title');
+
+  String get guideListItemPlaylistDescription =>
+      _localizedValue('guide_list_item_playlist_description');
+
+  String get guideListItemMediaTitle => _localizedValue('guide_list_item_media_title');
+
+  String get guideListItemMediaDescription => _localizedValue('guide_list_item_media_description');
+
+  String get guideListDetailView => _localizedValue('guide_list_detail_view');
+
+  String get guideDetailDevice1Title => _localizedValue('guide_detail_device_1_title');
+
+  String get guideDetailDevice1Description => _localizedValue('guide_detail_device_1_description');
+
+  String get guideDetailDevice1SubDescription1 =>
+      _localizedValue('guide_detail_device_1_sub_description_1');
+
+  String get guideDetailDevice1SubDescription2 =>
+      _localizedValue('guide_detail_device_1_sub_description_2');
+
+  String get guideDetailDevice2Title => _localizedValue('guide_detail_device_2_title');
+
+  String get guideDetailDevice2Description => _localizedValue('guide_detail_device_2_description');
+
+  String get guideDetailDevice3Title => _localizedValue('guide_detail_device_3_title');
+
+  String get guideDetailDevice3Description => _localizedValue('guide_detail_device_3_description');
+
+  String get guideDetailSchedule1Title => _localizedValue('guide_detail_schedule_1_title');
+
+  String get guideDetailSchedule1Description =>
+      _localizedValue('guide_detail_schedule_1_description');
+
+  String get guideDetailSchedule1SubDescription1 =>
+      _localizedValue('guide_detail_schedule_1_sub_description_1');
+
+  String get guideDetailSchedule2Title => _localizedValue('guide_detail_schedule_2_title');
+
+  String get guideDetailSchedule2Description =>
+      _localizedValue('guide_detail_schedule_2_description');
+
+  String get guideDetailSchedule3Title => _localizedValue('guide_detail_schedule_3_title');
+
+  String get guideDetailSchedule3Description =>
+      _localizedValue('guide_detail_schedule_3_description');
+
+  String get guideDetailPlaylist1Title => _localizedValue('guide_detail_playlist_1_title');
+
+  String get guideDetailPlaylist1Description =>
+      _localizedValue('guide_detail_playlist_1_description');
+
+  String get guideDetailPlaylist1SubDescription1 =>
+      _localizedValue('guide_detail_playlist_1_sub_description_1');
+
+  String get guideDetailPlaylist1SubDescription2 =>
+      _localizedValue('guide_detail_playlist_1_sub_description_2');
+
+  String get guideDetailPlaylist2Title => _localizedValue('guide_detail_playlist_2_title');
+
+  String get guideDetailPlaylist2Description =>
+      _localizedValue('guide_detail_playlist_2_description');
+
+  String get guideDetailPlaylist3Title => _localizedValue('guide_detail_playlist_3_title');
+
+  String get guideDetailPlaylist3Description =>
+      _localizedValue('guide_detail_playlist_3_description');
+
+  String get guideDetailMedia1Title => _localizedValue('guide_detail_media_1_title');
+
+  String get guideDetailMedia1Description => _localizedValue('guide_detail_media_1_description');
+
+  String get guideDetailMedia1SubDescription1 =>
+      _localizedValue('guide_detail_media_1_sub_description_1');
+
+  String get guideDetailMedia1SubDescription2 =>
+      _localizedValue('guide_detail_media_1_sub_description_2');
+
+  String get guideDetailMedia2Title => _localizedValue('guide_detail_media_2_title');
+
+  String get guideDetailMedia2Description => _localizedValue('guide_detail_media_2_description');
+
+  String get guideDetailMedia3Title => _localizedValue('guide_detail_media_3_title');
+
+  String get guideDetailMedia3Description => _localizedValue('guide_detail_media_3_description');
 
   String get deleteAccountTitle => _localizedValue('delete_account_title');
 
