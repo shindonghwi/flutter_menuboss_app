@@ -170,8 +170,8 @@ class Strings {
       'blank_message_content_upload_file': isKr() ? '파일 업로드' : 'Upload file',
       'blank_message_content_add_content': isKr() ? '콘텐츠 추가' : 'Add content',
       'blank_message_content_add_canvas': isKr() ? '캔버스 추가' : 'Add canvas',
-      'blank_message_content_new_schedule': isKr() ? '새로운 스케줄' : 'New schedule',
-      'blank_message_content_new_playlist': isKr() ? '새로운 플레이리스트' : 'New playlist',
+      'blank_message_content_new_schedule': isKr() ? '시간표 추가' : 'New schedule',
+      'blank_message_content_new_playlist': isKr() ? '재생목록 추가' : 'New playlist',
       'blank_message_description_add_screen': isKr()
           ? '현재 저장된 TV목록이 없습니다\nQR코드 인식을 통해 TV를 만들어주세요'
           : 'There are currently no saved screen list\nPlease register the screen through QR code',
@@ -191,8 +191,8 @@ class Strings {
       'popup_rename_title': isKr() ? '이름 변경' : 'Rename',
       'popup_rename_screen_hint': isKr() ? 'TV 이름을 입력해주세요' : 'Enter Screen name',
       'popup_rename_media_hint': isKr() ? '미디어 이름' : 'Media name',
-      'popup_rename_schedule_hint': isKr() ? '시간 이름' : 'Schedule name',
-      'popup_rename_playlist_hint': isKr() ? '플레이리스트 이름' : 'Playlist name',
+      'popup_rename_schedule_hint': isKr() ? '시간표 이름' : 'Schedule name',
+      'popup_rename_playlist_hint': isKr() ? '재생목록 이름' : 'Playlist name',
       'popup_delete_title': isKr() ? '정말로 삭제하시겠습니까?' : 'Are you sure?',
       'popup_delete_description': isKr()
           ? '이 레코드를 정말로 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다'
