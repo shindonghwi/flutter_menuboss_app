@@ -14,13 +14,20 @@
       },
       "oauth_client": [
         {
-          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "1060430673784-lfbmia1bbsd6r8kkcfkcjg3p459qgcmc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.menuboss",
+            "certificate_hash": "c089b29023d6a7dbebb21e145cbef535c94f9716"
+          }
         }
       ],
       "api_key": [
         {
           "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
+        },
+        {
+          "current_key": "AIzaSyBbTeNAYPNPeZuus_T5FoqLUG5PJh68mHc"
         }
       ],
       "services": {
@@ -29,6 +36,56 @@
             {
               "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1060430673784-0cfb7u03tm959ughcdifc8qof5v40hja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.menuboss"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1060430673784:android:e3fbc96dac729b33b9ba8d",
+        "android_client_info": {
+          "package_name": "com.orot.menuboss.kr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1060430673784-kesl9q7k443pqjed37glnps2ihhj1l7m.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.menuboss.kr",
+            "certificate_hash": "c089b29023d6a7dbebb21e145cbef535c94f9716"
+          }
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
+        },
+        {
+          "current_key": "AIzaSyBbTeNAYPNPeZuus_T5FoqLUG5PJh68mHc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1060430673784-0cfb7u03tm959ughcdifc8qof5v40hja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.menuboss"
+              }
             }
           ]
         }

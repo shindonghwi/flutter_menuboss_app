@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/guide/detail/GuideDetailScreen.dart';
@@ -12,6 +13,8 @@ import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class _GuideItem {
   final String title;
@@ -112,7 +115,12 @@ class GuideListScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Clickable(
-                onPressed: () {},
+                onPressed: () {
+                  launchUrlString(
+                    "${Environment.webUrl}/guides/Quick_Start_Guide_App_KR_ver1.0.pdf",
+                    mode: LaunchMode.externalApplication,
+                  );
+                },
                 child: Container(
                   padding: const EdgeInsets.all(8),
                   child: Container(
