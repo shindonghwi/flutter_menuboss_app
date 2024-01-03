@@ -6,7 +6,7 @@ import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/theme.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:uni_links/uni_links.dart';

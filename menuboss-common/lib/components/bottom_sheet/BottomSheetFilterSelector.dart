@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 
 import '../../utils/Common.dart';

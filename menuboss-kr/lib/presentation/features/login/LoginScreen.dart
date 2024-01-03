@@ -12,8 +12,8 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/RegUtil.dart';
@@ -111,8 +111,8 @@ class _SignUpButton extends StatelessWidget {
         Text(
           Strings.of(context).loginNoAccount,
           style: getTextTheme(context).b3m.copyWith(
-            color: getColorScheme(context).colorGray500,
-          ),
+                color: getColorScheme(context).colorGray500,
+              ),
         ),
         const SizedBox(width: 4),
         Clickable(
@@ -120,7 +120,7 @@ class _SignUpButton extends StatelessWidget {
             Navigator.push(
               context,
               nextSlideHorizontalScreen(
-                RoutingScreen.SignUp.route,
+                RoutingScreen.Policy.route,
               ),
             );
           },
@@ -129,8 +129,8 @@ class _SignUpButton extends StatelessWidget {
             child: Text(
               Strings.of(context).commonSignUp,
               style: getTextTheme(context).b3sb.copyWith(
-                color: getColorScheme(context).colorPrimary500,
-              ),
+                    color: getColorScheme(context).colorPrimary500,
+                  ),
             ),
           ),
         ),
@@ -165,8 +165,8 @@ class _SocialLoginButtons extends HookConsumerWidget {
                 child: Text(
                   Strings.of(context).commonOr,
                   style: getTextTheme(context).b3m.copyWith(
-                    color: getColorScheme(context).colorGray500,
-                  ),
+                        color: getColorScheme(context).colorGray500,
+                      ),
                   textAlign: TextAlign.center,
                 ),
               ),
@@ -190,8 +190,10 @@ class _SocialLoginButtons extends HookConsumerWidget {
                 if (socialJoinModel != null) {
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
-                        parameter: socialJoinModel),
+                    nextSlideHorizontalScreen(
+                      RoutingScreen.Policy.route,
+                      parameter: socialJoinModel,
+                    ),
                   );
                 }
               },
@@ -209,8 +211,10 @@ class _SocialLoginButtons extends HookConsumerWidget {
                 if (socialJoinModel != null) {
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
-                        parameter: socialJoinModel),
+                    nextSlideHorizontalScreen(
+                      RoutingScreen.Policy.route,
+                      parameter: socialJoinModel,
+                    ),
                   );
                 }
               },
@@ -267,16 +271,16 @@ class _Title extends StatelessWidget {
           Text(
             Strings.of(context).loginTitle,
             style: getTextTheme(context).s1sb.copyWith(
-              color: getColorScheme(context).colorGray900,
-            ),
+                  color: getColorScheme(context).colorGray900,
+                ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
               Strings.of(context).loginWelcome,
               style: getTextTheme(context).b2m.copyWith(
-                color: getColorScheme(context).colorGray700,
-              ),
+                    color: getColorScheme(context).colorGray700,
+                  ),
             ),
           ),
         ],
@@ -303,8 +307,8 @@ class _InputEmail extends HookWidget {
           Text(
             Strings.of(context).commonEmail,
             style: getTextTheme(context).b3m.copyWith(
-              color: getColorScheme(context).colorGray800,
-            ),
+                  color: getColorScheme(context).colorGray800,
+                ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
@@ -343,8 +347,8 @@ class _InputPassword extends HookWidget {
           Text(
             Strings.of(context).commonPassword,
             style: getTextTheme(context).b3m.copyWith(
-              color: getColorScheme(context).colorGray800,
-            ),
+                  color: getColorScheme(context).colorGray800,
+                ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),

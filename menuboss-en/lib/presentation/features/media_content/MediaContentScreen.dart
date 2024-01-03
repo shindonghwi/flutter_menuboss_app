@@ -7,7 +7,7 @@ import 'package:menuboss/presentation/features/media_content/widget/MediaTabCanv
 import 'package:menuboss/presentation/features/media_content/widget/MediaTabFolder.dart';
 import 'package:menuboss_common/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 
 import 'widget/MediaTab.dart';
 

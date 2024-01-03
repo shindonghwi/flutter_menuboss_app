@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../../models/file/ResponseFileModel.dart';
 import '../BaseApiUtil.dart';

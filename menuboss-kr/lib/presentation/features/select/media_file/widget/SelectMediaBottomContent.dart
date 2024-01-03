@@ -4,7 +4,7 @@ import 'package:menuboss/presentation/features/select/media_file/provider/Select
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 

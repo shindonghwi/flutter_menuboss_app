@@ -15,7 +15,7 @@ import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';

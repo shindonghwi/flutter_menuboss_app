@@ -4,7 +4,7 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../models/base/ApiListResponse.dart';
 

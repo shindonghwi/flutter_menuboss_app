@@ -11,7 +11,7 @@ import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';

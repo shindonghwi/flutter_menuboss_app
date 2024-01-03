@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../ui/colors.dart';
-import '../../ui/strings.dart';
+import '../../ui/Strings.dart';
 import '../../ui/typography.dart';
 import '../../utils/Common.dart';
 import '../button/NeutralLineButton.dart';

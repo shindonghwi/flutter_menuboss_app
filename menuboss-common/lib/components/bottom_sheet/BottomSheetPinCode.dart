@@ -3,7 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 
-import '../../ui/strings.dart';
+import '../../ui/Strings.dart';
 import '../../utils/Common.dart';
 import '../button/PrimaryFilledButton.dart';
 

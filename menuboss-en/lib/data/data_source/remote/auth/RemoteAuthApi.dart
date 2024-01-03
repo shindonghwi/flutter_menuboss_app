@@ -11,7 +11,7 @@ import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';

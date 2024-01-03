@@ -13,7 +13,7 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 

@@ -6,7 +6,7 @@ import 'package:menuboss/presentation/features/create/playlist/provider/Playlist
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
 class PlaylistBottomContent extends HookConsumerWidget {

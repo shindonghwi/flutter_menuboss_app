@@ -12,7 +12,7 @@ import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dar
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss_common/components/bottomNav/BottomNavBar.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister.dart';
 import 'package:menuboss_common/ui/tutorial/media/TutorialMediaRegister.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';

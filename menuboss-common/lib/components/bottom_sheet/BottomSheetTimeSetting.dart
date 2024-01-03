@@ -4,7 +4,7 @@ import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-import '../../ui/strings.dart';
+import '../../ui/Strings.dart';
 import '../../utils/Common.dart';
 import '../../utils/dto/Pair.dart';
 import '../button/NeutralLineButton.dart';

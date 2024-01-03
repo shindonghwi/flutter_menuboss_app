@@ -4,7 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss_common/components/textfield/OutlineTextField.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 

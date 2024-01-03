@@ -30,6 +30,14 @@ class Strings {
       'signup_business_name': isKr() ? '사업자 이름' : 'Business name',
       'signup_business_name_hint': isKr() ? '사업자 이름을 입력해주세요' : 'Please enter a business name',
 
+      'policy_title': isKr() ? '약관동의' : '',
+      'policy_description_title': isKr() ? '회원가입' : '',
+      'policy_description': isKr() ? '서비스 시작을 위해 가입 및 정보 제공에 동의해주세요' : '',
+      'policy_term1': isKr() ? '(필수) 만 14세 이상입니다' : '',
+      'policy_term2': isKr() ? '(필수) 이용약관 동의' : '',
+      'policy_term3': isKr() ? '(필수) 개인정보 수집 및 이용 동의' : '',
+      'policy_term4': isKr() ? '(선택) 마케팅 개인정보 제3자 제공 동의' : '',
+
       'main_navigation_menu_schedules': isKr() ? '시간표' : 'Schedules',
       'main_navigation_menu_playlists': isKr() ? '재생목록' : 'Playlists',
       'main_navigation_menu_screens': isKr() ? 'TV' : 'Screens',
@@ -241,6 +249,7 @@ class Strings {
       'common_video': isKr() ? '비디오' : 'video',
       'common_canvas': isKr() ? '캔버스' : 'canvas',
       'common_folder': isKr() ? '폴더' : 'folder',
+      'common_all_agree': isKr() ? '전체동의' : '',
 
       // Filter Keys and Values
       'filter_key_name_asc': "name_asc",
@@ -323,6 +332,20 @@ class Strings {
   String get signupBusinessName => _localizedValue('signup_business_name');
 
   String get signupBusinessNameHint => _localizedValue('signup_business_name_hint');
+
+  String get policyTitle => _localizedValue('policy_title');
+
+  String get policyDescriptionTitle => _localizedValue('policy_description_title');
+
+  String get policyDescription => _localizedValue('policy_description');
+
+  String get policyTerm1 => _localizedValue('policy_term1');
+
+  String get policyTerm2 => _localizedValue('policy_term2');
+
+  String get policyTerm3 => _localizedValue('policy_term3');
+
+  String get policyTerm4 => _localizedValue('policy_term4');
 
   String get mainNavigationMenuSchedules => _localizedValue('main_navigation_menu_schedules');
 
@@ -622,6 +645,8 @@ class Strings {
   String get commonCanvas => _localizedValue('common_canvas');
 
   String get commonFolder => _localizedValue('common_folder');
+
+  String get commonAllAgree => _localizedValue('common_all_agree');
 
   String get filterKeyNameAsc => _localizedValue('filter_key_name_asc');
 

@@ -17,6 +17,7 @@ import 'package:menuboss/presentation/features/main/media/in_folder/MediaInFolde
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
+import 'package:menuboss/presentation/features/policy/PolicyScreen.dart';
 import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/scan_qr/ScanQrScreen.dart';
 import 'package:menuboss/presentation/features/select/destination_folder/DestinationFolderScreen.dart';
@@ -32,6 +33,7 @@ enum RoutingScreen {
   Splash(route: "/splash"), // 스플래시
   Login(route: "/login"), // 로그인
   SignUp(route: "/signup"), // 회원가입
+  Policy(route: "/policy"), // 약관동의
   Main(route: "/main"), // 메인
 
   ScanQR(route: "/scan/qr"), // Scan QR 코드 인식
@@ -66,6 +68,7 @@ enum RoutingScreen {
       RoutingScreen.Splash.route: (context) => const SplashScreen(),
       RoutingScreen.Login.route: (context) => const LoginScreen(),
       RoutingScreen.SignUp.route: (context) => const SignUpScreen(),
+      RoutingScreen.Policy.route: (context) => const PolicyScreen(),
       RoutingScreen.Main.route: (context) => const MainScreen(),
       RoutingScreen.ScanQR.route: (context) => const ScanQrScreen(),
       RoutingScreen.MediaInfo.route: (context) => const MediaInformationScreen(),
@@ -96,6 +99,9 @@ enum RoutingScreen {
       return SignUpScreen(socialJoinModel: socialJoinModel);
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
+    } else if (route == RoutingScreen.Policy.route) {
+      RequestMeSocialJoinModel? socialJoinModel = parameter;
+      return PolicyScreen(socialJoinModel: socialJoinModel);
     } else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.MediaInfo.route) {
