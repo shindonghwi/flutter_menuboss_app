@@ -63,13 +63,13 @@ class LoginScreen extends HookConsumerWidget {
           children: [
             SafeArea(
               child: Container(
-                margin: const EdgeInsets.fromLTRB(24, 96, 24, 0),
+                margin: const EdgeInsets.fromLTRB(24, 80, 24, 0),
                 child: SingleChildScrollView(
                   physics: const AlwaysScrollableScrollPhysics(),
                   child: Column(
                     children: [
                       const _Title(),
-                      const SizedBox(height: 40),
+                      const SizedBox(height: 32),
                       _InputEmail(
                         onChanged: (text) {
                           loginManager.updateEmail(text);
@@ -85,7 +85,7 @@ class LoginScreen extends HookConsumerWidget {
                       ),
                       const SizedBox(height: 32),
                       _LoginButton(isActivated: isEmailValid.value && isPwValid.value),
-                      const SizedBox(height: 24),
+                      const SizedBox(height: 20),
                       const _SignUpButton(),
                       const SizedBox(height: 28),
                       const _SocialLoginButtons(),
@@ -245,7 +245,6 @@ class _LoginButton extends HookConsumerWidget {
         content: Strings.of(context).commonDoLogin,
         isActivated: isActivated,
         onPressed: () {
-          // FirebaseCrashlytics.instance.crash();
           loginManager.doEmailLogin();
         },
       ),
