@@ -74,26 +74,22 @@ class MainScreen extends HookConsumerWidget {
           switch (currentIndex) {
             case 0:
               final items = await ref.read(schedulesProvider.notifier).requestGetSchedules();
-              tutorialKey.value =
-              items.isEmpty ? TutorialKey.ScheduleRegisterKey : TutorialKey.ScheduleAddedKey;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.ScheduleAddedKey;
               tutorialOpacity.value = 1.0;
               break;
             case 1:
               final items = await ref.read(playListProvider.notifier).requestGetPlaylists();
-              tutorialKey.value =
-              items.isEmpty ? TutorialKey.PlaylistRegisterKey : TutorialKey.PlaylistAddedKey;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.PlaylistAddedKey;
               tutorialOpacity.value = 1.0;
               break;
             case 2:
               final items = await ref.read(deviceListProvider.notifier).requestGetDevices();
-              tutorialKey.value =
-              items.isEmpty ? TutorialKey.ScreenRegisterKey : TutorialKey.ScreenAdded;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.ScreenAdded;
               tutorialOpacity.value = 1.0;
               break;
             case 3:
               final items = await ref.read(mediaListProvider.notifier).requestGetMedias();
-              tutorialKey.value =
-              items.isEmpty ? TutorialKey.MediaRegisterKey : TutorialKey.MediaAddedKey;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.MediaAddedKey;
               tutorialOpacity.value = 1.0;
               break;
             case 4:

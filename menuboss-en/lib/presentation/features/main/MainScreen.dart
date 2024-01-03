@@ -1,11 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
-import 'package:menuboss/domain/usecases/local/app/PostTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
@@ -13,11 +8,7 @@ import 'package:menuboss/presentation/features/main/media/provider/MediaListProv
 import 'package:menuboss_common/components/bottomNav/BottomNavBar.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/ui/strings.dart';
-import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister.dart';
-import 'package:menuboss_common/ui/tutorial/media/TutorialMediaRegister.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
-import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistRegister.dart';
-import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleRegister.dart';
 import 'package:menuboss_common/utils/dto/Triple.dart';
 
 import 'devices/DevicesScreen.dart';
@@ -74,26 +65,22 @@ class MainScreen extends HookConsumerWidget {
           switch (currentIndex) {
             case 0:
               final items = await ref.read(schedulesProvider.notifier).requestGetSchedules();
-              tutorialKey.value =
-                  items.isEmpty ? TutorialKey.ScheduleRegisterKey : TutorialKey.ScheduleAddedKey;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.ScheduleAddedKey;
               tutorialOpacity.value = 1.0;
               break;
             case 1:
               final items = await ref.read(playListProvider.notifier).requestGetPlaylists();
-              tutorialKey.value =
-                  items.isEmpty ? TutorialKey.PlaylistRegisterKey : TutorialKey.PlaylistAddedKey;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.PlaylistAddedKey;
               tutorialOpacity.value = 1.0;
               break;
             case 2:
               final items = await ref.read(deviceListProvider.notifier).requestGetDevices();
-              tutorialKey.value =
-                  items.isEmpty ? TutorialKey.ScreenRegisterKey : TutorialKey.ScreenAdded;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.ScreenAdded;
               tutorialOpacity.value = 1.0;
               break;
             case 3:
               final items = await ref.read(mediaListProvider.notifier).requestGetMedias();
-              tutorialKey.value =
-                  items.isEmpty ? TutorialKey.MediaRegisterKey : TutorialKey.MediaAddedKey;
+              tutorialKey.value = items.isEmpty ? null : TutorialKey.MediaAddedKey;
               tutorialOpacity.value = 1.0;
               break;
             case 4:
