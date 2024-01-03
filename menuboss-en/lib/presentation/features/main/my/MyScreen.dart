@@ -190,12 +190,12 @@ class _SettingItems extends HookConsumerWidget {
     final logoutManager = ref.read(logoutProvider.notifier);
 
     final items = [
-      Pair(Strings.of(context).myPageSettingItemsProfile, () {
-        Navigator.push(
-          context,
-          nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
-        );
-      }),
+      // Pair(Strings.of(context).myPageSettingItemsProfile, () {
+      //   Navigator.push(
+      //     context,
+      //     nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
+      //   );
+      // }),
       Pair(Strings.of(context).commonLogout, () {
         CommonPopup.showPopup(
           context,
@@ -215,16 +215,16 @@ class _SettingItems extends HookConsumerWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                Strings.of(context).myPageSettingItem,
-                style: getTextTheme(context).b3sb.copyWith(
-                      color: getColorScheme(context).colorGray700,
-                    ),
-                textAlign: TextAlign.start,
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.symmetric(vertical: 16.0),
+            //   child: Text(
+            //     Strings.of(context).myPageSettingItem,
+            //     style: getTextTheme(context).b3sb.copyWith(
+            //           color: getColorScheme(context).colorGray700,
+            //         ),
+            //     textAlign: TextAlign.start,
+            //   ),
+            // ),
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               shrinkWrap: true,

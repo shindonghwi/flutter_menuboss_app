@@ -72,8 +72,15 @@ class Strings {
       'edit_playlist_title': isKr() ? '재생목록 수정' : 'Edit playlist',
       'edit_schedule_title': isKr() ? '시간표 수정' : 'Edit schedule',
 
-      'my_page_setting_item': isKr() ? '설정' : 'Settings',
-      'my_page_setting_items_profile': isKr() ? '프로필' : 'Profile',
+      'my_page_setting_item_title': isKr() ? '설정' : 'Settings',
+      'my_page_setting_item_submenu_team': isKr() ? '구성원' : 'Team',
+      'my_page_setting_item_submenu_role': isKr() ? '역할' : 'Role',
+      'my_page_setting_item_title_user': isKr() ? '사용자 설정' : 'Settings',
+      'my_page_setting_item_submenu_my': isKr() ? '내 정보' : 'Profile',
+      'my_page_setting_item_submenu_business': isKr() ? '사업자' : 'Profile',
+      'my_page_setting_item_title_guide': isKr() ? '가이드' : 'Profile',
+      'my_page_setting_item_submenu_menual': isKr() ? '사용방법' : 'Profile',
+
       'my_page_profile_appbar_title': isKr() ? '프로필' : 'Profile',
       'my_page_profile_business_name': isKr() ? '비즈니스 이름' : 'Business name',
       'my_page_profile_delete_account': isKr() ? '탈퇴하기' : 'Delete account',
@@ -401,9 +408,22 @@ class Strings {
 
   String get editScheduleTitle => _localizedValue('edit_schedule_title');
 
-  String get myPageSettingItem => _localizedValue('my_page_setting_item');
+  String get myPageSettingItemTitle => _localizedValue('my_page_setting_item_title');
 
-  String get myPageSettingItemsProfile => _localizedValue('my_page_setting_items_profile');
+  String get myPageSettingSubmenuTeam => _localizedValue('my_page_setting_item_submenu_team');
+
+  String get myPageSettingSubmenuRole => _localizedValue('my_page_setting_item_submenu_role');
+
+  String get myPageSettingItemTitleUser => _localizedValue('my_page_setting_item_title_user');
+
+  String get myPageSettingSubmenuMy => _localizedValue('my_page_setting_item_submenu_my');
+
+  String get myPageSettingSubmenuBusiness =>
+      _localizedValue('my_page_setting_item_submenu_business');
+
+  String get myPageSettingSubmenuGuide => _localizedValue('my_page_setting_item_title_guide');
+
+  String get myPageSettingSubmenuMenual => _localizedValue('my_page_setting_item_submenu_menual');
 
   String get myPageProfileAppbarTitle => _localizedValue('my_page_profile_appbar_title');
 

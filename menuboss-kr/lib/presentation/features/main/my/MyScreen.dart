@@ -6,6 +6,7 @@ import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
 import 'package:menuboss/presentation/features/main/my/provider/LogoutProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarTitle.dart';
+import 'package:menuboss_common/components/divider/DividerVertical.dart';
 import 'package:menuboss_common/components/loader/LoadProfile.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
@@ -13,15 +14,14 @@ import 'package:menuboss_common/components/popup/CommonPopup.dart';
 import 'package:menuboss_common/components/popup/PopupLogout.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
-import 'package:menuboss_common/components/utils/Clickable.dart';
+import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
-import 'package:menuboss_common/utils/dto/Pair.dart';
 
 class MyScreen extends HookConsumerWidget {
   const MyScreen({super.key});
@@ -74,12 +74,91 @@ class MyScreen extends HookConsumerWidget {
                   businessName: meInfo?.business?.title,
                   email: meInfo?.email,
                 ),
-                Container(
-                  width: double.infinity,
-                  height: 8,
-                  color: getColorScheme(context).colorGray100,
+                DividerVertical(
+                  marginVertical: 0,
+                  dividerColor: getColorScheme(context).colorGray100,
                 ),
-                const _SettingItems(),
+
+                const SizedBox(height: 8),
+
+                // // 설정
+                // _MenuContent(
+                //   title: _SettingTitle(title: Strings.of(context).myPageSettingItemTitle),
+                //   menuList: [
+                //     _SettingContent(
+                //       content: Strings.of(context).myPageSettingSubmenuTeam,
+                //       onPressed: () {},
+                //     ),
+                //     _SettingContent(
+                //       content: Strings.of(context).myPageSettingSubmenuRole,
+                //       onPressed: () {
+                //       },
+                //     ),
+                //     DividerVertical(
+                //       marginVertical: 8,
+                //       height: 1,
+                //       dividerColor: getColorScheme(context).colorGray100,
+                //     ),
+                //   ],
+                // ),
+
+                // 사용자 설정
+                _MenuContent(
+                  title: _SettingTitle(title: Strings.of(context).myPageSettingItemTitleUser),
+                  menuList: [
+                    _SettingContent(
+                      content: Strings.of(context).myPageSettingSubmenuMy,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
+                        );
+                      },
+                    ),
+                    // _SettingContent(
+                    //   content: Strings.of(context).myPageSettingSubmenuBusiness,
+                    //   onPressed: () {},
+                    // ),
+                    DividerVertical(
+                      marginVertical: 8,
+                      height: 1,
+                      dividerColor: getColorScheme(context).colorGray100,
+                    ),
+                  ],
+                ),
+
+                // 가이드
+                _MenuContent(
+                  title: _SettingTitle(title: Strings.of(context).myPageSettingSubmenuGuide),
+                  menuList: [
+                    _SettingContent(
+                      content: Strings.of(context).myPageSettingSubmenuMenual,
+                      onPressed: () {},
+                    ),
+                    DividerVertical(
+                      marginVertical: 8,
+                      height: 1,
+                      dividerColor: getColorScheme(context).colorGray100,
+                    ),
+                  ],
+                ),
+
+                Padding(
+                  padding: const EdgeInsets.only(top: 24.0),
+                  child: _SettingContent(
+                    content: Strings.of(context).commonLogout,
+                    onPressed: () {
+                      CommonPopup.showPopup(
+                        context,
+                        child: PopupLogout(onClicked: (isCompleted) {
+                          if (isCompleted) {
+                            logoutManager.requestLogout();
+                          }
+                        }),
+                      );
+                    },
+                  ),
+                ),
               ],
             ),
             if (logoutState is Loading) const LoadingView()
@@ -182,85 +261,91 @@ class _UserProfile extends HookWidget {
   }
 }
 
-class _SettingItems extends HookConsumerWidget {
-  const _SettingItems({super.key});
+class _MenuContent extends StatelessWidget {
+  final Widget title;
+  final List<Widget> menuList;
+
+  const _MenuContent({
+    super.key,
+    required this.title,
+    required this.menuList,
+  });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    final logoutManager = ref.read(logoutProvider.notifier);
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        title,
+        ...menuList,
+      ],
+    );
+  }
+}
 
-    final items = [
-      Pair(Strings.of(context).myPageSettingItemsProfile, () {
-        Navigator.push(
-          context,
-          nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
-        );
-      }),
-      Pair(Strings.of(context).commonLogout, () {
-        CommonPopup.showPopup(
-          context,
-          child: PopupLogout(onClicked: (isCompleted) {
-            if (isCompleted) {
-              logoutManager.requestLogout();
-            }
-          }),
-        );
-      }),
-    ];
+class _SettingTitle extends StatelessWidget {
+  final String title;
 
-    return Expanded(
-      child: Container(
-        width: double.infinity,
-        margin: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: Text(
-                Strings.of(context).myPageSettingItem,
-                style: getTextTheme(context).b3sb.copyWith(
-                      color: getColorScheme(context).colorGray700,
-                    ),
-                textAlign: TextAlign.start,
-              ),
+  const _SettingTitle({
+    super.key,
+    required this.title,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 40,
+      alignment: Alignment.centerLeft,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: Text(
+        title,
+        style: getTextTheme(context).c1sb.copyWith(
+              color: getColorScheme(context).colorGray700,
             ),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              separatorBuilder: (BuildContext context, int index) {
-                return const SizedBox(height: 0);
-              },
-              itemBuilder: (BuildContext context, int index) {
-                final item = items[index];
-                return Clickable(
-                  onPressed: item.second,
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 16.0),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          item.first,
-                          style: getTextTheme(context).b3m.copyWith(
-                                color: getColorScheme(context).colorGray900,
-                              ),
-                        ),
-                        LoadSvg(
-                          path: "assets/imgs/icon_next.svg",
-                          color: getColorScheme(context).colorGray600,
-                          width: 24,
-                          height: 24,
-                        )
-                      ],
-                    ),
+        textAlign: TextAlign.start,
+      ),
+    );
+  }
+}
+
+class _SettingContent extends StatelessWidget {
+  final String content;
+  final VoidCallback? onPressed;
+
+  const _SettingContent({
+    super.key,
+    required this.content,
+    required this.onPressed,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 48,
+      padding: const EdgeInsets.symmetric(horizontal: 24),
+      child: ClickableScale(
+        onPressed: onPressed == null ? null : () => onPressed?.call(),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              content,
+              style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).colorGray900,
                   ),
-                );
-              },
-              itemCount: items.length,
-            )
+              textAlign: TextAlign.start,
+            ),
+            if (onPressed != null)
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: LoadSvg(
+                  path: "assets/imgs/icon_next.svg",
+                  width: 20,
+                  height: 20,
+                  color: getColorScheme(context).colorGray600,
+                ),
+              )
           ],
         ),
       ),
