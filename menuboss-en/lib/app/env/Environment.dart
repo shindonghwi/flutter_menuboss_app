@@ -20,6 +20,9 @@ class Environment {
   static String apiUrl =
       _instance._buildType == BuildType.dev ? 'https://dev-app-api.themenuboss.com' : 'https://app-api.themenuboss.com';
 
+  static String webUrl =
+      _instance._buildType == BuildType.dev ? 'https://dev-www.themenuboss.com' : 'https://www.themenuboss.com/';
+
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
   factory Environment.newInstance(BuildType buildType) {

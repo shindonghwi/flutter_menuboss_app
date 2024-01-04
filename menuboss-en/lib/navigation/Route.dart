@@ -11,6 +11,8 @@ import 'package:menuboss/presentation/features/create/schedule/CreateScheduleScr
 import 'package:menuboss/presentation/features/delete_account/DeleteAccountScreen.dart';
 import 'package:menuboss/presentation/features/detail/playlist/DetailPlaylistScreen.dart';
 import 'package:menuboss/presentation/features/detail/schedule/DetailScheduleScreen.dart';
+import 'package:menuboss/presentation/features/guide/detail/GuideDetailScreen.dart';
+import 'package:menuboss/presentation/features/guide/list/GuideListScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/media/in_folder/MediaInFolderScreen.dart';
@@ -53,6 +55,8 @@ enum RoutingScreen {
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"), // 프로필 정보
+  GuideList(route: "/my/guide/list"), // 사용방법 목록
+  GuideDetail(route: "/my/guide/detail"), // 사용방법 상세
   DeleteAccount(route: "/delete/account"); // 계정 삭제
 
   final String route;
@@ -82,6 +86,8 @@ enum RoutingScreen {
       RoutingScreen.SelectDestinationFolder.route: (context) => const DestinationFolderScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
+      RoutingScreen.GuideList.route: (context) => const GuideListScreen(),
+      RoutingScreen.GuideDetail.route: (context) => const GuideDetailScreen(),
       RoutingScreen.DeleteAccount.route: (context) => const DeleteAccountScreen(),
     };
   }
@@ -91,7 +97,7 @@ enum RoutingScreen {
       return const SplashScreen();
     } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
-    }else if (route == RoutingScreen.SignUp.route) {
+    } else if (route == RoutingScreen.SignUp.route) {
       RequestMeSocialJoinModel? socialJoinModel = parameter;
       return SignUpScreen(socialJoinModel: socialJoinModel);
     } else if (route == RoutingScreen.Main.route) {
@@ -136,7 +142,12 @@ enum RoutingScreen {
       return ApplyToDeviceScreen(item: model);
     } else if (route == RoutingScreen.MyProfile.route) {
       return const MyProfileScreen();
-    }else if (route == RoutingScreen.DeleteAccount.route) {
+    } else if (route == RoutingScreen.GuideList.route) {
+      return const GuideListScreen();
+    } else if (route == RoutingScreen.GuideDetail.route) {
+      GuideType type = parameter;
+      return GuideDetailScreen(type: type);
+    } else if (route == RoutingScreen.DeleteAccount.route) {
       return const DeleteAccountScreen();
     } else {
       return const SplashScreen();

@@ -74,75 +74,101 @@ class Strings {
 
       'my_page_setting_item_title': isKr() ? '설정' : 'Settings',
       'my_page_setting_item_submenu_team': isKr() ? '구성원' : 'Team',
-      'my_page_setting_item_submenu_role': isKr() ? '역할' : 'Role',
-      'my_page_setting_item_title_user': isKr() ? '사용자 설정' : 'Settings',
-      'my_page_setting_item_submenu_my': isKr() ? '내 정보' : 'Profile',
-      'my_page_setting_item_submenu_business': isKr() ? '사업자' : 'Profile',
-      'my_page_setting_item_title_guide': isKr() ? '가이드' : 'Profile',
-      'my_page_setting_item_submenu_menual': isKr() ? '사용방법' : 'Profile',
+      'my_page_setting_item_submenu_role': isKr() ? '역할' : 'Roles',
+      'my_page_setting_item_title_user': isKr() ? '사용자 설정' : 'User Settings',
+      'my_page_setting_item_submenu_my': isKr() ? '내 정보' : 'My account',
+      'my_page_setting_item_submenu_business': isKr() ? '사업자' : 'Business',
+      'my_page_setting_item_title_guide': isKr() ? '가이드' : 'Guide',
+      'my_page_setting_item_submenu_menual': isKr() ? '사용방법' : 'Get started',
 
       'my_page_profile_appbar_title': isKr() ? '프로필' : 'Profile',
       'my_page_profile_business_name': isKr() ? '비즈니스 이름' : 'Business name',
       'my_page_profile_delete_account': isKr() ? '탈퇴하기' : 'Delete account',
 
-      'guide_list_title': isKr() ? '사용방법' : 'Profile',
-      'guide_list_item_device_title': isKr() ? 'TV' : 'Profile',
-      'guide_list_item_device_description': isKr() ? 'TV를 추가하고 관리' : 'Profile',
-      'guide_list_item_schedule_title': isKr() ? '시간표' : 'Profile',
-      'guide_list_item_schedule_description': isKr() ? '시간별로 TV 화면을 다르게 설정' : 'Profile',
-      'guide_list_item_playlist_title': isKr() ? '재생목록' : 'Profile',
-      'guide_list_item_playlist_description': isKr() ? '콘텐츠 순서를 정렬하고 시간 설정' : 'Profile',
-      'guide_list_item_media_title': isKr() ? '보관함' : 'Profile',
-      'guide_list_item_media_description': isKr() ? '파일 업로드 및 이동, 상세보기' : 'Profile',
-      'guide_list_detail_view': isKr() ? '모바일 앱 가이드 자세히 보기' : 'Profile',
+      'guide_list_title': isKr() ? '사용방법' : 'Get started',
+      'guide_list_item_device_title': isKr() ? 'TV' : 'Screen',
+      'guide_list_item_device_description': isKr() ? 'TV를 추가하고 관리' : 'Add and manage screens',
+      'guide_list_item_schedule_title': isKr() ? '시간표' : 'Schedule',
+      'guide_list_item_schedule_description':
+          isKr() ? '시간별로 TV 화면을 다르게 설정' : 'Set the screen differently by time',
+      'guide_list_item_playlist_title': isKr() ? '재생목록' : 'Playlist',
+      'guide_list_item_playlist_description':
+          isKr() ? '콘텐츠 순서를 정렬하고 시간 설정' : 'Sort and time content',
+      'guide_list_item_media_title': isKr() ? '보관함' : 'Media',
+      'guide_list_item_media_description':
+          isKr() ? '파일 업로드 및 이동, 상세보기' : 'Upload and move files, view more',
+      'guide_list_detail_view':
+          isKr() ? '모바일 앱 가이드 자세히 보기' : 'Learn more about the mobile app guide',
 
-      'guide_detail_device_1_title': isKr() ? '1. TV앱 다운로드' : 'Profile',
+      'guide_detail_device_1_title': isKr() ? '1. TV앱 다운로드' : '1. Screen app download',
       'guide_detail_device_1_description': isKr()
           ? '구글 플레이스토어에서 [MenuBossTV - Digital Signage All in one Service] 다운받아주세요'
-          : 'Profile',
-      'guide_detail_device_1_sub_description_1': isKr() ? '· 리모컨 역할 : 모바일 휴대폰 또는 태블릿' : 'Profile',
-      'guide_detail_device_1_sub_description_2': isKr() ? '· 디지털 메뉴판 역할 : TV' : 'Profile',
-      'guide_detail_device_2_title': isKr() ? '2. TV 연결 - QR 코드 스캔 / PIN 번호 입력' : 'Profile',
-      'guide_detail_device_2_description': isKr() ? '두 가지 방법을 통해 TV와 모바일 앱을 연결해주세요' : 'Profile',
-      'guide_detail_device_3_title': isKr() ? '3. TV에 이름 표시' : 'Profile',
-      'guide_detail_device_3_description':
-          isKr() ? 'TV화면 구분이 어려울 경우, 더보기의 [TV에 이름 표시] 기능을 이용해서 TV를 구분할 수 있습니다' : 'Profile',
+          : '[MenuBossTV - Digital Signage All in one Service] from Amazon App Store',
+      'guide_detail_device_1_sub_description_1':
+          isKr() ? '· 리모컨 역할 : 모바일 휴대폰 또는 태블릿' : '· Controller : Mobile phone or tablet',
+      'guide_detail_device_1_sub_description_2':
+          isKr() ? '· 디지털 메뉴판 역할 : TV' : '· Digital Signage : TV Screen',
+      'guide_detail_device_2_title':
+          isKr() ? '2. TV 연결 - QR 코드 스캔 / PIN 번호 입력' : '2. Screen Connect - QR code / PIN code',
+      'guide_detail_device_2_description':
+          isKr() ? '두 가지 방법을 통해 TV와 모바일 앱을 연결해주세요' : 'Please connect the TV screen and mobile app',
+      'guide_detail_device_3_title': isKr() ? '3. TV에 이름 표시' : '3. Display Screen Name',
+      'guide_detail_device_3_description': isKr()
+          ? 'TV화면 구분이 어려울 경우, 더보기의 [TV에 이름 표시] 기능을 이용해서 TV를 구분할 수 있습니다'
+          : 'You can distinguish the screen using the [Screen Display Name] function',
 
-      'guide_detail_schedule_1_title': isKr() ? '1. 시간표 만들기' : 'Profile',
-      'guide_detail_schedule_1_description':
-          isKr() ? '시간표에 재생목록을 추가하고 해당 시간을 설정할 수 있습니다' : 'Profile',
-      'guide_detail_schedule_1_sub_description_1':
-          isKr() ? '· 기본 설정은 시간을 수정하거나 삭제할 수 없습니다' : 'Profile',
-      'guide_detail_schedule_2_title': isKr() ? '2. TV에 시간표 적용' : 'Profile',
-      'guide_detail_schedule_2_description': isKr() ? '[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!' : 'Profile',
-      'guide_detail_schedule_3_title': isKr() ? '3. 시간표 수정' : 'Profile',
-      'guide_detail_schedule_3_description':
-          isKr() ? '하단의 [+] 버튼을 통해 새 재생목록을 추가하고 시간 수정 및 삭제할 수 있습니다' : 'Profile',
+      'guide_detail_schedule_1_title': isKr() ? '1. 시간표 만들기' : '1. Create schedule',
+      'guide_detail_schedule_1_description': isKr()
+          ? '시간표에 재생목록을 추가하고 해당 시간을 설정할 수 있습니다'
+          : 'Add playlists to your schedule and set their time',
+      'guide_detail_schedule_1_sub_description_1': isKr()
+          ? '· 기본 설정은 시간을 수정하거나 삭제할 수 없습니다'
+          : '· Default setting basics cannot be time modified or deleted',
+      'guide_detail_schedule_2_title': isKr() ? '2. TV에 시간표 적용' : '2. Connect to screen',
+      'guide_detail_schedule_2_description': isKr()
+          ? '[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!'
+          : 'Press the [Apply] button and select the screen',
+      'guide_detail_schedule_3_title': isKr() ? '3. 시간표 수정' : '3. Edit schedule',
+      'guide_detail_schedule_3_description': isKr()
+          ? '하단의 [+] 버튼을 통해 새 재생목록을 추가하고 시간 수정 및 삭제할 수 있습니다'
+          : 'Additional schedules can be added via the [plus] button at the bottom',
 
-      'guide_detail_playlist_1_title': isKr() ? '1. 재생목록 만들기' : 'Profile',
-      'guide_detail_playlist_1_description':
-          isKr() ? '콘텐츠의 순서를 정렬하고 옵션을 통해 화면 모양을 원하는대로 설정할 수 있습니다' : 'Profile',
-      'guide_detail_playlist_1_sub_description_1':
-          isKr() ? '· 옵션 : 가로 / 세로 그리고 채우기 / 맞추기 / 늘리기' : 'Profile',
-      'guide_detail_playlist_1_sub_description_2': isKr() ? '· 동영상은 시간 설정이 불가합니다' : 'Profile',
-      'guide_detail_playlist_2_title': isKr() ? '2. 미리보기' : 'Profile',
-      'guide_detail_playlist_2_description':
-          isKr() ? '옵션의 [미리보기] 를 통해 TV 화면의 모습을 미리 볼 수 있습니다' : 'Profile',
-      'guide_detail_playlist_3_title': isKr() ? '3. TV에 재생목록 적용' : 'Profile',
-      'guide_detail_playlist_3_description': isKr() ? '[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!' : 'Profile',
+      'guide_detail_playlist_1_title': isKr() ? '1. 재생목록 만들기' : '1. Create playlist',
+      'guide_detail_playlist_1_description': isKr()
+          ? '콘텐츠의 순서를 정렬하고 옵션을 통해 화면 모양을 원하는대로 설정할 수 있습니다'
+          : 'Sort the order of the content, and use the options to set the appearance of the screen',
+      'guide_detail_playlist_1_sub_description_1': isKr()
+          ? '· 옵션 : 가로 / 세로 그리고 채우기 / 맞추기 / 늘리기'
+          : '· Option : Horizontal / Vertical and Fill / Fit / Stretch',
+      'guide_detail_playlist_1_sub_description_2':
+          isKr() ? '· 동영상은 시간 설정이 불가합니다' : '· It is not possible to set the time for videos',
+      'guide_detail_playlist_2_title': isKr() ? '2. 미리보기' : '2. Preview',
+      'guide_detail_playlist_2_description': isKr()
+          ? '옵션의 [미리보기] 를 통해 TV 화면의 모습을 미리 볼 수 있습니다'
+          : 'Set up or preview the screen through the optional preview',
+      'guide_detail_playlist_3_title': isKr() ? '3. TV에 재생목록 적용' : '3. Connect to screen',
+      'guide_detail_playlist_3_description': isKr()
+          ? '[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!'
+          : 'Press the [Apply] button and select the screen',
 
-      'guide_detail_media_1_title': isKr() ? '1. 콘텐츠 파일 업로드' : 'Profile',
-      'guide_detail_media_1_description':
-          isKr() ? '이미지, 동영상 파일을 업로드 하거나 새 폴더를 만들어 파일을 정리 할 수 있습니다' : 'Profile',
-      'guide_detail_media_1_sub_description_1':
-          isKr() ? '· [+] : 새 폴더 만들기 / [체크 아이콘] : 파일 이동 및 삭제' : 'Profile',
-      'guide_detail_media_1_sub_description_2': isKr() ? '· 폴더 안에서 또 다른 폴더를 생성할 수 없습니다' : 'Profile',
-      'guide_detail_media_2_title': isKr() ? '2. 파일 상세' : 'Profile',
-      'guide_detail_media_2_description':
-          isKr() ? '업로드한 파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다' : 'Profile',
-      'guide_detail_media_3_title': isKr() ? '3. 파일 이동' : 'Profile',
-      'guide_detail_media_3_description':
-          isKr() ? '메인화면 상단의 [체크 아이콘] 을 선택하여 파일을 이동 및 삭제할 수 있습니다' : 'Profile',
+      'guide_detail_media_1_title': isKr() ? '1. 콘텐츠 파일 업로드' : '1. Upload media file',
+      'guide_detail_media_1_description': isKr()
+          ? '이미지, 동영상 파일을 업로드 하거나 새 폴더를 만들어 파일을 정리 할 수 있습니다'
+          : 'Upload images and videos or organize files through folders',
+      'guide_detail_media_1_sub_description_1': isKr()
+          ? '· [+] : 새 폴더 만들기 / [체크 아이콘] : 파일 이동 및 삭제'
+          : '· [Plus icon] : New folder / [Check icon] : Move files',
+      'guide_detail_media_1_sub_description_2': isKr()
+          ? '· 폴더 안에서 또 다른 폴더를 생성할 수 없습니다'
+          : '· Creating a folder within a folder is not possible',
+      'guide_detail_media_2_title': isKr() ? '2. 파일 상세' : '2. Create a folder and add file detail',
+      'guide_detail_media_2_description': isKr()
+          ? '업로드한 파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다'
+          : 'Select an uploaded file to view more information about the file',
+      'guide_detail_media_3_title': isKr() ? '3. 파일 이동' : '3. Move media file',
+      'guide_detail_media_3_description': isKr()
+          ? '메인화면 상단의 [체크 아이콘] 을 선택하여 파일을 이동 및 삭제할 수 있습니다'
+          : 'Move or delete files by selecting the [check icon] at the top of the main screen',
 
       'delete_account_title': isKr() ? '탈퇴' : 'Delete account',
       'delete_account_description':
