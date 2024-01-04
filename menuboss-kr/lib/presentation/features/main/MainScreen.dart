@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
@@ -8,6 +10,7 @@ import 'package:menuboss/presentation/features/main/media/provider/MediaListProv
 import 'package:menuboss_common/components/bottomNav/BottomNavBar.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/dto/Triple.dart';
 
 import 'devices/DevicesScreen.dart';
@@ -33,6 +36,7 @@ class MainScreen extends HookConsumerWidget {
     final currentIndexManager = ref.read(currentIndexProvider.notifier);
     final tutorialState = ref.watch(tutorialProvider);
     final tutorialManager = ref.read(tutorialProvider.notifier);
+    final getTutorialViewedUseCase = GetIt.instance<GetTutorialViewedUseCase>();
 
     List<Triple> iconList = [
       Triple('assets/imgs/icon_schedules_line.svg', 'assets/imgs/icon_schedules_filled.svg',
@@ -65,16 +69,40 @@ class MainScreen extends HookConsumerWidget {
 
           switch (currentIndex) {
             case 0:
-              ref.read(schedulesProvider.notifier).requestGetSchedules();
+              final items = await ref.read(schedulesProvider.notifier).requestGetSchedules();
+              if (items.isNotEmpty){
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.ScheduleAddedKey, 1.0);
+                }
+              }
               break;
             case 1:
-              ref.read(playListProvider.notifier).requestGetPlaylists();
+              final items = await ref.read(playListProvider.notifier).requestGetPlaylists();
+              if (items.isNotEmpty){
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.PlaylistAddedKey, 1.0);
+                }
+              }
               break;
             case 2:
-              ref.read(deviceListProvider.notifier).requestGetDevices();
+              final items = await ref.read(deviceListProvider.notifier).requestGetDevices();
+              if (items.isNotEmpty){
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.ScreenAdded, 1.0);
+                }
+              }
               break;
             case 3:
-              ref.read(mediaListProvider.notifier).requestGetMedias();
+              final items = await ref.read(mediaListProvider.notifier).requestGetMedias();
+              if (items.isNotEmpty){
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.MediaAddedKey, 1.0);
+                }
+              }
               break;
             case 4:
               break;

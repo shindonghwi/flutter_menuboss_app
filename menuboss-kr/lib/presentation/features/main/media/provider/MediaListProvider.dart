@@ -15,9 +15,8 @@ import 'package:menuboss_common/components/bottom_sheet/BottomSheetFilterSelecto
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
-final mediaListProvider =
-    StateNotifierProvider<MediaListNotifier, UIState<List<ResponseMediaModel>>>(
-  (ref) => MediaListNotifier(),
+final mediaListProvider = StateNotifierProvider<MediaListNotifier, UIState<List<ResponseMediaModel>>>(
+      (ref) => MediaListNotifier(),
 );
 
 class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>> {
@@ -31,18 +30,16 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
 
   final GetMediasUseCase _getMediasUseCase = GetIt.instance<GetMediasUseCase>();
   final DelMediaUseCase _delMediaUseCase = GetIt.instance<DelMediaUseCase>();
-  final PostCreateMediaFolderUseCase _createMediaFolderUseCase =
-      GetIt.instance<PostCreateMediaFolderUseCase>();
+  final PostCreateMediaFolderUseCase _createMediaFolderUseCase = GetIt.instance<PostCreateMediaFolderUseCase>();
   final PatchMediaNameUseCase _mediaNameUseCase = GetIt.instance<PatchMediaNameUseCase>();
-  final PostMediaFilterTypeUseCase _saveFilterTypeUseCase =
-      GetIt.instance<PostMediaFilterTypeUseCase>();
+  final PostMediaFilterTypeUseCase _saveFilterTypeUseCase = GetIt.instance<PostMediaFilterTypeUseCase>();
 
   Map<FilterType, String> filterKeys = {};
 
   void updateFilterKeys(Map<FilterType, String> filterKeys) => this.filterKeys = filterKeys;
 
   /// 미디어 리스트 요청
-  void requestGetMedias({int? delayed}) async {
+  Future<List<dynamic>> requestGetMedias({int? delayed}) async {
     if (_hasNext) {
       if (_currentPage == 1) {
         state = Loading();
@@ -53,8 +50,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (!_isProcessing) {
         _isProcessing = true;
         try {
-          final response = await _getMediasUseCase.call(
-              page: _currentPage, size: 30, sort: filterKeys[_filterType]!);
+          final response = await _getMediasUseCase.call(page: _currentPage, size: 30, sort: filterKeys[_filterType]!);
 
           if (response.status == 200) {
             final responseItems = response.list?.toList() ?? [];
@@ -70,6 +66,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
             _hasNext = response.page!.hasNext;
             _currentPage = response.page!.currentPage + 1;
             state = Success([...updateItems]);
+            return updateItems;
           } else {
             initPageInfo();
             state = Failure(response.message);
@@ -82,6 +79,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
         _isProcessing = false;
       }
     }
+    return [];
   }
 
   /// 미디어 폴더 생성
@@ -129,8 +127,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
       if (response.status == 200) {
         final updatedItems = currentItems.map((item) {
           if (item.mediaId == mediaId) {
-            return item.copyWith(
-                name: newName, createdAt: item.createdAt, updatedAt: item.updatedAt);
+            return item.copyWith(name: newName, createdAt: item.createdAt, updatedAt: item.updatedAt);
           }
           return item;
         }).toList();
@@ -147,8 +144,7 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
   Future<bool> removeItem(List<String> mediaIds, {String? folderId}) {
     return _delMediaUseCase.call(mediaIds).then((response) async {
       if (response.status == 200) {
-        List<ResponseMediaModel> updateItems =
-            currentItems.where((item) => !mediaIds.contains(item.mediaId)).toList();
+        List<ResponseMediaModel> updateItems = currentItems.where((item) => !mediaIds.contains(item.mediaId)).toList();
         updateCurrentItems(updateItems, isUiUpdate: true);
         return Future(() => true);
       } else {
@@ -172,8 +168,8 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
 
       if (updatedCount >= 0 && updatedSize >= 0) {
         int index = currentItems.indexOf(folderItem);
-        currentItems[index] = folderItem.copyWith(
-            property: folderItem.property?.copyWith(count: updatedCount, size: updatedSize));
+        currentItems[index] =
+            folderItem.copyWith(property: folderItem.property?.copyWith(count: updatedCount, size: updatedSize));
       }
 
       if (isUiUpdate) {
@@ -207,9 +203,9 @@ class MediaListNotifier extends StateNotifier<UIState<List<ResponseMediaModel>>>
 
   /// 미디어 정렬 순서 변경
   void changeFilterType(
-    FilterType type, {
-    required Map<FilterType, String> filterValue,
-  }) async {
+      FilterType type, {
+        required Map<FilterType, String> filterValue,
+      }) async {
     await _saveFilterTypeUseCase.call(type, filterValue);
     _filterType = type;
     initPageInfo();

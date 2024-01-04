@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
@@ -6,8 +7,7 @@ import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/PatchDeviceNameUseCase.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
-final deviceListProvider =
-    StateNotifierProvider<DeviceListNotifier, UIState<List<ResponseDeviceModel>>>(
+final deviceListProvider = StateNotifierProvider<DeviceListNotifier, UIState<List<ResponseDeviceModel>>>(
   (ref) => DeviceListNotifier(),
 );
 
@@ -21,7 +21,7 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
   List<ResponseDeviceModel> currentDevices = [];
 
   /// 디바이스 리스트 조회
-  void requestGetDevices() async {
+  Future<List<dynamic>> requestGetDevices() async{
     state = Loading();
 
     await Future.delayed(const Duration(milliseconds: 600));
@@ -30,9 +30,11 @@ class DeviceListNotifier extends StateNotifier<UIState<List<ResponseDeviceModel>
       if (response.status == 200) {
         updateCurrentDevices(response.list?.toList() ?? []);
         state = Success(currentDevices);
+        return currentDevices;
       } else {
         state = Failure(response.message);
       }
+      return [];
     });
   }
 
