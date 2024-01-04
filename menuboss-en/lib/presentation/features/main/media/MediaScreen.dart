@@ -4,6 +4,7 @@ import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -18,14 +19,16 @@ import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/colors.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/FilePickerUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 import 'package:menuboss_common/utils/dto/Pair.dart';
 
+import '../widget/provider/TutorialProvider.dart';
 import 'provider/MediaUploadProvider.dart';
 import 'widget/MediaItem.dart';
 import 'widget/MediaUploadProgress.dart';
@@ -38,6 +41,7 @@ class MediaScreen extends HookConsumerWidget {
     final mediaState = ref.watch(mediaListProvider);
     final mediaManager = ref.read(mediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
+    final tutorialManager = ref.read(tutorialProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -69,7 +73,7 @@ class MediaScreen extends HookConsumerWidget {
 
     void doMediaUploadAction() async {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
-
+      final getTutorialViewedUseCase = GetIt.instance<GetTutorialViewedUseCase>();
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) async {
           final controller = await uploadProgressProvider.uploadStart(
@@ -82,11 +86,15 @@ class MediaScreen extends HookConsumerWidget {
           if (controller != null) {
             GetIt.instance<PostUploadMediaImageUseCase>()
                 .call(xFile.path, streamController: controller)
-                .then((response) {
+                .then((response) async {
               if (response.status == 200) {
                 mediaManager.initPageInfo();
                 mediaManager.requestGetMedias();
                 uploadProgressProvider.uploadSuccess();
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.MediaAddedKey, 1.0);
+                }
               } else {
                 Toast.showError(context, response.message);
                 uploadProgressProvider.uploadFail();
@@ -105,11 +113,15 @@ class MediaScreen extends HookConsumerWidget {
           if (controller != null) {
             GetIt.instance<PostUploadMediaVideoUseCase>()
                 .call(xFile.path, streamController: controller)
-                .then((response) {
+                .then((response) async {
               if (response.status == 200) {
                 mediaManager.initPageInfo();
                 mediaManager.requestGetMedias();
                 uploadProgressProvider.uploadSuccess();
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.MediaAddedKey, 1.0);
+                }
               } else {
                 Toast.showError(context, response.message);
                 uploadProgressProvider.uploadFail();
@@ -220,7 +232,8 @@ class _MediaContentList extends HookConsumerWidget {
                     child: FilterButton(
                       filterValues: FilterInfo.getFilterValue(context),
                       onSelected: (type, text) {
-                        mediaManager.changeFilterType(type, filterValue: FilterInfo.getFilterValue(context));
+                        mediaManager.changeFilterType(type,
+                            filterValue: FilterInfo.getFilterValue(context));
                       },
                     ),
                   ),
@@ -274,7 +287,8 @@ class _MediaContentList extends HookConsumerWidget {
                               onRemove: () async {
                                 final isRemoved = await mediaManager.removeItem([item.mediaId]);
                                 if (isRemoved) {
-                                  Toast.showSuccess(context, Strings.of(context).messageRemoveMediaSuccess);
+                                  Toast.showSuccess(
+                                      context, Strings.of(context).messageRemoveMediaSuccess);
                                 }
                               },
                               onRename: (newName) {

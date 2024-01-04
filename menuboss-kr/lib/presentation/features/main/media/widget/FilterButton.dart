@@ -37,7 +37,7 @@ class FilterButton extends HookWidget {
           context,
           child: BottomSheetFilterSelector(
             checkedFilterType: FilterType.values.firstWhere(
-              (element) => filterValues[element] == filterText.value,
+                  (element) => filterValues[element] == filterText.value,
             ),
             onSelected: (FilterType type, String text) {
               filterText.value = text;
@@ -46,7 +46,8 @@ class FilterButton extends HookWidget {
           ),
         );
       },
-      child: Padding(
+      child: Container(
+        height: 40,
         padding: const EdgeInsets.all(12.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,
@@ -57,8 +58,8 @@ class FilterButton extends HookWidget {
               child: Text(
                 filterText.value.toString(),
                 style: getTextTheme(context).c1sb.copyWith(
-                      color: getColorScheme(context).colorGray900,
-                    ),
+                  color: getColorScheme(context).colorGray900,
+                ),
               ),
             ),
             LoadSvg(

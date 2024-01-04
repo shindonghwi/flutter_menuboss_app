@@ -50,6 +50,8 @@ class _ForegroundContents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return SafeArea(
       child: SizedBox(
         height: getMediaQuery(context).size.height,
@@ -200,7 +202,11 @@ class _ForegroundContents extends StatelessWidget {
                         ],
                       ),
                     ),
-                    const _PlaylistContentItem(type: "image", name: "이미지 이름", duration: 10),
+                    _PlaylistContentItem(
+                      type: "image",
+                      name: isKr ? "이미지 이름" : "Image name",
+                      duration: 10,
+                    ),
                   ],
                 ),
                 Expanded(
@@ -233,6 +239,8 @@ class _BackgroundContents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return SafeArea(
       child: SizedBox(
         height: double.infinity,
@@ -292,9 +300,18 @@ class _BackgroundContents extends StatelessWidget {
                           ],
                         ),
                       ),
-                      const _PlaylistContentItem(type: "video", name: "동영상 이름", duration: 10),
+                      _PlaylistContentItem(
+                        type: "video",
+                        name: isKr ? "동영상 이름" : "Video name",
+                        duration: 10,
+                      ),
                       Container(width: double.infinity, height: 92, color: Colors.white),
-                      const _PlaylistContentItem(type: "canvas", name: "캔버스 이름", duration: 0),
+
+                      _PlaylistContentItem(
+                        type: "canvas",
+                        name: isKr ? "캔버스 이름" : "Canvas name",
+                        duration: 20,
+                      ),
                     ],
                   ),
                 ],

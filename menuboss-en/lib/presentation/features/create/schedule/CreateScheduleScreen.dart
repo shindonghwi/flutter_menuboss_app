@@ -99,7 +99,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
             success: (event) {
               Toast.showSuccess(context, Strings.of(context).messageRegisterScheduleSuccess);
               schedulesManager.requestGetSchedules();
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );

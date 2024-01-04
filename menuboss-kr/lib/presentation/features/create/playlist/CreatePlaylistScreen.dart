@@ -88,10 +88,10 @@ class CreatePlaylistScreen extends HookConsumerWidget {
       void handleUiStateChange() async {
         await Future(() {
           playListRegisterState.when(
-            success: (event) {
+            success: (event) async {
               Toast.showSuccess(context, Strings.of(context).messageRegisterPlaylistSuccess);
               playlistsManager.requestGetPlaylists();
-              Navigator.of(context).pop();
+              Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );

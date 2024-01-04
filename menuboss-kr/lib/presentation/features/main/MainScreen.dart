@@ -1,11 +1,6 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
-import 'package:menuboss/domain/usecases/local/app/PostTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
@@ -13,11 +8,6 @@ import 'package:menuboss/presentation/features/main/media/provider/MediaListProv
 import 'package:menuboss_common/components/bottomNav/BottomNavBar.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/ui/Strings.dart';
-import 'package:menuboss_common/ui/tutorial/device/TutorialDeviceRegister.dart';
-import 'package:menuboss_common/ui/tutorial/media/TutorialMediaRegister.dart';
-import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
-import 'package:menuboss_common/ui/tutorial/playlist/TutorialPlaylistRegister.dart';
-import 'package:menuboss_common/ui/tutorial/schedule/TutorialScheduleRegister.dart';
 import 'package:menuboss_common/utils/dto/Triple.dart';
 
 import 'devices/DevicesScreen.dart';
@@ -29,6 +19,7 @@ import 'playlists/provider/PlaylistProvider.dart';
 import 'schedules/SchedulesScreen.dart';
 import 'schedules/provider/SchedulesProvider.dart';
 import 'widget/TutorialView.dart';
+import 'widget/provider/TutorialProvider.dart';
 
 final currentIndexProvider = StateProvider<int>((ref) => 2);
 
@@ -40,6 +31,8 @@ class MainScreen extends HookConsumerWidget {
     final meInfoManager = ref.read(meInfoProvider.notifier);
     final currentIndex = ref.watch(currentIndexProvider);
     final currentIndexManager = ref.read(currentIndexProvider.notifier);
+    final tutorialState = ref.watch(tutorialProvider);
+    final tutorialManager = ref.read(tutorialProvider.notifier);
 
     List<Triple> iconList = [
       Triple('assets/imgs/icon_schedules_line.svg', 'assets/imgs/icon_schedules_filled.svg',
@@ -54,10 +47,9 @@ class MainScreen extends HookConsumerWidget {
           Strings.of(context).mainNavigationMenuMy),
     ];
 
-    final tutorialKey = useState<TutorialKey?>(null);
-    final tutorialOpacity = useState(0.0);
-    final executedCodeForIndex =
-    useState<List<bool>>(List.generate(iconList.length, (index) => false));
+    final executedCodeForIndex = useState<List<bool>>(
+      List.generate(iconList.length, (index) => false),
+    );
 
     useEffect(() {
       if (!executedCodeForIndex.value[currentIndex]) {
@@ -73,24 +65,16 @@ class MainScreen extends HookConsumerWidget {
 
           switch (currentIndex) {
             case 0:
-              final items = await ref.read(schedulesProvider.notifier).requestGetSchedules();
-              tutorialKey.value = items.isEmpty ? null : TutorialKey.ScheduleAddedKey;
-              tutorialOpacity.value = 1.0;
+              ref.read(schedulesProvider.notifier).requestGetSchedules();
               break;
             case 1:
-              final items = await ref.read(playListProvider.notifier).requestGetPlaylists();
-              tutorialKey.value = items.isEmpty ? null : TutorialKey.PlaylistAddedKey;
-              tutorialOpacity.value = 1.0;
+              ref.read(playListProvider.notifier).requestGetPlaylists();
               break;
             case 2:
-              final items = await ref.read(deviceListProvider.notifier).requestGetDevices();
-              tutorialKey.value = items.isEmpty ? null : TutorialKey.ScreenAdded;
-              tutorialOpacity.value = 1.0;
+              ref.read(deviceListProvider.notifier).requestGetDevices();
               break;
             case 3:
-              final items = await ref.read(mediaListProvider.notifier).requestGetMedias();
-              tutorialKey.value = items.isEmpty ? null : TutorialKey.MediaAddedKey;
-              tutorialOpacity.value = 1.0;
+              ref.read(mediaListProvider.notifier).requestGetMedias();
               break;
             case 4:
               break;
@@ -124,13 +108,13 @@ class MainScreen extends HookConsumerWidget {
 
         // 튜토리얼 화면
         AnimatedOpacity(
-          opacity: tutorialOpacity.value,
+          opacity: tutorialState.second,
           duration: const Duration(milliseconds: 300),
           child: IgnorePointer(
-            ignoring: tutorialOpacity.value == 0,
+            ignoring: tutorialState.second == 0.0,
             child: TutorialView(
-              tutorialKey: tutorialKey.value,
-              onTutorialClosed: () => tutorialOpacity.value = 0.0,
+              tutorialKey: tutorialState.first,
+              onTutorialClosed: () => tutorialManager.change(null, 0.0),
             ),
           ),
         ),

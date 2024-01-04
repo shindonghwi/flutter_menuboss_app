@@ -30,74 +30,53 @@ class TutorialView extends HookWidget {
       final postTutorialViewedUseCase = GetIt.instance<PostTutorialViewedUseCase>();
 
       if (tutorialKey != null) {
+        bool hasViewed = await getTutorialViewedUseCase.call(tutorialKey!);
+        if (hasViewed) {
+          return Container();
+        }
         switch (tutorialKey) {
           case TutorialKey.ScreenAdded:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
-            if (!hasViewed) {
-              return TutorialDeviceAdded(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
-                },
-              );
-            }
-            break;
+            return TutorialDeviceAdded(
+              onPressed: () {
+                onTutorialClosed.call();
+                postTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
+              },
+            );
           case TutorialKey.PlaylistAddedKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
-            if (!hasViewed) {
-              return TutorialPlaylistAdded(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
-                },
-              );
-            }
-            break;
+            return TutorialPlaylistAdded(
+              onPressed: () {
+                onTutorialClosed.call();
+                postTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
+              },
+            );
           case TutorialKey.PlaylistMakeKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistMakeKey);
-            if (!hasViewed) {
-              return TutorialPlaylistMake(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.PlaylistMakeKey);
-                },
-              );
-            }
-            break;
+            return TutorialPlaylistMake(
+              onPressed: () {
+                onTutorialClosed.call();
+                postTutorialViewedUseCase.call(TutorialKey.PlaylistMakeKey);
+              },
+            );
           case TutorialKey.ScheduleAddedKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
-            if (!hasViewed) {
-              return TutorialScheduleAdded(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
-                },
-              );
-            }
-            break;
-
+            return TutorialScheduleAdded(
+              onPressed: () {
+                onTutorialClosed.call();
+                postTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
+              },
+            );
           case TutorialKey.ScheduleMakeKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleMakeKey);
-            if (!hasViewed) {
-              return TutorialScheduleMake(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.ScheduleMakeKey);
-                },
-              );
-            }
-            break;
+            return TutorialScheduleMake(
+              onPressed: () {
+                onTutorialClosed.call();
+                postTutorialViewedUseCase.call(TutorialKey.ScheduleMakeKey);
+              },
+            );
           case TutorialKey.MediaAddedKey:
-            bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
-            if (!hasViewed) {
-              return TutorialMediaAdded(
-                onPressed: () {
-                  onTutorialClosed.call();
-                  postTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
-                },
-              );
-            }
-            break;
+            return TutorialMediaAdded(
+              onPressed: () async {
+                onTutorialClosed.call();
+                postTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+              },
+            );
           default:
             break;
         }

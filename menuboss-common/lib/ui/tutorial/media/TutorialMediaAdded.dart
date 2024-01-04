@@ -127,12 +127,33 @@ class _BackgroundContents extends StatelessWidget {
     final isKr = Localizations.localeOf(context).languageCode.contains("ko");
     return SafeArea(
       child: Padding(
-        padding: const EdgeInsets.only(top: 96.0, bottom: 78),
+        padding: const EdgeInsets.only(top: 56.0, bottom: 78),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            Container(
+              height: 40,
+              padding: const EdgeInsets.symmetric(horizontal: 24),
+              color: getColorScheme(context).white,
+              child: Row(
+                children: [
+                  DefaultTextStyle(
+                    style: getTextTheme(context).c1sb.copyWith(
+                          color: getColorScheme(context).colorGray700,
+                        ),
+                    child: Text(isKr ? "이름 (가 -> 하)" : "Name (A -> Z)"),
+                  ),
+                  const SizedBox(width: 12),
+                  const LoadSvg(
+                    path: "assets/imgs/icon_down.svg",
+                    width: 16,
+                    height: 16,
+                  ),
+                ],
+              ),
+            ),
             _Content(
               fileName: isKr ? "새 폴더" : "New folder",
               description: isKr ? "2개 파일(4.7MB)" : "2 files(4.7MB)",

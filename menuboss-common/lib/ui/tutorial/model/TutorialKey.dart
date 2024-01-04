@@ -1,4 +1,5 @@
 enum TutorialKey {
+  Idle, // 튜토리얼 없음
   // 스크린
   ScreenAdded, // 추가된 스크린 튜토리얼
 

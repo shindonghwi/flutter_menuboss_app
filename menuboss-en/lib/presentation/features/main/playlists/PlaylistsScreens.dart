@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
+import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
@@ -18,9 +20,12 @@ import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 import 'package:menuboss_common/utils/UiState.dart';
+
+import '../widget/provider/TutorialProvider.dart';
 
 
 class PlaylistsScreens extends HookConsumerWidget {
@@ -88,14 +93,23 @@ class _PlaylistContentList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final playlistManager = ref.read(playListProvider.notifier);
+    final getTutorialViewedUseCase = GetIt.instance<GetTutorialViewedUseCase>();
+    final tutorialManager = ref.read(tutorialProvider.notifier);
 
     void goToCreatePlaylist() async {
-      Navigator.push(
+      final isAdded = await Navigator.push(
         context,
         nextSlideVerticalScreen(
           RoutingScreen.CreatePlaylist.route,
         ),
       );
+
+      if (isAdded) {
+        bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
+        if (!hasViewed) {
+          tutorialManager.change(TutorialKey.PlaylistAddedKey, 1.0);
+        }
+      }
     }
 
     void goToDetailPlaylist(ResponsePlaylistsModel item) async {

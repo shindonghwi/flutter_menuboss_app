@@ -2,13 +2,16 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
+import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceShowNameEventProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/widget/DeviceItem.dart';
+import 'package:menuboss/presentation/features/main/widget/provider/TutorialProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarTitle.dart';
 import 'package:menuboss_common/components/button/FloatingPlusButton.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
@@ -17,6 +20,7 @@ import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
@@ -105,6 +109,8 @@ class _DeviceContentList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final deviceManager = ref.read(deviceListProvider.notifier);
+    final getTutorialViewedUseCase = GetIt.instance<GetTutorialViewedUseCase>();
+    final tutorialManager = ref.read(tutorialProvider.notifier);
 
     void goToRegisterDevice() async {
       try {
@@ -115,6 +121,10 @@ class _DeviceContentList extends HookConsumerWidget {
 
         if (isAdded) {
           deviceManager.requestGetDevices();
+          bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
+          if (!hasViewed) {
+            tutorialManager.change(TutorialKey.ScreenAdded, 1.0);
+          }
         }
       } catch (e) {
         debugPrint(e.toString());
