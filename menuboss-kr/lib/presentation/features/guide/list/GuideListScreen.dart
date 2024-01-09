@@ -13,7 +13,6 @@ import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
 class _GuideItem {
@@ -135,7 +134,7 @@ class GuideListScreen extends StatelessWidget {
                     padding: const EdgeInsets.only(bottom: 4.0), // 이 부분을 조절하여 간격 변경
                     child: Text(
                       Strings.of(context).guideListDetailView,
-                      style: getTextTheme(context).b3m.copyWith(
+                      style: getTextTheme(context).c1m.copyWith(
                             color: getColorScheme(context).colorGray400,
                           ),
                     ),
@@ -174,7 +173,7 @@ class _Content extends HookWidget {
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   item.title,
@@ -182,6 +181,7 @@ class _Content extends HookWidget {
                         color: getColorScheme(context).colorGray900,
                       ),
                 ),
+                const SizedBox(height: 6),
                 Text(
                   item.description,
                   style: getTextTheme(context).b3m.copyWith(

@@ -38,6 +38,9 @@ class ScheduleTimelineInfoProviderNotifier extends StateNotifier<List<SimpleSche
   }
 
   void replaceItems(List<SimpleSchedulesModel> items) {
+    if (items.isEmpty) {
+      return;
+    }
     // 첫번째 아이템은 제거 (서버에서 전달받은 플레이리스트로 구성)
     // 마지막 아이템은 항상 추가 버튼
     SimpleSchedulesModel lastItem = state.last;

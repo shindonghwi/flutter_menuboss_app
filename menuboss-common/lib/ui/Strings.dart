@@ -56,7 +56,7 @@ class Strings {
 
       'select_playlist_title': isKr() ? '재생목록' : 'Playlist',
 
-      'destination_folder_title': isKr() ? '폴더 선택' : 'Select destination folder',
+      'destination_folder_title': isKr() ? '폴더 선택' : 'Select folder',
       'destination_folder_root': isKr() ? '보관함' : 'Media',
 
       'create_schedule_title': isKr() ? '시간표 생성' : 'Create schedule',
@@ -258,7 +258,7 @@ class Strings {
       'tutorial_media_description6':
           isKr() ? '파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다' : 'Select a file to see detailed information',
 
-      'blank_message_content_add_screen': isKr() ? 'TV 추가' : 'Add screen',
+      'blank_message_content_add_screen': isKr() ? 'TV 추가' : 'New screen',
       'blank_message_content_upload_file': isKr() ? '파일 업로드' : 'Upload file',
       'blank_message_content_add_content': isKr() ? '콘텐츠 추가' : 'Add content',
       'blank_message_content_add_canvas': isKr() ? '캔버스 추가' : 'Add canvas',

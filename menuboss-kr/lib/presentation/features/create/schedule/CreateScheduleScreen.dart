@@ -74,6 +74,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        timelineManager.setInitialItems(initialItems);
         if (isEditMode.value) {
           saveManager.changeName(item?.name ?? "");
 
@@ -86,7 +87,6 @@ class CreateScheduleScreen extends HookConsumerWidget {
           timelineManager.replaceItems(newPlaylistItems);
         } else {
           tutorialOpacity.value = 1.0;
-          timelineManager.setInitialItems(initialItems);
         }
       });
       return null;

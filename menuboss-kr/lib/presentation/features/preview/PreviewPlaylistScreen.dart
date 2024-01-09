@@ -355,7 +355,7 @@ class TimerDivider extends HookWidget {
                     startTimer();
                   },
                   child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 12),
                     child: Stack(
                       children: [
                         Container(

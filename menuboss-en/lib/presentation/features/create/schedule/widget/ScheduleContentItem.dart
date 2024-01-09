@@ -99,7 +99,9 @@ class ScheduleContentItem extends HookConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       separatorBuilder: (BuildContext context, int index) {
-        return Container();
+        return Container(
+          height: 8,
+        );
       },
       itemBuilder: (BuildContext context, int index) {
         final data = timelineState[index];
@@ -143,7 +145,7 @@ class ScheduleContentItem extends HookConsumerWidget {
               )
             : SizedBox(
                 width: double.infinity,
-                height: 172,
+          height: 164,
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,7 +167,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                     ),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.only(top: 12, right: 12, bottom: 24),
+                        margin: const EdgeInsets.only(right: 12.0, bottom: 12),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,27 +178,30 @@ class ScheduleContentItem extends HookConsumerWidget {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsets.only(top: data.isRequired ? 12 : 0),
-                                    child: Row(
-                                      children: [
-                                        if (data.isRequired)
-                                          Text(
-                                            "* ",
-                                            style: getTextTheme(context).s3sb.copyWith(
-                                                  color: getColorScheme(context).colorSecondary500,
-                                                ),
-                                          ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
-                                            child: Text(
-                                              data.playListName,
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        children: [
+                                          if (data.isRequired)
+                                            Text(
+                                              "* ",
                                               style: getTextTheme(context).s3sb.copyWith(
-                                                    color: getColorScheme(context).colorGray900,
+                                                    color: getColorScheme(context).colorSecondary500,
                                                   ),
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
+                                              child: Text(
+                                                data.playListName,
+                                                style: getTextTheme(context).s3sb.copyWith(
+                                                      color: getColorScheme(context).colorGray900,
+                                                    ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -204,6 +209,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                   Clickable(
                                     onPressed: () => timelineProvider.removeItemByIndex(index),
                                     child: Container(
+                                      margin: const EdgeInsets.only(right: 0),
                                       padding: const EdgeInsets.all(12),
                                       child: LoadSvg(
                                         path: "assets/imgs/icon_trash.svg",

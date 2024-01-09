@@ -17,7 +17,7 @@ class DeviceGuide extends HookWidget {
         children: [
           Text(
             Strings.of(context).guideDetailDevice1Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                   overflow: TextOverflow.visible,
                 ),
@@ -25,17 +25,32 @@ class DeviceGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailDevice1Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray700,
                   overflow: TextOverflow.visible,
                 ),
           ),
           const SizedBox(height: 20),
           Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_device1.png"),
+          const SizedBox(height: 12),
+          Text(
+            Strings.of(context).guideDetailDevice1SubDescription1,
+            style: getTextTheme(context).c1m.copyWith(
+              color: getColorScheme(context).colorGray500,
+              overflow: TextOverflow.visible,
+            ),
+          ),
+          Text(
+            Strings.of(context).guideDetailDevice1SubDescription2,
+            style: getTextTheme(context).c1m.copyWith(
+              color: getColorScheme(context).colorGray500,
+              overflow: TextOverflow.visible,
+            ),
+          ),
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailDevice2Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -43,7 +58,7 @@ class DeviceGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailDevice2Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),
@@ -53,7 +68,7 @@ class DeviceGuide extends HookWidget {
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailDevice3Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -61,7 +76,7 @@ class DeviceGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailDevice3Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),

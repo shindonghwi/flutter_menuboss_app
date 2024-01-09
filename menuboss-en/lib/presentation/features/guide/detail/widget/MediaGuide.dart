@@ -17,7 +17,7 @@ class MediaGuide extends HookWidget {
         children: [
           Text(
             Strings.of(context).guideDetailMedia1Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -25,7 +25,7 @@ class MediaGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailMedia1Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),
@@ -50,7 +50,7 @@ class MediaGuide extends HookWidget {
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailMedia2Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -58,7 +58,7 @@ class MediaGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailMedia2Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),
@@ -68,7 +68,7 @@ class MediaGuide extends HookWidget {
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailMedia3Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -76,7 +76,7 @@ class MediaGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailMedia3Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),

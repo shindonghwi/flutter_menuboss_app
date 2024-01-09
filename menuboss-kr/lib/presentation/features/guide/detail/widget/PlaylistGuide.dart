@@ -17,7 +17,7 @@ class PlaylistGuide extends HookWidget {
         children: [
           Text(
             Strings.of(context).guideDetailPlaylist1Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -25,7 +25,7 @@ class PlaylistGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailPlaylist1Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),
@@ -50,7 +50,7 @@ class PlaylistGuide extends HookWidget {
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailPlaylist2Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -58,7 +58,7 @@ class PlaylistGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailPlaylist2Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),
@@ -68,7 +68,7 @@ class PlaylistGuide extends HookWidget {
           const SizedBox(height: 32),
           Text(
             Strings.of(context).guideDetailPlaylist3Title,
-            style: getTextTheme(context).b1sb.copyWith(
+            style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
             ),
@@ -76,7 +76,7 @@ class PlaylistGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailPlaylist3Description,
-            style: getTextTheme(context).b2m.copyWith(
+            style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
             ),

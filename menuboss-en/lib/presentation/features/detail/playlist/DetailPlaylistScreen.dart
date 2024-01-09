@@ -20,8 +20,8 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -222,7 +222,7 @@ class _PlaylistContent extends StatelessWidget {
                                         padding: const EdgeInsets.only(left: 4.0),
                                         child: Text(
                                           data?.name ?? "",
-                                          style: getTextTheme(context).b2sb.copyWith(
+                                          style: getTextTheme(context).b3m.copyWith(
                                                 color: getColorScheme(context).colorGray900,
                                               ),
                                         ),
@@ -234,7 +234,7 @@ class _PlaylistContent extends StatelessWidget {
                             ),
                             Text(
                               StringUtil.formatDuration(data?.duration ?? 0),
-                              style: getTextTheme(context).b3sb.copyWith(
+                              style: getTextTheme(context).b3m.copyWith(
                                     color: getColorScheme(context).colorGray500,
                                   ),
                             ),
@@ -314,7 +314,7 @@ class _TotalDuration extends HookConsumerWidget {
             children: [
               Text(
                 Strings.of(context).commonTotalDuration,
-                style: getTextTheme(context).b3sb.copyWith(
+                style: getTextTheme(context).b3m.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
               ),
@@ -329,7 +329,7 @@ class _TotalDuration extends HookConsumerWidget {
                         ) ??
                         0,
                   ),
-                  style: getTextTheme(context).b3sb.copyWith(
+                  style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).colorGray500,
                       ),
                 ),
@@ -452,7 +452,7 @@ class _OptionPropertyInfo extends HookWidget {
                 padding: const EdgeInsets.only(left: 8.0),
                 child: Text(
                   iconText,
-                  style: getTextTheme(context).b3sb.copyWith(
+                  style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
                 ),
