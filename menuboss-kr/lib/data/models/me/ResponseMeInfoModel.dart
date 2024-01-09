@@ -1,12 +1,9 @@
-import 'dart:convert';
-
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/data/models/me/ResponseMeProfile.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 
 import 'ResponseMeAuthorization.dart';
 import 'ResponseMeBusiness.dart';
-import 'ResponseMePhone.dart';
 
 part 'ResponseMeInfoModel.g.dart';
 
@@ -26,7 +23,8 @@ class ResponseMeInfoModel {
     required this.authorization,
   });
 
-  factory ResponseMeInfoModel.fromJson(Map<String, dynamic> json) => _$ResponseMeInfoModelFromJson(json);
+  factory ResponseMeInfoModel.fromJson(Map<String, dynamic> json) =>
+      _$ResponseMeInfoModelFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMeInfoModelToJson(this);
 

@@ -19,7 +19,8 @@ class RequestMeSocialJoinModel {
     this.timeZone,
   });
 
-  factory RequestMeSocialJoinModel.fromJson(Map<String, dynamic> json) => _$RequestMeSocialJoinModelFromJson(json);
+  factory RequestMeSocialJoinModel.fromJson(Map<String, dynamic> json) =>
+      _$RequestMeSocialJoinModelFromJson(json);
 
   RequestMeSocialJoinModel copyWith({
     String? type,
