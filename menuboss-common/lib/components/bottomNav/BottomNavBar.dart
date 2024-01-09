@@ -36,42 +36,45 @@ class BottomNavBar extends HookConsumerWidget {
               ),
             ),
             height: 72,
-            child: Row(
-                children: iconList.asMap().entries.map((e) {
-              final index = e.key;
-              final item = e.value;
-              return Flexible(
-                fit: FlexFit.tight,
-                flex: 1,
-                child: Clickable(
-                  onPressed: () => onTap.call(index),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      LoadSvg(
-                        path: currentIndex == index ? item.second : item.first,
-                        width: 24,
-                        height: 24,
-                        color: currentIndex == index
-                            ? getColorScheme(context).colorPrimary500
-                            : getColorScheme(context).colorGray400,
-                      ),
-                      const SizedBox(
-                        height: 2,
-                      ),
-                      Text(
-                        item.third,
-                        style: getTextTheme(context).c1m.copyWith(
-                              color: currentIndex == index
-                                  ? getColorScheme(context).colorPrimary500
-                                  : getColorScheme(context).colorGray400,
-                            ),
-                      ),
-                    ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                  children: iconList.asMap().entries.map((e) {
+                final index = e.key;
+                final item = e.value;
+                return Flexible(
+                  fit: FlexFit.tight,
+                  flex: 1,
+                  child: Clickable(
+                    onPressed: () => onTap.call(index),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        LoadSvg(
+                          path: currentIndex == index ? item.second : item.first,
+                          width: 24,
+                          height: 24,
+                          color: currentIndex == index
+                              ? getColorScheme(context).colorPrimary500
+                              : getColorScheme(context).colorGray400,
+                        ),
+                        const SizedBox(
+                          height: 2,
+                        ),
+                        Text(
+                          item.third,
+                          style: getTextTheme(context).c1m.copyWith(
+                                color: currentIndex == index
+                                    ? getColorScheme(context).colorPrimary500
+                                    : getColorScheme(context).colorGray400,
+                              ),
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }).toList()),
+                );
+              }).toList()),
+            ),
           ),
         ),
       ),
