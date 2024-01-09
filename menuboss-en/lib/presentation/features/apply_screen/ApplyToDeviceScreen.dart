@@ -15,8 +15,8 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
@@ -116,7 +116,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
                         child: PrimaryFilledButton.largeRound8(
-                          content: Strings.of(context).commonConfirm,
+                          content: Strings.of(context).commonDone,
                           isActivated: checkList.isNotEmpty,
                           onPressed: () {
                             CommonPopup.showPopup(
@@ -124,12 +124,15 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                               child: PopupApplyDevice(
                                 onClicked: (isApply) {
                                   if (isApply) {
-                                    final deviceIds = deviceManager.currentDevices.map((e) => e.screenId).toList();
+                                    final deviceIds = deviceManager.currentDevices
+                                        .map((e) => e.screenId)
+                                        .toList();
                                     final applyDeviceIds = [
                                       for (var i = 0; i < deviceIds.length; i++)
                                         if (checkList.contains(i)) deviceIds[i]
                                     ];
-                                    applyItem.value = applyItem.value.copyWith(screenIds: applyDeviceIds);
+                                    applyItem.value =
+                                        applyItem.value.copyWith(screenIds: applyDeviceIds);
                                     applyScreenManager.applyToScreen(applyItem.value);
                                   }
                                 },

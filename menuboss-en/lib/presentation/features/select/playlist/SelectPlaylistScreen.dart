@@ -4,7 +4,6 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
-import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:menuboss_common/components/loader/LoadImage.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
@@ -15,8 +14,8 @@ import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -99,19 +98,6 @@ class SelectPlaylistScreen extends HookConsumerWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          width: getMediaQuery(context).size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
-          child: PrimaryFilledButton.largeRound8(
-            content: Strings.of(context).commonDone,
-            isActivated: selectedPlaylist.value != null,
-            onPressed: () {
-              Navigator.of(context).pop(selectedPlaylist.value);
-            },
-          ),
-        ),
-      ),
     );
   }
 }
@@ -188,7 +174,8 @@ class _PlaylistContent extends HookWidget {
                                       ),
                                       Row(
                                         children: [
-                                          if (!CollectionUtil.isNullorEmpty(data.property?.contentTypes))
+                                          if (!CollectionUtil.isNullorEmpty(
+                                              data.property?.contentTypes))
                                             Row(
                                               children: data.property!.contentTypes!.map((e) {
                                                 return Container(
@@ -201,7 +188,8 @@ class _PlaylistContent extends HookWidget {
                                             Padding(
                                               padding: const EdgeInsets.only(left: 4.0),
                                               child: Text(
-                                                Strings.of(context).count_pages(data.property?.count ?? 0),
+                                                Strings.of(context)
+                                                    .count_pages(data.property?.count ?? 0),
                                                 style: getTextTheme(context).c1m.copyWith(
                                                       color: getColorScheme(context).colorGray500,
                                                     ),
