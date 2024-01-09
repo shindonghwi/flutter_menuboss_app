@@ -294,7 +294,7 @@ class _MediaInformation extends HookConsumerWidget {
             child: Text(
               Strings.of(context).mediaInfoTitle,
               style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorGray900,
+                    color: getColorScheme(context).colorGray700,
                   ),
             ),
           ),
