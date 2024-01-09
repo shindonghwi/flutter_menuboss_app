@@ -22,10 +22,10 @@ class Environment {
       _instance._buildType == BuildType.dev ? '87e95076a7810aa93854080bab89a56f' : '782a9583e5428ca708d3feae7b536359';
 
   static String apiUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-app-api.menuboss.kr' : 'https://app-api.menuboss.kr';
+      _instance._buildType == BuildType.dev ? 'https://dev-app-api-kr.menuboss.live' : 'https://app-api.menuboss.kr';
 
   static String webUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-www.menuboss.kr' : 'https://www.menuboss.kr';
+      _instance._buildType == BuildType.dev ? 'https://dev-www-kr.menuboss.live' : 'https://www.menuboss.kr';
 
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
