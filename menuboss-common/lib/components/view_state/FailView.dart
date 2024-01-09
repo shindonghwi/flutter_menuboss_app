@@ -18,11 +18,9 @@ class FailView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: getMediaQuery(context).size.width,
-      height: getMediaQuery(context).size.height,
-      margin: EdgeInsets.only(top: 230),
+    return Center(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
