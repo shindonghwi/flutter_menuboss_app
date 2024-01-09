@@ -180,7 +180,7 @@ class _PlaylistContent extends HookWidget {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                                         child: Text(
-                                          "${Strings.of(context).commonUpdated}: ${data.updatedDate}",
+                                          "${Strings.of(context).commonUpdated} : ${data.updatedDate}",
                                           style: getTextTheme(context).c1m.copyWith(
                                                 color: getColorScheme(context).colorGray500,
                                               ),

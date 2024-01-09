@@ -106,7 +106,7 @@ class _EnableContents extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "${Strings.of(context).commonUpdated}: $date",
+                          "${Strings.of(context).commonUpdated} : $date",
                           style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),

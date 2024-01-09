@@ -56,7 +56,7 @@ class ScheduleItem extends HookWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "${Strings.of(context).commonUpdated}: ${item.updatedDate}",
+                          "${Strings.of(context).commonUpdated} : ${item.updatedDate}",
                           style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),
