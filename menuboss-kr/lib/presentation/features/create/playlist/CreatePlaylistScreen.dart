@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/CreatePreviewItemProcessProvider.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/playlists/provider/PlaylistProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
@@ -40,6 +41,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = useState(item != null);
 
+    final deviceListManager = ref.read(deviceListProvider.notifier);
     final playlistsManager = ref.read(playListProvider.notifier);
 
     final playListRegisterState = ref.watch(playListRegisterProvider);
@@ -91,6 +93,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
             success: (event) async {
               Toast.showSuccess(context, Strings.of(context).messageRegisterPlaylistSuccess);
               playlistsManager.requestGetPlaylists();
+              deviceListManager.requestGetDevices();
               Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
@@ -99,6 +102,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
             success: (event) {
               Toast.showSuccess(context, Strings.of(context).messageUpdatePlaylistSuccess);
               playlistsManager.requestGetPlaylists();
+              deviceListManager.requestGetDevices();
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },

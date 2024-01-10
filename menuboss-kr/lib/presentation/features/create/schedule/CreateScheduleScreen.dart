@@ -5,6 +5,7 @@ import 'package:menuboss/presentation/features/create/schedule/provider/Schedule
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleUpdateProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/widget/ScheduleContentItem.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/provider/SchedulesProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss_common/components/appbar/TopBarNoneTitleIcon.dart';
@@ -36,6 +37,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = useState(item != null);
 
+    final deviceListManager = ref.read(deviceListProvider.notifier);
     final schedulesManager = ref.read(schedulesProvider.notifier);
 
     final scheduleUpdateState = ref.watch(scheduleUpdateProvider);
@@ -99,6 +101,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
             success: (event) {
               Toast.showSuccess(context, Strings.of(context).messageRegisterScheduleSuccess);
               schedulesManager.requestGetSchedules();
+              deviceListManager.requestGetDevices();
               Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
@@ -107,6 +110,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
             success: (event) {
               Toast.showSuccess(context, Strings.of(context).messageUpdateScheduleSuccess);
               schedulesManager.requestGetSchedules();
+              deviceListManager.requestGetDevices();
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },
