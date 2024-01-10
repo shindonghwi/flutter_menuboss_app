@@ -91,6 +91,7 @@ class _TitleContent extends StatelessWidget {
             Strings.of(context).policyDescription,
             style: getTextTheme(context).b2m.copyWith(
                   color: getColorScheme(context).colorGray700,
+                  overflow: TextOverflow.visible,
                 ),
           ),
         ],

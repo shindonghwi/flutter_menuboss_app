@@ -101,7 +101,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     children: [
                       Text(
                         Strings.of(context).deleteAccountDescription,
-                        style: getTextTheme(context).s3sb.copyWith(
+                        style: getTextTheme(context).s1sb.copyWith(
                               color: getColorScheme(context).colorGray900,
                             ),
                         overflow: TextOverflow.visible,
@@ -129,7 +129,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     ),
                     Text(
                       Strings.of(context).deleteAccountReasonTitle,
-                      style: getTextTheme(context).s3sb.copyWith(
+                      style: getTextTheme(context).s1sb.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                       overflow: TextOverflow.visible,
