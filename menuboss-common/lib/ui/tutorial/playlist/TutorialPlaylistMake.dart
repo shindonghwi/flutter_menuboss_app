@@ -54,121 +54,69 @@ class _ForegroundContents extends StatelessWidget {
 
     return SafeArea(
       child: SizedBox(
+        width: double.infinity,
         height: getMediaQuery(context).size.height,
         child: Clickable(
           onPressed: () => onPressed.call(),
           child: IgnorePointer(
             child: Column(
+              mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(
+                Container(
                   height: 56,
+                  margin: const EdgeInsets.only(right: 20),
                   child: Row(
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Flexible(
-                        flex: 43,
-                        fit: FlexFit.tight,
-                        child: Container(
-                          alignment: Alignment.topRight,
-                          padding: const EdgeInsets.only(top: 24.0),
-                          child: Transform.flip(
-                            child: Transform.rotate(
-                              angle: -60 * math.pi / 180,
-                              child: LoadSvg(
-                                width: 24,
-                                height: 12,
-                                path: "assets/imgs/icon_tutorial_arrow1.svg",
-                                color: getColorScheme(context).white,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
+                      Transform.flip(
+                        child: Transform.rotate(
+                          angle: -60 * math.pi / 180,
+                          child: LoadSvg(
+                            width: 24,
+                            height: 12,
+                            path: "assets/imgs/icon_tutorial_arrow1.svg",
+                            color: getColorScheme(context).white,
+                            fit: BoxFit.cover,
                           ),
                         ),
                       ),
-                      Flexible(
-                        flex: 57,
-                        fit: FlexFit.tight,
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          padding: const EdgeInsets.only(top: 12, left: 8),
-                          child: DefaultTextStyle(
-                            style: getTextTheme(context).b3m.copyWith(
-                                  color: getColorScheme(context).white,
-                                  overflow: TextOverflow.visible,
-                                ),
-                            child: Text(Strings.of(context).tutorialPlaylistDescription1),
-                          ),
+                      const SizedBox(
+                        width: 8,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(bottom: 10),
+                        child: Text(
+                          Strings.of(context).tutorialPlaylistDescription1,
+                          style: getTextTheme(context).b3m.copyWith(
+                                color: getColorScheme(context).white,
+                                overflow: TextOverflow.visible,
+                              ),
                         ),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                Container(
+                  width: double.infinity,
                   height: 380,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       const PlaylistInputName(),
                       const PlaylistSettings(),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            flex: 3,
-                            fit: FlexFit.tight,
-                            child: Container(
-                              alignment: Alignment.topRight,
-                              padding: const EdgeInsets.only(top: 12.0),
-                              child: Transform.flip(
-                                flipY: true,
-                                child: Transform.rotate(
-                                  angle: -60 * math.pi / 180,
-                                  child: LoadSvg(
-                                    width: 24,
-                                    height: 12,
-                                    path: "assets/imgs/icon_tutorial_arrow1.svg",
-                                    color: getColorScheme(context).white,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          Flexible(
-                            flex: 7,
-                            fit: FlexFit.tight,
-                            child: Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(top: 24, left: 8),
-                              child: DefaultTextStyle(
-                                style: getTextTheme(context).b3m.copyWith(
-                                      color: getColorScheme(context).white,
-                                      overflow: TextOverflow.visible,
-                                    ),
-                                child: Text(Strings.of(context).tutorialPlaylistDescription2),
-                              ),
-                            ),
-                          ),
-                        ],
+                      const SizedBox(
+                        height: 12,
                       ),
-                      // PlaylistTotalDuration()
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 52),
-                Column(
-                  children: [
-                    Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            flex: 25,
-                            fit: FlexFit.tight,
-                            child: Container(
-                              alignment: Alignment.bottomRight,
-                              margin: const EdgeInsets.only(bottom: 0.0),
+                      Container(
+                        margin: const EdgeInsets.only(right: 20),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Transform.flip(
+                              flipY: true,
                               child: Transform.rotate(
                                 angle: -60 * math.pi / 180,
                                 child: LoadSvg(
@@ -180,26 +128,56 @@ class _ForegroundContents extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            flex: 75,
-                            fit: FlexFit.tight,
-                            child: Container(
-                              alignment: Alignment.centerLeft,
-                              margin: const EdgeInsets.only(bottom: 12),
-                              child: Padding(
-                                padding: const EdgeInsets.only(left: 8.0),
-                                child: DefaultTextStyle(
-                                  style: getTextTheme(context).b3m.copyWith(
-                                        color: getColorScheme(context).white,
-                                        overflow: TextOverflow.visible,
-                                      ),
-                                  child: Text(Strings.of(context).tutorialPlaylistDescription3),
-                                ),
+                            Padding(
+                              padding: const EdgeInsets.only(top: 12, left: 8),
+                              child: Text(
+                                Strings.of(context).tutorialPlaylistDescription2,
+                                style: getTextTheme(context).b3m.copyWith(
+                                      color: getColorScheme(context).white,
+                                      overflow: TextOverflow.visible,
+                                    ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
+                      ),
+                      // PlaylistTotalDuration()
+                    ],
+                  ),
+                ),
+                const SizedBox(height: 48),
+                Column(
+                  children: [
+                    Container(
+                      margin: const EdgeInsets.only(right: 20),
+                      child: Padding(
+                        padding: const EdgeInsets.only(bottom: 12),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Transform.rotate(
+                              angle: -60 * math.pi / 180,
+                              child: LoadSvg(
+                                width: 24,
+                                height: 12,
+                                path: "assets/imgs/icon_tutorial_arrow1.svg",
+                                color: getColorScheme(context).white,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, bottom: 12),
+                              child: Text(
+                                Strings.of(context).tutorialPlaylistDescription3,
+                                style: getTextTheme(context).b3m.copyWith(
+                                      color: getColorScheme(context).white,
+                                      overflow: TextOverflow.visible,
+                                    ),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
                     _PlaylistContentItem(
@@ -306,7 +284,6 @@ class _BackgroundContents extends StatelessWidget {
                         duration: 10,
                       ),
                       Container(width: double.infinity, height: 92, color: Colors.white),
-
                       _PlaylistContentItem(
                         type: "canvas",
                         name: isKr ? "캔버스 이름" : "Canvas name",

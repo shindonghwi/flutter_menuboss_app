@@ -67,48 +67,37 @@ class _EnableContents extends StatelessWidget {
               fileName: isKr ? "파일 이름" : "File name",
               description: isKr ? "이미지 - 2.8MB" : "Image - 2.8MB",
             ),
-            const SizedBox(height: 20),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Flexible(
-                  flex: 25,
-                  fit: FlexFit.tight,
-                  child: Align(
-                    alignment: Alignment.centerRight,
-                    child: Transform.flip(
-                      flipY: true,
-                      child: Transform.rotate(
-                        angle: -60 * math.pi / 180,
-                        child: LoadSvg(
-                          width: 24,
-                          height: 12,
-                          path: "assets/imgs/icon_tutorial_arrow1.svg",
-                          color: getColorScheme(context).white,
-                          fit: BoxFit.cover,
-                        ),
+            Padding(
+              padding: const EdgeInsets.only(top: 20, right: 20),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Transform.flip(
+                    flipY: true,
+                    child: Transform.rotate(
+                      angle: -60 * math.pi / 180,
+                      child: LoadSvg(
+                        width: 24,
+                        height: 12,
+                        path: "assets/imgs/icon_tutorial_arrow1.svg",
+                        color: getColorScheme(context).white,
+                        fit: BoxFit.cover,
                       ),
                     ),
                   ),
-                ),
-                Flexible(
-                  flex: 75,
-                  fit: FlexFit.tight,
-                  child: Align(
-                    alignment: Alignment.centerLeft,
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8.0),
-                      child: DefaultTextStyle(
-                        style: getTextTheme(context).b3m.copyWith(
-                              color: getColorScheme(context).white,
-                              overflow: TextOverflow.visible,
-                            ),
-                        child: Text(Strings.of(context).tutorialMediaDescription6),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 11.0, top: 4),
+                    child: DefaultTextStyle(
+                      style: getTextTheme(context).b3m.copyWith(
+                            color: getColorScheme(context).white,
+                            overflow: TextOverflow.visible,
+                          ),
+                      child: Text(Strings.of(context).tutorialMediaDescription6),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             )
           ],
         ),
@@ -281,7 +270,7 @@ class _BottomContent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(right: 7, bottom: 30),
+                        margin: const EdgeInsets.only(right: 12, bottom: 30),
                         child: LoadSvg(
                           width: 20,
                           height: 44,
@@ -334,7 +323,7 @@ class _TopContent extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                margin: const EdgeInsets.only(right: 12, top: 5, bottom: 5),
+                margin: const EdgeInsets.only(right: 12, top: 6, bottom: 6),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -352,7 +341,7 @@ class _TopContent extends StatelessWidget {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.only(right: 14),
+                      padding: const EdgeInsets.only(right: 12),
                       child: Text(
                         Strings.of(context).tutorialMediaDescription1,
                         style: getTextTheme(context).b3m.copyWith(

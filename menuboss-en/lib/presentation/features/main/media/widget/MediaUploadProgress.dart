@@ -39,28 +39,40 @@ class MediaUploadProgress extends HookConsumerWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(2),
-                          child: mediaUploadProvider.thumbnailFile != null
-                              ? Image.file(
-                                  mediaUploadState.thumbnailFile!,
-                                  width: 32,
-                                  height: 32,
-                                  fit: BoxFit.cover,
-                                )
-                              : Container(
-                                  width: 32,
-                                  height: 32,
-                                  color: getColorScheme(context).colorGray100,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: LoadSvg(
-                                      path: "assets/imgs/image_logo_text.svg",
-                                      width: 20,
-                                      height: 10,
-                                      color: getColorScheme(context).colorGray400,
-                                      fit: BoxFit.contain,
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              border: Border.all(
+                                width: 1,
+                                color: getColorScheme(context).colorGray200,
+                              ),
+                              color: getColorScheme(context).colorGray100,
+                            ),
+                            child: mediaUploadProvider.thumbnailFile != null
+                                ? Image.file(
+                                    mediaUploadState.thumbnailFile!,
+                                    width: 32,
+                                    height: 32,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(
+                                    width: 32,
+                                    height: 32,
+                                    color: getColorScheme(context).colorGray100,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: LoadSvg(
+                                        path: "assets/imgs/image_logo_text.svg",
+                                        width: 20,
+                                        height: 10,
+                                        color: getColorScheme(context).colorGray400,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
-                                ),
+                          ),
                         ),
                         Expanded(
                           child: Padding(

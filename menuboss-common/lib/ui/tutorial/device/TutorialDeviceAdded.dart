@@ -111,7 +111,7 @@ class _Content extends HookWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4.0),
                               child: Text(
-                                isKr ? "TV 이름": "Screen name",
+                                isKr ? "TV 이름" : "Screen name",
                                 style: getTextTheme(context).b2m.copyWith(
                                       color: getColorScheme(context).colorGray900,
                                     ),
@@ -124,7 +124,7 @@ class _Content extends HookWidget {
                       Padding(
                         padding: const EdgeInsets.only(top: 5.5),
                         child: Text(
-                          isKr ? "시간표 이름": "Schedule name",
+                          isKr ? "시간표 이름" : "Schedule name",
                           style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),
@@ -159,52 +159,40 @@ class _TopDescription extends HookWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
-      child: Align(
-        alignment: Alignment.topRight,
-        child: Column(
-          children: [
-            RichText(
-              text: TextSpan(
-                children: [
-                  WidgetSpan(
-                    child: Container(
-                      width: 24,
-                      height: 12,
-                      margin: const EdgeInsets.only(top: 20),
-                      child: Transform.rotate(
-                        angle: 60 * math.pi / 180,
-                        child: LoadSvg(
-                          width: 24,
-                          height: 12,
-                          path: "assets/imgs/icon_tutorial_arrow1.svg",
-                          color: getColorScheme(context).white,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                  ),
-                  TextSpan(
-                    text: Strings.of(context).tutorialScreenDescription1,
-                    style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).white,
-                        ),
-                  ),
-                ],
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          Container(
+            width: 24,
+            height: 12,
+            margin: const EdgeInsets.only(top: 20),
+            child: Transform.flip(
+              flipY: true,
+              child: Transform.rotate(
+                angle: -60 * math.pi / 180,
+                child: LoadSvg(
+                  width: 24,
+                  height: 12,
+                  path: "assets/imgs/icon_tutorial_arrow1.svg",
+                  color: getColorScheme(context).white,
+                  fit: BoxFit.cover,
+                ),
               ),
-              overflow: TextOverflow.ellipsis,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: Text(
-                Strings.of(context).tutorialScreenDescription2,
-                style: getTextTheme(context)
-                    .b3m
-                    .copyWith(color: getColorScheme(context).white, height: 1),
-                textAlign: TextAlign.right,
-              ),
-            )
-          ],
-        ),
+          ),
+          const SizedBox(width: 4),
+          Padding(
+            padding: const EdgeInsets.only(top: 20),
+            child: Text(
+              Strings.of(context).tutorialScreenDescription1,
+              style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).white,
+                  ),
+              textAlign: TextAlign.right,
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -327,64 +315,51 @@ class _BottomMenuEnable extends HookWidget {
       alignment: Alignment.bottomRight,
       child: SafeArea(
         child: SizedBox(
-          width: getMediaQuery(context).size.width,
+          width: double.infinity,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Container(
-                width: getMediaQuery(context).size.width,
+                width: double.infinity,
                 margin: const EdgeInsets.symmetric(horizontal: 20),
-                child: Column(
+                child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    DefaultTextStyle(
-                      style: getTextTheme(context)
-                          .b3m
-                          .copyWith(color: getColorScheme(context).white, height: 1),
-                      child: Text(
-                        Strings.of(context).tutorialScreenDescription3,
+                    Container(
+                      width: 24,
+                      height: 12,
+                      margin: const EdgeInsets.only(right: 4),
+                      child: Transform.flip(
+                        child: Transform.rotate(
+                          angle: -60 * math.pi / 180,
+                          child: LoadSvg(
+                            width: 24,
+                            height: 12,
+                            path: "assets/imgs/icon_tutorial_arrow1.svg",
+                            color: getColorScheme(context).white,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
                       ),
                     ),
-                    RichText(
-                      text: TextSpan(
-                        children: [
-                          WidgetSpan(
-                            child: Container(
-                              width: 24,
-                              height: 12,
-                              margin: const EdgeInsets.only(top: 8),
-                              child: Transform.flip(
-                                flipY: true,
-                                child: Transform.rotate(
-                                  angle: 60 * math.pi / 180,
-                                  child: LoadSvg(
-                                    width: 24,
-                                    height: 12,
-                                    path: "assets/imgs/icon_tutorial_arrow1.svg",
-                                    color: getColorScheme(context).white,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 4),
+                      child: DefaultTextStyle(
+                        style: getTextTheme(context).b3m.copyWith(
+                              color: getColorScheme(context).white,
                             ),
-                          ),
-                          TextSpan(
-                            text:
-                                "                       ${Strings.of(context).tutorialScreenDescription4}",
-                            style: getTextTheme(context)
-                                .b3m
-                                .copyWith(color: getColorScheme(context).white, height: 1),
-                          ),
-                        ],
+                        child: Text(
+                          Strings.of(context).tutorialScreenDescription2,
+                          textAlign: TextAlign.right,
+                        ),
                       ),
-                      overflow: TextOverflow.ellipsis,
                     ),
                   ],
                 ),
               ),
               Container(
-                margin: const EdgeInsets.only(top: 24),
+                margin: const EdgeInsets.only(top: 20),
                 padding: const EdgeInsets.all(24),
                 color: getColorScheme(context).white,
                 height: 72,

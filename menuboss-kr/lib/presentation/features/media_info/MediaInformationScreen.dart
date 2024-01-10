@@ -292,7 +292,7 @@ class _MediaInformation extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              Strings.of(context).mediaInfoTitle,
+              Strings.of(context).mediaInfoMenuTitle,
               style: getTextTheme(context).b3sb.copyWith(
                     color: getColorScheme(context).colorGray700,
                   ),

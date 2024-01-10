@@ -185,8 +185,8 @@ class Strings {
       'delete_account_reason_menu4_hint':
           isKr() ? '탈퇴 이유를 알려주세요' : 'Please tell me why you want to quit',
 
-      'media_info_title': isKr() ? '미디어 정보' : 'Media Information',
-      'media_info_menu_title': isKr() ? '정보' : 'Information',
+      'media_info_title': isKr() ? '상세정보' : 'Media Information',
+      'media_info_menu_title': isKr() ? '상세' : 'Information',
       'media_info_menu_input_title': isKr() ? '제목' : 'Title',
       'media_info_menu_input_file_name_hint': isKr() ? '파일 이름 입력' : 'Input file name',
       'media_info_menu_register_date': isKr() ? '업로드 날짜' : 'Uploaded date',
@@ -208,14 +208,10 @@ class Strings {
           ? 'QR 코드를 스캔하거나\nPIN 번호를 입력해 주세요'
           : 'Scan the QR code or\nplease enter the PIN code',
       'tutorial_screen_description1':
-          isKr() ? 'TV의 On, Off 상태와 TV 화면에 연결된' : 'Through On and Off of the screen',
-      'tutorial_screen_description2':
-          isKr() ? '시간표, 재생목록을 살펴볼 수 있습니다' : 'you can check the status of the screen',
-      'tutorial_screen_description3': isKr()
-          ? '자세히보기 아이콘을 눌러 [TV에 이름 표시]을 통해'
-          : 'Display your name on the screen via the [More] icon',
-      'tutorial_screen_description4':
-          isKr() ? 'TV 화면에 이름을 표시하거나 수정 및 삭제가 가능합니다' : 'or editing and deletion are possible',
+          isKr() ? 'TV의 On, Off 상태와 TV 화면에 연결된\n시간표, 재생목록을 살펴볼 수 있습니다' : 'Through On and Off of the screen\nyou can check the status of the screen',
+      'tutorial_screen_description2': isKr()
+          ? '자세히보기 아이콘을 눌러 [TV에 이름 표시]을 통해\nTV 화면에 이름을 표시하거나 수정 및 삭제가 가능합니다'
+          : 'Display your name on the screen via the [More] icon\nor editing and deletion are possible',
 
       'tutorial_playlist_add_new': isKr() ? '재생목록을 추가해서 등록해주세요' : 'Add and register a new playlist',
       'tutorial_playlist_description1':
@@ -225,26 +221,18 @@ class Strings {
       'tutorial_playlist_description3':
           isKr() ? '콘텐츠를 추가 및 정렬하고 시간 설정이 가능합니다' : 'Add and sort content, set time',
       'tutorial_playlist_description4':
-          isKr() ? '연결할 재생목록의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
-      'tutorial_playlist_description5': isKr()
-          ? '켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!'
-          : 'that is turned on. Screen and playlist connected!',
-      'tutorial_playlist_description6':
+          isKr() ? '연결할 재생목록의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!' : 'Press the [Apply] button to select the screen\nthat is turned on. Screen and playlist connected!',
+      'tutorial_playlist_description5':
           isKr() ? '[+] 버튼을 눌러 새 재생목록을 만들 수 있습니다' : 'Press the [Plus] button to add a new playlist',
 
       'tutorial_schedule_add_new': isKr() ? '시간표를 추가해서 등록해주세요' : 'Add and register a new schedule',
       'tutorial_schedule_description1':
           isKr() ? '시간표의 제목을 입력해주세요' : 'Please write the title of the schedule',
       'tutorial_schedule_description2':
-          isKr() ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을' : '1. Add playlist 2. Schedule by setting time',
+          isKr() ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을\n눌러 해당 재생목록을 삭제 할 수 있습니다' : '1. Add playlist 2. Schedule by setting time\nYou can delete it using the trash can icon',
       'tutorial_schedule_description3':
-          isKr() ? '눌러 해당 재생목록을 삭제 할 수 있습니다' : 'You can delete it using the trash can icon',
+          isKr() ? '연결할 시간표의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 시간표 연결 완료!' : 'Press the [Apply] button to select the screen\nthat is turned on. Screen and schedule connected!',
       'tutorial_schedule_description4':
-          isKr() ? '연결할 시간표의 [TV 적용] 버튼을 누르고' : 'Press the [Apply] button to select the screen',
-      'tutorial_schedule_description5': isKr()
-          ? '켜져있는 TV를 선택하면, TV와 시간표 연결 완료!'
-          : 'that is turned on. Screen and schedule connected!',
-      'tutorial_schedule_description6':
           isKr() ? '[+] 버튼을 눌러 새 시간표를 만들 수 있습니다' : 'Press the [Plus] button to add a new schedule',
 
       'tutorial_media_add_new': isKr() ? '이미지, 동영상 파일을 업로드해주세요' : 'Upload image and video files',
@@ -672,10 +660,6 @@ class Strings {
 
   String get tutorialScreenDescription2 => _localizedValue('tutorial_screen_description2');
 
-  String get tutorialScreenDescription3 => _localizedValue('tutorial_screen_description3');
-
-  String get tutorialScreenDescription4 => _localizedValue('tutorial_screen_description4');
-
   String get tutorialPlaylistAddNew => _localizedValue('tutorial_playlist_add_new');
 
   String get tutorialPlaylistDescription1 => _localizedValue('tutorial_playlist_description1');
@@ -688,8 +672,6 @@ class Strings {
 
   String get tutorialPlaylistDescription5 => _localizedValue('tutorial_playlist_description5');
 
-  String get tutorialPlaylistDescription6 => _localizedValue('tutorial_playlist_description6');
-
   String get tutorialScheduleAddNew => _localizedValue('tutorial_schedule_add_new');
 
   String get tutorialScheduleDescription1 => _localizedValue('tutorial_schedule_description1');
@@ -699,10 +681,6 @@ class Strings {
   String get tutorialScheduleDescription3 => _localizedValue('tutorial_schedule_description3');
 
   String get tutorialScheduleDescription4 => _localizedValue('tutorial_schedule_description4');
-
-  String get tutorialScheduleDescription5 => _localizedValue('tutorial_schedule_description5');
-
-  String get tutorialScheduleDescription6 => _localizedValue('tutorial_schedule_description6');
 
   String get tutorialMediaAddNew => _localizedValue('tutorial_media_add_new');
 

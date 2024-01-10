@@ -58,17 +58,20 @@ class _ForegroundContents extends StatelessWidget {
                   height: 110 + 45,
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       const _ScheduleInputName(),
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Flexible(
-                            flex: 3,
-                            fit: FlexFit.tight,
-                            child: Container(
+                      Container(
+                        width: double.infinity,
+                        margin: const EdgeInsets.only(right: 20, top: 12),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Container(
                               alignment: Alignment.topRight,
-                              padding: const EdgeInsets.only(top: 12.0),
+                              margin: const EdgeInsets.only(bottom: 10),
                               child: Transform.flip(
                                 flipY: true,
                                 child: Transform.rotate(
@@ -83,69 +86,49 @@ class _ForegroundContents extends StatelessWidget {
                                 ),
                               ),
                             ),
-                          ),
-                          Flexible(
-                            flex: 7,
-                            fit: FlexFit.tight,
-                            child: Container(
-                              alignment: Alignment.topLeft,
-                              padding: const EdgeInsets.only(top: 24, left: 8),
-                              child: DefaultTextStyle(
-                                style: getTextTheme(context).b3m.copyWith(
-                                      color: getColorScheme(context).white,
-                                      overflow: TextOverflow.visible,
-                                    ),
-                                child: Text(Strings.of(context).tutorialScheduleDescription1),
-                              ),
+                            const SizedBox(width: 8),
+                            Text(
+                              Strings.of(context).tutorialScheduleDescription1,
+                              style: getTextTheme(context).b3m.copyWith(
+                                    color: getColorScheme(context).white,
+                                    overflow: TextOverflow.visible,
+                                  ),
+                              textAlign: TextAlign.end,
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                       // PlaylistTotalDuration()
                     ],
                   ),
                 ),
-                const SizedBox(height: 70),
+                const SizedBox(height: 64),
                 Container(
-                  margin: const EdgeInsets.only(left: 36 ,right: 20),
-                  child: Stack(
+                  margin: const EdgeInsets.only(right: 20),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              Strings.of(context).tutorialScheduleDescription2,
-                              style: getTextTheme(context).b3m.copyWith(
-                                    color: getColorScheme(context).white,
-                                    overflow: TextOverflow.visible,
-                                  ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
-                              Strings.of(context).tutorialScheduleDescription3,
-                              style: getTextTheme(context).b3m.copyWith(
-                                    color: getColorScheme(context).white,
-                                    overflow: TextOverflow.visible,
-                                  ),
-                            ),
-                          )
-                        ],
+                      Transform.rotate(
+                        angle: -60 * math.pi / 180,
+                        child: LoadSvg(
+                          width: 24,
+                          height: 12,
+                          path: "assets/imgs/icon_tutorial_arrow1.svg",
+                          color: getColorScheme(context).white,
+                          fit: BoxFit.cover,
+                        ),
                       ),
+                      const SizedBox(width: 8),
                       Container(
-                        margin: const EdgeInsets.only(left: 64, top: 28),
-                        child: Transform.rotate(
-                          angle: -60 * math.pi / 180,
-                          child: LoadSvg(
-                            width: 24,
-                            height: 12,
-                            path: "assets/imgs/icon_tutorial_arrow1.svg",
-                            color: getColorScheme(context).white,
-                            fit: BoxFit.cover,
-                          ),
+                        margin: const EdgeInsets.only(bottom: 4),
+                        child: Text(
+                          Strings.of(context).tutorialScheduleDescription2,
+                          style: getTextTheme(context).b3m.copyWith(
+                                color: getColorScheme(context).white,
+                                overflow: TextOverflow.visible,
+                              ),
+                          textAlign: TextAlign.end,
                         ),
                       ),
                     ],

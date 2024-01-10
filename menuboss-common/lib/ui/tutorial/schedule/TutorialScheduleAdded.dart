@@ -148,50 +148,32 @@ class _EnableContents extends StatelessWidget {
           Align(
             alignment: Alignment.topRight,
             child: Padding(
-              padding: const EdgeInsets.only(right: 48.0),
-              child: Column(
+              padding: const EdgeInsets.only(left: 21),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  RichText(
-                    text: TextSpan(
-                      children: [
-                        TextSpan(
-                          text: Strings.of(context).tutorialScheduleDescription4,
-                          style: getTextTheme(context).b3m.copyWith(
-                                color: getColorScheme(context).white,
-                              ),
-                        ),
-                        WidgetSpan(
-                          child: Container(
-                            margin: const EdgeInsets.only(left: 48, bottom: 6),
-                            width: 24,
-                            height: 12,
-                            child: Transform.rotate(
-                              angle: 120 * math.pi / 180,
-                              child: LoadSvg(
-                                width: 24,
-                                height: 12,
-                                path: "assets/imgs/icon_tutorial_arrow1.svg",
-                                color: getColorScheme(context).white,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                  Text(
+                    Strings.of(context).tutorialScheduleDescription4,
+                    style: getTextTheme(context).b3m.copyWith(
+                      color: getColorScheme(context).white,
                     ),
-                    overflow: TextOverflow.ellipsis,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(top: 8),
-                    child: Text(
-                      Strings.of(context).tutorialScheduleDescription5,
-                      style: getTextTheme(context)
-                          .b3m
-                          .copyWith(color: getColorScheme(context).white, height: 1),
-                      textAlign: TextAlign.right,
+                  const SizedBox(width: 4,),
+                  SizedBox(
+                    width: 24,
+                    height: 12,
+                    child: Transform.rotate(
+                      angle: 120 * math.pi / 180,
+                      child: LoadSvg(
+                        width: 24,
+                        height: 12,
+                        path: "assets/imgs/icon_tutorial_arrow1.svg",
+                        color: getColorScheme(context).white,
+                        fit: BoxFit.cover,
+                      ),
                     ),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -251,7 +233,7 @@ class _BottomContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  Strings.of(context).tutorialScheduleDescription6,
+                  Strings.of(context).tutorialScheduleDescription4,
                   style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).white,
                       ),
@@ -264,7 +246,7 @@ class _BottomContent extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
                       Container(
-                        margin: const EdgeInsets.only(right: 7, bottom: 30),
+                        margin: const EdgeInsets.only(right: 12, bottom: 30),
                         child: LoadSvg(
                           width: 20,
                           height: 44,
