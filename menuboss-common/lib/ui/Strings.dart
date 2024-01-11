@@ -185,8 +185,8 @@ class Strings {
       'delete_account_reason_menu4_hint':
           isKr() ? '탈퇴 이유를 알려주세요' : 'Please tell me why you want to quit',
 
-      'media_info_title': isKr() ? '상세정보' : 'Media Information',
-      'media_info_menu_title': isKr() ? '상세' : 'Information',
+      'media_info_title': isKr() ? '미디어 정보' : 'Media Information',
+      'media_info_menu_title': isKr() ? '정보' : 'Information',
       'media_info_menu_input_title': isKr() ? '제목' : 'Title',
       'media_info_menu_input_file_name_hint': isKr() ? '파일 이름 입력' : 'Input file name',
       'media_info_menu_register_date': isKr() ? '업로드 날짜' : 'Uploaded date',

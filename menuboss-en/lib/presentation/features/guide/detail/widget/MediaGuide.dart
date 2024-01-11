@@ -35,14 +35,14 @@ class MediaGuide extends HookWidget {
           const SizedBox(height: 12),
           Text(
             Strings.of(context).guideDetailMedia1SubDescription1,
-            style: getTextTheme(context).b3m.copyWith(
+            style: getTextTheme(context).c1m.copyWith(
               color: getColorScheme(context).colorGray500,
               overflow: TextOverflow.visible,
             ),
           ),
           Text(
             Strings.of(context).guideDetailMedia1SubDescription2,
-            style: getTextTheme(context).b3m.copyWith(
+            style: getTextTheme(context).c1m.copyWith(
               color: getColorScheme(context).colorGray500,
               overflow: TextOverflow.visible,
             ),
