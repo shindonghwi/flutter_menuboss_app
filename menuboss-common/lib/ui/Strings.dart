@@ -207,11 +207,12 @@ class Strings {
       'tutorial_screen_enter_pin_code': isKr()
           ? 'QR 코드를 스캔하거나\nPIN 번호를 입력해 주세요'
           : 'Scan the QR code or\nplease enter the PIN code',
-      'tutorial_screen_description1':
-          isKr() ? 'TV의 On, Off 상태와 TV 화면에 연결된\n시간표, 재생목록을 살펴볼 수 있습니다' : 'Through On and Off of the screen\nyou can check the status of the screen',
+      'tutorial_screen_description1': isKr()
+          ? 'TV의 On, Off 상태와 TV 화면에 연결된\n시간표, 재생목록을 살펴볼 수 있습니다'
+          : 'Through On and Off of the screen\nyou can check the status of the screen',
       'tutorial_screen_description2': isKr()
           ? '자세히보기 아이콘을 눌러 [TV에 이름 표시]을 통해\nTV 화면에 이름을 표시하거나 수정 및 삭제가 가능합니다'
-          : 'Display your name on the screen via the [More] icon\nor editing and deletion are possible',
+          : 'Display your name on the screen via the\n[More] icon or editing and deletion are possible',
 
       'tutorial_playlist_add_new': isKr() ? '재생목록을 추가해서 등록해주세요' : 'Add and register a new playlist',
       'tutorial_playlist_description1':
@@ -220,18 +221,21 @@ class Strings {
           isKr() ? '옵션에서 TV 화면의 모습을 설정할 수 있습니다' : 'Set the playlist settings in the options',
       'tutorial_playlist_description3':
           isKr() ? '콘텐츠를 추가 및 정렬하고 시간 설정이 가능합니다' : 'Add and sort content, set time',
-      'tutorial_playlist_description4':
-          isKr() ? '연결할 재생목록의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!' : 'Press the [Apply] button to select the screen\nthat is turned on. Screen and playlist connected!',
+      'tutorial_playlist_description4': isKr()
+          ? '연결할 재생목록의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!'
+          : 'Press the [Apply] button to select the screen\nthat is turned on. Screen and playlist connected!',
       'tutorial_playlist_description5':
           isKr() ? '[+] 버튼을 눌러 새 재생목록을 만들 수 있습니다' : 'Press the [Plus] button to add a new playlist',
 
       'tutorial_schedule_add_new': isKr() ? '시간표를 추가해서 등록해주세요' : 'Add and register a new schedule',
       'tutorial_schedule_description1':
           isKr() ? '시간표의 제목을 입력해주세요' : 'Please write the title of the schedule',
-      'tutorial_schedule_description2':
-          isKr() ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을\n눌러 해당 재생목록을 삭제 할 수 있습니다' : '1. Add playlist 2. Schedule by setting time\nYou can delete it using the trash can icon',
-      'tutorial_schedule_description3':
-          isKr() ? '연결할 시간표의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 시간표 연결 완료!' : 'Press the [Apply] button to select the screen\nthat is turned on. Screen and schedule connected!',
+      'tutorial_schedule_description2': isKr()
+          ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을\n눌러 해당 재생목록을 삭제 할 수 있습니다'
+          : '1. Add playlist 2. Schedule by setting time\nYou can delete it using the trash can icon',
+      'tutorial_schedule_description3': isKr()
+          ? '연결할 시간표의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 시간표 연결 완료!'
+          : 'Press the [Apply] button to select the screen\nthat is turned on. Screen and schedule connected!',
       'tutorial_schedule_description4':
           isKr() ? '[+] 버튼을 눌러 새 시간표를 만들 수 있습니다' : 'Press the [Plus] button to add a new schedule',
 

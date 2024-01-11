@@ -321,7 +321,7 @@ class _BottomMenuEnable extends HookWidget {
             children: [
               Container(
                 width: double.infinity,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
+                margin: const EdgeInsets.only(right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   crossAxisAlignment: CrossAxisAlignment.end,
@@ -329,7 +329,7 @@ class _BottomMenuEnable extends HookWidget {
                     Container(
                       width: 24,
                       height: 12,
-                      margin: const EdgeInsets.only(right: 4),
+                      margin: const EdgeInsets.only(right: 8),
                       child: Transform.flip(
                         child: Transform.rotate(
                           angle: -60 * math.pi / 180,
