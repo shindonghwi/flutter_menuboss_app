@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
+import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:menuboss_common/components/loader/LoadImage.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
@@ -98,6 +99,22 @@ class SelectPlaylistScreen extends HookConsumerWidget {
           ],
         ),
       ),
+      bottomNavigationBar:
+          playlistState is Success<List<ResponsePlaylistsModel>> && playlistState.value.isNotEmpty
+              ? SafeArea(
+                  child: Container(
+                    width: getMediaQuery(context).size.width,
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+                    child: PrimaryFilledButton.largeRound8(
+                      content: Strings.of(context).commonDone,
+                      isActivated: selectedPlaylist.value != null,
+                      onPressed: () {
+                        Navigator.of(context).pop(selectedPlaylist.value);
+                      },
+                    ),
+                  ),
+                )
+              : null,
     );
   }
 }
