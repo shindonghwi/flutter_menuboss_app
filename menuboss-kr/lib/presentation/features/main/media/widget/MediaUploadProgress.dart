@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/file/ResponseFileModel.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
@@ -11,7 +12,6 @@ import 'package:menuboss_common/components/loader/LoadLottie.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -218,7 +218,7 @@ class _SuffixFail extends HookConsumerWidget {
               isVideo: uploadProgressProvider.isLastUploadVideo,
               onNetworkError: () => Toast.showError(
                 context,
-                Strings.of(context).messageNetworkRequired,
+                getString(context).messageNetworkRequired,
               ),
             );
             if (controller != null) {

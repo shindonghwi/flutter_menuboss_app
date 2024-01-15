@@ -4,7 +4,6 @@ import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 
-import '../../ui/Strings.dart';
 import '../../utils/Common.dart';
 import '../utils/ClickableScale.dart';
 
@@ -22,10 +21,12 @@ class BottomSheetModifySelector extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
+
     final Map<ModifyType, String> modifyDescriptions = {
-      ModifyType.ShowNameToScreen: Strings.of(context).bottomSheetMenuDisplayShowName,
-      ModifyType.Rename: Strings.of(context).commonRename,
-      ModifyType.Delete: Strings.of(context).commonDelete,
+      ModifyType.ShowNameToScreen: isKr ? '화면 이름 표시' : 'Display screen name',
+      ModifyType.Rename: isKr ? '이름 변경' : 'Rename',
+      ModifyType.Delete: isKr ? '삭제' : 'Delete',
     };
 
     String getModifyNameFromType(ModifyType type) {

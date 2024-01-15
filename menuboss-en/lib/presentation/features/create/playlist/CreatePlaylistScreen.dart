@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/CreatePreviewItemProcessProvider.dart';
@@ -14,7 +15,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
@@ -76,10 +76,12 @@ class CreatePlaylistScreen extends HookConsumerWidget {
       WidgetsBinding.instance.addPostFrameCallback((_) {
         if (isEditMode.value) {
           saveManager.changeName(item?.name ?? "");
-          saveManager.changeDirection(getPlaylistDirectionTypeFromString(item?.property?.direction?.code));
+          saveManager
+              .changeDirection(getPlaylistDirectionTypeFromString(item?.property?.direction?.code));
           saveManager.changeFill(getPlaylistScaleTypeFromString(item?.property?.fill?.code));
-          mediaCartManager.addItems(item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? []);
-        }else{
+          mediaCartManager
+              .addItems(item?.contents?.map((e) => e.toMapperMediaContentModel()).toList() ?? []);
+        } else {
           tutorialOpacity.value = 1.0;
         }
       });
@@ -91,7 +93,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
         await Future(() {
           playListRegisterState.when(
             success: (event) async {
-              Toast.showSuccess(context, Strings.of(context).messageRegisterPlaylistSuccess);
+              Toast.showSuccess(context, getString(context).messageRegisterPlaylistSuccess);
               playlistsManager.requestGetPlaylists();
               deviceListManager.requestGetDevices();
               Navigator.of(context).pop(true);
@@ -100,7 +102,7 @@ class CreatePlaylistScreen extends HookConsumerWidget {
           );
           playListUpdateState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageUpdatePlaylistSuccess);
+              Toast.showSuccess(context, getString(context).messageUpdatePlaylistSuccess);
               playlistsManager.requestGetPlaylists();
               deviceListManager.requestGetDevices();
               Navigator.of(context).pop();
@@ -122,13 +124,13 @@ class CreatePlaylistScreen extends HookConsumerWidget {
             preferredSize: const Size.fromHeight(56.0),
             child: isEditMode.value
                 ? TopBarIconTitleNone(
-              content: Strings.of(context).editPlaylistTitle,
-              onBack: () => popPageWrapper(context: context),
-            )
+                    content: getString(context).editPlaylistTitle,
+                    onBack: () => popPageWrapper(context: context),
+                  )
                 : TopBarNoneTitleIcon(
-              content: Strings.of(context).createPlaylistTitle,
-              onBack: () => popPageWrapper(context: context),
-            ),
+                    content: getString(context).createPlaylistTitle,
+                    onBack: () => popPageWrapper(context: context),
+                  ),
           ),
           body: Container(
             color: getColorScheme(context).white,
@@ -146,7 +148,8 @@ class CreatePlaylistScreen extends HookConsumerWidget {
                                 initTitle: item?.name ?? "",
                               ),
                               PlaylistSettings(
-                                direction: getPlaylistDirectionTypeFromString(item?.property?.direction?.code),
+                                direction: getPlaylistDirectionTypeFromString(
+                                    item?.property?.direction?.code),
                                 scale: getPlaylistScaleTypeFromString(item?.property?.fill?.code),
                               ),
                             ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -13,7 +14,6 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/RegUtil.dart';
@@ -109,7 +109,7 @@ class _SignUpButton extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          Strings.of(context).loginNoAccount,
+          getString(context).loginNoAccount,
           style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray500,
               ),
@@ -127,7 +127,7 @@ class _SignUpButton extends StatelessWidget {
           child: Padding(
             padding: const EdgeInsets.all(4.0),
             child: Text(
-              Strings.of(context).commonSignUp,
+              getString(context).commonSignUp,
               style: getTextTheme(context).b3sb.copyWith(
                     color: getColorScheme(context).colorPrimary500,
                   ),
@@ -163,7 +163,7 @@ class _SocialLoginButtons extends HookConsumerWidget {
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Text(
-                  Strings.of(context).commonOr,
+                  getString(context).commonOr,
                   style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).colorGray500,
                       ),
@@ -242,7 +242,7 @@ class _LoginButton extends HookConsumerWidget {
     return SizedBox(
       width: double.infinity,
       child: PrimaryFilledButton.mediumRound8(
-        content: Strings.of(context).commonDoLogin,
+        content: getString(context).commonDoLogin,
         isActivated: isActivated,
         onPressed: () {
           // FirebaseCrashlytics.instance.crash();
@@ -266,7 +266,7 @@ class _Title extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).loginTitle,
+            getString(context).loginTitle,
             style: getTextTheme(context).s1sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -274,7 +274,7 @@ class _Title extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8),
             child: Text(
-              Strings.of(context).loginWelcome,
+              getString(context).loginWelcome,
               style: getTextTheme(context).b2m.copyWith(
                     color: getColorScheme(context).colorGray700,
                   ),
@@ -302,7 +302,7 @@ class _InputEmail extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).commonEmail,
+            getString(context).commonEmail,
             style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray800,
                 ),
@@ -311,9 +311,9 @@ class _InputEmail extends HookWidget {
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.medium(
               controller: useTextEditingController(),
-              hint: Strings.of(context).commonEmail,
-              successMessage: Strings.of(context).loginEmailCorrect,
-              errorMessage: Strings.of(context).loginEmailInvalid,
+              hint: getString(context).commonEmail,
+              successMessage: getString(context).loginEmailCorrect,
+              errorMessage: getString(context).loginEmailInvalid,
               checkRegList: const [
                 RegCheckType.Email,
               ],
@@ -342,7 +342,7 @@ class _InputPassword extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).commonPassword,
+            getString(context).commonPassword,
             style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray800,
                 ),
@@ -351,7 +351,7 @@ class _InputPassword extends HookWidget {
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.medium(
               controller: useTextEditingController(),
-              hint: Strings.of(context).commonPassword,
+              hint: getString(context).commonPassword,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.visiblePassword,
               showPwVisibleButton: true,

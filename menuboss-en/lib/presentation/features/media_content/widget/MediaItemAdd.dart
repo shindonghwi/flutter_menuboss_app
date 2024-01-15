@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/SimpleMediaContentModel.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
@@ -11,7 +11,6 @@ import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -122,12 +121,12 @@ class MediaItemAdd extends HookConsumerWidget {
                 ? Container(
                     margin: const EdgeInsets.only(right: 12),
                     child: PrimaryFilledButton.smallRound100(
-                      content: Strings.of(context).commonAdd,
+                      content: getString(context).commonAdd,
                       isActivated: true,
                       onPressed: () {
                         Toast.showSuccess(
                           context,
-                          Strings.of(context).messageAddMediaInPlaylistSuccess,
+                          getString(context).messageAddMediaInPlaylistSuccess,
                         );
                         mediaCartManager.addItem(item);
                       },

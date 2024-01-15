@@ -3,7 +3,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 
-import '../../ui/Strings.dart';
 import '../../utils/Common.dart';
 import '../button/PrimaryFilledButton.dart';
 
@@ -17,6 +16,7 @@ class BottomSheetPinCode extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
     const pinCodeLength = 4;
     final controllers = List.generate(pinCodeLength, (_) => useTextEditingController());
     final focusNodes = List.generate(pinCodeLength, (_) => useFocusNode());
@@ -78,7 +78,7 @@ class BottomSheetPinCode extends HookWidget {
           height: 24,
         ),
         Text(
-          Strings.of(context).bottomSheetPinCodeDescription,
+          isKr ? 'PIN 코드를 입력하세요' : 'Please enter your PIN code',
           style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
@@ -128,8 +128,8 @@ class BottomSheetPinCode extends HookWidget {
 
                     // Update the value after moving focus
                     controllers[index].text = value.substring(value.length - 1);
-                    controllers[index].selection =
-                        TextSelection.fromPosition(TextPosition(offset: controllers[index].text.length));
+                    controllers[index].selection = TextSelection.fromPosition(
+                        TextPosition(offset: controllers[index].text.length));
                   }
                 },
               ),
@@ -141,7 +141,7 @@ class BottomSheetPinCode extends HookWidget {
           child: Padding(
             padding: const EdgeInsets.all(24.0),
             child: PrimaryFilledButton.largeRound8(
-              content: Strings.of(context).commonConfirm,
+              content: isKr ? '확인' : 'Confirm',
               isActivated: isCompleted.value,
               onPressed: () {
                 actionConfirm();

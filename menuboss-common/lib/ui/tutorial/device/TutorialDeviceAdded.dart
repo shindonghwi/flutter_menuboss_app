@@ -13,7 +13,6 @@ import '../../../components/label/LabelText.dart';
 import '../../../components/loader/LoadImage.dart';
 import '../../../components/loader/LoadSvg.dart';
 import '../../../components/placeholder/PlaceholderType.dart';
-import '../../Strings.dart';
 
 class TutorialDeviceAdded extends HookWidget {
   final VoidCallback onPressed;
@@ -103,10 +102,7 @@ class _Content extends HookWidget {
                     children: [
                       Row(
                         children: [
-                          LabelText(
-                            content: Strings.of(context).commonOn,
-                            isOn: true,
-                          ),
+                          const LabelText(content: "On", isOn: true),
                           Expanded(
                             child: Padding(
                               padding: const EdgeInsets.only(left: 4.0),
@@ -157,6 +153,8 @@ class _TopDescription extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
@@ -185,7 +183,9 @@ class _TopDescription extends HookWidget {
           Padding(
             padding: const EdgeInsets.only(top: 20),
             child: Text(
-              Strings.of(context).tutorialScreenDescription1,
+              isKr
+                  ? "TV의 On, Off 상태와 TV 화면에 연결된\n시간표, 재생목록을 살펴볼 수 있습니다"
+                  : "Through On and Off of the screen\nyou can check the status of the screen",
               style: getTextTheme(context).b3m.copyWith(
                     color: getColorScheme(context).white,
                   ),
@@ -205,6 +205,8 @@ class _BottomMenuDisable extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: SafeArea(
@@ -235,7 +237,7 @@ class _BottomMenuDisable extends HookWidget {
                               color: getColorScheme(context).colorGray900,
                             ),
                         child: Text(
-                          Strings.of(context).bottomSheetMenuDisplayShowName,
+                          isKr ? "화면 이름 표시" : "Display screen name",
                         ),
                       ),
                     )
@@ -262,7 +264,7 @@ class _BottomMenuDisable extends HookWidget {
                               color: getColorScheme(context).colorGray900,
                             ),
                         child: Text(
-                          Strings.of(context).commonRename,
+                          isKr ? "이름 변경" : "Rename",
                         ),
                       ),
                     )
@@ -289,7 +291,7 @@ class _BottomMenuDisable extends HookWidget {
                               color: getColorScheme(context).colorRed500,
                             ),
                         child: Text(
-                          Strings.of(context).commonDelete,
+                          isKr ? "삭제" : "Delete",
                         ),
                       ),
                     )
@@ -311,6 +313,8 @@ class _BottomMenuEnable extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Align(
       alignment: Alignment.bottomRight,
       child: SafeArea(
@@ -350,7 +354,9 @@ class _BottomMenuEnable extends HookWidget {
                               color: getColorScheme(context).white,
                             ),
                         child: Text(
-                          Strings.of(context).tutorialScreenDescription2,
+                          isKr
+                              ? "자세히보기 아이콘을 눌러 [TV에 이름 표시]을 통해\nTV 화면에 이름을 표시하거나 수정 및 삭제가 가능합니다"
+                              : "Display your name on the screen via the\n[More] icon or editing and deletion are possible",
                           textAlign: TextAlign.right,
                         ),
                       ),
@@ -380,7 +386,7 @@ class _BottomMenuEnable extends HookWidget {
                               color: getColorScheme(context).colorGray900,
                             ),
                         child: Text(
-                          Strings.of(context).bottomSheetMenuDisplayShowName,
+                          isKr ? "화면 이름 표시" : "Display screen name",
                         ),
                       ),
                     )

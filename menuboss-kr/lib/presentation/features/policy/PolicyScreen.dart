@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
@@ -8,7 +9,6 @@ import 'package:menuboss_common/components/checkbox/checkbox/BasicBorderCheckBox
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
@@ -32,7 +32,7 @@ class PolicyScreen extends HookWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).policyTitle,
+        content: getString(context).policyTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: Column(
@@ -51,7 +51,7 @@ class PolicyScreen extends HookWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
         child: PrimaryFilledButton.largeRound8(
-          content: Strings.of(context).commonNext,
+          content: getString(context).commonNext,
           isActivated: isButtonActivated.value,
           onPressed: () {
             Navigator.push(
@@ -81,14 +81,14 @@ class _TitleContent extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).policyDescriptionTitle,
+            getString(context).policyDescriptionTitle,
             style: getTextTheme(context).s1sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
           ),
           const SizedBox(height: 8),
           Text(
-            Strings.of(context).policyDescription,
+            getString(context).policyDescription,
             style: getTextTheme(context).b2m.copyWith(
                   color: getColorScheme(context).colorGray700,
                   overflow: TextOverflow.visible,
@@ -157,7 +157,7 @@ class _TermContents extends HookWidget {
                   ),
                 ),
                 Text(
-                  Strings.of(context).commonAllAgree,
+                  getString(context).commonAllAgree,
                   style: getTextTheme(context).b2sb.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
@@ -181,15 +181,15 @@ class _TermContents extends HookWidget {
               String policyFullUrl = "";
 
               if (index == 0) {
-                content = Strings.of(context).policyTerm1;
+                content = getString(context).policyTerm1;
               } else if (index == 1) {
-                content = Strings.of(context).policyTerm2;
+                content = getString(context).policyTerm2;
                 policyFullUrl = "$policyBaseUrl/service";
               } else if (index == 2) {
-                content = Strings.of(context).policyTerm3;
+                content = getString(context).policyTerm3;
                 policyFullUrl = "$policyBaseUrl/privacy";
               } else if (index == 3) {
-                content = Strings.of(context).policyTerm4;
+                content = getString(context).policyTerm4;
                 policyFullUrl = "$policyBaseUrl/marketing";
               }
 

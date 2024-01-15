@@ -16,7 +16,6 @@ import '../../../components/placeholder/PlaceholderType.dart';
 import '../../../components/textfield/OutlineTextField.dart';
 import '../../../utils/CollectionUtil.dart';
 import '../../../utils/StringUtil.dart';
-import '../../Strings.dart';
 
 class TutorialPlaylistMake extends HookWidget {
   final VoidCallback onPressed;
@@ -88,7 +87,7 @@ class _ForegroundContents extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.only(bottom: 10),
                         child: Text(
-                          Strings.of(context).tutorialPlaylistDescription1,
+                          isKr ? '재생목록의 제목을 입력해주세요' : 'Please write the title of the playlist',
                           style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).white,
                                 overflow: TextOverflow.visible,
@@ -131,7 +130,9 @@ class _ForegroundContents extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(top: 12, left: 8),
                               child: Text(
-                                Strings.of(context).tutorialPlaylistDescription2,
+                                isKr
+                                    ? '옵션에서 TV 화면의 모습을 설정할 수 있습니다'
+                                    : 'Set the playlist settings in the options',
                                 style: getTextTheme(context).b3m.copyWith(
                                       color: getColorScheme(context).white,
                                       overflow: TextOverflow.visible,
@@ -169,7 +170,9 @@ class _ForegroundContents extends StatelessWidget {
                             Padding(
                               padding: const EdgeInsets.only(left: 8, bottom: 12),
                               child: Text(
-                                Strings.of(context).tutorialPlaylistDescription3,
+                                isKr
+                                    ? '콘텐츠를 추가 및 정렬하고 시간 설정이 가능합니다'
+                                    : 'Add and sort content, set time',
                                 style: getTextTheme(context).b3m.copyWith(
                                       color: getColorScheme(context).white,
                                       overflow: TextOverflow.visible,
@@ -230,7 +233,7 @@ class _BackgroundContents extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
               child: PrimaryFilledButton.largeRound8(
-                content: Strings.of(context).commonSave,
+                content: isKr ? '저장' : 'Save',
                 isActivated: true,
               ),
             ),
@@ -253,7 +256,7 @@ class _BackgroundContents extends StatelessWidget {
                                   style: getTextTheme(context).b3m.copyWith(
                                         color: getColorScheme(context).colorGray900,
                                       ),
-                                  child: Text(Strings.of(context).commonTotalDuration),
+                                  child: Text(isKr ? '총 재생 시간' : 'Total duration'),
                                 ),
                                 SizedBox(width: 8),
                                 DefaultTextStyle(
@@ -271,7 +274,7 @@ class _BackgroundContents extends StatelessWidget {
                                 height: 16,
                                 color: getColorScheme(context).white,
                               ),
-                              content: Strings.of(context).blankMessageContentAddContent,
+                              content: isKr ? '콘텐츠 추가' : 'Add content',
                               isActivated: true,
                               onPressed: null,
                             ),
@@ -308,6 +311,8 @@ class PlaylistInputName extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Container(
       color: getColorScheme(context).white,
       padding: const EdgeInsets.symmetric(
@@ -322,14 +327,14 @@ class PlaylistInputName extends HookWidget {
                   color: getColorScheme(context).colorGray900,
                 ),
             child: Text(
-              Strings.of(context).commonTitle,
+              isKr ? '제목' : 'Title',
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.medium(
               controller: useTextEditingController(),
-              hint: Strings.of(context).createPlaylistTitleInput,
+              hint: isKr ? '제목을 입력해주세요' : 'Please enter a title',
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.text,
               showPwVisibleButton: false,
@@ -351,7 +356,7 @@ class PlaylistSettings extends HookWidget {
   @override
   Widget build(BuildContext context) {
     final isFolded = useState(false);
-
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
     final controller = useAnimationController(duration: const Duration(milliseconds: 300));
     final rotationAnimation = Tween<double>(begin: 0, end: math.pi).animate(controller);
 
@@ -377,7 +382,7 @@ class PlaylistSettings extends HookWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    Strings.of(context).commonOption,
+                    isKr ? '옵션' : 'Option',
                     style: getTextTheme(context).b3sb.copyWith(
                           color: getColorScheme(context).colorGray900,
                         ),
@@ -417,6 +422,8 @@ class _SettingContents extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 24.0),
       child: Column(
@@ -434,13 +441,13 @@ class _SettingContents extends HookWidget {
                     children: [
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_horizontal_line.svg",
-                        iconText: Strings.of(context).commonHorizontal,
+                        iconText: isKr ? '가로' : 'Horizontal',
                         onPressed: () {},
                         isChecked: true,
                       ),
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_vertical_line.svg",
-                        iconText: Strings.of(context).commonVertical,
+                        iconText: isKr ? '세로' : 'Vertical',
                         onPressed: () {},
                         isChecked: false,
                       ),
@@ -463,19 +470,19 @@ class _SettingContents extends HookWidget {
                     children: [
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_fill_line.svg",
-                        iconText: Strings.of(context).commonFill,
+                        iconText: isKr ? '채우기' : 'Fill',
                         onPressed: () {},
                         isChecked: true,
                       ),
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_fit.svg",
-                        iconText: Strings.of(context).commonFit,
+                        iconText: isKr ? '맞추기' : 'Fit',
                         onPressed: () {},
                         isChecked: false,
                       ),
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_stretch.svg",
-                        iconText: Strings.of(context).commonStretch,
+                        iconText: isKr ? '늘리기' : 'Stretch',
                         onPressed: () {},
                         isChecked: false,
                       ),
@@ -496,7 +503,7 @@ class _SettingContents extends HookWidget {
                 color: getColorScheme(context).black,
               ),
               onPressed: () => null,
-              content: Strings.of(context).commonPreview,
+              content: isKr ? '미리보기' : 'Preview',
               isActivated: true,
             ),
           ),

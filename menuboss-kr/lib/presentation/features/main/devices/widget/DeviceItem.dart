@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/devices/provider/DeviceShowNameEventProvider.dart';
@@ -12,7 +13,6 @@ import 'package:menuboss_common/components/popup/CommonPopup.dart';
 import 'package:menuboss_common/components/popup/PopupDelete.dart';
 import 'package:menuboss_common/components/popup/PopupRename.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -58,8 +58,8 @@ class DeviceItem extends HookConsumerWidget {
                         children: [
                           LabelText(
                             content: item.isOnline
-                                ? Strings.of(context).commonOn
-                                : Strings.of(context).commonOff,
+                                ? getString(context).commonOn
+                                : getString(context).commonOff,
                             isOn: item.isOnline,
                           ),
                           Expanded(
@@ -106,8 +106,8 @@ class DeviceItem extends HookConsumerWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
-                    title: Strings.of(context).popupRenameTitle,
-                    hint: Strings.of(context).popupRenameScreenHint,
+                    title: getString(context).popupRenameTitle,
+                    hint: getString(context).popupRenameScreenHint,
                     name: item.name,
                     onClicked: (name) {
                       if (name.isNotEmpty) {

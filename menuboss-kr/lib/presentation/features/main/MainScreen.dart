@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -9,7 +10,6 @@ import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dar
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
 import 'package:menuboss_common/components/bottomNav/BottomNavBar.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/dto/Triple.dart';
 
@@ -40,15 +40,15 @@ class MainScreen extends HookConsumerWidget {
 
     List<Triple> iconList = [
       Triple('assets/imgs/icon_schedules_line.svg', 'assets/imgs/icon_schedules_filled.svg',
-          Strings.of(context).mainNavigationMenuSchedules),
+          getString(context).mainNavigationMenuSchedules),
       Triple('assets/imgs/icon_playlists_line.svg', 'assets/imgs/icon_playlists_filled.svg',
-          Strings.of(context).mainNavigationMenuPlaylists),
+          getString(context).mainNavigationMenuPlaylists),
       Triple('assets/imgs/icon_screens_line.svg', 'assets/imgs/icon_screens_filled.svg',
-          Strings.of(context).mainNavigationMenuScreens),
+          getString(context).mainNavigationMenuScreens),
       Triple('assets/imgs/icon_media_line.svg', 'assets/imgs/icon_media_filled.svg',
-          Strings.of(context).mainNavigationMenuMedia),
+          getString(context).mainNavigationMenuMedia),
       Triple('assets/imgs/icon_my_line.svg', 'assets/imgs/icon_my_filled.svg',
-          Strings.of(context).mainNavigationMenuMy),
+          getString(context).mainNavigationMenuMy),
     ];
 
     final executedCodeForIndex = useState<List<bool>>(
@@ -62,7 +62,7 @@ class MainScreen extends HookConsumerWidget {
             Navigator.pushAndRemoveUntil(
               context,
               nextFadeInOutScreen(RoutingScreen.Login.route),
-                  (route) => false,
+              (route) => false,
             );
             return;
           }
@@ -70,7 +70,7 @@ class MainScreen extends HookConsumerWidget {
           switch (currentIndex) {
             case 0:
               final items = await ref.read(schedulesProvider.notifier).requestGetSchedules();
-              if (items.isNotEmpty){
+              if (items.isNotEmpty) {
                 bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScheduleAddedKey);
                 if (!hasViewed) {
                   tutorialManager.change(TutorialKey.ScheduleAddedKey, 1.0);
@@ -79,7 +79,7 @@ class MainScreen extends HookConsumerWidget {
               break;
             case 1:
               final items = await ref.read(playListProvider.notifier).requestGetPlaylists();
-              if (items.isNotEmpty){
+              if (items.isNotEmpty) {
                 bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.PlaylistAddedKey);
                 if (!hasViewed) {
                   tutorialManager.change(TutorialKey.PlaylistAddedKey, 1.0);
@@ -88,7 +88,7 @@ class MainScreen extends HookConsumerWidget {
               break;
             case 2:
               final items = await ref.read(deviceListProvider.notifier).requestGetDevices();
-              if (items.isNotEmpty){
+              if (items.isNotEmpty) {
                 bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.ScreenAdded);
                 if (!hasViewed) {
                   tutorialManager.change(TutorialKey.ScreenAdded, 1.0);
@@ -97,7 +97,7 @@ class MainScreen extends HookConsumerWidget {
               break;
             case 3:
               final items = await ref.read(mediaListProvider.notifier).requestGetMedias();
-              if (items.isNotEmpty){
+              if (items.isNotEmpty) {
                 bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
                 if (!hasViewed) {
                   tutorialManager.change(TutorialKey.MediaAddedKey, 1.0);

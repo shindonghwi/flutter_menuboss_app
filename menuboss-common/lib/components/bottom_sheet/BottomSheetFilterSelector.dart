@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 
 import '../../utils/Common.dart';
@@ -12,20 +11,22 @@ enum FilterType { NameAsc, NameDesc, NewestFirst, OldestFirst }
 
 class FilterInfo {
   static Map<FilterType, String> getFilterKey(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
     return {
-      FilterType.NameAsc: Strings.of(context).filterKeyNameAsc,
-      FilterType.NameDesc: Strings.of(context).filterKeyNameDesc,
-      FilterType.NewestFirst: Strings.of(context).filterKeyNewestFirst,
-      FilterType.OldestFirst: Strings.of(context).filterKeyOldestFirst
+      FilterType.NameAsc: "name_asc",
+      FilterType.NameDesc: "name_desc",
+      FilterType.NewestFirst: "created_desc",
+      FilterType.OldestFirst: "created_asc"
     };
   }
 
   static Map<FilterType, String> getFilterValue(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
     return {
-      FilterType.NameAsc: Strings.of(context).filterValueNameAsc,
-      FilterType.NameDesc: Strings.of(context).filterValueNameDesc,
-      FilterType.NewestFirst: Strings.of(context).filterValueNewestFirst,
-      FilterType.OldestFirst: Strings.of(context).filterValueOldestFirst
+      FilterType.NameAsc: isKr ? "이름 (오름차순)" : "Name (A->Z)",
+      FilterType.NameDesc: isKr ? "이름 (내림차순)" : "Name (Z->A)",
+      FilterType.NewestFirst: isKr ? "최신 순" : "Newest First",
+      FilterType.OldestFirst: isKr ? "오래된 순" : "Oldest First"
     };
   }
 }

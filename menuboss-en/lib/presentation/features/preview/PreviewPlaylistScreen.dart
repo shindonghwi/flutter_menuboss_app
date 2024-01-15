@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/preview/provider/PreviewListProvider.dart';
@@ -15,7 +16,6 @@ import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
@@ -52,7 +52,7 @@ class PreviewPlaylistScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
-        content: Strings.of(context).commonPreview,
+        content: getString(context).commonPreview,
         backgroundColor: Colors.transparent,
         reverseContentColor: true,
         onBack: () => popPageWrapper(context: context),
@@ -183,7 +183,7 @@ class _Settings extends HookWidget {
                   _PreviewSettingIcon(
                     horizontalPadding: 16,
                     iconPath: 'assets/imgs/icon_horizontal_filled.svg',
-                    content: Strings.of(context).commonHorizontal,
+                    content: getString(context).commonHorizontal,
                     isSelected: directionType.value == PlaylistSettingType.Horizontal,
                     onPressed: () => directionType.value = PlaylistSettingType.Horizontal,
                   ),
@@ -191,7 +191,7 @@ class _Settings extends HookWidget {
                   _PreviewSettingIcon(
                     horizontalPadding: 16,
                     iconPath: 'assets/imgs/icon_vertical_filled.svg',
-                    content: Strings.of(context).commonVertical,
+                    content: getString(context).commonVertical,
                     isSelected: directionType.value == PlaylistSettingType.Vertical,
                     onPressed: () => directionType.value = PlaylistSettingType.Vertical,
                   )
@@ -210,19 +210,19 @@ class _Settings extends HookWidget {
                 children: [
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fill_filled.svg',
-                    content: Strings.of(context).commonFill,
+                    content: getString(context).commonFill,
                     isSelected: contentScale.value == PlaylistSettingType.Fill,
                     onPressed: () => contentScale.value = PlaylistSettingType.Fill,
                   ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_fit.svg',
-                    content: Strings.of(context).commonFit,
+                    content: getString(context).commonFit,
                     isSelected: contentScale.value == PlaylistSettingType.Fit,
                     onPressed: () => contentScale.value = PlaylistSettingType.Fit,
                   ),
                   _PreviewSettingIcon(
                     iconPath: 'assets/imgs/icon_stretch.svg',
-                    content: Strings.of(context).commonStretch,
+                    content: getString(context).commonStretch,
                     isSelected: contentScale.value == PlaylistSettingType.Stretch,
                     onPressed: () => contentScale.value = PlaylistSettingType.Stretch,
                   )
@@ -266,12 +266,15 @@ class _PreviewSettingIcon extends StatelessWidget {
               path: iconPath,
               width: 24,
               height: 24,
-              color: isSelected ? getColorScheme(context).white : getColorScheme(context).colorGray500,
+              color:
+                  isSelected ? getColorScheme(context).white : getColorScheme(context).colorGray500,
             ),
             Text(
               content,
               style: getTextTheme(context).c1m.copyWith(
-                    color: isSelected ? getColorScheme(context).white : getColorScheme(context).colorGray500,
+                    color: isSelected
+                        ? getColorScheme(context).white
+                        : getColorScheme(context).colorGray500,
                   ),
             )
           ],
@@ -312,7 +315,8 @@ class TimerDivider extends HookWidget {
 
       timer.value = Timer.periodic(const Duration(seconds: 1), (timer) {
         elapsedSeconds++;
-        progressValue.value = (elapsedSeconds / durations[currentPageNotifier.value]!) * scaledTargetValue;
+        progressValue.value =
+            (elapsedSeconds / durations[currentPageNotifier.value]!) * scaledTargetValue;
         if (progressValue.value >= scaledTargetValue) {
           timer.cancel();
           if (currentPageNotifier.value < durations.length - 1) {
@@ -370,7 +374,9 @@ class TimerDivider extends HookWidget {
                           Container(
                             width: max(
                               0,
-                              MediaQuery.of(context).size.width / durations.length * progressValue.value,
+                              MediaQuery.of(context).size.width /
+                                  durations.length *
+                                  progressValue.value,
                             ),
                             height: 4,
                             decoration: BoxDecoration(
@@ -432,7 +438,9 @@ class TimerDivider extends HookWidget {
                   child: Padding(
                     padding: const EdgeInsets.all(12.0),
                     child: LoadSvg(
-                      path: timer.value == null ? "assets/imgs/icon_play.svg" : "assets/imgs/icon_pause.svg",
+                      path: timer.value == null
+                          ? "assets/imgs/icon_play.svg"
+                          : "assets/imgs/icon_pause.svg",
                       width: 40,
                       height: 40,
                       color: getColorScheme(context).white,

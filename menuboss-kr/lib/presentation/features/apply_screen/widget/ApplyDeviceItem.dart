@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss_common/components/checkbox/checkbox/BasicBorderCheckBox.dart';
 import 'package:menuboss_common/components/label/LabelText.dart';
@@ -7,7 +8,6 @@ import 'package:menuboss_common/components/loader/LoadImage.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -53,8 +53,8 @@ class ApplyDeviceItem extends HookWidget {
                     children: [
                       LabelText(
                         content: item.isOnline
-                            ? Strings.of(context).commonOn
-                            : Strings.of(context).commonOff,
+                            ? getString(context).commonOn
+                            : getString(context).commonOff,
                         isOn: item.isOnline,
                       ),
                       Padding(

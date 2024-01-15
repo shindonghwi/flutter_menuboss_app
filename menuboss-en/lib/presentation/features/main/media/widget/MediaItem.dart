@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss_common/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss_common/components/commons/MoreButton.dart';
@@ -11,7 +11,6 @@ import 'package:menuboss_common/components/popup/CommonPopup.dart';
 import 'package:menuboss_common/components/popup/PopupDelete.dart';
 import 'package:menuboss_common/components/popup/PopupRename.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -21,23 +20,23 @@ class ParseMediaItem {
   static String convertTypeSizeFormat(BuildContext context, String? type, int? count, int? size) {
     switch (type?.toLowerCase()) {
       case "image":
-        return Strings.of(context).type_media_size(
-          Strings.of(context).commonImage,
+        return getString(context).typeMediaSize(
+          getString(context).commonImage,
           StringUtil.formatBytesToMegabytes(size ?? 0),
         );
       case "video":
-        return Strings.of(context).type_media_size(
-          Strings.of(context).commonVideo,
+        return getString(context).typeMediaSize(
+          getString(context).commonVideo,
           StringUtil.formatBytesToMegabytes(size ?? 0),
         );
       case "folder":
-        return Strings.of(context).count_folder(
+        return getString(context).countFolder(
           count ?? 0,
           StringUtil.formatBytesToMegabytes(size ?? 0),
         );
       case "canvas":
-        return Strings.of(context).type_media_size(
-          Strings.of(context).commonCanvas,
+        return getString(context).typeMediaSize(
+          getString(context).commonCanvas,
           StringUtil.formatBytesToMegabytes(size ?? 0),
         );
     }
@@ -64,7 +63,7 @@ class MediaItem extends HookWidget {
     switch (item.type?.code.toLowerCase()) {
       case "folder":
         iconWidget = LoadSvg(
-          path : "assets/imgs/icon_folder.svg",
+          path: "assets/imgs/icon_folder.svg",
           width: 60,
           height: 60,
         );
@@ -114,8 +113,8 @@ class MediaItem extends HookWidget {
                 CommonPopup.showPopup(
                   context,
                   child: PopupRename(
-                    title: Strings.of(context).popupRenameTitle,
-                    hint: Strings.of(context).popupRenameMediaHint,
+                    title: getString(context).popupRenameTitle,
+                    hint: getString(context).popupRenameMediaHint,
                     name: item.name.toString(),
                     onClicked: (name) => onRename.call(name),
                   ),

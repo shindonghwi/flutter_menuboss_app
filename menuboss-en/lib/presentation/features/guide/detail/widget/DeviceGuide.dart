@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -16,7 +16,7 @@ class DeviceGuide extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).guideDetailDevice1Title,
+            getString(context).guideDetailDevice1Title,
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                   overflow: TextOverflow.visible,
@@ -24,7 +24,7 @@ class DeviceGuide extends HookWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailDevice1Description,
+            getString(context).guideDetailDevice1Description,
             style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray700,
                   overflow: TextOverflow.visible,
@@ -34,52 +34,52 @@ class DeviceGuide extends HookWidget {
           Image.asset("packages/menuboss_common/assets/imgs/image_en_guide_device1.png"),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailDevice1SubDescription1,
+            getString(context).guideDetailDevice1SubDescription1,
             style: getTextTheme(context).c1m.copyWith(
-              color: getColorScheme(context).colorGray500,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray500,
+                  overflow: TextOverflow.visible,
+                ),
           ),
           Text(
-            Strings.of(context).guideDetailDevice1SubDescription2,
+            getString(context).guideDetailDevice1SubDescription2,
             style: getTextTheme(context).c1m.copyWith(
-              color: getColorScheme(context).colorGray500,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray500,
+                  overflow: TextOverflow.visible,
+                ),
           ),
           const SizedBox(height: 32),
           Text(
-            Strings.of(context).guideDetailDevice2Title,
+            getString(context).guideDetailDevice2Title,
             style: getTextTheme(context).b2sb.copyWith(
-              color: getColorScheme(context).colorGray900,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray900,
+                  overflow: TextOverflow.visible,
+                ),
           ),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailDevice2Description,
+            getString(context).guideDetailDevice2Description,
             style: getTextTheme(context).b3m.copyWith(
-              color: getColorScheme(context).colorGray700,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray700,
+                  overflow: TextOverflow.visible,
+                ),
           ),
           const SizedBox(height: 20),
           Image.asset("packages/menuboss_common/assets/imgs/image_en_guide_device2.png"),
           const SizedBox(height: 32),
           Text(
-            Strings.of(context).guideDetailDevice3Title,
+            getString(context).guideDetailDevice3Title,
             style: getTextTheme(context).b2sb.copyWith(
-              color: getColorScheme(context).colorGray900,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray900,
+                  overflow: TextOverflow.visible,
+                ),
           ),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailDevice3Description,
+            getString(context).guideDetailDevice3Description,
             style: getTextTheme(context).b3m.copyWith(
-              color: getColorScheme(context).colorGray700,
-              overflow: TextOverflow.visible,
-            ),
+                  color: getColorScheme(context).colorGray700,
+                  overflow: TextOverflow.visible,
+                ),
           ),
           const SizedBox(height: 20),
           Image.asset("packages/menuboss_common/assets/imgs/image_en_guide_device3.png"),

@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/button/FloatingPlusButton.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -57,6 +56,8 @@ class _EnableContents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return SafeArea(
       child: Padding(
         padding: const EdgeInsets.only(top: 96.0),
@@ -93,7 +94,9 @@ class _EnableContents extends StatelessWidget {
                             color: getColorScheme(context).white,
                             overflow: TextOverflow.visible,
                           ),
-                      child: Text(Strings.of(context).tutorialMediaDescription6),
+                      child: Text(isKr
+                          ? "파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다"
+                          : "Select a file to see detailed information"),
                     ),
                   ),
                 ],
@@ -246,6 +249,8 @@ class _BottomContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Column(
@@ -257,7 +262,7 @@ class _BottomContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  Strings.of(context).tutorialMediaDescription3,
+                  isKr ? "[+] 버튼을 눌러 파일을 업로드할 수 있습니다" : "Press the [Plus] button to upload file",
                   style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).white,
                       ),
@@ -313,6 +318,8 @@ class _TopContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -343,7 +350,7 @@ class _TopContent extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(right: 12),
                       child: Text(
-                        Strings.of(context).tutorialMediaDescription1,
+                        isKr ? "새 폴더 만들기" : "Create a new folder",
                         style: getTextTheme(context).b3m.copyWith(
                               color: getColorScheme(context).white,
                             ),
@@ -399,7 +406,9 @@ class _TopContent extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(right: 8),
                   child: Text(
-                    Strings.of(context).tutorialMediaDescription2,
+                    isKr
+                        ? "파일 또는 폴더를 선택한 뒤 이동 및 삭제가 가능합니다"
+                        : "Select, move, and delete files and folders",
                     style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).white,
                         ),

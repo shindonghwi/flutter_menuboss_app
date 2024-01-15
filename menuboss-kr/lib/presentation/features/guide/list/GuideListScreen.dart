@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -9,7 +10,6 @@ import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -34,8 +34,8 @@ class GuideListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     List<_GuideItem> guideList = [
       _GuideItem(
-        title: Strings.of(context).guideListItemDeviceTitle,
-        description: Strings.of(context).guideListItemDeviceDescription,
+        title: getString(context).guideListItemDeviceTitle,
+        description: getString(context).guideListItemDeviceDescription,
         onPressed: () {
           Navigator.push(
             context,
@@ -47,8 +47,8 @@ class GuideListScreen extends StatelessWidget {
         },
       ),
       _GuideItem(
-        title: Strings.of(context).guideListItemScheduleTitle,
-        description: Strings.of(context).guideListItemScheduleDescription,
+        title: getString(context).guideListItemScheduleTitle,
+        description: getString(context).guideListItemScheduleDescription,
         onPressed: () {
           Navigator.push(
             context,
@@ -60,8 +60,8 @@ class GuideListScreen extends StatelessWidget {
         },
       ),
       _GuideItem(
-        title: Strings.of(context).guideListItemPlaylistTitle,
-        description: Strings.of(context).guideListItemScheduleDescription,
+        title: getString(context).guideListItemPlaylistTitle,
+        description: getString(context).guideListItemPlaylistDescription,
         onPressed: () {
           Navigator.push(
             context,
@@ -73,8 +73,8 @@ class GuideListScreen extends StatelessWidget {
         },
       ),
       _GuideItem(
-        title: Strings.of(context).guideListItemMediaTitle,
-        description: Strings.of(context).guideListItemMediaDescription,
+        title: getString(context).guideListItemMediaTitle,
+        description: getString(context).guideListItemMediaDescription,
         onPressed: () {
           Navigator.push(
             context,
@@ -89,7 +89,7 @@ class GuideListScreen extends StatelessWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).guideListTitle,
+        content: getString(context).guideListTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: Container(
@@ -133,7 +133,7 @@ class GuideListScreen extends StatelessWidget {
                     ),
                     padding: const EdgeInsets.only(bottom: 4.0), // 이 부분을 조절하여 간격 변경
                     child: Text(
-                      Strings.of(context).guideListDetailView,
+                      getString(context).guideListDetailView,
                       style: getTextTheme(context).c1m.copyWith(
                             color: getColorScheme(context).colorGray400,
                           ),

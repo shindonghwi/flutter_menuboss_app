@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
@@ -19,7 +20,6 @@ import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
@@ -80,7 +80,7 @@ class MediaScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: false,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
           if (controller != null) {
@@ -107,7 +107,7 @@ class MediaScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: true,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
           if (controller != null) {
@@ -130,12 +130,12 @@ class MediaScreen extends HookConsumerWidget {
           }
         },
         notAvailableFile: () {
-          Toast.showSuccess(context, Strings.of(context).messageFileNotAllowed404);
+          Toast.showSuccess(context, getString(context).messageFileNotAllowed404);
         },
         onError: (message) {
           Toast.showError(context, message);
         },
-        errorPermissionMessage: Strings.of(context).messagePermissionErrorPhotos,
+        errorPermissionMessage: getString(context).messagePermissionErrorPhotos,
       );
     }
 
@@ -144,17 +144,17 @@ class MediaScreen extends HookConsumerWidget {
         children: [
           TopBarIconTitleIcon(
             leadingIsShow: false,
-            content: Strings.of(context).mainNavigationMenuMedia,
+            content: getString(context).mainNavigationMenuMedia,
             suffixIcons: [
               Pair(
                 "assets/imgs/icon_new_folder.svg",
-                    () {
+                () {
                   mediaManager.createFolder();
                 },
               ),
               Pair(
                 "assets/imgs/icon_check_round.svg",
-                    () {
+                () {
                   Navigator.push(
                     context,
                     nextSlideVerticalScreen(
@@ -181,10 +181,10 @@ class MediaScreen extends HookConsumerWidget {
                           onMediaUpload: () => doMediaUploadAction(),
                         )
                       else if (mediaState is Success<List<ResponseMediaModel>>)
-                          _MediaContentList(
-                            items: mediaState.value,
-                            onMediaUpload: () => doMediaUploadAction(),
-                          ),
+                        _MediaContentList(
+                          items: mediaState.value,
+                          onMediaUpload: () => doMediaUploadAction(),
+                        ),
                       if (mediaState is Loading) const LoadingView(),
                     ],
                   ),
@@ -224,96 +224,96 @@ class _MediaContentList extends HookConsumerWidget {
 
     return items.isNotEmpty
         ? Stack(
-      children: [
-        Column(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft,
-              child: FilterButton(
-                filterValues: FilterInfo.getFilterValue(context),
-                onSelected: (type, text) {
-                  mediaManager.changeFilterType(type,
-                      filterValue: FilterInfo.getFilterValue(context));
-                },
-              ),
-            ),
-            Expanded(
-              child: RefreshIndicator(
-                onRefresh: () async {
-                  mediaManager.initPageInfo();
-                  mediaManager.requestGetMedias(delayed: 300);
-                },
-                color: getColorScheme(context).colorPrimary500,
-                backgroundColor: getColorScheme(context).white,
-                child: ListView.builder(
-                  padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
-                  controller: scrollController,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    final item = items[index];
-                    final isFolderType = item.type?.code.toLowerCase() == "folder";
-                    return ClickableScale(
-                      onPressed: () async {
-                        if (isFolderType) {
-                          Navigator.push(
-                            context,
-                            nextSlideHorizontalScreen(
-                              RoutingScreen.MediaDetailInFolder.route,
-                              parameter: item,
+            children: [
+              Column(
+                children: [
+                  Align(
+                    alignment: Alignment.centerLeft,
+                    child: FilterButton(
+                      filterValues: FilterInfo.getFilterValue(context),
+                      onSelected: (type, text) {
+                        mediaManager.changeFilterType(type,
+                            filterValue: FilterInfo.getFilterValue(context));
+                      },
+                    ),
+                  ),
+                  Expanded(
+                    child: RefreshIndicator(
+                      onRefresh: () async {
+                        mediaManager.initPageInfo();
+                        mediaManager.requestGetMedias(delayed: 300);
+                      },
+                      color: getColorScheme(context).colorPrimary500,
+                      backgroundColor: getColorScheme(context).white,
+                      child: ListView.builder(
+                        padding: const EdgeInsets.fromLTRB(24, 0, 12, 100),
+                        controller: scrollController,
+                        physics: const AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          final isFolderType = item.type?.code.toLowerCase() == "folder";
+                          return ClickableScale(
+                            onPressed: () async {
+                              if (isFolderType) {
+                                Navigator.push(
+                                  context,
+                                  nextSlideHorizontalScreen(
+                                    RoutingScreen.MediaDetailInFolder.route,
+                                    parameter: item,
+                                  ),
+                                );
+                              } else {
+                                try {
+                                  final newName = await Navigator.push(
+                                    context,
+                                    nextSlideHorizontalScreen(
+                                      RoutingScreen.MediaInfo.route,
+                                      parameter: item,
+                                    ),
+                                  );
+
+                                  if (!CollectionUtil.isNullEmptyFromString(newName)) {
+                                    mediaManager.renameItem(item.mediaId ?? "", newName);
+                                  }
+                                } catch (e) {
+                                  debugPrint(e.toString());
+                                }
+                              }
+                            },
+                            child: MediaItem(
+                              item: item,
+                              onRemove: () async {
+                                final isRemoved = await mediaManager.removeItem([item.mediaId]);
+                                if (isRemoved) {
+                                  Toast.showSuccess(
+                                      context, getString(context).messageRemoveMediaSuccess);
+                                }
+                              },
+                              onRename: (newName) {
+                                mediaManager.renameItem(item.mediaId, newName);
+                              },
                             ),
                           );
-                        } else {
-                          try {
-                            final newName = await Navigator.push(
-                              context,
-                              nextSlideHorizontalScreen(
-                                RoutingScreen.MediaInfo.route,
-                                parameter: item,
-                              ),
-                            );
-
-                            if (!CollectionUtil.isNullEmptyFromString(newName)) {
-                              mediaManager.renameItem(item.mediaId ?? "", newName);
-                            }
-                          } catch (e) {
-                            debugPrint(e.toString());
-                          }
-                        }
-                      },
-                      child: MediaItem(
-                        item: item,
-                        onRemove: () async {
-                          final isRemoved = await mediaManager.removeItem([item.mediaId]);
-                          if (isRemoved) {
-                            Toast.showSuccess(
-                                context, Strings.of(context).messageRemoveMediaSuccess);
-                          }
-                        },
-                        onRename: (newName) {
-                          mediaManager.renameItem(item.mediaId, newName);
                         },
                       ),
-                    );
-                  },
+                    ),
+                  ),
+                ],
+              ),
+              Container(
+                alignment: Alignment.bottomRight,
+                margin: const EdgeInsets.only(bottom: 16, right: 24),
+                child: FloatingPlusButton(
+                  onPressed: () => onMediaUpload.call(),
                 ),
               ),
-            ),
-          ],
-        ),
-        Container(
-          alignment: Alignment.bottomRight,
-          margin: const EdgeInsets.only(bottom: 16, right: 24),
-          child: FloatingPlusButton(
-            onPressed: () => onMediaUpload.call(),
-          ),
-        ),
-      ],
-    )
+            ],
+          )
         : EmptyView(
-      type: BlankMessageType.UPLOAD_FILE,
-      onPressed: () => onMediaUpload.call(),
-    );
+            type: BlankMessageType.UPLOAD_FILE,
+            onPressed: () => onMediaUpload.call(),
+          );
   }
 }

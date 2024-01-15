@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../ui/colors.dart';
 import '../../ui/typography.dart';
@@ -18,6 +17,8 @@ class PopupDeleteAccount extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -35,7 +36,7 @@ class PopupDeleteAccount extends HookWidget {
             height: 32,
           ),
           Text(
-            Strings.of(context).popupDeleteAccountTitle,
+            isKr ? '계정 삭제 완료!' : 'Delete account completed!',
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -44,7 +45,9 @@ class PopupDeleteAccount extends HookWidget {
             height: 16,
           ),
           Text(
-            Strings.of(context).popupDeleteAccountDescription,
+            isKr
+                ? '계정 삭제가 성공적으로 완료되었습니다. 다음에 다시 만나요'
+                : 'Account deletion completed successfully. See you next time',
             style: getTextTheme(context).b3r.copyWith(
                   color: getColorScheme(context).colorGray500,
                   overflow: TextOverflow.visible,
@@ -57,7 +60,7 @@ class PopupDeleteAccount extends HookWidget {
           SizedBox(
             width: double.infinity,
             child: PrimaryFilledButton.mediumRound8(
-              content: Strings.of(context).commonOk,
+              content: isKr ? '확인' : 'Ok',
               isActivated: true,
               onPressed: () {
                 Navigator.pop(context);

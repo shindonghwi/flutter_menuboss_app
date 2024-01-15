@@ -13,7 +13,6 @@ import '../../../components/loader/LoadImage.dart';
 import '../../../components/loader/LoadSvg.dart';
 import '../../../components/placeholder/PlaceholderType.dart';
 import '../../../components/textfield/OutlineTextField.dart';
-import '../../Strings.dart';
 
 class TutorialScheduleMake extends HookWidget {
   final VoidCallback onPressed;
@@ -45,6 +44,8 @@ class _ForegroundContents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return SafeArea(
       child: SizedBox(
         height: getMediaQuery(context).size.height,
@@ -88,7 +89,7 @@ class _ForegroundContents extends StatelessWidget {
                             ),
                             const SizedBox(width: 8),
                             Text(
-                              Strings.of(context).tutorialScheduleDescription1,
+                              isKr ? '시간표의 제목을 입력해주세요' : 'Please write the title of the schedule',
                               style: getTextTheme(context).b3m.copyWith(
                                     color: getColorScheme(context).white,
                                     overflow: TextOverflow.visible,
@@ -123,7 +124,9 @@ class _ForegroundContents extends StatelessWidget {
                       Container(
                         margin: const EdgeInsets.only(bottom: 4),
                         child: Text(
-                          Strings.of(context).tutorialScheduleDescription2,
+                          isKr
+                              ? '1. 재생목록 추가 2. 시간 설정하고 휴지통 아이콘을\n눌러 해당 재생목록을 삭제 할 수 있습니다'
+                              : '1. Add playlist 2. Schedule by setting time\nYou can delete it using the trash can icon',
                           style: getTextTheme(context).b3m.copyWith(
                                 color: getColorScheme(context).white,
                                 overflow: TextOverflow.visible,
@@ -137,7 +140,7 @@ class _ForegroundContents extends StatelessWidget {
                 const SizedBox(height: 20),
                 _ScheduleContentItem(
                   isRequired: false,
-                  playListName: Strings.of(context).createScheduleDefaultPlaylistTitleMorning,
+                  playListName: isKr ? '아침' : 'Morning',
                   start: "06:00",
                   end: "11:00",
                   backgroundColor: getColorScheme(context).white,
@@ -172,6 +175,8 @@ class _BackgroundContents extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return SafeArea(
       child: SizedBox(
         height: double.infinity,
@@ -183,7 +188,7 @@ class _BackgroundContents extends StatelessWidget {
               width: double.infinity,
               padding: const EdgeInsets.fromLTRB(24, 12, 24, 12),
               child: PrimaryFilledButton.largeRound8(
-                content: Strings.of(context).commonSave,
+                content: isKr ? '저장' : 'Save',
                 isActivated: true,
               ),
             ),
@@ -196,14 +201,14 @@ class _BackgroundContents extends StatelessWidget {
                     children: [
                       _ScheduleContentItem(
                         isRequired: true,
-                        playListName: Strings.of(context).createScheduleDefaultPlaylistTitleBasic,
+                        playListName: isKr ? '기본' : 'Basic',
                         start: "00:00",
                         end: "24:00",
                       ),
                       Container(width: double.infinity, height: 172, color: Colors.white),
                       _ScheduleContentItem(
                         isRequired: false,
-                        playListName: Strings.of(context).createScheduleDefaultPlaylistTitleLunch,
+                        playListName: isKr ? '점심' : 'Lunch',
                         start: "11:00",
                         end: "15:00",
                       ),
@@ -224,6 +229,8 @@ class _ScheduleInputName extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 24.0,
@@ -234,7 +241,7 @@ class _ScheduleInputName extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).commonTitle,
+            isKr ? '제목' : 'Title',
             style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray700,
                 ),
@@ -244,7 +251,7 @@ class _ScheduleInputName extends HookWidget {
               padding: const EdgeInsets.only(top: 12.0),
               child: OutlineTextField.medium(
                 controller: useTextEditingController(),
-                hint: Strings.of(context).createScheduleTitleInput,
+                hint: isKr ? '제목을 입력해주세요' : 'Please enter a title',
                 textInputAction: TextInputAction.done,
                 textInputType: TextInputType.text,
                 showPwVisibleButton: false,
@@ -276,6 +283,8 @@ class _ScheduleContentItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Container(
       width: double.infinity,
       color: backgroundColor ?? Colors.transparent,
@@ -359,7 +368,7 @@ class _ScheduleContentItem extends HookWidget {
                             ? Padding(
                                 padding: const EdgeInsets.only(bottom: 14.5),
                                 child: Text(
-                                  "${Strings.of(context).commonTime} 00:00 ~ 24:00",
+                                  "${isKr ? '시간' : 'Time'} 00:00 ~ 24:00",
                                   style: getTextTheme(context).b3sb.copyWith(
                                         color: getColorScheme(context).colorGray900,
                                       ),
@@ -393,7 +402,7 @@ class _ScheduleContentItem extends HookWidget {
                                 height: 20,
                                 color: getColorScheme(context).colorGray900,
                               ),
-                              content: Strings.of(context).createScheduleAddPlaylist,
+                              content: isKr ? '재생목록 추가' : 'Add Playlist',
                               isActivated: true,
                               onPressed: null,
                             ),
