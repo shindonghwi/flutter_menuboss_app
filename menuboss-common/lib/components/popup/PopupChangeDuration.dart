@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../ui/colors.dart';
 import '../../ui/typography.dart';
@@ -25,6 +24,7 @@ class PopupChangeDuration extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
     const size = 3;
     final controllers = List.generate(size, (index) {
       return index == 0
@@ -68,7 +68,7 @@ class PopupChangeDuration extends HookWidget {
       mainAxisSize: MainAxisSize.min,
       children: [
         Text(
-          Strings.of(context).popupChangeDurationTitle,
+          isKr ? '미디어의 지속 시간을 입력하세요' : 'Please enter the duration\nof the media',
           style: getTextTheme(context).b2sb.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
@@ -117,7 +117,8 @@ class PopupChangeDuration extends HookWidget {
                           onChanged: (value) {
                             if (value.length == 2 && index < size - 1) {
                               // 입력한 값의 길이가 2이고 마지막 필드가 아닌 경우
-                              FocusScope.of(context).requestFocus(focusNodes[index + 1]); // 다음 필드로 초점 이동
+                              FocusScope.of(context)
+                                  .requestFocus(focusNodes[index + 1]); // 다음 필드로 초점 이동
                               currentFocusIndex.value = index + 1;
                             }
                           },
@@ -159,7 +160,7 @@ class PopupChangeDuration extends HookWidget {
               fit: FlexFit.tight,
               flex: 1,
               child: NeutralLineButton.mediumRound8(
-                content: Strings.of(context).commonCancel,
+                content: isKr ? '취소' : 'Cancel',
                 isActivated: true,
                 onPressed: () {
                   Navigator.pop(context);
@@ -173,7 +174,7 @@ class PopupChangeDuration extends HookWidget {
               fit: FlexFit.tight,
               flex: 1,
               child: PrimaryFilledButton.mediumRound8(
-                content: Strings.of(context).commonOk,
+                content: isKr ? '확인' : 'Ok',
                 isActivated: true,
                 onPressed: () {
                   onClicked?.call(

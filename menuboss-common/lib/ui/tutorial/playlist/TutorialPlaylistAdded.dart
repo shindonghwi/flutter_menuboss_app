@@ -7,7 +7,6 @@ import 'package:menuboss_common/components/button/FloatingPlusButton.dart';
 import 'package:menuboss_common/components/loader/LoadImage.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -106,7 +105,7 @@ class _EnableContents extends StatelessWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "${Strings.of(context).commonUpdated} : $date",
+                          "${isKr ? "수정일" : "Updated"} : $date",
                           style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),
@@ -125,7 +124,7 @@ class _EnableContents extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              Strings.of(context).count_pages(6),
+                              isKr ? "콘텐츠 6개" : "6 pages",
                               style: getTextTheme(context).c1m.copyWith(
                                     color: getColorScheme(context).colorGray500,
                                   ),
@@ -137,7 +136,7 @@ class _EnableContents extends StatelessWidget {
                   ),
                 ),
                 PrimaryLineButton.smallRound100(
-                  content: Strings.of(context).commonConnectScreen,
+                  content: isKr ? "TV 적용" : "Apply",
                   isActivated: true,
                   onPressed: () => null,
                 )
@@ -154,12 +153,16 @@ class _EnableContents extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   Text(
-                    Strings.of(context).tutorialPlaylistDescription4,
+                    isKr
+                        ? "연결할 재생목록의 [TV 적용] 버튼을 누르고\n켜져있는 TV를 선택하면, TV와 재생목록 연결 완료!"
+                        : "Press the [Apply] button to select the screen\nthat is turned on. Screen and playlist connected!",
                     style: getTextTheme(context).b3m.copyWith(
                           color: getColorScheme(context).white,
                         ),
                   ),
-                  const SizedBox(width: 4,),
+                  const SizedBox(
+                    width: 4,
+                  ),
                   SizedBox(
                     width: 24,
                     height: 12,
@@ -222,6 +225,8 @@ class _BottomContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isKr = Localizations.localeOf(context).languageCode.contains("ko");
+
     return Align(
       alignment: Alignment.bottomCenter,
       child: Column(
@@ -233,7 +238,9 @@ class _BottomContent extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
-                  Strings.of(context).tutorialPlaylistDescription5,
+                  isKr
+                      ? "[+] 버튼을 눌러 새 재생목록을 만들 수 있습니다"
+                      : "Press the [Plus] button to add a new playlist",
                   style: getTextTheme(context).b3m.copyWith(
                         color: getColorScheme(context).white,
                       ),

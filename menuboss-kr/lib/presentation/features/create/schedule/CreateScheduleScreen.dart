@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleRegisterProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleUpdateProvider.dart';
@@ -14,7 +15,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
@@ -53,13 +53,13 @@ class CreateScheduleScreen extends HookConsumerWidget {
 
     final initialItems = [
       timelineManager.createScheduleItem(
-          -1, true, false, Strings.of(context).createScheduleDefaultPlaylistTitleBasic, null, null),
+          -1, true, false, getString(context).createScheduleDefaultPlaylistTitleBasic, null, null),
       timelineManager.createScheduleItem(-2, false, false,
-          Strings.of(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
+          getString(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
       timelineManager.createScheduleItem(-3, false, false,
-          Strings.of(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
+          getString(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
       timelineManager.createScheduleItem(-4, false, false,
-          Strings.of(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
+          getString(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
       timelineManager.createScheduleItem(-5, false, true, "", null, null),
     ];
 
@@ -99,7 +99,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
         await Future(() {
           scheduleRegisterState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageRegisterScheduleSuccess);
+              Toast.showSuccess(context, getString(context).messageRegisterScheduleSuccess);
               schedulesManager.requestGetSchedules();
               deviceListManager.requestGetDevices();
               Navigator.of(context).pop(true);
@@ -108,7 +108,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
           );
           scheduleUpdateState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageUpdateScheduleSuccess);
+              Toast.showSuccess(context, getString(context).messageUpdateScheduleSuccess);
               schedulesManager.requestGetSchedules();
               deviceListManager.requestGetDevices();
               Navigator.of(context).pop();
@@ -130,11 +130,11 @@ class CreateScheduleScreen extends HookConsumerWidget {
             preferredSize: const Size.fromHeight(56.0),
             child: isEditMode.value
                 ? TopBarIconTitleNone(
-              content: Strings.of(context).editScheduleTitle,
+              content: getString(context).editScheduleTitle,
               onBack: () => popPageWrapper(context: context),
             )
                 : TopBarNoneTitleIcon(
-              content: Strings.of(context).createScheduleTitle,
+              content: getString(context).createScheduleTitle,
               onBack: () => popPageWrapper(context: context),
             ),
           ),
@@ -205,11 +205,11 @@ class _SaveButton extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
         child: PrimaryFilledButton.largeRound8(
-          content: Strings.of(context).commonSave,
+          content: getString(context).commonSave,
           isActivated: isSaveAvailable,
           onPressed: () {
             if (timelineManager.hasAnyOverlappingTimes()) {
-              Toast.showError(context, Strings.of(context).messageTimeSettingDuplicated);
+              Toast.showError(context, getString(context).messageTimeSettingDuplicated);
             } else {
               if (isEditMode) {
                 scheduleUpdateManager.updateSchedule(scheduleId ?? -1, saveState);

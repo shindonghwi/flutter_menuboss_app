@@ -4,7 +4,6 @@ import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:numberpicker/numberpicker.dart';
 
-import '../../ui/Strings.dart';
 import '../../utils/Common.dart';
 import '../../utils/dto/Pair.dart';
 import '../button/NeutralLineButton.dart';
@@ -27,6 +26,7 @@ class BottomSheetTimeSetting extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
     final isFocusStartTime = useState(true);
 
     final startHour = int.parse(startTime.split(':')[0]);
@@ -61,14 +61,15 @@ class BottomSheetTimeSetting extends HookWidget {
           } else {
             final startInfo = timeInfoState.first;
             final endInfo = timeInfoState.last;
-
+            final duplicateMessage =
+                isKr ? '종료시간은 시작 시간보다 빠를수 없습니다' : 'End time cannot precede start time';
             // 시작 시간이 앞서는걸 방지
             if (startInfo.first.value > endInfo.first.value) {
-              Toast.showError(context, Strings.of(context).messageTimeSettingPrecede);
+              Toast.showError(context, duplicateMessage);
               return;
             } else if ((startInfo.first.value == endInfo.first.value) &&
                 (startInfo.second.value >= endInfo.second.value)) {
-              Toast.showError(context, Strings.of(context).messageTimeSettingPrecede);
+              Toast.showError(context, duplicateMessage);
               return;
             }
 
@@ -318,6 +319,8 @@ class _ButtonGroups extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 16),
       child: Row(
@@ -326,7 +329,7 @@ class _ButtonGroups extends HookWidget {
             flex: 1,
             fit: FlexFit.tight,
             child: NeutralLineButton.mediumRound8(
-              content: Strings.of(context).commonCancel,
+              content: isKr ? '취소' : 'Cancel',
               isActivated: true,
               onPressed: () => onPressed.call(false),
             ),
@@ -338,7 +341,7 @@ class _ButtonGroups extends HookWidget {
             flex: 1,
             fit: FlexFit.tight,
             child: PrimaryFilledButton.mediumRound8(
-              content: Strings.of(context).commonOk,
+              content: isKr ? '확인' : 'Ok',
               isActivated: true,
               onPressed: () => onPressed.call(true),
             ),

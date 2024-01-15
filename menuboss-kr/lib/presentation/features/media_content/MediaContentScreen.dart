@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/features/media_content/widget/MediaContentTabVIew.dart';
 import 'package:menuboss/presentation/features/media_content/widget/MediaTabCanvas.dart';
 import 'package:menuboss/presentation/features/media_content/widget/MediaTabFolder.dart';
 import 'package:menuboss_common/components/appbar/TopBarNoneTitleIcon.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import 'widget/MediaTab.dart';
 
@@ -23,7 +23,7 @@ class MediaContentScreen extends HookWidget {
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
-        content: Strings.of(context).mediaContentTitle,
+        content: getString(context).mediaContentTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: Column(
@@ -44,7 +44,8 @@ class MediaContentScreen extends HookWidget {
             child: NotificationListener<ScrollNotification>(
               onNotification: (notification) {
                 if (notification is UserScrollNotification) {
-                  if (currentIndex.value == 1 && notification.direction == ScrollDirection.forward) {
+                  if (currentIndex.value == 1 &&
+                      notification.direction == ScrollDirection.forward) {
                     return true; // Prevents the scrolling from 1 index to 2 index.
                   }
                 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -15,7 +16,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -67,7 +67,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
           applyScreenState.when(
             success: (event) async {
               deviceManager.requestGetDevices();
-              Toast.showSuccess(context, Strings.of(context).messageApplyScreenSuccess);
+              Toast.showSuccess(context, getString(context).messageApplyScreenSuccess);
               Navigator.of(context).pop();
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
@@ -81,7 +81,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).applyScreenTitle,
+        content: getString(context).applyScreenTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
@@ -116,7 +116,7 @@ class ApplyToDeviceScreen extends HookConsumerWidget {
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
                         child: PrimaryFilledButton.largeRound8(
-                          content: Strings.of(context).commonDone,
+                          content: getString(context).commonDone,
                           isActivated: checkList.isNotEmpty,
                           onPressed: () {
                             CommonPopup.showPopup(

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../ui/colors.dart';
 import '../../ui/typography.dart';
@@ -19,6 +18,8 @@ class PopupDelete extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -36,7 +37,7 @@ class PopupDelete extends HookWidget {
             height: 24,
           ),
           Text(
-            Strings.of(context).popupDeleteTitle,
+            isKr ? '정말로 삭제하시겠습니까?' : 'Are you sure?',
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -45,7 +46,9 @@ class PopupDelete extends HookWidget {
             height: 16,
           ),
           Text(
-            Strings.of(context).popupDeleteDescription,
+            isKr
+                ? '이 레코드를 정말로 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다'
+                : 'Do you really want to delete these records?\nThis process cannot be undone',
             style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray500,
                   overflow: TextOverflow.visible,
@@ -61,7 +64,7 @@ class PopupDelete extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: NeutralLineButton.mediumRound8(
-                  content: Strings.of(context).commonCancel,
+                  content: isKr ? '취소' : 'Cancel',
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);
@@ -75,7 +78,7 @@ class PopupDelete extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: ErrorFilledButton.mediumRound8(
-                  content: Strings.of(context).commonDelete,
+                  content: isKr ? '삭제' : 'Delete',
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);

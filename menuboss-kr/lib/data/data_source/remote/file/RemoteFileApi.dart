@@ -3,9 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
-import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../../models/file/ResponseFileModel.dart';
 import '../BaseApiUtil.dart';
@@ -30,14 +28,14 @@ class RemoteFileApi {
     if (!file.existsSync()) {
       return ApiResponse(
         status: 404,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageFileNotFound404,
+        message: "파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요",
         data: null,
       );
     } else if (!allowedExtensionsImage.contains(file.path.split('.').last) &&
         !allowedExtensionsVideo.contains(file.path.split('.').last)) {
       return ApiResponse(
         status: 400,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageFileNotAllowed404,
+        message: "허용되지 않는 파일 확장자입니다.\n다시 시도해주세요",
         data: null,
       );
     }
@@ -82,13 +80,13 @@ class RemoteFileApi {
     if (!file.existsSync()) {
       return ApiResponse(
         status: 404,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageFileNotFound404,
+        message: "파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요",
         data: null,
       );
     } else if (!allowedExtensionsVideo.contains(file.path.split('.').last)) {
       return ApiResponse(
         status: 400,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageFileNotAllowed404,
+        message: "허용되지 않는 파일 확장자입니다.\n다시 시도해주세요",
         data: null,
       );
     }
@@ -133,13 +131,13 @@ class RemoteFileApi {
     if (!file.existsSync()) {
       return ApiResponse(
         status: 404,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageFileNotFound404,
+        message: "파일을 찾을 수 없습니다\n잠시후에 다시 시도해주세요",
         data: null,
       );
     } else if (!allowedExtensionsImage.contains(file.path.split('.').last)) {
       return ApiResponse(
         status: 400,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageFileNotAllowed404,
+        message: "허용되지 않는 파일 확장자입니다.\n다시 시도해주세요",
         data: null,
       );
     }

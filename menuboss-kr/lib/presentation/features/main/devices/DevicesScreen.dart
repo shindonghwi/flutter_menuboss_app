@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/device/ResponseDeviceModel.dart';
 import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -17,7 +18,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -65,7 +65,7 @@ class DevicesScreen extends HookConsumerWidget {
         await Future(() {
           deviceShowNameEventState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageSendEventNameShowSuccess);
+              Toast.showSuccess(context, getString(context).messageSendEventNameShowSuccess);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
@@ -81,7 +81,7 @@ class DevicesScreen extends HookConsumerWidget {
     return SafeArea(
       child: Column(
         children: [
-          TopBarTitle(content: Strings.of(context).mainNavigationMenuScreens),
+          TopBarTitle(content: getString(context).mainNavigationMenuScreens),
           Expanded(
             child: Stack(
               children: [

@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss_common/components/textfield/OutlineTextField.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
@@ -29,7 +29,7 @@ class ScheduleInputName extends HookConsumerWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).commonTitle,
+            getString(context).commonTitle,
             style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray700,
                 ),
@@ -38,7 +38,7 @@ class ScheduleInputName extends HookConsumerWidget {
             padding: const EdgeInsets.only(top: 12.0),
             child: OutlineTextField.medium(
               controller: useTextEditingController(text: initTitle),
-              hint: Strings.of(context).createScheduleTitleInput,
+              hint: getString(context).createScheduleTitleInput,
               textInputAction: TextInputAction.done,
               textInputType: TextInputType.text,
               showPwVisibleButton: false,

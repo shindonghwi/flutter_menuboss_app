@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:menuboss_common/ui/Strings.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -16,7 +16,7 @@ class ScheduleGuide extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).guideDetailSchedule1Title,
+            getString(context).guideDetailSchedule1Title,
             style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
@@ -24,7 +24,7 @@ class ScheduleGuide extends HookWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailSchedule1Description,
+            getString(context).guideDetailSchedule1Description,
             style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
@@ -34,7 +34,7 @@ class ScheduleGuide extends HookWidget {
           Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_schedule1.png"),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailSchedule1SubDescription1,
+            getString(context).guideDetailSchedule1SubDescription1,
             style: getTextTheme(context).c1m.copyWith(
               color: getColorScheme(context).colorGray500,
               overflow: TextOverflow.visible,
@@ -42,7 +42,7 @@ class ScheduleGuide extends HookWidget {
           ),
           const SizedBox(height: 32),
           Text(
-            Strings.of(context).guideDetailSchedule2Title,
+            getString(context).guideDetailSchedule2Title,
             style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
@@ -50,7 +50,7 @@ class ScheduleGuide extends HookWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailSchedule2Description,
+            getString(context).guideDetailSchedule2Description,
             style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,
@@ -60,7 +60,7 @@ class ScheduleGuide extends HookWidget {
           Image.asset("packages/menuboss_common/assets/imgs/image_kr_guide_schedule2.png"),
           const SizedBox(height: 32),
           Text(
-            Strings.of(context).guideDetailSchedule3Title,
+            getString(context).guideDetailSchedule3Title,
             style: getTextTheme(context).b2sb.copyWith(
               color: getColorScheme(context).colorGray900,
               overflow: TextOverflow.visible,
@@ -68,7 +68,7 @@ class ScheduleGuide extends HookWidget {
           ),
           const SizedBox(height: 12),
           Text(
-            Strings.of(context).guideDetailSchedule3Description,
+            getString(context).guideDetailSchedule3Description,
             style: getTextTheme(context).b3m.copyWith(
               color: getColorScheme(context).colorGray700,
               overflow: TextOverflow.visible,

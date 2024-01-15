@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
@@ -16,7 +17,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/RegUtil.dart';
@@ -66,7 +66,7 @@ class SignUpScreen extends HookConsumerWidget {
             Navigator.pushAndRemoveUntil(
               context,
               nextFadeInOutScreen(RoutingScreen.Main.route),
-                  (route) => false,
+              (route) => false,
             );
           },
           failure: (event) {
@@ -79,7 +79,7 @@ class SignUpScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).commonSignUp,
+        content: getString(context).commonSignUp,
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
@@ -92,23 +92,23 @@ class SignUpScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (socialJoinModel == null)
-                  // Email
+                    // Email
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Strings.of(context).commonEmail,
+                          getString(context).commonEmail,
                           style: getTextTheme(context).b3m.copyWith(
-                            color: getColorScheme(context).colorGray800,
-                          ),
+                                color: getColorScheme(context).colorGray800,
+                              ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 12),
                           child: OutlineTextField.medium(
                             controller: useTextEditingController(),
-                            hint: Strings.of(context).commonEmail,
-                            successMessage: Strings.of(context).loginEmailCorrect,
-                            errorMessage: Strings.of(context).loginEmailInvalid,
+                            hint: getString(context).commonEmail,
+                            successMessage: getString(context).loginEmailCorrect,
+                            errorMessage: getString(context).loginEmailInvalid,
                             checkRegList: const [
                               RegCheckType.Email,
                             ],
@@ -120,22 +120,22 @@ class SignUpScreen extends HookConsumerWidget {
                     ),
 
                   if (socialJoinModel == null)
-                  // Password
+                    // Password
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          Strings.of(context).commonPassword,
+                          getString(context).commonPassword,
                           style: getTextTheme(context).b3m.copyWith(
-                            color: getColorScheme(context).colorGray800,
-                          ),
+                                color: getColorScheme(context).colorGray800,
+                              ),
                         ),
                         Padding(
                           padding: const EdgeInsets.only(top: 12),
                           child: OutlineTextField.medium(
                             controller: useTextEditingController(),
-                            hint: Strings.of(context).commonPassword,
-                            errorMessage: Strings.of(context).loginPwInvalid,
+                            hint: getString(context).commonPassword,
+                            errorMessage: getString(context).loginPwInvalid,
                             checkRegList: const [
                               RegCheckType.PW,
                             ],
@@ -154,16 +154,16 @@ class SignUpScreen extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        Strings.of(context).commonFullName,
+                        getString(context).commonFullName,
                         style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray800,
-                        ),
+                              color: getColorScheme(context).colorGray800,
+                            ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12.0),
                         child: OutlineTextField.medium(
                           controller: useTextEditingController(),
-                          hint: Strings.of(context).signupFullNameHint,
+                          hint: getString(context).signupFullNameHint,
                           onChanged: (text) => fullName.value = text,
                         ),
                       ),
@@ -176,16 +176,16 @@ class SignUpScreen extends HookConsumerWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        Strings.of(context).signupBusinessName,
+                        getString(context).signupBusinessName,
                         style: getTextTheme(context).b3m.copyWith(
-                          color: getColorScheme(context).colorGray800,
-                        ),
+                              color: getColorScheme(context).colorGray800,
+                            ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(top: 12.0),
                         child: OutlineTextField.medium(
                           controller: useTextEditingController(),
-                          hint: Strings.of(context).signupBusinessNameHint,
+                          hint: getString(context).signupBusinessNameHint,
                           onChanged: (text) => businessName.value = text,
                         ),
                       ),
@@ -196,14 +196,14 @@ class SignUpScreen extends HookConsumerWidget {
                   SizedBox(
                     width: double.infinity,
                     child: PrimaryFilledButton.mediumRound8(
-                      content: Strings.of(context).commonSignUp,
+                      content: getString(context).commonSignUp,
                       isActivated: socialJoinModel == null
                           ? RegUtil.checkEmail(email.value) &&
-                          email.value.isNotEmpty &&
-                          RegUtil.checkPw(password.value) &&
-                          password.value.isNotEmpty &&
-                          fullName.value.isNotEmpty &&
-                          businessName.value.isNotEmpty
+                              email.value.isNotEmpty &&
+                              RegUtil.checkPw(password.value) &&
+                              password.value.isNotEmpty &&
+                              fullName.value.isNotEmpty &&
+                              businessName.value.isNotEmpty
                           : fullName.value.isNotEmpty && businessName.value.isNotEmpty,
                       onPressed: () async {
                         final String timeZone = await FlutterNativeTimezone.getLocalTimezone();

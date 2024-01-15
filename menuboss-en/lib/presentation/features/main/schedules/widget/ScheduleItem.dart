@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -9,7 +10,6 @@ import 'package:menuboss_common/components/loader/LoadImage.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
@@ -56,7 +56,7 @@ class ScheduleItem extends HookWidget {
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                         child: Text(
-                          "${Strings.of(context).commonUpdated} : ${item.updatedDate}",
+                          "${getString(context).commonUpdated} : ${item.updatedDate}",
                           style: getTextTheme(context).c1m.copyWith(
                                 color: getColorScheme(context).colorGray500,
                               ),
@@ -75,7 +75,7 @@ class ScheduleItem extends HookWidget {
                           Padding(
                             padding: const EdgeInsets.only(left: 4.0),
                             child: Text(
-                              Strings.of(context).count_playlist(item.property?.count ?? 0),
+                              getString(context).countPlaylist(item.property?.count ?? 0),
                               style: getTextTheme(context).c1m.copyWith(
                                     color: getColorScheme(context).colorGray500,
                                   ),
@@ -90,7 +90,7 @@ class ScheduleItem extends HookWidget {
             ),
           ),
           PrimaryLineButton.smallRound100(
-            content: Strings.of(context).commonConnectScreen,
+            content: getString(context).commonConnectScreen,
             isActivated: true,
             onPressed: () {
               Navigator.push(

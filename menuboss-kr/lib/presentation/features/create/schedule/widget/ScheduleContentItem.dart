@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -16,7 +17,6 @@ import 'package:menuboss_common/components/loader/LoadImage.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -111,7 +111,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                 child: Clickable(
                   onPressed: () {
                     timelineProvider.addItem(
-                      defaultTitle: Strings.of(context).createScheduleNewPlaylist,
+                      defaultTitle: getString(context).createScheduleNewPlaylist,
                     );
                   },
                   child: DottedBorder(
@@ -236,7 +236,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                       ? Padding(
                                           padding: const EdgeInsets.only(bottom: 14.5),
                                           child: Text(
-                                            "${Strings.of(context).commonTime} 00:00 ~ 24:00",
+                                            "${getString(context).commonTime} 00:00 ~ 24:00",
                                             style: getTextTheme(context).b3sb.copyWith(
                                                   color: getColorScheme(context).colorGray900,
                                                 ),
@@ -287,8 +287,8 @@ class ScheduleContentItem extends HookConsumerWidget {
                                           color: getColorScheme(context).colorGray900,
                                         ),
                                         content: data.playlistId == null || data.playlistId! < 0
-                                            ? Strings.of(context).createScheduleAddPlaylist
-                                            : Strings.of(context).createScheduleChangePlaylist,
+                                            ? getString(context).createScheduleAddPlaylist
+                                            : getString(context).createScheduleChangePlaylist,
                                         isActivated: true,
                                         onPressed: () => goToSelectPlaylist(index, data),
                                       ),

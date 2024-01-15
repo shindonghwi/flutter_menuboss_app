@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import '../../ui/colors.dart';
 import '../../ui/typography.dart';
@@ -19,6 +18,8 @@ class PopupLogout extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
+
     return SizedBox(
       width: double.infinity,
       child: Column(
@@ -36,7 +37,7 @@ class PopupLogout extends HookWidget {
             height: 32,
           ),
           Text(
-            Strings.of(context).commonLogout,
+            isKr ? '로그아웃' : 'Log out',
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -45,7 +46,7 @@ class PopupLogout extends HookWidget {
             height: 16,
           ),
           Text(
-            Strings.of(context).popupLogoutDescription,
+            isKr ? '로그아웃 하시겠습니까?' : 'Are you sure you want to log out?',
             style: getTextTheme(context).b3r.copyWith(
                   color: getColorScheme(context).colorGray500,
                   overflow: TextOverflow.visible,
@@ -61,7 +62,7 @@ class PopupLogout extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: NeutralLineButton.mediumRound8(
-                  content: Strings.of(context).commonCancel,
+                  content: isKr? '취소' : 'Cancel',
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);
@@ -75,7 +76,7 @@ class PopupLogout extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: PrimaryFilledButton.mediumRound8(
-                  content: Strings.of(context).commonLogout,
+                  content: isKr ? '로그아웃' : 'Log out',
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -13,7 +12,6 @@ import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -66,8 +64,7 @@ class RemoteAuthApi {
         if (!CollectionUtil.isNullEmptyFromString(appleIdCredential.identityToken)) {
           return ApiResponse<SocialLoginModel>(
             status: 200,
-            message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+            message: "",
             data: SocialLoginModel(
               LoginPlatform.Apple,
               appleIdCredential.identityToken,
@@ -76,27 +73,23 @@ class RemoteAuthApi {
         } else {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message: "사용자 정보를 찾을 수 없습니다",
             data: null,
           );
         }
       } catch (e) {
-        debugPrint(
-            "doAppleLogin: 400 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
+        debugPrint("doAppleLogin: 500 : 일시적인 장애가 발생하였습니다 - 다른 로그인 방법을 사용해주세요");
         return ApiResponse<SocialLoginModel>(
-          status: 400,
-          message: "",
+          status: 500,
+          message: "일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요",
           data: null,
         );
       }
     } else {
-      debugPrint(
-          "doAppleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
+      debugPrint("doAppleLogin: 406 : 네트워크 연결이 불안정합니다");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message: "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
         data: null,
       );
     }
@@ -113,8 +106,7 @@ class RemoteAuthApi {
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message:
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message: "사용자 정보를 찾을 수 없습니다",
             data: null,
           );
         } else {
@@ -136,8 +128,7 @@ class RemoteAuthApi {
               (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
-                  message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
-                      .messageApiSuccess,
+                  message: "",
                   data: SocialLoginModel(
                     LoginPlatform.Google,
                     value.idToken,
@@ -148,29 +139,24 @@ class RemoteAuthApi {
           } else {
             return ApiResponse<SocialLoginModel>(
               status: 404,
-              message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
-                  .messageNotFoundUser,
+              message: "사용자 정보를 찾을 수 없습니다",
               data: null,
             );
           }
         }
       } catch (e) {
-        debugPrint(
-            "doGoogleLogin: 500 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
+        debugPrint("doGoogleLogin: 500 : 일시적인 장애가 발생하였습니다 - 다른 로그인 방법을 사용해주세요");
         return ApiResponse<SocialLoginModel>(
           status: 500,
-          message:
-              Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
+          message: "일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요",
           data: null,
         );
       }
     } else {
-      debugPrint(
-          "doGoogleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
+      debugPrint("doGoogleLogin: 406 : 네트워크 연결이 불안정합니다");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message: "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
         data: null,
       );
     }
@@ -182,7 +168,7 @@ class RemoteAuthApi {
     ApiResponse<SocialLoginModel> successKakaoLogin(String idToken) {
       return ApiResponse<SocialLoginModel>(
         status: 200,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+        message: "",
         data: SocialLoginModel(
           LoginPlatform.Kakao,
           idToken,
@@ -215,9 +201,7 @@ class RemoteAuthApi {
               final res = await kakao.UserApi.instance.loginWithKakaoAccount();
               return successKakaoLogin(res.accessToken.toString());
             } catch (error) {
-              return failureKakaoLogin(
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
-              );
+              return failureKakaoLogin("사용자 정보를 찾을 수 없습니다");
             }
           }
         } else {
@@ -225,28 +209,22 @@ class RemoteAuthApi {
             final res = await kakao.UserApi.instance.loginWithKakaoAccount();
             return successKakaoLogin(res.accessToken.toString());
           } catch (error) {
-            return failureKakaoLogin(
-              Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
-            );
+            return failureKakaoLogin("사용자 정보를 찾을 수 없습니다");
           }
         }
       } catch (e) {
-        debugPrint(
-            "doKakaoLogin: 500 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
+        debugPrint("doKakaoLogin: 500 : 일시적인 장애가 발생하였습니다 - 다른 로그인 방법을 사용해주세요");
         return ApiResponse<SocialLoginModel>(
           status: 500,
-          message:
-              Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
+          message: "일시적인 장애가 발생하였습니다\n다른 로그인 방법을 사용해주세요",
           data: null,
         );
       }
     } else {
-      debugPrint(
-          "doKakaoLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
+      debugPrint("doGoogleLogin: 406 : 네트워크 연결이 불안정합니다");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message: "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
         data: null,
       );
     }

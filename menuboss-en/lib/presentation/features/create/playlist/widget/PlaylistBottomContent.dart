@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlayListRegisterProvider.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlayListUpdateProvider.dart';
 import 'package:menuboss/presentation/features/create/playlist/provider/PlaylistSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
 class PlaylistBottomContent extends HookConsumerWidget {
@@ -41,7 +41,7 @@ class PlaylistBottomContent extends HookConsumerWidget {
                       playListRegisterManager.registerPlaylist(saveManager);
                     }
                   },
-                  content: Strings.of(context).commonSave,
+                  content: getString(context).commonSave,
                   isActivated: saveManager.isCreateAvailable(),
                 ),
               ),

@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,7 +10,6 @@ import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/domain/models/auth/SocialLoginModel.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
@@ -64,8 +62,7 @@ class RemoteAuthApi {
         if (!CollectionUtil.isNullEmptyFromString(appleIdCredential.identityToken)) {
           return ApiResponse<SocialLoginModel>(
             status: 200,
-            message:
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageApiSuccess,
+            message: "",
             data: SocialLoginModel(
               LoginPlatform.Apple,
               appleIdCredential.identityToken,
@@ -74,27 +71,24 @@ class RemoteAuthApi {
         } else {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message:
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message: "User information not found",
             data: null,
           );
         }
       } catch (e) {
         debugPrint(
-            "doAppleLogin: 400 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
+            "doAppleLogin: 500 : A temporary failure has occurred.\nPlease use a different login method");
         return ApiResponse<SocialLoginModel>(
-          status: 400,
+          status: 500,
           message: "",
           data: null,
         );
       }
     } else {
-      debugPrint(
-          "doAppleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
+      debugPrint("doGoogleLogin: 406 : The network connection is unstable");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message: "The network connection is unstable",
         data: null,
       );
     }
@@ -111,8 +105,7 @@ class RemoteAuthApi {
         if (googleUser == null) {
           return ApiResponse<SocialLoginModel>(
             status: 404,
-            message:
-                Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNotFoundUser,
+            message: "User information not found",
             data: null,
           );
         } else {
@@ -134,8 +127,7 @@ class RemoteAuthApi {
               (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
-                  message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
-                      .messageApiSuccess,
+                  message: "",
                   data: SocialLoginModel(
                     LoginPlatform.Google,
                     value.idToken,
@@ -146,29 +138,25 @@ class RemoteAuthApi {
           } else {
             return ApiResponse<SocialLoginModel>(
               status: 404,
-              message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext)
-                  .messageNotFoundUser,
+              message: "User information not found",
               data: null,
             );
           }
         }
       } catch (e) {
         debugPrint(
-            "doGoogleLogin: 500 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail} ${e.toString()}");
+            "doAppleLogin: 500 : A temporary failure has occurred.\nPlease use a different login method");
         return ApiResponse<SocialLoginModel>(
           status: 500,
-          message:
-              Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageTempLoginFail,
+          message: "",
           data: null,
         );
       }
     } else {
-      debugPrint(
-          "doGoogleLogin: 406 :${Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired} ${e}");
+      debugPrint("doGoogleLogin: 406 : The network connection is unstable");
       return ApiResponse<SocialLoginModel>(
         status: 406,
-        message:
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message: "The network connection is unstable",
         data: null,
       );
     }

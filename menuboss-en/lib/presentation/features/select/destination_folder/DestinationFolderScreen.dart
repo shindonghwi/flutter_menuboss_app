@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/features/main/media/provider/MediaListProvider.dart';
@@ -15,7 +16,6 @@ import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -45,7 +45,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         destinationFolderProvider.requestGetFolders(
-          rootFolderName: Strings.of(context).destinationFolderRoot,
+          rootFolderName: getString(context).destinationFolderRoot,
           filterKeys: FilterInfo.getFilterKey(context),
         );
       });
@@ -56,7 +56,8 @@ class DestinationFolderScreen extends HookConsumerWidget {
       void handleUiStateChange() {
         fileMoveState.when(
           success: (event) async {
-            Toast.showSuccess(context, Strings.of(context).message_move_media_success(event.value.toString()));
+            Toast.showSuccess(
+                context, getString(context).messageMoveMediaSuccess(event.value.toString()));
             mediaListManager.initPageInfo();
             mediaListManager.requestGetMedias();
             Navigator.of(context).pop();
@@ -77,7 +78,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
-        content: Strings.of(context).destinationFolderTitle,
+        content: getString(context).destinationFolderTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
@@ -86,7 +87,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
             if (destinationFolderState is Failure)
               FailView(
                 onPressed: () => destinationFolderProvider.requestGetFolders(
-                  rootFolderName: Strings.of(context).destinationFolderRoot,
+                  rootFolderName: getString(context).destinationFolderRoot,
                   filterKeys: FilterInfo.getFilterKey(context),
                 ),
               )
@@ -113,7 +114,8 @@ class DestinationFolderScreen extends HookConsumerWidget {
                         } else {
                           isSelectFolderId.value = item?.mediaId;
                         }
-                        debugPrint("isSelectFolderId: ${isSelectFolderId.value}  ${isSelectFolderId.value == null}");
+                        debugPrint(
+                            "isSelectFolderId: ${isSelectFolderId.value}  ${isSelectFolderId.value == null}");
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -146,7 +148,7 @@ class DestinationFolderScreen extends HookConsumerWidget {
             mediaIds,
             isSelectFolderId.value,
             mediaListManager.getFolderName(
-              Strings.of(context).destinationFolderRoot,
+              getString(context).destinationFolderRoot,
               isSelectFolderId.value,
             ),
           );

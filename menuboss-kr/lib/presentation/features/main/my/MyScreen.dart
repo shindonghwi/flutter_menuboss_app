@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
@@ -16,7 +17,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
@@ -60,7 +60,7 @@ class MyScreen extends HookConsumerWidget {
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
       appBar: TopBarTitle(
-        content: Strings.of(context).mainNavigationMenuMy,
+        content: getString(context).mainNavigationMenuMy,
       ),
       body: SafeArea(
         child: Stack(
@@ -83,14 +83,14 @@ class MyScreen extends HookConsumerWidget {
 
                 // // 설정
                 // _MenuContent(
-                //   title: _SettingTitle(title: Strings.of(context).myPageSettingItemTitle),
+                //   title: _SettingTitle(title: getString(context).myPageSettingItemTitle),
                 //   menuList: [
                 //     _SettingContent(
-                //       content: Strings.of(context).myPageSettingSubmenuTeam,
+                //       content: getString(context).myPageSettingSubmenuTeam,
                 //       onPressed: () {},
                 //     ),
                 //     _SettingContent(
-                //       content: Strings.of(context).myPageSettingSubmenuRole,
+                //       content: getString(context).myPageSettingSubmenuRole,
                 //       onPressed: () {
                 //       },
                 //     ),
@@ -104,10 +104,10 @@ class MyScreen extends HookConsumerWidget {
 
                 // 사용자 설정
                 _MenuContent(
-                  title: _SettingTitle(title: Strings.of(context).myPageSettingItemTitleUser),
+                  title: _SettingTitle(title: getString(context).myPageSettingItemTitleUser),
                   menuList: [
                     _SettingContent(
-                      content: Strings.of(context).myPageSettingSubmenuMy,
+                      content: getString(context).myPageSettingSubmenuMy,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -116,7 +116,7 @@ class MyScreen extends HookConsumerWidget {
                       },
                     ),
                     // _SettingContent(
-                    //   content: Strings.of(context).myPageSettingSubmenuBusiness,
+                    //   content: getString(context).myPageSettingSubmenuBusiness,
                     //   onPressed: () {},
                     // ),
                     DividerVertical(
@@ -129,10 +129,10 @@ class MyScreen extends HookConsumerWidget {
 
                 // 가이드
                 _MenuContent(
-                  title: _SettingTitle(title: Strings.of(context).myPageSettingSubmenuGuide),
+                  title: _SettingTitle(title: getString(context).myPageSettingSubmenuGuide),
                   menuList: [
                     _SettingContent(
-                      content: Strings.of(context).myPageSettingSubmenuMenual,
+                      content: getString(context).myPageSettingSubmenuMenual,
                       onPressed: () {
                         Navigator.push(
                           context,
@@ -151,7 +151,7 @@ class MyScreen extends HookConsumerWidget {
                 Padding(
                   padding: const EdgeInsets.only(top: 24.0),
                   child: _SettingContent(
-                    content: Strings.of(context).commonLogout,
+                    content: getString(context).commonLogout,
                     onPressed: () {
                       CommonPopup.showPopup(
                         context,

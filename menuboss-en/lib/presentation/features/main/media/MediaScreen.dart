@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
@@ -19,7 +20,6 @@ import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
@@ -80,7 +80,7 @@ class MediaScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: false,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
           if (controller != null) {
@@ -107,7 +107,7 @@ class MediaScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: true,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
           if (controller != null) {
@@ -130,12 +130,12 @@ class MediaScreen extends HookConsumerWidget {
           }
         },
         notAvailableFile: () {
-          Toast.showSuccess(context, Strings.of(context).messageFileNotAllowed404);
+          Toast.showSuccess(context, getString(context).messageFileNotAllowed404);
         },
         onError: (message) {
           Toast.showError(context, message);
         },
-        errorPermissionMessage: Strings.of(context).messagePermissionErrorPhotos,
+        errorPermissionMessage: getString(context).messagePermissionErrorPhotos,
       );
     }
 
@@ -144,7 +144,7 @@ class MediaScreen extends HookConsumerWidget {
         children: [
           TopBarIconTitleIcon(
             leadingIsShow: false,
-            content: Strings.of(context).mainNavigationMenuMedia,
+            content: getString(context).mainNavigationMenuMedia,
             suffixIcons: [
               Pair(
                 "assets/imgs/icon_new_folder.svg",
@@ -288,7 +288,7 @@ class _MediaContentList extends HookConsumerWidget {
                                 final isRemoved = await mediaManager.removeItem([item.mediaId]);
                                 if (isRemoved) {
                                   Toast.showSuccess(
-                                      context, Strings.of(context).messageRemoveMediaSuccess);
+                                      context, getString(context).messageRemoveMediaSuccess);
                                 }
                               },
                               onRename: (newName) {

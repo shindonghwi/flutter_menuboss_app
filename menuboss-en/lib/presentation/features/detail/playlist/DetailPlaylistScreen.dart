@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -20,7 +21,6 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
@@ -77,7 +77,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
           );
           delPlaylistState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageRemovePlaylistSuccess);
+              Toast.showSuccess(context, getString(context).messageRemovePlaylistSuccess);
               playlistsManager.requestGetPlaylists();
               Navigator.of(context).pop();
             },
@@ -97,7 +97,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
             success: (event) {
               final convertedItems = event.value;
               if (CollectionUtil.isNullorEmpty(convertedItems)) {
-                Toast.showWarning(context, Strings.of(context).messageAddMediaContent);
+                Toast.showWarning(context, getString(context).messageAddMediaContent);
                 return;
               }
 
@@ -275,7 +275,7 @@ class _Options extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).commonOption,
+            getString(context).commonOption,
             style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -313,7 +313,7 @@ class _TotalDuration extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                Strings.of(context).commonTotalDuration,
+                getString(context).commonTotalDuration,
                 style: getTextTheme(context).b3m.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
@@ -343,7 +343,7 @@ class _TotalDuration extends HookConsumerWidget {
               height: 20,
               color: getColorScheme(context).black,
             ),
-            content: Strings.of(context).commonPreview,
+            content: getString(context).commonPreview,
             isActivated: true,
             onPressed: () {
               var previewItems = item.contents?.map((e) => e.toMapperMediaContentModel()).toList();
@@ -379,21 +379,21 @@ class _OptionContents extends HookWidget {
 
     if (directionType == PlaylistSettingType.Horizontal) {
       directionIconPath = "assets/imgs/icon_horizontal_line.svg";
-      directionName = Strings.of(context).commonHorizontal;
+      directionName = getString(context).commonHorizontal;
     } else {
       directionIconPath = "assets/imgs/icon_vertical_line.svg";
-      directionName = Strings.of(context).commonVertical;
+      directionName = getString(context).commonVertical;
     }
 
     if (scaleType == PlaylistSettingType.Fit) {
       scaleIconPath = "assets/imgs/icon_fit.svg";
-      scaleIconName = Strings.of(context).commonFit;
+      scaleIconName = getString(context).commonFit;
     } else if (scaleType == PlaylistSettingType.Fill) {
       scaleIconPath = "assets/imgs/icon_fill_line.svg";
-      scaleIconName = Strings.of(context).commonFill;
+      scaleIconName = getString(context).commonFill;
     } else if (scaleType == PlaylistSettingType.Stretch) {
       scaleIconPath = "assets/imgs/icon_stretch.svg";
-      scaleIconName = Strings.of(context).commonStretch;
+      scaleIconName = getString(context).commonStretch;
     }
 
     return Row(

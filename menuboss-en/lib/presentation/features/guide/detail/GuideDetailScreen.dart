@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/presentation/features/guide/detail/widget/DeviceGuide.dart';
 import 'package:menuboss/presentation/features/guide/detail/widget/MediaGuide.dart';
 import 'package:menuboss/presentation/features/guide/detail/widget/ScheduleGuide.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
-import 'package:menuboss_common/ui/Strings.dart';
 
 import 'widget/PlaylistGuide.dart';
 
@@ -26,20 +26,20 @@ class GuideDetailScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String appBarTitle = Strings.of(context).guideListTitle;
+    String appBarTitle = getString(context).guideListTitle;
     Widget content = Container();
 
     if (type == GuideType.device) {
-      appBarTitle = Strings.of(context).guideListItemDeviceTitle;
+      appBarTitle = getString(context).guideListItemDeviceTitle;
       content = const DeviceGuide();
     } else if (type == GuideType.schedule) {
-      appBarTitle = Strings.of(context).guideListItemScheduleTitle;
+      appBarTitle = getString(context).guideListItemScheduleTitle;
       content = const ScheduleGuide();
     } else if (type == GuideType.playlist) {
-      appBarTitle = Strings.of(context).guideListItemPlaylistTitle;
+      appBarTitle = getString(context).guideListItemPlaylistTitle;
       content = const PlaylistGuide();
     } else if (type == GuideType.media) {
-      appBarTitle = Strings.of(context).guideListItemMediaTitle;
+      appBarTitle = getString(context).guideListItemMediaTitle;
       content = const MediaGuide();
     }
 
