@@ -16,6 +16,10 @@ workflows:
     scripts:
       - name: Move to menuboss-en directory
         script: cd menuboss-en
+      - name: Check current directory
+        script: |
+          echo "Current directory:"
+          pwd
       - name: Clean Run Build
         script: make run-rebuild
       - name: Build APK
