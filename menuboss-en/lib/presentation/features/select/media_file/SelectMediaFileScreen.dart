@@ -51,12 +51,16 @@ class SelectMediaFileScreen extends HookConsumerWidget {
       body: SafeArea(
         child: Stack(
           children: [
-            if (mediaState is Failure)
+            if (mediaManager.currentItems.isEmpty && mediaState is Failure)
               FailView(onPressed: () => mediaManager.requestGetMedias())
             else if (mediaState is Success<List<ResponseMediaModel>>)
               _MediaList(
                 items: mediaState.value,
-              ),
+              )
+            else if (mediaManager.currentItems.isNotEmpty)
+                _MediaList(
+                  items: mediaManager.currentItems,
+                ),
             if (mediaState is Loading) const LoadingView(),
           ],
         ),

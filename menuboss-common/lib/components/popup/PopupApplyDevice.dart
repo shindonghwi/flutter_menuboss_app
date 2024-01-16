@@ -37,7 +37,7 @@ class PopupApplyDevice extends HookWidget {
             height: 24,
           ),
           Text(
-            isKr ? '스크린에 적용하시겠습니까?' : 'Apply to screens?',
+            isKr ? 'TV에 적용하시겠습니까?' : 'Apply to screens?',
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -47,7 +47,7 @@ class PopupApplyDevice extends HookWidget {
           ),
           Text(
             isKr
-                ? '이것을 스크린에 직접 적용하시겠습니까?'
+                ? '이것을 TV에 직접 적용하시겠습니까?'
                 : 'Are you sure you want to apply it directly to the screens?',
             style: getTextTheme(context).b3m.copyWith(
                   color: getColorScheme(context).colorGray500,

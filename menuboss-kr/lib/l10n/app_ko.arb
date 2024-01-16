@@ -63,7 +63,7 @@
     "guideListTitle": "사용방법",
     "guideListItemDeviceTitle": "TV",
     "guideListItemDeviceDescription": "TV를 추가하고 관리",
-    "guideListItemScheduleDescription": "TV를 추가하고 관리",
+    "guideListItemScheduleDescription": "시간별로 TV 화면을 다르게 설정",
     "guideListItemPlaylistDescription": "콘텐츠 순서를 정렬하고 시간 설정",
     "guideListItemMediaDescription": "파일 업로드 및 이동, 상세보기",
     "guideListItemScheduleTitle": "시간표",
@@ -133,7 +133,7 @@
 
     "commonSignUp": "회원가입",
     "commonDoLogin": "로그인",
-    "commonAllAgree": "추가",
+    "commonAllAgree": "전체동의",
     "commonAdd": "추가",
     "commonPassword": "비밀번호",
     "commonEmail": "이메일",
