@@ -14,24 +14,8 @@ workflows:
           include: true
           source: true
     scripts:
-      - name: List directory contents
-        script: |
-          echo "Listing contents of /Users/builder/clone:"
-          ls -al
-      - name: Move to menuboss-en directory and check
-        script: |
-          cd menuboss-en || { echo "Failed to change directory"; exit 1; }
-          echo "Changed to directory:"
-          pwd
-      - name: Move to menuboss-en directory using absolute path
-        script: |
-          cd /path/to/menuboss-en
-          echo "Changed to directory:"
-          pwd
       - name: Clean Run Build
-        script: make run-rebuild
-      - name: Build APK
-        script: make create-apk-dev
+        script: make run-en-apk
     artifacts:
       - build/**/outputs/**/*.apk
 
