@@ -14,8 +14,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "1060430673784-9etlenj1vm8aovh0r6gi40lajs4g9aet.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.menuboss",
+            "certificate_hash": "12a428916d04501ec8c10a4b915c85ba4b4ae326"
+          }
         }
       ],
       "api_key": [
@@ -23,7 +27,7 @@
           "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
         },
         {
-          "current_key": "AIzaSyBTpL1oQAdmqKfUZ_6grt1E6MtLxY75FNE"
+          "current_key": "AIzaSyBbTeNAYPNPeZuus_T5FoqLUG5PJh68mHc"
         }
       ],
       "services": {
@@ -32,6 +36,13 @@
             {
               "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1060430673784-0cfb7u03tm959ughcdifc8qof5v40hja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.menuboss"
+              }
             }
           ]
         }
@@ -46,8 +57,12 @@
       },
       "oauth_client": [
         {
-          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
-          "client_type": 3
+          "client_id": "1060430673784-v8d12osqo8f3839l8206jnbi24crhqt4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.orot.menuboss.kr",
+            "certificate_hash": "055f12ecf2444879d24d9803616f0f6818517808"
+          }
         }
       ],
       "api_key": [
@@ -55,7 +70,7 @@
           "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
         },
         {
-          "current_key": "AIzaSyBTpL1oQAdmqKfUZ_6grt1E6MtLxY75FNE"
+          "current_key": "AIzaSyBbTeNAYPNPeZuus_T5FoqLUG5PJh68mHc"
         }
       ],
       "services": {
@@ -64,6 +79,13 @@
             {
               "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1060430673784-0cfb7u03tm959ughcdifc8qof5v40hja.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.orot.menuboss"
+              }
             }
           ]
         }

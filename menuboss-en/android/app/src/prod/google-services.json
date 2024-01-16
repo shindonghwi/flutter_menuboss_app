@@ -14,11 +14,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1060430673784-lfbmia1bbsd6r8kkcfkcjg3p459qgcmc.apps.googleusercontent.com",
+          "client_id": "1060430673784-9etlenj1vm8aovh0r6gi40lajs4g9aet.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.orot.menuboss",
-            "certificate_hash": "c089b29023d6a7dbebb21e145cbef535c94f9716"
+            "certificate_hash": "12a428916d04501ec8c10a4b915c85ba4b4ae326"
           }
         }
       ],
@@ -57,11 +57,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1060430673784-kesl9q7k443pqjed37glnps2ihhj1l7m.apps.googleusercontent.com",
+          "client_id": "1060430673784-v8d12osqo8f3839l8206jnbi24crhqt4.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.orot.menuboss.kr",
-            "certificate_hash": "c089b29023d6a7dbebb21e145cbef535c94f9716"
+            "certificate_hash": "055f12ecf2444879d24d9803616f0f6818517808"
           }
         }
       ],
