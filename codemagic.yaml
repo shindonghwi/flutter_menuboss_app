@@ -14,8 +14,8 @@ workflows:
           include: true
           source: true
     scripts:
-      - name: Move to menuboss_en directory
-        script: cd menuboss_en
+      - name: Move to menuboss-en directory
+        script: cd menuboss-en
       - name: Clean Run Build
         script: make run-rebuild
       - name: Build APK
@@ -39,8 +39,8 @@ workflows:
           include: true
           source: true
     scripts:
-      - name: Move to menuboss_en directory
-        script: cd menuboss_en
+      - name: Move to menuboss-en directory
+        script: cd menuboss-en
       - name: Clean Run Build
         script: make run-rebuild
     artifacts:
