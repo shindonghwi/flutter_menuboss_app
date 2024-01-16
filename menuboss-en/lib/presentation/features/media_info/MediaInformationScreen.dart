@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleText.dart';
@@ -13,7 +14,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -67,10 +67,11 @@ class MediaInformationScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleText(
-        content: Strings.of(context).mediaInfoTitle,
-        rightText: Strings.of(context).commonSave,
+        content: getString(context).mediaInfoTitle,
+        rightText: getString(context).commonSave,
         rightTextActivated: fileName.value.isNotEmpty,
-        rightIconOnPressed: () => mediaNameChangeManager.requestChangeMediaName(item!.mediaId, fileName.value),
+        rightIconOnPressed: () =>
+            mediaNameChangeManager.requestChangeMediaName(item!.mediaId, fileName.value),
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
@@ -116,7 +117,7 @@ class _InputFileName extends HookWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            Strings.of(context).mediaInfoMenuInputTitle,
+            getString(context).mediaInfoMenuInputTitle,
             style: getTextTheme(context).b3sb.copyWith(
                   color: getColorScheme(context).colorGray700,
                 ),
@@ -124,7 +125,7 @@ class _InputFileName extends HookWidget {
           const SizedBox(height: 12),
           OutlineTextField.medium(
             controller: useTextEditingController(text: item?.name),
-            hint: item?.name ?? Strings.of(context).mediaInfoMenuInputFileNameHint,
+            hint: item?.name ?? getString(context).mediaInfoMenuInputFileNameHint,
             onChanged: onChanged,
           ),
         ],
@@ -213,14 +214,14 @@ class _MediaInformation extends HookConsumerWidget {
 
               items.add(
                 Pair(
-                  Strings.of(context).mediaInfoMenuRegisterDate,
+                  getString(context).mediaInfoMenuRegisterDate,
                   data?.updatedAt.toString() ?? "",
                 ),
               );
 
               items.add(
                 Pair(
-                  Strings.of(context).mediaInfoMenuFileSize,
+                  getString(context).mediaInfoMenuFileSize,
                   "${data?.property?.width} X ${data?.property?.height}",
                 ),
               );
@@ -228,19 +229,21 @@ class _MediaInformation extends HookConsumerWidget {
               var isFileTypeImage = true;
               switch (data?.type?.code.toLowerCase()) {
                 case "image":
-                  final extension = StringUtil.extractFileExtensionFromUrl(data?.property?.imageUrl);
+                  final extension =
+                      StringUtil.extractFileExtensionFromUrl(data?.property?.imageUrl);
                   items.add(
                     Pair(
-                      Strings.of(context).mediaInfoMenuFileType,
+                      getString(context).mediaInfoMenuFileType,
                       "image / $extension",
                     ),
                   );
                   break;
                 case "video":
-                  final extension = StringUtil.extractFileExtensionFromUrl(data?.property?.videoUrl);
+                  final extension =
+                      StringUtil.extractFileExtensionFromUrl(data?.property?.videoUrl);
                   items.add(
                     Pair(
-                      Strings.of(context).mediaInfoMenuFileType,
+                      getString(context).mediaInfoMenuFileType,
                       "video / $extension",
                     ),
                   );
@@ -250,7 +253,7 @@ class _MediaInformation extends HookConsumerWidget {
 
               items.add(
                 Pair(
-                  Strings.of(context).mediaInfoMenuFileCapacity,
+                  getString(context).mediaInfoMenuFileCapacity,
                   StringUtil.formatBytesToMegabytes(data?.property?.size ?? 0),
                 ),
               );
@@ -258,16 +261,17 @@ class _MediaInformation extends HookConsumerWidget {
               if (!CollectionUtil.isNullEmptyFromString(data?.property?.codec)) {
                 items.add(
                   Pair(
-                    Strings.of(context).mediaInfoMenuFileCodec,
+                    getString(context).mediaInfoMenuFileCodec,
                     data?.property?.codec?.toString() ?? "",
                   ),
                 );
               }
 
-              if (!CollectionUtil.isNullEmptyFromString(data?.property?.duration.toString()) && !isFileTypeImage) {
+              if (!CollectionUtil.isNullEmptyFromString(data?.property?.duration.toString()) &&
+                  !isFileTypeImage) {
                 items.add(
                   Pair(
-                    Strings.of(context).mediaInfoMenuFileRunningTime,
+                    getString(context).mediaInfoMenuFileRunningTime,
                     StringUtil.formatDuration(data?.property?.duration ?? 0),
                   ),
                 );
@@ -292,9 +296,9 @@ class _MediaInformation extends HookConsumerWidget {
           Padding(
             padding: const EdgeInsets.only(bottom: 12),
             child: Text(
-              Strings.of(context).mediaInfoTitle,
+              getString(context).mediaInfoMenuTitle,
               style: getTextTheme(context).b3sb.copyWith(
-                    color: getColorScheme(context).colorGray900,
+                    color: getColorScheme(context).colorGray700,
                   ),
             ),
           ),

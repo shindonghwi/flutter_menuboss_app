@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/schedule/ResponseScheduleModel.dart';
 import 'package:menuboss/data/models/schedule/ResponseSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -20,7 +21,6 @@ import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -68,7 +68,7 @@ class DetailScheduleScreen extends HookConsumerWidget {
           );
           delScheduleState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageRemoveScheduleSuccess);
+              Toast.showSuccess(context, getString(context).messageRemoveScheduleSuccess);
               schedulesManager.requestGetSchedules();
               Navigator.of(context).pop();
             },
@@ -193,7 +193,7 @@ class _ScheduleContent extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.only(top: 16.0, bottom: 8.0),
                             child: Text(
-                              "${Strings.of(context).commonTime} ${item.time?.start ?? ""} ~ ${item.time?.end ?? ""}",
+                              "${getString(context).commonTime} ${item.time?.start ?? ""} ~ ${item.time?.end ?? ""}",
                               style: getTextTheme(context).b3m.copyWith(
                                     color: getColorScheme(context).colorGray900,
                                   ),
@@ -216,7 +216,7 @@ class _ScheduleContent extends StatelessWidget {
                                 Padding(
                                   padding: const EdgeInsets.only(left: 4.0),
                                   child: Text(
-                                    Strings.of(context).count_pages(item.property?.count ?? 0),
+                                    getString(context).countPages(item.property?.count ?? 0),
                                     style: getTextTheme(context).c1sb.copyWith(
                                           color: getColorScheme(context).colorGray500,
                                         ),

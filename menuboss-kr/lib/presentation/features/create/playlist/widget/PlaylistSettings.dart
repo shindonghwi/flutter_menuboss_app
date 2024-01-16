@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
@@ -14,7 +15,6 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -61,7 +61,7 @@ class PlaylistSettings extends HookWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  Strings.of(context).commonOption,
+                  getString(context).commonOption,
                   style: getTextTheme(context).b3sb.copyWith(
                         color: getColorScheme(context).colorGray900,
                       ),
@@ -124,7 +124,7 @@ class _SettingContents extends HookConsumerWidget {
             success: (event) {
               final convertedItems = event.value;
               if (CollectionUtil.isNullorEmpty(convertedItems)) {
-                Toast.showWarning(context, Strings.of(context).messageAddMediaContent);
+                Toast.showWarning(context, getString(context).messageAddMediaContent);
                 return;
               }
               previewListManager.changeItems(
@@ -169,7 +169,7 @@ class _SettingContents extends HookConsumerWidget {
                     children: [
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_horizontal_line.svg",
-                        iconText: Strings.of(context).commonHorizontal,
+                        iconText: getString(context).commonHorizontal,
                         onPressed: () {
                           saveManager.changeDirection(PlaylistSettingType.Horizontal);
                           directionType.value = PlaylistSettingType.Horizontal;
@@ -178,7 +178,7 @@ class _SettingContents extends HookConsumerWidget {
                       ),
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_vertical_line.svg",
-                        iconText: Strings.of(context).commonVertical,
+                        iconText: getString(context).commonVertical,
                         onPressed: () {
                           saveManager.changeDirection(PlaylistSettingType.Vertical);
                           directionType.value = PlaylistSettingType.Vertical;
@@ -204,7 +204,7 @@ class _SettingContents extends HookConsumerWidget {
                     children: [
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_fill_line.svg",
-                        iconText: Strings.of(context).commonFill,
+                        iconText: getString(context).commonFill,
                         onPressed: () {
                           saveManager.changeFill(PlaylistSettingType.Fill);
                           scaleType.value = PlaylistSettingType.Fill;
@@ -213,7 +213,7 @@ class _SettingContents extends HookConsumerWidget {
                       ),
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_fit.svg",
-                        iconText: Strings.of(context).commonFit,
+                        iconText: getString(context).commonFit,
                         onPressed: () {
                           saveManager.changeFill(PlaylistSettingType.Fit);
                           scaleType.value = PlaylistSettingType.Fit;
@@ -222,7 +222,7 @@ class _SettingContents extends HookConsumerWidget {
                       ),
                       _SettingSelectableIcon(
                         iconPath: "assets/imgs/icon_stretch.svg",
-                        iconText: Strings.of(context).commonStretch,
+                        iconText: getString(context).commonStretch,
                         onPressed: () {
                           saveManager.changeFill(PlaylistSettingType.Stretch);
                           scaleType.value = PlaylistSettingType.Stretch;
@@ -254,7 +254,7 @@ class _SettingContents extends HookConsumerWidget {
                 );
                 // 이후 conversionStart가 끝나면 변환된 리스트를 uistate Success에서 관찰 후 이후 프리뷰로 이동한다.
               },
-              content: Strings.of(context).commonPreview,
+              content: getString(context).commonPreview,
               isActivated: true,
             ),
           ),

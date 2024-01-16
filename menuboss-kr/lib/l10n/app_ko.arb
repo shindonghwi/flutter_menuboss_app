@@ -1,0 +1,238 @@
+{
+    "appTitle": "메뉴보스",
+
+    "applyScreenTitle": "TV에 적용",
+
+    "editPlaylistTitle": "재생목록 수정",
+    "createPlaylistTitle": "재생목록 생성",
+    "createPlaylistTitleInput": "제목을 입력해주세요",
+
+    "editScheduleTitle": "Edit schedule",
+    "createScheduleTitle": "시간표 생성",
+    "createScheduleNewPlaylist": "새 재생목록",
+    "createScheduleAddPlaylist": "재생목록 추가",
+    "createScheduleChangePlaylist": "재생목록 변경",
+    "createScheduleTitleInput": "제목을 입력해주세요",
+    "createScheduleDefaultPlaylistTitleBasic": "기본",
+    "createScheduleDefaultPlaylistTitleMorning": "아침",
+    "createScheduleDefaultPlaylistTitleLunch": "점심",
+    "createScheduleDefaultPlaylistTitleDinner": "저녁",
+
+    "deleteAccountTitle": "탈퇴",
+    "deleteAccountDescription": "메뉴보스를 탈퇴하시나요?",
+    "deleteAccountDescription1": "탈퇴하시면 모든 정보와 데이터가 삭제됩니다.\n삭제하시려면 주의 사항을 확인하고 진행해 주세요",
+    "deleteAccountReasonTitle": "탈퇴 사유를 선택해주세요",
+    "deleteAccountReasonMenu1": "서비스를 자주 사용하지 않음",
+    "deleteAccountReasonMenu2": "서비스가 불편함",
+    "deleteAccountReasonMenu3": "사용하기 어려움",
+    "deleteAccountReasonMenu4": "기타",
+    "deleteAccountReasonMenu4Hint": "탈퇴 이유를 알려주세요",
+
+    "guideDetailDevice1Title": "1. TV앱 다운로드",
+    "guideDetailDevice1Description": "구글 플레이스토어에서 [MenuBossTV - Digital Signage All in one Service] 다운받아주세요",
+    "guideDetailDevice1SubDescription1": "· 리모컨 역할 : 모바일 휴대폰 또는 태블릿",
+    "guideDetailDevice1SubDescription2": "· 디지털 메뉴판 역할 : TV",
+    "guideDetailDevice2Title": "2. TV 연결 - QR 코드 스캔 / PIN 번호 입력",
+    "guideDetailDevice2Description": "두 가지 방법을 통해 TV와 모바일 앱을 연결해주세요",
+    "guideDetailDevice3Title": "3. TV에 이름 표시",
+    "guideDetailDevice3Description": "TV화면 구분이 어려울 경우, 더보기의 [TV에 이름 표시] 기능을 이용해서 TV를 구분할 수 있습니다",
+    "guideDetailSchedule1Title": "1. 시간표 만들기",
+    "guideDetailSchedule1Description": "시간표에 재생목록을 추가하고 해당 시간을 설정할 수 있습니다",
+    "guideDetailSchedule1SubDescription1": "· 기본 설정은 시간을 수정하거나 삭제할 수 없습니다",
+    "guideDetailSchedule2Title": "2. TV에 시간표 적용",
+    "guideDetailSchedule2Description": "[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!",
+    "guideDetailSchedule3Title": "3. 시간표 수정",
+    "guideDetailSchedule3Description": "하단의 [+] 버튼을 통해 새 재생목록을 추가하고 시간 수정 및 삭제할 수 있습니다",
+    "guideDetailPlaylist1Title": "1. 재생목록 만들기",
+    "guideDetailPlaylist1Description": "콘텐츠의 순서를 정렬하고 옵션을 통해 화면 모양을 원하는대로 설정할 수 있습니다",
+    "guideDetailPlaylist1SubDescription1": "· 옵션 : 가로 / 세로 그리고 채우기 / 맞추기 / 늘리기",
+    "guideDetailPlaylist1SubDescription2": "· 동영상은 시간 설정이 불가합니다",
+    "guideDetailPlaylist2Title": "2. 미리보기",
+    "guideDetailPlaylist2Description": "옵션의 [미리보기] 를 통해 TV 화면의 모습을 미리 볼 수 있습니다",
+    "guideDetailPlaylist3Title": "3. TV에 재생목록 적용",
+    "guideDetailPlaylist3Description": "[TV 적용] 버튼을 누르고 TV를 선택하면 연결완료!",
+    "guideDetailMedia1Title": "1. 콘텐츠 파일 업로드",
+    "guideDetailMedia1Description": "이미지, 동영상 파일을 업로드 하거나 새 폴더를 만들어 파일을 정리 할 수 있습니다",
+    "guideDetailMedia1SubDescription1": "· [+] : 새 폴더 만들기 / [체크 아이콘] : 파일 이동 및 삭제",
+    "guideDetailMedia1SubDescription2": "· 폴더 안에서 또 다른 폴더를 생성할 수 없습니다",
+    "guideDetailMedia2Title": "2. 파일 상세",
+    "guideDetailMedia2Description": "업로드한 파일을 선택하면 해당 파일의 상세 정보를 볼 수 있습니다",
+    "guideDetailMedia3Title": "3. 파일 이동",
+    "guideDetailMedia3Description": "메인화면 상단의 [체크 아이콘] 을 선택하여 파일을 이동 및 삭제할 수 있습니다",
+
+    "guideListTitle": "사용방법",
+    "guideListItemDeviceTitle": "TV",
+    "guideListItemDeviceDescription": "TV를 추가하고 관리",
+    "guideListItemScheduleDescription": "시간별로 TV 화면을 다르게 설정",
+    "guideListItemPlaylistDescription": "콘텐츠 순서를 정렬하고 시간 설정",
+    "guideListItemMediaDescription": "파일 업로드 및 이동, 상세보기",
+    "guideListItemScheduleTitle": "시간표",
+    "guideListItemPlaylistTitle": "재생목록",
+    "guideListItemMediaTitle": "보관함",
+    "guideListDetailView": "모바일 앱 가이드 자세히 보기",
+
+    "loginTitle": "로그인",
+    "loginWelcome": "반갑습니다! 회원 정보를 입력해주세요",
+    "loginNoAccount": "메뉴보스가 처음이신가요?",
+    "loginEmailCorrect": "올바른 이메일 입니다",
+    "loginEmailInvalid": "올바른 이메일을 입력해주세요",
+    "loginPwInvalid": "올바른 이메일을 입력해주세요",
+
+    "myPageProfileAppbarTitle": "프로필",
+    "myPageProfileDeleteAccount": "탈퇴하기",
+    "myPageSettingItemTitleUser": "사용자 설정",
+    "myPageSettingSubmenuMy": "내 정보",
+    "myPageSettingSubmenuGuide": "가이드",
+    "myPageSettingSubmenuMenual": "사용방법",
+
+    "mediaContentTitle": "콘텐츠",
+    "mediaContentTabMedia": "미디어",
+    "mediaContentTabCanvas": "캔버스",
+
+    "mediaInfoTitle": "미디어 정보",
+    "mediaInfoMenuTitle": "정보",
+    "mediaInfoMenuInputTitle": "제목",
+    "mediaInfoMenuInputFileNameHint": "파일 이름 입력",
+    "mediaInfoMenuRegisterDate": "업로드 날짜",
+    "mediaInfoMenuFileSize": "파일 크기",
+    "mediaInfoMenuFileType": "파일 유형",
+    "mediaInfoMenuFileCapacity": "파일 용량",
+    "mediaInfoMenuFileCodec": "코덱",
+    "mediaInfoMenuFileRunningTime": "재생 시간",
+
+    "policyTitle": "약관동의",
+    "policyDescriptionTitle": "회원가입",
+    "policyDescription": "서비스 시작을 위해 가입 및 정보 제공에 동의해주세요",
+    "policyTerm1": "(필수) 만 14세 이상입니다",
+    "policyTerm2": "(필수) 이용약관 동의",
+    "policyTerm3": "(필수) 개인정보 수집 및 이용 동의",
+    "policyTerm4": "(선택) 마케팅 개인정보 제3자 제공 동의",
+
+    "scanQrTitle": "QR 코드 인식",
+    "scanQrEnterPinCode": "PIN 번호 입력",
+    "scanQrDescription": "TV 화면에 보이는\nQR 코드를 인식해주세요",
+
+    "destinationFolderTitle": "폴더 선택",
+    "destinationFolderRoot": "보관함",
+
+    "selectPlaylistTitle": "재생목록",
+
+    "signupFullNameHint": "이름을 입력해주세요",
+    "signupBusinessName": "사업자 이름",
+    "signupBusinessNameHint": "사업자 이름을 입력해주세요",
+
+    "mainNavigationMenuScreens": "TV",
+    "mainNavigationMenuSchedules": "시간표",
+    "mainNavigationMenuPlaylists": "재생목록",
+    "mainNavigationMenuMedia": "보관함",
+    "mainNavigationMenuMy": "내 정보",
+
+    "popupRenameTitle": "이름 변경",
+    "popupRenameMediaHint": "미디어 이름",
+    "popupRenameScreenHint": "TV 이름을 입력해주세요",
+
+    "commonSignUp": "회원가입",
+    "commonDoLogin": "로그인",
+    "commonAllAgree": "전체동의",
+    "commonAdd": "추가",
+    "commonPassword": "비밀번호",
+    "commonEmail": "이메일",
+    "commonOn": "On",
+    "commonOr": "또는",
+    "commonOff": "Off",
+    "commonTitle": "제목",
+    "commonDone": "완료",
+    "commonSave": "저장",
+    "commonOption": "옵션",
+    "commonHorizontal": "가로",
+    "commonVertical": "세로",
+    "commonFill": "채우기",
+    "commonFit": "맞추기",
+    "commonStretch": "늘리기",
+    "commonPreview": "미리보기",
+    "commonTotalDuration": "총 재생 시간",
+    "commonTime": "시간",
+    "commonNext": "다음",
+    "commonImage": "이미지",
+    "commonVideo": "비디오",
+    "commonCanvas": "캔버스",
+    "commonFolder": "폴더",
+    "commonFullName": "이름",
+    "commonLogout": "로그아웃",
+    "commonUpdated": "수정일",
+    "commonConnectScreen": "TV 적용",
+    "commonBack": "뒤로가기",
+    "commonNewFolder": "새 폴더",
+    "commonMoveHere": "여기로 이동",
+    "commonMove": "이동",
+    "commonDelete": "삭제",
+
+    "blankMessageContentAddContent": "콘텐츠 추가",
+
+    "messageServerError5xx": "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
+    "messageNetworkRequired": "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
+    "messageFileNotFound404": "파일을 찾을 수 없습니다\n다시 시도해주세요",
+    "messageFileNotAllowed404": "지원하지 않는 파일 확장자입니다\n다시 시도해주세요",
+    "messagePermissionErrorPhotos": "미디어 파일을 업로드하려면 사진 및 비디오 권한이 필요합니다",
+
+    "messageApplyScreenSuccess": "TV에 적용되었습니다",
+    "messageRegisterScreenSuccess": "TV 등록에 성공했습니다",
+    "messageSendEventNameShowSuccess": "TV에 이름을 표시하였습니다",
+    "messageTimeSettingDuplicated": "중복된 시간을 수정해주세요",
+    "messageRegisterPlaylistSuccess": "재생목록 등록에 성공했습니다",
+    "messageUpdatePlaylistSuccess": "재생목록 정보가 변경되었습니다",
+    "messageRemovePlaylistSuccess": "재생목록 삭제에 성공했습니다",
+    "messageAddMediaContent": "콘텐츠를 추가해주세요",
+    "messageRegisterScheduleSuccess": "시간표 등록에 성공했습니다",
+    "messageUpdateScheduleSuccess": "시간표 정보가 변경되었습니다",
+    "messageRemoveScheduleSuccess": "시간표 삭제에 성공했습니다",
+    "messageRemoveMediaSuccess": "미디어 파일 삭제에 성공했습니다",
+    "messageAddMediaInPlaylistSuccess": "재생목록에 추가되었습니다",
+
+    "countPages": "콘텐츠 {count}개",
+    "@countPages":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "countFolder": "{count}개 파일({size})",
+    "@countFolder":{
+        "placeholders": {
+            "count": {},
+            "size": {}
+        }
+    },
+
+    "countPlaylist": "{count}개 재생목록",
+    "@countPlaylist":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "messageMoveMediaSuccess": "파일이 {folder}로 이동되었습니다",
+    "@messageMoveMediaSuccess":{
+        "placeholders": {
+            "folder": {}
+        }
+    },
+
+    "selectMediaFileTitle": "파일 선택 ({count})",
+    "@selectMediaFileTitle":{
+        "placeholders": {
+            "count": {}
+        }
+    },
+
+    "typeMediaSize": "{type} - {size}",
+    "@typeMediaSize":{
+        "placeholders": {
+            "type": {},
+            "size": {}
+        }
+    }
+
+
+
+}

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
@@ -18,7 +19,6 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/FilePickerUtil.dart';
@@ -101,8 +101,8 @@ class MyProfileScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleText(
-        content: Strings.of(context).myPageProfileAppbarTitle,
-        rightText: Strings.of(context).commonSave,
+        content: getString(context).myPageProfileAppbarTitle,
+        rightText: getString(context).commonSave,
         rightIconOnPressed: () {
           nameChangeManager.requestChangeName();
         },
@@ -168,7 +168,7 @@ class MyProfileScreen extends HookConsumerWidget {
                           child: Padding(
                             padding: const EdgeInsets.fromLTRB(0, 12, 12, 12),
                             child: Text(
-                              Strings.of(context).myPageProfileDeleteAccount,
+                              getString(context).myPageProfileDeleteAccount,
                               style: getTextTheme(context).b3m.copyWith(
                                     color: getColorScheme(context).colorGray600,
                                   ),
@@ -180,7 +180,9 @@ class MyProfileScreen extends HookConsumerWidget {
                   ],
                 ),
               ),
-              if (nameChangeState is Loading || uploadState is Loading || updateProfileImageState is Loading)
+              if (nameChangeState is Loading ||
+                  uploadState is Loading ||
+                  updateProfileImageState is Loading)
                 const LoadingView()
             ],
           ),
@@ -216,12 +218,12 @@ class _CameraWidget extends HookConsumerWidget {
               },
               onVideoSelected: null,
               notAvailableFile: () {
-                Toast.showSuccess(context, Strings.of(context).messageFileNotAllowed404);
+                Toast.showSuccess(context, getString(context).messageFileNotAllowed404);
               },
               onError: (message) {
                 Toast.showError(context, message);
               },
-              errorPermissionMessage: Strings.of(context).messagePermissionErrorPhotos,
+              errorPermissionMessage: getString(context).messagePermissionErrorPhotos,
             );
           },
           borderRadius: 100,
@@ -257,7 +259,7 @@ class _InputFullName extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Strings.of(context).commonFullName,
+          getString(context).commonFullName,
           style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),
@@ -286,7 +288,7 @@ class _InputEmail extends HookConsumerWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          Strings.of(context).commonEmail,
+          getString(context).commonEmail,
           style: getTextTheme(context).b3m.copyWith(
                 color: getColorScheme(context).colorGray900,
               ),

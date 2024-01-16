@@ -1,14 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 
-import 'ResponseMePhone.dart';
-
 part 'ResponseMeProfile.g.dart';
 
 @JsonSerializable()
 class ResponseMeProfile {
   final String? name;
-  final ResponseMePhone? phone;
+  final String? phone;
   final String? imageUrl;
 
   ResponseMeProfile({
@@ -17,13 +15,14 @@ class ResponseMeProfile {
     required this.imageUrl,
   });
 
-  factory ResponseMeProfile.fromJson(Map<String, dynamic> json) => _$ResponseMeProfileFromJson(json);
+  factory ResponseMeProfile.fromJson(Map<String, dynamic> json) =>
+      _$ResponseMeProfileFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMeProfileToJson(this);
 
   ResponseMeProfile copyWith({
     String? name,
-    ResponseMePhone? phone,
+    String? phone,
     String? imageUrl,
   }) {
     return ResponseMeProfile(

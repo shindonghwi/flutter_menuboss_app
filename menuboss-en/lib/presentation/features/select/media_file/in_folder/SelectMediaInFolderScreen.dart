@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -16,7 +17,6 @@ import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
 import 'provider/SelectMediaInFolderListProvider.dart';
@@ -65,7 +65,7 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).select_media_file_title(checkListState.length),
+        content: getString(context).selectMediaFileTitle(checkListState.length),
         onBack: () => popPageWrapper(context: context),
       ),
       body: Stack(
@@ -97,9 +97,10 @@ class SelectMediaInFolderScreen extends HookConsumerWidget {
           );
         },
         onDeleteClick: () async {
-          final isSuccess = await mediaListManager.removeItem(checkListState, folderId: item!.mediaId);
+          final isSuccess =
+              await mediaListManager.removeItem(checkListState, folderId: item!.mediaId);
           if (isSuccess) {
-            Toast.showSuccess(context, Strings.of(context).messageRemoveMediaSuccess);
+            Toast.showSuccess(context, getString(context).messageRemoveMediaSuccess);
             mediaListManager.initPageInfo();
             mediaListManager.requestGetMedias();
           }

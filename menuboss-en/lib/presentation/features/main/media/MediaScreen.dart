@@ -3,7 +3,9 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
+import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -19,13 +21,14 @@ import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/FilePickerUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 import 'package:menuboss_common/utils/dto/Pair.dart';
 
+import '../widget/provider/TutorialProvider.dart';
 import 'provider/MediaUploadProvider.dart';
 import 'widget/MediaItem.dart';
 import 'widget/MediaUploadProgress.dart';
@@ -38,6 +41,7 @@ class MediaScreen extends HookConsumerWidget {
     final mediaState = ref.watch(mediaListProvider);
     final mediaManager = ref.read(mediaListProvider.notifier);
     final mediaList = useState<List<ResponseMediaModel>?>(null);
+    final tutorialManager = ref.read(tutorialProvider.notifier);
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
@@ -69,24 +73,28 @@ class MediaScreen extends HookConsumerWidget {
 
     void doMediaUploadAction() async {
       final uploadProgressProvider = ref.read(mediaUploadProgressProvider.notifier);
-
+      final getTutorialViewedUseCase = GetIt.instance<GetTutorialViewedUseCase>();
       FilePickerUtil.pickFile(
         onImageSelected: (XFile xFile) async {
           final controller = await uploadProgressProvider.uploadStart(
             xFile.path,
             isVideo: false,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
           if (controller != null) {
             GetIt.instance<PostUploadMediaImageUseCase>()
                 .call(xFile.path, streamController: controller)
-                .then((response) {
+                .then((response) async {
               if (response.status == 200) {
                 mediaManager.initPageInfo();
                 mediaManager.requestGetMedias();
                 uploadProgressProvider.uploadSuccess();
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.MediaAddedKey, 1.0);
+                }
               } else {
                 Toast.showError(context, response.message);
                 uploadProgressProvider.uploadFail();
@@ -99,17 +107,21 @@ class MediaScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: true,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
           if (controller != null) {
             GetIt.instance<PostUploadMediaVideoUseCase>()
                 .call(xFile.path, streamController: controller)
-                .then((response) {
+                .then((response) async {
               if (response.status == 200) {
                 mediaManager.initPageInfo();
                 mediaManager.requestGetMedias();
                 uploadProgressProvider.uploadSuccess();
+                bool hasViewed = await getTutorialViewedUseCase.call(TutorialKey.MediaAddedKey);
+                if (!hasViewed) {
+                  tutorialManager.change(TutorialKey.MediaAddedKey, 1.0);
+                }
               } else {
                 Toast.showError(context, response.message);
                 uploadProgressProvider.uploadFail();
@@ -118,12 +130,12 @@ class MediaScreen extends HookConsumerWidget {
           }
         },
         notAvailableFile: () {
-          Toast.showSuccess(context, Strings.of(context).messageFileNotAllowed404);
+          Toast.showSuccess(context, getString(context).messageFileNotAllowed404);
         },
         onError: (message) {
           Toast.showError(context, message);
         },
-        errorPermissionMessage: Strings.of(context).messagePermissionErrorPhotos,
+        errorPermissionMessage: getString(context).messagePermissionErrorPhotos,
       );
     }
 
@@ -132,7 +144,7 @@ class MediaScreen extends HookConsumerWidget {
         children: [
           TopBarIconTitleIcon(
             leadingIsShow: false,
-            content: Strings.of(context).mainNavigationMenuMedia,
+            content: getString(context).mainNavigationMenuMedia,
             suffixIcons: [
               Pair(
                 "assets/imgs/icon_new_folder.svg",
@@ -220,7 +232,8 @@ class _MediaContentList extends HookConsumerWidget {
                     child: FilterButton(
                       filterValues: FilterInfo.getFilterValue(context),
                       onSelected: (type, text) {
-                        mediaManager.changeFilterType(type, filterValue: FilterInfo.getFilterValue(context));
+                        mediaManager.changeFilterType(type,
+                            filterValue: FilterInfo.getFilterValue(context));
                       },
                     ),
                   ),
@@ -274,7 +287,8 @@ class _MediaContentList extends HookConsumerWidget {
                               onRemove: () async {
                                 final isRemoved = await mediaManager.removeItem([item.mediaId]);
                                 if (isRemoved) {
-                                  Toast.showSuccess(context, Strings.of(context).messageRemoveMediaSuccess);
+                                  Toast.showSuccess(
+                                      context, getString(context).messageRemoveMediaSuccess);
                                 }
                               },
                               onRename: (newName) {

@@ -51,7 +51,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDiCJc6FfE9BGx38TIkvs8bQBTPaFtL3a0',
-    appId: '1:922858947237:android:5e914b60a9bfccf683434c',
+    appId: '1:922858947237:android:efbd03ca1d9fb9f683434c',
     messagingSenderId: '922858947237',
     projectId: 'menuboss-app-dev',
     storageBucket: 'menuboss-app-dev.appspot.com',
@@ -59,10 +59,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBuf8vxwnlpLpqiSx1C-XaXb-LL9Bg68oQ',
-    appId: '1:922858947237:ios:ead509099d6a327483434c',
+    appId: '1:922858947237:ios:abd000816b5f49bb83434c',
     messagingSenderId: '922858947237',
     projectId: 'menuboss-app-dev',
     storageBucket: 'menuboss-app-dev.appspot.com',
-    iosBundleId: 'com.orot.menuboss.dev',
+    androidClientId: '922858947237-qti9p87mlmqg195iqeqae73egnq8ok8e.apps.googleusercontent.com',
+    iosClientId: '922858947237-5l6poa73hhachqdijn2k59h1v2rb7r7b.apps.googleusercontent.com',
+    iosBundleId: 'com.orot.menuboss.kr.dev',
   );
 }

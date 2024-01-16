@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleRegisterProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleSaveInfoProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/provider/ScheduleUpdateProvider.dart';
 import 'package:menuboss/presentation/features/create/schedule/widget/ScheduleContentItem.dart';
+import 'package:menuboss/presentation/features/main/devices/provider/DeviceListProvider.dart';
 import 'package:menuboss/presentation/features/main/schedules/provider/SchedulesProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss_common/components/appbar/TopBarNoneTitleIcon.dart';
@@ -13,12 +15,13 @@ import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
+import 'package:menuboss_common/ui/tutorial/model/TutorialKey.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
 import '../../../../data/models/schedule/ResponseScheduleModel.dart';
 import '../../../../navigation/PageMoveUtil.dart';
+import '../../main/widget/TutorialView.dart';
 import 'provider/ScheduleTimelineInfoProvider.dart';
 import 'widget/ScheduleInputName.dart';
 
@@ -34,6 +37,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final isEditMode = useState(item != null);
 
+    final deviceListManager = ref.read(deviceListProvider.notifier);
     final schedulesManager = ref.read(schedulesProvider.notifier);
 
     final scheduleUpdateState = ref.watch(scheduleUpdateProvider);
@@ -45,15 +49,17 @@ class CreateScheduleScreen extends HookConsumerWidget {
     final timelineManager = ref.read(scheduleTimelineInfoProvider.notifier);
     final saveManager = ref.read(ScheduleSaveInfoProvider.notifier);
 
+    final tutorialOpacity = useState(0.0);
+
     final initialItems = [
       timelineManager.createScheduleItem(
-          -1, true, false, Strings.of(context).createScheduleDefaultPlaylistTitleBasic, null, null),
-      timelineManager.createScheduleItem(
-          -2, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
-      timelineManager.createScheduleItem(
-          -3, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
-      timelineManager.createScheduleItem(
-          -4, false, false, Strings.of(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
+          -1, true, false, getString(context).createScheduleDefaultPlaylistTitleBasic, null, null),
+      timelineManager.createScheduleItem(-2, false, false,
+          getString(context).createScheduleDefaultPlaylistTitleMorning, "06:00", "11:00"),
+      timelineManager.createScheduleItem(-3, false, false,
+          getString(context).createScheduleDefaultPlaylistTitleLunch, "11:00", "15:00"),
+      timelineManager.createScheduleItem(-4, false, false,
+          getString(context).createScheduleDefaultPlaylistTitleDinner, "15:00", "23:59"),
       timelineManager.createScheduleItem(-5, false, true, "", null, null),
     ];
 
@@ -70,6 +76,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) {
+        timelineManager.setInitialItems(initialItems);
         if (isEditMode.value) {
           saveManager.changeName(item?.name ?? "");
 
@@ -81,7 +88,7 @@ class CreateScheduleScreen extends HookConsumerWidget {
 
           timelineManager.replaceItems(newPlaylistItems);
         } else {
-          timelineManager.setInitialItems(initialItems);
+          tutorialOpacity.value = 1.0;
         }
       });
       return null;
@@ -92,16 +99,18 @@ class CreateScheduleScreen extends HookConsumerWidget {
         await Future(() {
           scheduleRegisterState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageRegisterScheduleSuccess);
+              Toast.showSuccess(context, getString(context).messageRegisterScheduleSuccess);
               schedulesManager.requestGetSchedules();
-              Navigator.of(context).pop();
+              deviceListManager.requestGetDevices();
+              Navigator.of(context).pop(true);
             },
             failure: (event) => Toast.showError(context, event.errorMessage),
           );
           scheduleUpdateState.when(
             success: (event) {
-              Toast.showSuccess(context, Strings.of(context).messageUpdateScheduleSuccess);
+              Toast.showSuccess(context, getString(context).messageUpdateScheduleSuccess);
               schedulesManager.requestGetSchedules();
+              deviceListManager.requestGetDevices();
               Navigator.of(context).pop();
               Navigator.of(context).pop();
             },
@@ -114,41 +123,58 @@ class CreateScheduleScreen extends HookConsumerWidget {
       return null;
     }, [scheduleRegisterState, scheduleUpdateState]);
 
-    return BaseScaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(56.0),
-        child: isEditMode.value
-            ? TopBarIconTitleNone(
-                content: Strings.of(context).editScheduleTitle,
-                onBack: () => popPageWrapper(context: context),
-              )
-            : TopBarNoneTitleIcon(
-                content: Strings.of(context).createScheduleTitle,
-                onBack: () => popPageWrapper(context: context),
+    return Stack(
+      children: [
+        BaseScaffold(
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(56.0),
+            child: isEditMode.value
+                ? TopBarIconTitleNone(
+                    content: getString(context).editScheduleTitle,
+                    onBack: () => popPageWrapper(context: context),
+                  )
+                : TopBarNoneTitleIcon(
+                    content: getString(context).createScheduleTitle,
+                    onBack: () => popPageWrapper(context: context),
+                  ),
+          ),
+          body: Container(
+            color: getColorScheme(context).white,
+            child: SafeArea(
+              child: Stack(
+                children: [
+                  SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        ScheduleInputName(initTitle: item?.name ?? ""),
+                        ScheduleContentItem(playlists: item?.playlists),
+                      ],
+                    ),
+                  ),
+                  if (scheduleRegisterState is Loading) const LoadingView(),
+                ],
               ),
-      ),
-      body: Container(
-        color: getColorScheme(context).white,
-        child: SafeArea(
-          child: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    ScheduleInputName(initTitle: item?.name ?? ""),
-                    ScheduleContentItem(playlists: item?.playlists),
-                  ],
-                ),
-              ),
-              if (scheduleRegisterState is Loading) const LoadingView(),
-            ],
+            ),
+          ),
+          bottomNavigationBar: _SaveButton(
+            scheduleId: item?.scheduleId,
+            isEditMode: isEditMode.value,
           ),
         ),
-      ),
-      bottomNavigationBar: _SaveButton(
-        scheduleId: item?.scheduleId,
-        isEditMode: isEditMode.value,
-      ),
+
+        // 튜토리얼 화면
+        AnimatedOpacity(
+          opacity: tutorialOpacity.value,
+          duration: const Duration(milliseconds: 300),
+          child: IgnorePointer(
+            ignoring: tutorialOpacity.value == 0,
+            child: TutorialView(
+              tutorialKey: TutorialKey.ScheduleMakeKey,
+              onTutorialClosed: () => tutorialOpacity.value = 0.0,
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -179,11 +205,11 @@ class _SaveButton extends HookConsumerWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10.0),
         child: PrimaryFilledButton.largeRound8(
-          content: Strings.of(context).commonSave,
+          content: getString(context).commonSave,
           isActivated: isSaveAvailable,
           onPressed: () {
             if (timelineManager.hasAnyOverlappingTimes()) {
-              Toast.showError(context, Strings.of(context).messageTimeSettingDuplicated);
+              Toast.showError(context, getString(context).messageTimeSettingDuplicated);
             } else {
               if (isEditMode) {
                 scheduleUpdateManager.updateSchedule(scheduleId ?? -1, saveState);

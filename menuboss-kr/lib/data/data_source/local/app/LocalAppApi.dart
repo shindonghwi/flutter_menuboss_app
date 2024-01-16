@@ -33,4 +33,14 @@ class LocalAppApi {
   FilterType _stringToFilterType(String value, Map<FilterType, String> filterValues) {
     return filterValues.entries.firstWhere((entry) => entry.value == value).key;
   }
+
+  Future<bool> hasViewedTutorial(String screenKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getBool(screenKey) ?? false;
+  }
+
+  Future<void> setTutorialViewed(String screenKey) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setBool(screenKey, true);
+  }
 }

@@ -1,15 +1,19 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/theme.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:uni_links/uni_links.dart';
+
+AppLocalizations getString(BuildContext context) {
+  return AppLocalizations.of(context);
+}
 
 final firebaseAuth = FirebaseAuth.instance;
 
@@ -40,7 +44,7 @@ class MenuBossApp extends HookWidget {
                 child: child!,
               );
             },
-            onGenerateTitle: (context) => Strings.of(context).appTitle,
+            onGenerateTitle: (context) => getString(context).appTitle,
             theme: AppTheme.lightTheme.copyWith(
               textSelectionTheme: TextSelectionThemeData(
                 cursorColor: getColorScheme(context).colorPrimary500,
@@ -54,12 +58,8 @@ class MenuBossApp extends HookWidget {
               ),
             ),
             themeMode: ThemeMode.system,
-            localizationsDelegates: const [
-              GlobalMaterialLocalizations.delegate,
-              GlobalWidgetsLocalizations.delegate,
-              GlobalCupertinoLocalizations.delegate,
-            ],
-            supportedLocales: const [Locale('en', 'US')],
+            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: AppLocalizations.localizationsDelegates,
             debugShowCheckedModeBanner: true,
             initialRoute: RoutingScreen.Splash.route,
             routes: RoutingScreen.getAppRoutes(),

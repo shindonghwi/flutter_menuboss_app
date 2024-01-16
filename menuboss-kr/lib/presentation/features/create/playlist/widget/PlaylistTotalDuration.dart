@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/media_content/provider/MediaContentsCartProvider.dart';
 import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
@@ -43,7 +43,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
           Row(
             children: [
               Text(
-                Strings.of(context).commonTotalDuration,
+                getString(context).commonTotalDuration,
                 style: getTextTheme(context).b3m.copyWith(
                       color: getColorScheme(context).colorGray900,
                     ),
@@ -67,7 +67,7 @@ class PlaylistTotalDuration extends HookConsumerWidget {
                 height: 16,
                 color: getColorScheme(context).white,
               ),
-              content: Strings.of(context).blankMessageContentAddContent,
+              content: getString(context).blankMessageContentAddContent,
               isActivated: true,
               onPressed: () {
                 Navigator.push(

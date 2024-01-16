@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 
 import '../../ui/colors.dart';
-import '../../ui/strings.dart';
 import '../../ui/typography.dart';
 import '../../utils/Common.dart';
 import '../button/NeutralLineButton.dart';
@@ -25,6 +24,7 @@ class PopupRename extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
     final renameText = useState("");
 
     return SizedBox(
@@ -57,7 +57,7 @@ class PopupRename extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: NeutralLineButton.mediumRound8(
-                  content: Strings.of(context).commonCancel,
+                  content: isKr ? '취소' : 'Cancel',
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);
@@ -71,7 +71,7 @@ class PopupRename extends HookWidget {
                 fit: FlexFit.tight,
                 flex: 1,
                 child: PrimaryFilledButton.mediumRound8(
-                  content: Strings.of(context).commonOk,
+                  content: isKr ? '확인' : 'Ok',
                   isActivated: true,
                   onPressed: () {
                     Navigator.pop(context);

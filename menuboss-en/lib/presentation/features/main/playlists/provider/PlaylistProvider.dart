@@ -13,17 +13,19 @@ class PlayListNotifier extends StateNotifier<UIState<List<ResponsePlaylistsModel
 
   final GetPlaylistsUseCase _getPlaylistsUseCase = GetIt.instance<GetPlaylistsUseCase>();
 
-  void requestGetPlaylists({int delay = 0}) async{
+  Future<List<dynamic>> requestGetPlaylists({int delay = 0}) async{
     state = Loading();
 
     await Future.delayed(Duration(milliseconds: (delay)));
 
-    _getPlaylistsUseCase.call().then((response) {
+    return _getPlaylistsUseCase.call().then((response) {
       if (response.status == 200) {
         state = Success(response.list?.map((e) => e.toUpDatedAtSimpleMapper()).toList() ?? []);
+        return response.list?.map((e) => e.toUpDatedAtSimpleMapper()).toList() ?? [];
       } else {
         state = Failure(response.message);
       }
+      return [];
     });
   }
 

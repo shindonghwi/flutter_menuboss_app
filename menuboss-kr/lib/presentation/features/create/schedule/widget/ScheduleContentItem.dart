@@ -2,6 +2,7 @@ import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -17,7 +18,6 @@ import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
@@ -99,7 +99,9 @@ class ScheduleContentItem extends HookConsumerWidget {
       physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       separatorBuilder: (BuildContext context, int index) {
-        return Container();
+        return Container(
+          height: 8,
+        );
       },
       itemBuilder: (BuildContext context, int index) {
         final data = timelineState[index];
@@ -109,7 +111,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                 child: Clickable(
                   onPressed: () {
                     timelineProvider.addItem(
-                      defaultTitle: Strings.of(context).createScheduleNewPlaylist,
+                      defaultTitle: getString(context).createScheduleNewPlaylist,
                     );
                   },
                   child: DottedBorder(
@@ -143,7 +145,7 @@ class ScheduleContentItem extends HookConsumerWidget {
               )
             : SizedBox(
                 width: double.infinity,
-                height: 172,
+                height: 164,
                 child: Row(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,7 +167,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                     ),
                     Expanded(
                       child: Container(
-                        padding: const EdgeInsets.only(top: 12, right: 12, bottom: 24),
+                        margin: const EdgeInsets.only(right: 12.0, bottom: 12),
                         child: Column(
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -176,27 +178,34 @@ class ScheduleContentItem extends HookConsumerWidget {
                                 Expanded(
                                   child: Padding(
                                     padding: EdgeInsets.only(top: data.isRequired ? 12 : 0),
-                                    child: Row(
-                                      children: [
-                                        if (data.isRequired)
-                                          Text(
-                                            "* ",
-                                            style: getTextTheme(context).s3sb.copyWith(
-                                                  color: getColorScheme(context).colorSecondary500,
-                                                ),
-                                          ),
-                                        Expanded(
-                                          child: Padding(
-                                            padding: EdgeInsets.only(right: data.isRequired ? 16.0 : 0),
-                                            child: Text(
-                                              data.playListName,
+                                    child: Align(
+                                      alignment: Alignment.topLeft,
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: [
+                                          if (data.isRequired)
+                                            Text(
+                                              "* ",
                                               style: getTextTheme(context).s3sb.copyWith(
-                                                    color: getColorScheme(context).colorGray900,
+                                                    color:
+                                                        getColorScheme(context).colorSecondary500,
                                                   ),
                                             ),
-                                          ),
-                                        )
-                                      ],
+                                          Expanded(
+                                            child: Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: data.isRequired ? 16.0 : 0),
+                                              child: Text(
+                                                data.playListName,
+                                                style: getTextTheme(context).s3sb.copyWith(
+                                                      color: getColorScheme(context).colorGray900,
+                                                    ),
+                                              ),
+                                            ),
+                                          )
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -204,6 +213,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                   Clickable(
                                     onPressed: () => timelineProvider.removeItemByIndex(index),
                                     child: Container(
+                                      margin: const EdgeInsets.only(right: 0),
                                       padding: const EdgeInsets.all(12),
                                       child: LoadSvg(
                                         path: "assets/imgs/icon_trash.svg",
@@ -226,7 +236,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                                       ? Padding(
                                           padding: const EdgeInsets.only(bottom: 14.5),
                                           child: Text(
-                                            "${Strings.of(context).commonTime} 00:00 ~ 24:00",
+                                            "${getString(context).commonTime} 00:00 ~ 24:00",
                                             style: getTextTheme(context).b3sb.copyWith(
                                                   color: getColorScheme(context).colorGray900,
                                                 ),
@@ -246,7 +256,8 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                     ),
                                                     content: "${data.start} ~ ${data.end}",
                                                     isActivated: true,
-                                                    onPressed: () => showTimeSettingBottomSheet(data),
+                                                    onPressed: () =>
+                                                        showTimeSettingBottomSheet(data),
                                                   )
                                                 : NeutralLineButton.smallRound4Icon(
                                                     leftIcon: LoadSvg(
@@ -257,7 +268,8 @@ class ScheduleContentItem extends HookConsumerWidget {
                                                     ),
                                                     content: "${data.start} ~ ${data.end}",
                                                     isActivated: true,
-                                                    onPressed: () => showTimeSettingBottomSheet(data),
+                                                    onPressed: () =>
+                                                        showTimeSettingBottomSheet(data),
                                                   ),
                                           ),
                                         ),
@@ -275,8 +287,8 @@ class ScheduleContentItem extends HookConsumerWidget {
                                           color: getColorScheme(context).colorGray900,
                                         ),
                                         content: data.playlistId == null || data.playlistId! < 0
-                                            ? Strings.of(context).createScheduleAddPlaylist
-                                            : Strings.of(context).createScheduleChangePlaylist,
+                                            ? getString(context).createScheduleAddPlaylist
+                                            : getString(context).createScheduleChangePlaylist,
                                         isActivated: true,
                                         onPressed: () => goToSelectPlaylist(index, data),
                                       ),

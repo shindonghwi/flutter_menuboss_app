@@ -2,9 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
-import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
-import 'package:menuboss_common/ui/strings.dart';
 
 import '../../models/base/ApiListResponse.dart';
 
@@ -13,13 +11,13 @@ class BaseApiUtil {
     if (res.statusCode >= 500) {
       return ApiResponse(
         status: res.statusCode,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageServerError5xx,
+        message: "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
         data: null,
       );
     } else if (res.statusCode == 406) {
       return ApiResponse(
         status: res.statusCode,
-        message: Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+        message: "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
         data: null,
       );
     }

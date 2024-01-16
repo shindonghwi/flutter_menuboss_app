@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
-import 'package:menuboss_common/ui/strings.dart';
 
 import '../../ui/colors.dart';
 import '../../ui/typography.dart';
@@ -31,20 +30,22 @@ class EmptyView extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    bool isKr = Localizations.localeOf(context).languageCode == "ko";
+
     String? getContent() {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
-          return Strings.of(context).blankMessageContentAddScreen;
+          return isKr ? "TV 추가" : "New screen";
         case BlankMessageType.ADD_CONTENT:
-          return Strings.of(context).blankMessageContentAddContent;
+          return isKr ? "콘텐츠 추가" : "Add content";
         case BlankMessageType.ADD_CANVAS:
-          return Strings.of(context).blankMessageContentAddCanvas;
+          return isKr ? "캔버스 추가" : "Add canvas";
         case BlankMessageType.NEW_SCHEDULE:
-          return Strings.of(context).blankMessageContentNewSchedule;
+          return isKr ? "시간표 추가" : "New schedule";
         case BlankMessageType.NEW_PLAYLIST:
-          return Strings.of(context).blankMessageContentNewPlaylist;
+          return isKr ? "재생목록 추가" : "New playlist";
         case BlankMessageType.UPLOAD_FILE:
-          return Strings.of(context).blankMessageContentUploadFile;
+          return isKr ? "파일 업로드" : "Upload file";
         default:
           return null;
       }
@@ -54,17 +55,29 @@ class EmptyView extends HookWidget {
       if (onlyButtonMode) return null;
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
-          return Strings.of(context).blankMessageDescriptionAddScreen;
+          return isKr
+              ? "현재 저장된 TV목록이 없습니다\nQR코드 인식을 통해 TV를 만들어주세요"
+              : "There are currently no saved screen list\nPlease register the screen through QR code";
         case BlankMessageType.ADD_CONTENT:
-          return Strings.of(context).blankMessageDescriptionUploadFile;
+          return isKr
+              ? "현재 저장된 파일 및 폴더가 없습니다\n파일 또는 폴더를 추가하여 만들어주세요"
+              : "There are no current files or folders\nPlease create a file or folder";
         case BlankMessageType.ADD_CANVAS:
-          return Strings.of(context).blankMessageDescriptionAddCanvas;
+          return isKr
+              ? "현재 저장된 캔버스 없습니다\n캔버스를 만들어 추가해주세요"
+              : "There are currently no saved canvases\nPlease create and add a canvas";
         case BlankMessageType.NEW_SCHEDULE:
-          return Strings.of(context).blankMessageDescriptionNewSchedule;
+          return isKr
+              ? "현재 저장된 시간표가 없습니다\n시간표를 추가하여 만들어주세요"
+              : "There are currently no saved schedules\nPlease add a schedule to create one";
         case BlankMessageType.NEW_PLAYLIST:
-          return Strings.of(context).blankMessageDescriptionNewPlaylist;
+          return isKr
+              ? "현재 저장된 재생목록이 없습니다\n재생목록을 추가하여 만들어주세요"
+              : "There are currently no saved playlists\nPlease add a playlist to create one";
         case BlankMessageType.UPLOAD_FILE:
-          return Strings.of(context).blankMessageDescriptionUploadFile;
+          return isKr
+              ? "현재 저장된 파일 및 폴더가 없습니다\n파일 또는 폴더를 추가하여 만들어주세요"
+              : "There are no current files or folders\nPlease create a file or folder";
         default:
           return null;
       }

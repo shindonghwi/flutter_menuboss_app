@@ -3,6 +3,7 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaVideoUseCase.dart';
@@ -22,7 +23,6 @@ import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/FilePickerUtil.dart';
@@ -80,7 +80,8 @@ class MediaInFolderScreen extends HookConsumerWidget {
                     (value, element) => value + element,
                   );
             debugPrint("count: $count, size: $size");
-            rootMediaManager.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0, isUiUpdate: true);
+            rootMediaManager.updateLumpFolderCountAndSize(item!.mediaId, count, size ?? 0,
+                isUiUpdate: true);
           },
           failure: (event) => Toast.showError(context, event.errorMessage),
         );
@@ -97,7 +98,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: false,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
 
@@ -124,7 +125,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
             xFile.path,
             isVideo: true,
             onNetworkError: () {
-              Toast.showError(context, Strings.of(context).messageNetworkRequired);
+              Toast.showError(context, getString(context).messageNetworkRequired);
             },
           );
 
@@ -147,12 +148,12 @@ class MediaInFolderScreen extends HookConsumerWidget {
           }
         },
         notAvailableFile: () {
-          Toast.showSuccess(context, Strings.of(context).messageFileNotAllowed404);
+          Toast.showSuccess(context, getString(context).messageFileNotAllowed404);
         },
         onError: (message) {
           Toast.showError(context, message);
         },
-        errorPermissionMessage: Strings.of(context).messagePermissionErrorPhotos,
+        errorPermissionMessage: getString(context).messagePermissionErrorPhotos,
       );
     }
 
@@ -165,8 +166,8 @@ class MediaInFolderScreen extends HookConsumerWidget {
             CommonPopup.showPopup(
               context,
               child: PopupRename(
-                title: Strings.of(context).popupRenameTitle,
-                hint: Strings.of(context).popupRenameMediaHint,
+                title: getString(context).popupRenameTitle,
+                hint: getString(context).popupRenameMediaHint,
                 name: folderName.value,
                 onClicked: (name) {
                   folderName.value = name;
@@ -181,7 +182,7 @@ class MediaInFolderScreen extends HookConsumerWidget {
               child: PopupDelete(onClicked: () async {
                 final isRemoved = await rootMediaManager.removeItem([item?.mediaId ?? ""]);
                 if (isRemoved) {
-                  Toast.showSuccess(context, Strings.of(context).messageRemoveMediaSuccess);
+                  Toast.showSuccess(context, getString(context).messageRemoveMediaSuccess);
                   Navigator.of(context).pop();
                 }
               }),
@@ -281,7 +282,8 @@ class _MediaContentList extends HookConsumerWidget {
                         onRemove: () async {
                           final isRemoved = await mediaManager.removeItem([item.mediaId]);
                           if (isRemoved) {
-                            Toast.showSuccess(context, Strings.of(context).messageRemoveMediaSuccess);
+                            Toast.showSuccess(
+                                context, getString(context).messageRemoveMediaSuccess);
                             rootMediaManager.updateFolderCountAndSize(
                               folderId,
                               item.property?.size ?? 0,

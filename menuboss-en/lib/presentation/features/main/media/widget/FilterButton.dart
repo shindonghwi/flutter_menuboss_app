@@ -46,7 +46,8 @@ class FilterButton extends HookWidget {
           ),
         );
       },
-      child: Padding(
+      child: Container(
+        height: 40,
         padding: const EdgeInsets.all(12.0),
         child: Row(
           mainAxisSize: MainAxisSize.min,

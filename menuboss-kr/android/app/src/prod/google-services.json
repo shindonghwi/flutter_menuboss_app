@@ -1,49 +1,37 @@
 {
   "project_info": {
-    "project_number": "845007593508",
-    "project_id": "orotcode-menuboss",
-    "storage_bucket": "orotcode-menuboss.appspot.com"
+    "project_number": "1060430673784",
+    "project_id": "menuboss-app-prod",
+    "storage_bucket": "menuboss-app-prod.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:845007593508:android:21c9e9daf65df1023bb8b1",
+        "mobilesdk_app_id": "1:1060430673784:android:181cc6ce54a9a67eb9ba8d",
         "android_client_info": {
           "package_name": "com.orot.menuboss"
         }
       },
       "oauth_client": [
         {
-          "client_id": "845007593508-tmgds5u2qau90viqq7tfh7uhtciigm6g.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.orot.menuboss",
-            "certificate_hash": "c089b29023d6a7dbebb21e145cbef535c94f9716"
-          }
-        },
-        {
-          "client_id": "845007593508-a9sh1r6srbaqjtu6t4gc05b91h6s6oq6.apps.googleusercontent.com",
+          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDwoRAQrDWb0x5BjxYAXd-lrybmifVDKbA"
+          "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
+        },
+        {
+          "current_key": "AIzaSyBTpL1oQAdmqKfUZ_6grt1E6MtLxY75FNE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "845007593508-a9sh1r6srbaqjtu6t4gc05b91h6s6oq6.apps.googleusercontent.com",
+              "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.orot.menuboss.dev"
-              }
             }
           ]
         }
@@ -51,43 +39,31 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:845007593508:android:ecc5f4148d1472303bb8b1",
+        "mobilesdk_app_id": "1:1060430673784:android:e3fbc96dac729b33b9ba8d",
         "android_client_info": {
-          "package_name": "com.orot.menuboss.dev"
+          "package_name": "com.orot.menuboss.kr"
         }
       },
       "oauth_client": [
         {
-          "client_id": "845007593508-fdsp665ba4s33opll2g75fc9gfs21aob.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.orot.menuboss.dev",
-            "certificate_hash": "523c544ba706646ff47d5698d5bb1cf691210c5d"
-          }
-        },
-        {
-          "client_id": "845007593508-a9sh1r6srbaqjtu6t4gc05b91h6s6oq6.apps.googleusercontent.com",
+          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDwoRAQrDWb0x5BjxYAXd-lrybmifVDKbA"
+          "current_key": "AIzaSyAUDib9hEYcH7i8L-pKOKh4Yb07HVKK6xo"
+        },
+        {
+          "current_key": "AIzaSyBTpL1oQAdmqKfUZ_6grt1E6MtLxY75FNE"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "845007593508-a9sh1r6srbaqjtu6t4gc05b91h6s6oq6.apps.googleusercontent.com",
+              "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "845007593508-6kaepfutbrd7jte7sbqrlvdbdmt6gr4f.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.orot.menuboss.dev"
-              }
             }
           ]
         }

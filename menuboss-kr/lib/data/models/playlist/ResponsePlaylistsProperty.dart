@@ -10,7 +10,7 @@ class ResponsePlaylistsProperty {
   final int? count;
   final String? imageUrl;
   final List<ResponsePlaylistPropertyInfo>? contentTypes;
-  final String? direction;
+  final ResponsePlaylistPropertyInfo? direction;
 
   ResponsePlaylistsProperty({
     required this.count,

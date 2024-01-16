@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistsModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
@@ -16,7 +17,6 @@ import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -85,7 +85,7 @@ class SelectPlaylistScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).selectPlaylistTitle,
+        content: getString(context).selectPlaylistTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
@@ -99,19 +99,22 @@ class SelectPlaylistScreen extends HookConsumerWidget {
           ],
         ),
       ),
-      bottomNavigationBar: SafeArea(
-        child: Container(
-          width: getMediaQuery(context).size.width,
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
-          child: PrimaryFilledButton.largeRound8(
-            content: Strings.of(context).commonDone,
-            isActivated: selectedPlaylist.value != null,
-            onPressed: () {
-              Navigator.of(context).pop(selectedPlaylist.value);
-            },
-          ),
-        ),
-      ),
+      bottomNavigationBar:
+          playlistState is Success<List<ResponsePlaylistsModel>> && playlistState.value.isNotEmpty
+              ? SafeArea(
+                  child: Container(
+                    width: getMediaQuery(context).size.width,
+                    padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 10),
+                    child: PrimaryFilledButton.largeRound8(
+                      content: getString(context).commonDone,
+                      isActivated: selectedPlaylist.value != null,
+                      onPressed: () {
+                        Navigator.of(context).pop(selectedPlaylist.value);
+                      },
+                    ),
+                  ),
+                )
+              : null,
     );
   }
 }
@@ -180,7 +183,7 @@ class _PlaylistContent extends HookWidget {
                                       Padding(
                                         padding: const EdgeInsets.symmetric(vertical: 4.0),
                                         child: Text(
-                                          "${Strings.of(context).commonUpdated}: ${data.updatedDate}",
+                                          "${getString(context).commonUpdated} : ${data.updatedDate}",
                                           style: getTextTheme(context).c1m.copyWith(
                                                 color: getColorScheme(context).colorGray500,
                                               ),
@@ -188,7 +191,8 @@ class _PlaylistContent extends HookWidget {
                                       ),
                                       Row(
                                         children: [
-                                          if (!CollectionUtil.isNullorEmpty(data.property?.contentTypes))
+                                          if (!CollectionUtil.isNullorEmpty(
+                                              data.property?.contentTypes))
                                             Row(
                                               children: data.property!.contentTypes!.map((e) {
                                                 return Container(
@@ -201,7 +205,8 @@ class _PlaylistContent extends HookWidget {
                                             Padding(
                                               padding: const EdgeInsets.only(left: 4.0),
                                               child: Text(
-                                                Strings.of(context).count_pages(data.property?.count ?? 0),
+                                                getString(context)
+                                                    .countPages(data.property?.count ?? 0),
                                                 style: getTextTheme(context).c1m.copyWith(
                                                       color: getColorScheme(context).colorGray500,
                                                     ),

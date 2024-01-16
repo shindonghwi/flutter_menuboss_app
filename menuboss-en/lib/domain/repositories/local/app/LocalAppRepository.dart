@@ -12,4 +12,10 @@ abstract class LocalAppRepository {
 
   /// 미디어 필터 타입 저장하기
   Future<void> setMediaFilterType(FilterType type, Map<FilterType, String> filterValues);
+
+  /// 튜토리얼 화면을 봤는지 여부 가져오기
+  Future<bool> hasViewedTutorial(String screenKey);
+
+  /// 튜토리얼 화면을 봤다고 저장하기
+  Future<void> setTutorialViewed(String screenKey);
 }

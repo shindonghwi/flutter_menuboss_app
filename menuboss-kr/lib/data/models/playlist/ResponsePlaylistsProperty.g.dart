@@ -15,7 +15,10 @@ ResponsePlaylistsProperty _$ResponsePlaylistsPropertyFromJson(
           ?.map((e) =>
               ResponsePlaylistPropertyInfo.fromJson(e as Map<String, dynamic>))
           .toList(),
-      direction: json['direction'] as String?,
+      direction: json['direction'] == null
+          ? null
+          : ResponsePlaylistPropertyInfo.fromJson(
+              json['direction'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$ResponsePlaylistsPropertyToJson(

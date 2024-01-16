@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:lottie/lottie.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/file/ResponseFileModel.dart';
 import 'package:menuboss/domain/usecases/remote/file/PostUploadMediaImageUseCase.dart';
@@ -13,7 +13,6 @@ import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
@@ -39,28 +38,40 @@ class MediaUploadProgress extends HookConsumerWidget {
                       children: [
                         ClipRRect(
                           borderRadius: BorderRadius.circular(2),
-                          child: mediaUploadProvider.thumbnailFile != null
-                              ? Image.file(
-                                  mediaUploadState.thumbnailFile!,
-                                  width: 32,
-                                  height: 32,
-                                  fit: BoxFit.cover,
-                                )
-                              : Container(
-                                  width: 32,
-                                  height: 32,
-                                  color: getColorScheme(context).colorGray100,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: LoadSvg(
-                                      path: "assets/imgs/image_logo_text.svg",
-                                      width: 20,
-                                      height: 10,
-                                      color: getColorScheme(context).colorGray400,
-                                      fit: BoxFit.contain,
+                          child: Container(
+                            width: 32,
+                            height: 32,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(2),
+                              border: Border.all(
+                                width: 1,
+                                color: getColorScheme(context).colorGray200,
+                              ),
+                              color: getColorScheme(context).colorGray100,
+                            ),
+                            child: mediaUploadProvider.thumbnailFile != null
+                                ? Image.file(
+                                    mediaUploadState.thumbnailFile!,
+                                    width: 32,
+                                    height: 32,
+                                    fit: BoxFit.cover,
+                                  )
+                                : Container(
+                                    width: 32,
+                                    height: 32,
+                                    color: getColorScheme(context).colorGray100,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: LoadSvg(
+                                        path: "assets/imgs/image_logo_text.svg",
+                                        width: 20,
+                                        height: 10,
+                                        color: getColorScheme(context).colorGray400,
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
                                   ),
-                                ),
+                          ),
                         ),
                         Expanded(
                           child: Padding(
@@ -79,8 +90,10 @@ class MediaUploadProgress extends HookConsumerWidget {
                                     Text(
                                       mediaUploadState.currentProgressByte,
                                       style: getTextTheme(context).c2m.copyWith(
-                                            color: mediaUploadState.isUploading == UploadState.SUCCESS ||
-                                                    mediaUploadState.isUploading == UploadState.UPLOADING
+                                            color: mediaUploadState.isUploading ==
+                                                        UploadState.SUCCESS ||
+                                                    mediaUploadState.isUploading ==
+                                                        UploadState.UPLOADING
                                                 ? getColorScheme(context).colorGreen500
                                                 : mediaUploadState.isUploading == UploadState.FAIL
                                                     ? getColorScheme(context).colorRed500
@@ -90,8 +103,10 @@ class MediaUploadProgress extends HookConsumerWidget {
                                     Text(
                                       " / ${StringUtil.formatBytesToMegabytes(mediaUploadState.getFileSize())}",
                                       style: getTextTheme(context).c2m.copyWith(
-                                            color: mediaUploadState.isUploading == UploadState.SUCCESS ||
-                                                    mediaUploadState.isUploading == UploadState.UPLOADING
+                                            color: mediaUploadState.isUploading ==
+                                                        UploadState.SUCCESS ||
+                                                    mediaUploadState.isUploading ==
+                                                        UploadState.UPLOADING
                                                 ? getColorScheme(context).colorGreen500
                                                 : mediaUploadState.isUploading == UploadState.FAIL
                                                     ? getColorScheme(context).colorRed500
@@ -104,9 +119,11 @@ class MediaUploadProgress extends HookConsumerWidget {
                             ),
                           ),
                         ),
-                        if (mediaUploadState.isUploading == UploadState.SUCCESS) const _SuffixSuccess(),
+                        if (mediaUploadState.isUploading == UploadState.SUCCESS)
+                          const _SuffixSuccess(),
                         if (mediaUploadState.isUploading == UploadState.FAIL) const _SuffixFail(),
-                        if (mediaUploadState.isUploading == UploadState.UPLOADING) const _SuffixLoading()
+                        if (mediaUploadState.isUploading == UploadState.UPLOADING)
+                          const _SuffixLoading()
                       ],
                     ),
                     Container(
@@ -206,7 +223,7 @@ class _SuffixFail extends HookConsumerWidget {
               isVideo: uploadProgressProvider.isLastUploadVideo,
               onNetworkError: () => Toast.showError(
                 context,
-                Strings.of(context).messageNetworkRequired,
+                getString(context).messageNetworkRequired,
               ),
             );
             if (controller != null) {

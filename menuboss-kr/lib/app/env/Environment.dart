@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/di/locator.dart';
@@ -17,8 +18,14 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
+  static String kakaoNativeAppKey =
+      _instance._buildType == BuildType.dev ? '87e95076a7810aa93854080bab89a56f' : '782a9583e5428ca708d3feae7b536359';
+
   static String apiUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-app-api.menuboss.kr' : 'https://app-api.menuboss.kr';
+      _instance._buildType == BuildType.dev ? 'https://dev-app-api-kr.menuboss.live' : 'https://app-api.menuboss.kr';
+
+  static String webUrl =
+      _instance._buildType == BuildType.dev ? 'https://dev-www-kr.menuboss.live' : 'https://www.menuboss.kr';
 
   static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
@@ -30,6 +37,8 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() async {
+    print('Environment run: ${await KakaoSdk.origin}');
+    KakaoSdk.init(nativeAppKey: Environment.kakaoNativeAppKey);
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,
       overlays: [SystemUiOverlay.top, SystemUiOverlay.bottom],

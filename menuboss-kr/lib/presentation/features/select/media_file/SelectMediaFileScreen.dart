@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -13,7 +14,6 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
@@ -45,17 +45,21 @@ class SelectMediaFileScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarNoneTitleIcon(
-        content: Strings.of(context).select_media_file_title(checkListState.length),
+        content: getString(context).selectMediaFileTitle(checkListState.length),
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
         child: Stack(
           children: [
-            if (mediaState is Failure)
+            if (mediaManager.currentItems.isEmpty && mediaState is Failure)
               FailView(onPressed: () => mediaManager.requestGetMedias())
             else if (mediaState is Success<List<ResponseMediaModel>>)
               _MediaList(
                 items: mediaState.value,
+              )
+            else if (mediaManager.currentItems.isNotEmpty)
+              _MediaList(
+                items: mediaManager.currentItems,
               ),
             if (mediaState is Loading) const LoadingView(),
           ],
@@ -74,7 +78,7 @@ class SelectMediaFileScreen extends HookConsumerWidget {
         onDeleteClick: () async {
           final isRemoved = await mediaManager.removeItem(checkListState);
           if (isRemoved) {
-            Toast.showSuccess(context, Strings.of(context).messageRemoveMediaSuccess);
+            Toast.showSuccess(context, getString(context).messageRemoveMediaSuccess);
             Navigator.of(context).pop();
           }
         },

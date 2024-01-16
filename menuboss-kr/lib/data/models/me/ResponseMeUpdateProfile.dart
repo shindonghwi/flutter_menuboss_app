@@ -11,7 +11,8 @@ class ResponseMeUpdateProfile {
     required this.imageUrl,
   });
 
-  factory ResponseMeUpdateProfile.fromJson(Map<String, dynamic> json) => _$ResponseMeUpdateProfileFromJson(json);
+  factory ResponseMeUpdateProfile.fromJson(Map<String, dynamic> json) =>
+      _$ResponseMeUpdateProfileFromJson(json);
 
   Map<String, dynamic> toJson() => _$ResponseMeUpdateProfileToJson(this);
 

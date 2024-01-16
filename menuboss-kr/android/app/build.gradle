@@ -28,7 +28,7 @@ apply plugin: 'com.google.firebase.crashlytics'
 apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
 
 android {
-    namespace "com.orot.menuboss"
+    namespace "com.orot.menuboss.kr"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -81,18 +81,18 @@ android {
             dimension "app"
             applicationIdSuffix ".dev"
             versionNameSuffix ".dev"
-            manifestPlaceholders = [appName: "MenuBoss(Dev)"]
+            manifestPlaceholders = [appName: "메뉴보스(Dev)", kakaoNativeAppKey: "87e95076a7810aa93854080bab89a56f"]
         }
         prod {
             dimension "app"
             applicationIdSuffix ""
             versionNameSuffix ""
-            manifestPlaceholders = [appName: "MenuBoss"]
+            manifestPlaceholders = [appName: "메뉴보스", kakaoNativeAppKey: "782a9583e5428ca708d3feae7b536359"]
         }
     }
 
     defaultConfig {
-        applicationId "com.orot.menuboss"
+        applicationId "com.orot.menuboss.kr"
         minSdkVersion 26
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()
@@ -121,9 +121,9 @@ dependencies {
     implementation 'androidx.core:core-splashscreen:1.0.1'
 
     // firebase
-    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
-    implementation("com.google.firebase:firebase-crashlytics-ktx")
-    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation platform("com.google.firebase:firebase-bom:32.7.0")
+    implementation "com.google.firebase:firebase-crashlytics"
+    implementation "com.google.firebase:firebase-analytics"
     implementation "com.google.firebase:firebase-appcheck-playintegrity"
     implementation "com.google.firebase:firebase-appcheck-ktx"
 }

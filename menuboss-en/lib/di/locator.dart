@@ -31,8 +31,10 @@ import 'package:menuboss/domain/repositories/remote/schedule/RemoteScheduleRepos
 import 'package:menuboss/domain/repositories/remote/validation/RemoteValidationRepository.dart';
 import 'package:menuboss/domain/usecases/local/app/GetLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/GetMediaFilterTypeUseCase.dart';
+import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostMediaFilterTypeUseCase.dart';
+import 'package:menuboss/domain/usecases/local/app/PostTutorialViewedUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
@@ -53,6 +55,7 @@ import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeProfileImageUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PostMeJoinUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/PostMeLeaveUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/me/PostMeSocialJoinUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/DelMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediaUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/media/GetMediasUseCase.dart';
@@ -83,6 +86,8 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
   GetIt.instance.registerLazySingleton<GetMediaFilterTypeUseCase>(() => GetMediaFilterTypeUseCase());
   GetIt.instance.registerLazySingleton<PostMediaFilterTypeUseCase>(() => PostMediaFilterTypeUseCase());
+  GetIt.instance.registerLazySingleton<GetTutorialViewedUseCase>(() => GetTutorialViewedUseCase());
+  GetIt.instance.registerLazySingleton<PostTutorialViewedUseCase>(() => PostTutorialViewedUseCase());
 
   // auth
   GetIt.instance.registerLazySingleton<PostAppleSignInUseCase>(() => PostAppleSignInUseCase());
@@ -97,6 +102,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostMeJoinUseCase>(() => PostMeJoinUseCase());
   GetIt.instance.registerLazySingleton<PostMeLeaveUseCase>(() => PostMeLeaveUseCase());
   GetIt.instance.registerLazySingleton<PatchMeProfileImageUseCase>(() => PatchMeProfileImageUseCase());
+  GetIt.instance.registerLazySingleton<PostMeSocialJoinUseCase>(() => PostMeSocialJoinUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());

@@ -7,8 +7,6 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
-import 'package:menuboss/app/MenuBossApp.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:uuid/uuid.dart';
 
@@ -42,7 +40,8 @@ class Service {
     if (Platform.isAndroid) {
       final androidInfo = await deviceInfoPlugin.androidInfo;
       final isPhysicalDevice = androidInfo.isPhysicalDevice ? 'Physical' : 'Emulator';
-      String xDeviceModel = "Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt}; "
+      String xDeviceModel =
+          "Android ${androidInfo.version.release} (SDK ${androidInfo.version.sdkInt}; "
           "Model ${androidInfo.model}; Brand ${androidInfo.brand}; Device ${androidInfo.device}; "
           "Product ${androidInfo.product}; $isPhysicalDevice)";
       debugPrint('AndroidInfo: $xDeviceModel');
@@ -50,7 +49,8 @@ class Service {
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfoPlugin.iosInfo;
       final isPhysicalDevice = iosInfo.isPhysicalDevice ? 'Physical' : 'Simulator';
-      String xDeviceModel = "${iosInfo.systemName}/${iosInfo.systemVersion} (${iosInfo.localizedModel}; "
+      String xDeviceModel =
+          "${iosInfo.systemName}/${iosInfo.systemVersion} (${iosInfo.localizedModel}; "
           "${iosInfo.utsname.machine}; ${iosInfo.model}; $isPhysicalDevice)";
       debugPrint('iosInfo: $xDeviceModel');
       addHeader(key: HeaderKey.XDeviceModel, value: xDeviceModel);
@@ -104,7 +104,7 @@ class Service {
         return res;
       } else {
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+          "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
           406,
         );
       }
@@ -112,13 +112,13 @@ class Service {
       if (e is TimeoutException) {
         debugPrint('\nRequest timed out');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageOperationTimeout,
+          "작업이 너무 지연되고 있습니다.\n잠시 후에 다시 시도해주세요",
           408,
         );
       } else {
         debugPrint('\nhttp response error: $e');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageServerError5xx,
+          "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
           500,
         );
       }
@@ -132,7 +132,8 @@ class Service {
   }) async {
     try {
       if (await isNetworkAvailable()) {
-        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        final url = Uri.parse(
+            '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
         debugPrint('\nrequest Url: $url');
         debugPrint('\nrequest header: $headers');
         debugPrint('\nrequest body: $jsonBody\n', wrapWidth: 2048);
@@ -150,7 +151,7 @@ class Service {
         return res;
       } else {
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired.toString(),
+          "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요".toString(),
           406,
         );
       }
@@ -158,13 +159,13 @@ class Service {
       if (e is TimeoutException) {
         debugPrint('\nRequest timed out');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageOperationTimeout,
+          "작업이 너무 지연되고 있습니다.\n잠시 후에 다시 시도해주세요",
           408,
         );
       } else {
         debugPrint('\nhttp esponse error: $e');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageServerError5xx,
+          "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
           500,
         );
       }
@@ -180,7 +181,8 @@ class Service {
   }) async {
     try {
       if (await isNetworkAvailable()) {
-        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        final url = Uri.parse(
+            '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
 
         debugPrint('\nrequest Url: $url');
         debugPrint('\nrequest header: $headers');
@@ -189,7 +191,8 @@ class Service {
           ..headers.addAll(headers)
           ..fields.addAll(jsonBody.map((key, value) => MapEntry(key, value.toString())))
           ..files.add(
-            http.MultipartFile('file', file.openRead(), file.lengthSync(), filename: file.path.split('/').last),
+            http.MultipartFile('file', file.openRead(), file.lengthSync(),
+                filename: file.path.split('/').last),
           );
 
         var client = http.Client();
@@ -213,13 +216,13 @@ class Service {
           debugPrint('\nNetwork send error: $e');
           uploadProgressController?.close();
           return BaseApiUtil.createResponse(
-            Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+            "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
             406,
           );
         }
       } else {
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+          "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
           406,
         );
       }
@@ -227,13 +230,13 @@ class Service {
       if (e is TimeoutException) {
         debugPrint('\nRequest timed out');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageOperationTimeout,
+          "작업이 너무 지연되고 있습니다.\n잠시 후에 다시 시도해주세요",
           408,
         );
       } else {
         debugPrint('\nhttp esponse error: $e');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageServerError5xx,
+          "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
           500,
         );
       }
@@ -247,7 +250,8 @@ class Service {
   }) async {
     try {
       if (await isNetworkAvailable()) {
-        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        final url = Uri.parse(
+            '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
         debugPrint('\nrequest Url: $url');
         debugPrint('\nrequest header: $headers');
         debugPrint('\nrequest body: $jsonBody\n', wrapWidth: 2048);
@@ -265,7 +269,7 @@ class Service {
         return res;
       } else {
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+          "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
           406,
         );
       }
@@ -273,13 +277,13 @@ class Service {
       if (e is TimeoutException) {
         debugPrint('\nRequest timed out');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageOperationTimeout,
+          "작업이 너무 지연되고 있습니다.\n잠시 후에 다시 시도해주세요",
           408,
         );
       } else {
         debugPrint('\nhttp esponse error: $e');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageServerError5xx,
+          "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
           500,
         );
       }
@@ -293,7 +297,8 @@ class Service {
   }) async {
     try {
       if (await isNetworkAvailable()) {
-        final url = Uri.parse('$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
+        final url = Uri.parse(
+            '$baseUrl/${_ServiceTypeHelper.fromString(type)}${endPoint == null ? "" : "/$endPoint"}');
         debugPrint('\nrequest Url: $url');
         debugPrint('\nrequest header: $headers');
         debugPrint('\nrequest body: $jsonBody\n', wrapWidth: 2048);
@@ -311,7 +316,7 @@ class Service {
         return res;
       } else {
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageNetworkRequired,
+          "네트워크 연결이 불안정합니다\n잠시 후에 다시 시도해주세요",
           406,
         );
       }
@@ -319,13 +324,13 @@ class Service {
       if (e is TimeoutException) {
         debugPrint('\nRequest timed out');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageOperationTimeout,
+          "작업이 너무 지연되고 있습니다.\n잠시 후에 다시 시도해주세요",
           408,
         );
       } else {
         debugPrint('\nhttp esponse error: $e');
         return BaseApiUtil.createResponse(
-          Strings.of(MenuBossGlobalVariable.navigatorKey.currentContext).messageServerError5xx,
+          "일시적인 장애가 발생하였습니다\n잠시 후 다시 시도해주세요",
           500,
         );
       }

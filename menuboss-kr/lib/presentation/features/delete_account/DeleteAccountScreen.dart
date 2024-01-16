@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
@@ -16,7 +17,6 @@ import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
@@ -33,10 +33,10 @@ class DeleteAccountScreen extends HookConsumerWidget {
 
     final isShowFirstDescription = useState(true);
     final reasons = [
-      Pair(Strings.of(context).deleteAccountReasonMenu1, useState(false)),
-      Pair(Strings.of(context).deleteAccountReasonMenu2, useState(false)),
-      Pair(Strings.of(context).deleteAccountReasonMenu3, useState(false)),
-      Pair(Strings.of(context).deleteAccountReasonMenu4, useState(false)),
+      Pair(getString(context).deleteAccountReasonMenu1, useState(false)),
+      Pair(getString(context).deleteAccountReasonMenu2, useState(false)),
+      Pair(getString(context).deleteAccountReasonMenu3, useState(false)),
+      Pair(getString(context).deleteAccountReasonMenu4, useState(false)),
     ];
 
     final otherReasonText = useState("");
@@ -85,7 +85,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: Strings.of(context).deleteAccountTitle,
+        content: getString(context).deleteAccountTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: SafeArea(
@@ -100,8 +100,8 @@ class DeleteAccountScreen extends HookConsumerWidget {
                     mainAxisSize: MainAxisSize.min,
                     children: [
                       Text(
-                        Strings.of(context).deleteAccountDescription,
-                        style: getTextTheme(context).s3sb.copyWith(
+                        getString(context).deleteAccountDescription,
+                        style: getTextTheme(context).b1sb.copyWith(
                               color: getColorScheme(context).colorGray900,
                             ),
                         overflow: TextOverflow.visible,
@@ -111,7 +111,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                         height: 24,
                       ),
                       Text(
-                        Strings.of(context).deleteAccountDescription1,
+                        getString(context).deleteAccountDescription1,
                         style: getTextTheme(context).b2m.copyWith(
                               color: getColorScheme(context).colorGray700,
                             ),
@@ -128,8 +128,8 @@ class DeleteAccountScreen extends HookConsumerWidget {
                       height: 40,
                     ),
                     Text(
-                      Strings.of(context).deleteAccountReasonTitle,
-                      style: getTextTheme(context).s3sb.copyWith(
+                      getString(context).deleteAccountReasonTitle,
+                      style: getTextTheme(context).b1sb.copyWith(
                             color: getColorScheme(context).colorGray900,
                           ),
                       overflow: TextOverflow.visible,
@@ -192,7 +192,7 @@ class DeleteAccountScreen extends HookConsumerWidget {
                         padding: const EdgeInsets.only(top: 16.0),
                         child: DefaultTextArea.normal(
                           controller: otherTextController,
-                          hint: Strings.of(context).deleteAccountReasonMenu4Hint,
+                          hint: getString(context).deleteAccountReasonMenu4Hint,
                           onChanged: (value) {
                             leaveAccountManager.currentReason = value;
                           },
@@ -213,8 +213,8 @@ class DeleteAccountScreen extends HookConsumerWidget {
             margin: const EdgeInsets.symmetric(horizontal: 24, vertical: 10),
             child: PrimaryFilledButton.mediumRound8(
               content: isShowFirstDescription.value
-                  ? Strings.of(context).commonNext
-                  : Strings.of(context).deleteAccountTitle,
+                  ? getString(context).commonNext
+                  : getString(context).deleteAccountTitle,
               isActivated: true,
               onPressed: () {
                 if (isShowFirstDescription.value) {

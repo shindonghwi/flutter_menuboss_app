@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '922858947237',
     projectId: 'menuboss-app-dev',
     storageBucket: 'menuboss-app-dev.appspot.com',
+    androidClientId: '922858947237-qti9p87mlmqg195iqeqae73egnq8ok8e.apps.googleusercontent.com',
+    iosClientId: '922858947237-da933v8uvjla2cl211vnandbl12bjhru.apps.googleusercontent.com',
     iosBundleId: 'com.orot.menuboss.dev',
   );
 }

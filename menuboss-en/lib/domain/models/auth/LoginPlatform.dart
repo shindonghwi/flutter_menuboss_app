@@ -8,9 +8,9 @@ enum LoginPlatform {
 
 class LoginPlatformHelper {
   static const Map<LoginPlatform, String> _stringToEnum = {
-    LoginPlatform.Google: "google",
-    LoginPlatform.Kakao: "kakao",
-    LoginPlatform.Apple: "apple",
+    LoginPlatform.Google: "Google",
+    LoginPlatform.Kakao: "Kakao",
+    LoginPlatform.Apple: "Apple",
     LoginPlatform.None: "none"
   };
 

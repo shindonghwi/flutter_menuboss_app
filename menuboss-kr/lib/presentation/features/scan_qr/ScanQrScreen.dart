@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
+import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/domain/usecases/remote/device/PostDeviceUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss_common/components/appbar/TopBarNoneTitleIcon.dart';
@@ -12,7 +13,6 @@ import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/ui/colors.dart';
-import 'package:menuboss_common/ui/strings.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -106,7 +106,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
         Align(
           alignment: Alignment.topCenter,
           child: TopBarNoneTitleIcon(
-            content: Strings.of(context).scanQrTitle,
+            content: getString(context).scanQrTitle,
             backgroundColor: Colors.transparent,
             reverseContentColor: true,
             onBack: () => popPageWrapper(context: context),
@@ -119,7 +119,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
-                Strings.of(context).scanQrDescription,
+                getString(context).scanQrDescription,
                 style: getTextTheme(context).b2m.copyWith(
                       color: getColorScheme(context).white,
                     ),
@@ -129,7 +129,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
                 height: 244,
               ),
               NeutralFilledButton.mediumRound100(
-                content: Strings.of(context).scanQrEnterPinCode,
+                content: getString(context).scanQrEnterPinCode,
                 isActivated: true,
                 onPressed: () {
                   CommonBottomSheet.showBottomSheet(
@@ -153,7 +153,7 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
     isProcessing = true;
     GetIt.instance<PostDeviceUseCase>().call(code).then((response) async {
       if (response.status == 200) {
-        Toast.showSuccess(context, Strings.of(context).messageRegisterScreenSuccess);
+        Toast.showSuccess(context, getString(context).messageRegisterScreenSuccess);
         Navigator.of(context).pop(true);
       } else {
         Toast.showError(context, response.message);
@@ -173,7 +173,9 @@ class _QrCodeScannerState extends State<QrCodeScanner> {
 
         if (isProcessing) return;
 
-        if (result!.code.toString().contains(scheme) && result!.code.toString().contains("?pin=") && !isProcessing) {
+        if (result!.code.toString().contains(scheme) &&
+            result!.code.toString().contains("?pin=") &&
+            !isProcessing) {
           final code = result!.code.toString().split("?pin=").last;
           postDevice(code);
         }
