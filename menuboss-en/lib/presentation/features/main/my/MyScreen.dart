@@ -54,11 +54,21 @@ class MyScreen extends HookConsumerWidget {
                 menuList: [
                   _SettingContent(
                     content: getString(context).myPageSettingSubmenuTeam,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.TeamList.route),
+                      );
+                    },
                   ),
                   _SettingContent(
                     content: getString(context).myPageSettingSubmenuRole,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.RoleList.route),
+                      );
+                    },
                   ),
                   DividerVertical(
                     marginVertical: 8,
@@ -83,7 +93,12 @@ class MyScreen extends HookConsumerWidget {
                   ),
                   _SettingContent(
                     content: getString(context).myPageSettingSubmenuBusiness,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.MyBusiness.route),
+                      );
+                    },
                   ),
                   DividerVertical(
                     marginVertical: 8,
