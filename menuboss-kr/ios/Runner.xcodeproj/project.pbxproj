@@ -287,7 +287,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "SRC_ROOT_PATH=\"/Users/donghwishin/AndroidStudioProjects/menuboss-flutter-app/menuboss-kr/ios\"\nif [ \"${CONFIGURATION}\" == \"Debug-dev\" ]\nthen\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Debug.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nelse\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Release.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nfi\n\n\n";
+			shellScript = "SRC_ROOT_PATH=\"./\"  # Set the source root path to the current directory\n\nif [ \"${CONFIGURATION}\" == \"Debug-dev\" ]\nthen\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Debug.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nelse\n    cp -r \"${SRC_ROOT_PATH}/config/GoogleService-Info-Release.plist\" \"${SRC_ROOT_PATH}/Runner/GoogleService-Info.plist\"\nfi\n";
 		};
 		31FD11BD9DDE645F043E916F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
