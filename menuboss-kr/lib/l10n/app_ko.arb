@@ -7,7 +7,7 @@
     "createPlaylistTitle": "재생목록 생성",
     "createPlaylistTitleInput": "제목을 입력해주세요",
 
-    "editScheduleTitle": "Edit schedule",
+    "editScheduleTitle": "시간표 수정",
     "createScheduleTitle": "시간표 생성",
     "createScheduleNewPlaylist": "새 재생목록",
     "createScheduleAddPlaylist": "재생목록 추가",
@@ -29,7 +29,7 @@
     "deleteAccountReasonMenu4Hint": "탈퇴 이유를 알려주세요",
 
     "guideDetailDevice1Title": "1. TV앱 다운로드",
-    "guideDetailDevice1Description": "구글 플레이스토어에서 [MenuBossTV - Digital Signage All in one Service] 다운받아주세요",
+    "guideDetailDevice1Description": "구글 플레이스토어에서 [메뉴보스TV - 디지털 메뉴판]을 다운받아주세요",
     "guideDetailDevice1SubDescription1": "· 리모컨 역할 : 모바일 휴대폰 또는 태블릿",
     "guideDetailDevice1SubDescription2": "· 디지털 메뉴판 역할 : TV",
     "guideDetailDevice2Title": "2. TV 연결 - QR 코드 스캔 / PIN 번호 입력",
@@ -76,7 +76,7 @@
     "loginNoAccount": "메뉴보스가 처음이신가요?",
     "loginEmailCorrect": "올바른 이메일 입니다",
     "loginEmailInvalid": "올바른 이메일을 입력해주세요",
-    "loginPwInvalid": "올바른 이메일을 입력해주세요",
+    "loginPwInvalid": "a-z, A-Z, 0-9, 4~20 자리",
 
     "myPageProfileAppbarTitle": "프로필",
     "myPageProfileDeleteAccount": "탈퇴하기",
