@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
 import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
 import 'package:menuboss/data/models/me/ResponseMeUpdateProfile.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
+
 import '../../../models/me/ResponseMeInfoModel.dart';
 import '../BaseApiUtil.dart';
 import '../Service.dart';
@@ -31,7 +31,7 @@ class RemoteMeApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-              (json) => ResponseMeInfoModel.fromJson(json),
+          (json) => ResponseMeInfoModel.fromJson(json),
         );
       }
     } catch (e) {
@@ -59,7 +59,63 @@ class RemoteMeApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-              (json) {},
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
+
+  /// Owner 번호 수정
+  Future<ApiResponse<void>> patchPhone(String phone) async {
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Me,
+        endPoint: "phone",
+        jsonBody: {"phone": phone},
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
+
+  /// Owner 패스워드 수정
+  Future<ApiResponse<void>> patchPassword(String password) async {
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Me,
+        endPoint: "password",
+        jsonBody: {"password": password},
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
         );
       }
     } catch (e) {
@@ -87,7 +143,7 @@ class RemoteMeApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-              (json) => ResponseMeAuthorization.fromJson(json),
+          (json) => ResponseMeAuthorization.fromJson(json),
         );
       }
     } catch (e) {
@@ -98,7 +154,8 @@ class RemoteMeApi {
   }
 
   /// 소셜 회원가입
-  Future<ApiResponse<ResponseMeAuthorization>> postSocialJoin(RequestMeSocialJoinModel model) async {
+  Future<ApiResponse<ResponseMeAuthorization>> postSocialJoin(
+      RequestMeSocialJoinModel model) async {
     try {
       final response = await Service.postApi(
         type: ServiceType.Me,
@@ -115,7 +172,7 @@ class RemoteMeApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-              (json) => ResponseMeAuthorization.fromJson(json),
+          (json) => ResponseMeAuthorization.fromJson(json),
         );
       }
     } catch (e) {
@@ -143,7 +200,7 @@ class RemoteMeApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-              (json) {},
+          (json) {},
         );
       }
     } catch (e) {
@@ -171,7 +228,7 @@ class RemoteMeApi {
       } else {
         return ApiResponse.fromJson(
           jsonDecode(response.body),
-              (json) => ResponseMeUpdateProfile.fromJson(json),
+          (json) => ResponseMeUpdateProfile.fromJson(json),
         );
       }
     } catch (e) {

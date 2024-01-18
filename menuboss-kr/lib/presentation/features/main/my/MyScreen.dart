@@ -28,34 +28,7 @@ class MyScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutState = ref.watch(logoutProvider);
     final meInfo = ref.watch(meInfoProvider);
-    final meInfoManager = ref.read(meInfoProvider.notifier);
-    final logoutManager = ref.read(logoutProvider.notifier);
-
-    void goToLogin() {
-      meInfoManager.updateMeInfo(null);
-      Navigator.pushAndRemoveUntil(
-        context,
-        nextFadeInOutScreen(RoutingScreen.Login.route),
-        (route) => false,
-      );
-    }
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        logoutState.when(
-          success: (event) async {
-            logoutManager.init();
-            goToLogin();
-          },
-          failure: (event) {
-            Toast.showError(context, event.errorMessage);
-          },
-        );
-      });
-      return null;
-    }, [logoutState]);
 
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
@@ -63,111 +36,86 @@ class MyScreen extends HookConsumerWidget {
         content: getString(context).mainNavigationMenuMy,
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                _UserProfile(
-                  imageUrl: meInfo?.profile?.imageUrl,
-                  role: meInfo?.business?.role,
-                  name: meInfo?.profile?.name,
-                  businessName: meInfo?.business?.title,
-                  email: meInfo?.email,
-                ),
-                DividerVertical(
-                  marginVertical: 0,
-                  dividerColor: getColorScheme(context).colorGray100,
-                ),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              _UserProfile(
+                imageUrl: meInfo?.profile?.imageUrl,
+                role: meInfo?.business?.role,
+                name: meInfo?.profile?.name,
+                businessName: meInfo?.business?.title,
+                email: meInfo?.email,
+              ),
+              DividerVertical(
+                marginVertical: 0,
+                dividerColor: getColorScheme(context).colorGray100,
+              ),
 
-                const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-                // // 설정
-                // _MenuContent(
-                //   title: _SettingTitle(title: getString(context).myPageSettingItemTitle),
-                //   menuList: [
-                //     _SettingContent(
-                //       content: getString(context).myPageSettingSubmenuTeam,
-                //       onPressed: () {},
-                //     ),
-                //     _SettingContent(
-                //       content: getString(context).myPageSettingSubmenuRole,
-                //       onPressed: () {
-                //       },
-                //     ),
-                //     DividerVertical(
-                //       marginVertical: 8,
-                //       height: 1,
-                //       dividerColor: getColorScheme(context).colorGray100,
-                //     ),
-                //   ],
-                // ),
+              // 설정
+              _MenuContent(
+                title: _SettingTitle(title: getString(context).myPageSettingItemTitleSetting),
+                menuList: [
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuTeam,
+                    onPressed: () {},
+                  ),
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuRole,
+                    onPressed: () {},
+                  ),
+                  DividerVertical(
+                    marginVertical: 8,
+                    height: 1,
+                    dividerColor: getColorScheme(context).colorGray100,
+                  ),
+                ],
+              ),
 
-                // 사용자 설정
-                _MenuContent(
-                  title: _SettingTitle(title: getString(context).myPageSettingItemTitleUser),
-                  menuList: [
-                    _SettingContent(
-                      content: getString(context).myPageSettingSubmenuMy,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
-                        );
-                      },
-                    ),
-                    // _SettingContent(
-                    //   content: getString(context).myPageSettingSubmenuBusiness,
-                    //   onPressed: () {},
-                    // ),
-                    DividerVertical(
-                      marginVertical: 8,
-                      height: 1,
-                      dividerColor: getColorScheme(context).colorGray100,
-                    ),
-                  ],
-                ),
-
-                // 가이드
-                _MenuContent(
-                  title: _SettingTitle(title: getString(context).myPageSettingSubmenuGuide),
-                  menuList: [
-                    _SettingContent(
-                      content: getString(context).myPageSettingSubmenuMenual,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(RoutingScreen.GuideList.route),
-                        );
-                      },
-                    ),
-                    DividerVertical(
-                      marginVertical: 8,
-                      height: 1,
-                      dividerColor: getColorScheme(context).colorGray100,
-                    ),
-                  ],
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 24.0),
-                  child: _SettingContent(
-                    content: getString(context).commonLogout,
+              // 사용자 설정
+              _MenuContent(
+                title: _SettingTitle(title: getString(context).myPageSettingItemTitleUser),
+                menuList: [
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuMy,
                     onPressed: () {
-                      CommonPopup.showPopup(
+                      Navigator.push(
                         context,
-                        child: PopupLogout(onClicked: (isCompleted) {
-                          if (isCompleted) {
-                            logoutManager.requestLogout();
-                          }
-                        }),
+                        nextSlideHorizontalScreen(RoutingScreen.MyAccount.route),
                       );
                     },
                   ),
-                ),
-              ],
-            ),
-            if (logoutState is Loading) const LoadingView()
-          ],
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuBusiness,
+                    onPressed: () {},
+                  ),
+                  DividerVertical(
+                    marginVertical: 8,
+                    height: 1,
+                    dividerColor: getColorScheme(context).colorGray100,
+                  ),
+                ],
+              ),
+
+              // 가이드
+              _MenuContent(
+                title: _SettingTitle(title: getString(context).myPageSettingSubmenuGuide),
+                menuList: [
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuMenual,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.GuideList.route),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -223,8 +171,8 @@ class _UserProfile extends HookWidget {
                           child: Text(
                             role.toString(),
                             style: getTextTheme(context).c2m.copyWith(
-                                  color: getColorScheme(context).white,
-                                ),
+                              color: getColorScheme(context).white,
+                            ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -233,8 +181,8 @@ class _UserProfile extends HookWidget {
                       Text(
                         name.toString(),
                         style: getTextTheme(context).b2m.copyWith(
-                              color: getColorScheme(context).colorGray900,
-                            ),
+                          color: getColorScheme(context).colorGray900,
+                        ),
                       ),
                   ],
                 ),
@@ -245,15 +193,15 @@ class _UserProfile extends HookWidget {
                       Text(
                         businessName.toString(),
                         style: getTextTheme(context).c1m.copyWith(
-                              color: getColorScheme(context).colorGray700,
-                            ),
+                          color: getColorScheme(context).colorGray700,
+                        ),
                       ),
                     if (!CollectionUtil.isNullEmptyFromString(email))
                       Text(
                         email.toString(),
                         style: getTextTheme(context).c1m.copyWith(
-                              color: getColorScheme(context).colorGray700,
-                            ),
+                          color: getColorScheme(context).colorGray700,
+                        ),
                       ),
                   ],
                 ),
@@ -305,8 +253,8 @@ class _SettingTitle extends StatelessWidget {
       child: Text(
         title,
         style: getTextTheme(context).c1sb.copyWith(
-              color: getColorScheme(context).colorGray700,
-            ),
+          color: getColorScheme(context).colorGray700,
+        ),
         textAlign: TextAlign.start,
       ),
     );
@@ -337,8 +285,8 @@ class _SettingContent extends StatelessWidget {
             Text(
               content,
               style: getTextTheme(context).b3m.copyWith(
-                    color: getColorScheme(context).colorGray900,
-                  ),
+                color: getColorScheme(context).colorGray900,
+              ),
               textAlign: TextAlign.start,
             ),
             if (onPressed != null)

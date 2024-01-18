@@ -46,8 +46,8 @@ class PopupDeleteAccount extends HookWidget {
           ),
           Text(
             isKr
-                ? '계정 삭제가 성공적으로 완료되었습니다. 다음에 다시 만나요'
-                : 'Account deletion completed successfully. See you next time',
+                ? '계정 삭제가 성공적으로 완료되었습니다.\n다음에 다시 만나요'
+                : 'Account deletion completed successfully.\nSee you next time',
             style: getTextTheme(context).b3r.copyWith(
                   color: getColorScheme(context).colorGray500,
                   overflow: TextOverflow.visible,

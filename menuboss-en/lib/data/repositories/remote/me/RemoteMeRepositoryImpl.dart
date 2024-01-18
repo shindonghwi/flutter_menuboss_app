@@ -25,6 +25,16 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   }
 
   @override
+  Future<ApiResponse<void>> patchPhone(String country, String phone) {
+    return remoteMeApi.patchPhone(country, phone);
+  }
+
+  @override
+  Future<ApiResponse<void>> patchPassword(String password) {
+    return remoteMeApi.patchPassword(password);
+  }
+
+  @override
   Future<ApiResponse<ResponseMeAuthorization>> postJoin(RequestMeJoinModel model) {
     return remoteMeApi.postJoin(model);
   }

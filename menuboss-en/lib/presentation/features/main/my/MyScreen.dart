@@ -5,57 +5,24 @@ import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
-import 'package:menuboss/presentation/features/main/my/provider/LogoutProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarTitle.dart';
 import 'package:menuboss_common/components/divider/DividerVertical.dart';
 import 'package:menuboss_common/components/loader/LoadProfile.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
-import 'package:menuboss_common/components/popup/CommonPopup.dart';
-import 'package:menuboss_common/components/popup/PopupLogout.dart';
-import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
-import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
-import 'package:menuboss_common/utils/UiState.dart';
 
 class MyScreen extends HookConsumerWidget {
   const MyScreen({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final logoutState = ref.watch(logoutProvider);
     final meInfo = ref.watch(meInfoProvider);
-    final meInfoManager = ref.read(meInfoProvider.notifier);
-    final logoutManager = ref.read(logoutProvider.notifier);
-
-    void goToLogin() {
-      meInfoManager.updateMeInfo(null);
-      Navigator.pushAndRemoveUntil(
-        context,
-        nextFadeInOutScreen(RoutingScreen.Login.route),
-        (route) => false,
-      );
-    }
-
-    useEffect(() {
-      WidgetsBinding.instance.addPostFrameCallback((_) async {
-        logoutState.when(
-          success: (event) async {
-            logoutManager.init();
-            goToLogin();
-          },
-          failure: (event) {
-            Toast.showError(context, event.errorMessage);
-          },
-        );
-      });
-      return null;
-    }, [logoutState]);
 
     return BaseScaffold(
       backgroundColor: getColorScheme(context).white,
@@ -63,111 +30,86 @@ class MyScreen extends HookConsumerWidget {
         content: getString(context).mainNavigationMenuMy,
       ),
       body: SafeArea(
-        child: Stack(
-          children: [
-            Column(
-              children: [
-                _UserProfile(
-                  imageUrl: meInfo?.profile?.imageUrl,
-                  role: meInfo?.business?.role,
-                  name: meInfo?.profile?.name,
-                  businessName: meInfo?.business?.title,
-                  email: meInfo?.email,
-                ),
-                DividerVertical(
-                  marginVertical: 0,
-                  dividerColor: getColorScheme(context).colorGray100,
-                ),
+        child: SingleChildScrollView(
+          physics: const AlwaysScrollableScrollPhysics(),
+          child: Column(
+            children: [
+              _UserProfile(
+                imageUrl: meInfo?.profile?.imageUrl,
+                role: meInfo?.business?.role,
+                name: meInfo?.profile?.name,
+                businessName: meInfo?.business?.title,
+                email: meInfo?.email,
+              ),
+              DividerVertical(
+                marginVertical: 0,
+                dividerColor: getColorScheme(context).colorGray100,
+              ),
 
-                const SizedBox(height: 8),
+              const SizedBox(height: 8),
 
-                // // 설정
-                // _MenuContent(
-                //   title: _SettingTitle(title: getString(context).myPageSettingItemTitle),
-                //   menuList: [
-                //     _SettingContent(
-                //       content: getString(context).myPageSettingSubmenuTeam,
-                //       onPressed: () {},
-                //     ),
-                //     _SettingContent(
-                //       content: getString(context).myPageSettingSubmenuRole,
-                //       onPressed: () {
-                //       },
-                //     ),
-                //     DividerVertical(
-                //       marginVertical: 8,
-                //       height: 1,
-                //       dividerColor: getColorScheme(context).colorGray100,
-                //     ),
-                //   ],
-                // ),
+              // 설정
+              _MenuContent(
+                title: _SettingTitle(title: getString(context).myPageSettingItemTitleSetting),
+                menuList: [
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuTeam,
+                    onPressed: () {},
+                  ),
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuRole,
+                    onPressed: () {},
+                  ),
+                  DividerVertical(
+                    marginVertical: 8,
+                    height: 1,
+                    dividerColor: getColorScheme(context).colorGray100,
+                  ),
+                ],
+              ),
 
-                // 사용자 설정
-                _MenuContent(
-                  title: _SettingTitle(title: getString(context).myPageSettingItemTitleUser),
-                  menuList: [
-                    _SettingContent(
-                      content: getString(context).myPageSettingSubmenuMy,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(RoutingScreen.MyProfile.route),
-                        );
-                      },
-                    ),
-                    // _SettingContent(
-                    //   content: getString(context).myPageSettingSubmenuBusiness,
-                    //   onPressed: () {},
-                    // ),
-                    DividerVertical(
-                      marginVertical: 8,
-                      height: 1,
-                      dividerColor: getColorScheme(context).colorGray100,
-                    ),
-                  ],
-                ),
-
-                // 가이드
-                _MenuContent(
-                  title: _SettingTitle(title: getString(context).myPageSettingSubmenuGuide),
-                  menuList: [
-                    _SettingContent(
-                      content: getString(context).myPageSettingSubmenuMenual,
-                      onPressed: () {
-                        Navigator.push(
-                          context,
-                          nextSlideHorizontalScreen(RoutingScreen.GuideList.route),
-                        );
-                      },
-                    ),
-                    DividerVertical(
-                      marginVertical: 8,
-                      height: 1,
-                      dividerColor: getColorScheme(context).colorGray100,
-                    ),
-                  ],
-                ),
-
-                Padding(
-                  padding: const EdgeInsets.only(top: 24.0),
-                  child: _SettingContent(
-                    content: getString(context).commonLogout,
+              // 사용자 설정
+              _MenuContent(
+                title: _SettingTitle(title: getString(context).myPageSettingItemTitleUser),
+                menuList: [
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuMy,
                     onPressed: () {
-                      CommonPopup.showPopup(
+                      Navigator.push(
                         context,
-                        child: PopupLogout(onClicked: (isCompleted) {
-                          if (isCompleted) {
-                            logoutManager.requestLogout();
-                          }
-                        }),
+                        nextSlideHorizontalScreen(RoutingScreen.MyAccount.route),
                       );
                     },
                   ),
-                ),
-              ],
-            ),
-            if (logoutState is Loading) const LoadingView()
-          ],
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuBusiness,
+                    onPressed: () {},
+                  ),
+                  DividerVertical(
+                    marginVertical: 8,
+                    height: 1,
+                    dividerColor: getColorScheme(context).colorGray100,
+                  ),
+                ],
+              ),
+
+              // 가이드
+              _MenuContent(
+                title: _SettingTitle(title: getString(context).myPageSettingSubmenuGuide),
+                menuList: [
+                  _SettingContent(
+                    content: getString(context).myPageSettingSubmenuMenual,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.GuideList.route),
+                      );
+                    },
+                  ),
+                ],
+              ),
+            ],
+          ),
         ),
       ),
     );

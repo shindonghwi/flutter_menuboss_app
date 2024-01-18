@@ -78,9 +78,26 @@
     "loginEmailInvalid": "Email address entered incorrectly",
     "loginPwInvalid": "a-z, A-Z, 0-9, 4 to 20 characters",
 
+    "myPageAccountAppbarTitle": "My account",
+    "myPageAccountMenuProfile": "Profile",
+    "myPageAccountMenuPassword": "Password",
+    "myPageAccountMenuLogout": "Log out",
+
     "myPageProfileAppbarTitle": "Profile",
     "myPageProfileDeleteAccount": "Delete account",
+    "myPageProfilePhoneHint": "000-000-0000",
+    "myPageProfileRole": "Role",
+
+    "myPagePasswordAppbarTitle": "Password",
+    "myPagePasswordNewPassword": "New Password",
+    "myPagePasswordConfirmNewPassword": "Confirm new Password",
+    "myPagePasswordConfirmError": "Your password doesn't match",
+
+    "myPageSettingItemTitleSetting": "Settings",
     "myPageSettingItemTitleUser": "User Settings",
+    "myPageSettingSubmenuTeam": "Team",
+    "myPageSettingSubmenuRole": "Roles",
+    "myPageSettingSubmenuBusiness": "Business",
     "myPageSettingSubmenuMy": "My account",
     "myPageSettingSubmenuGuide": "Guide",
     "myPageSettingSubmenuMenual": "Get started",
@@ -150,6 +167,7 @@
     "commonCanvas": "canvas",
     "commonFolder": "folder",
     "commonFullName": "Full name",
+    "commonPhoneNumber": "Phone number",
     "commonLogout": "Log out",
     "commonUpdated": "Updated",
     "commonConnectScreen": "Apply",
@@ -180,6 +198,8 @@
     "messageRemoveScheduleSuccess": "Schedule deleted successfully",
     "messageRemoveMediaSuccess": "Media file deleted successfully",
     "messageAddMediaInPlaylistSuccess": "Successfully Add Media to Playlist",
+    "messageProfileUpdateSuccess": "Profile has been modified",
+    "messagePasswordUpdateSuccess": "Password has benn modified",
 
     "countPages": "{count} pages",
     "@countPages":{
