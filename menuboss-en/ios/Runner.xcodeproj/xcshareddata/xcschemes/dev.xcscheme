@@ -70,15 +70,9 @@
             ReferencedContainer = "container:Runner.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
-      <CommandLineArguments>
-         <CommandLineArgument
-            argument = "-FIRDebugEnabled"
-            isEnabled = "NO">
-         </CommandLineArgument>
-      </CommandLineArguments>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Debug-prod"
+      buildConfiguration = "Debug-dev"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -95,10 +89,10 @@
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug-prod">
+      buildConfiguration = "Debug-dev">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release-dev"
+      buildConfiguration = "Debug-dev"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>
