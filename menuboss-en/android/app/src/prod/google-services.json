@@ -20,6 +20,10 @@
             "package_name": "com.orot.menuboss",
             "certificate_hash": "12a428916d04501ec8c10a4b915c85ba4b4ae326"
           }
+        },
+        {
+          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -63,6 +67,10 @@
             "package_name": "com.orot.menuboss.kr",
             "certificate_hash": "055f12ecf2444879d24d9803616f0f6818517808"
           }
+        },
+        {
+          "client_id": "1060430673784-afldr0ush52sbpl3idbk85f31hn97q9q.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [

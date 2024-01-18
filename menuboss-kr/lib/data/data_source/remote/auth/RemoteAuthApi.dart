@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart' as kakao;
+import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
@@ -40,7 +41,7 @@ class RemoteAuthApi {
       final packageInfo = await PackageInfo.fromPlatform();
 
       final redirectURL = Environment.buildType == BuildType.dev
-          ? "https://dev-app-api.menuboss.kr/v1/external/apple/callback"
+          ? "https://dev-app-api-kr.menuboss.live/v1/external/apple/callback"
           : "https://app-api.menuboss.kr/v1/external/apple/callback";
       final clientID = packageInfo.packageName.split(".").reversed.join(".");
 
@@ -112,20 +113,16 @@ class RemoteAuthApi {
         } else {
           // Google Auth Provider 를 통해 Credential 정보를 받아온다.
           final GoogleSignInAuthentication googleAuth = await googleUser.authentication;
-          final OAuthCredential credential = GoogleAuthProvider.credential(
-            accessToken: googleAuth.accessToken,
-            idToken: googleAuth.idToken,
-          );
-          debugPrint("doGoogleLogin accessToken: ${googleAuth.accessToken}");
-          debugPrint("doGoogleLogin idToken: ${googleAuth.idToken}");
 
-          // 위에서 가져온 Credential 정보로 Firebase에 사용자 인증을한다.
-          final UserCredential userCredential = await firebaseAuth.signInWithCredential(credential);
-          final User? user = userCredential.user;
-
-          if (user != null) {
+          if (CollectionUtil.isNullEmptyFromString(googleAuth.idToken)){
+            return ApiResponse<SocialLoginModel>(
+              status: 404,
+              message: "사용자 정보를 찾을 수 없습니다",
+              data: null,
+            );
+          }else{
             return await googleUser.authentication.then(
-              (value) {
+                  (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
                   message: "",
@@ -135,12 +132,6 @@ class RemoteAuthApi {
                   ),
                 );
               },
-            );
-          } else {
-            return ApiResponse<SocialLoginModel>(
-              status: 404,
-              message: "사용자 정보를 찾을 수 없습니다",
-              data: null,
             );
           }
         }
@@ -201,6 +192,7 @@ class RemoteAuthApi {
               final res = await kakao.UserApi.instance.loginWithKakaoAccount();
               return successKakaoLogin(res.accessToken.toString());
             } catch (error) {
+              var key = await KakaoSdk.origin;
               return failureKakaoLogin("사용자 정보를 찾을 수 없습니다");
             }
           }
