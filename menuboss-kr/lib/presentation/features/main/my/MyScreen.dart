@@ -5,23 +5,17 @@ import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss/presentation/features/login/provider/MeInfoProvider.dart';
-import 'package:menuboss/presentation/features/main/my/provider/LogoutProvider.dart';
 import 'package:menuboss_common/components/appbar/TopBarTitle.dart';
 import 'package:menuboss_common/components/divider/DividerVertical.dart';
 import 'package:menuboss_common/components/loader/LoadProfile.dart';
 import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
-import 'package:menuboss_common/components/popup/CommonPopup.dart';
-import 'package:menuboss_common/components/popup/PopupLogout.dart';
-import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
 import 'package:menuboss_common/components/utils/ClickableScale.dart';
-import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
-import 'package:menuboss_common/utils/UiState.dart';
 
 class MyScreen extends HookConsumerWidget {
   const MyScreen({super.key});
@@ -60,11 +54,21 @@ class MyScreen extends HookConsumerWidget {
                 menuList: [
                   _SettingContent(
                     content: getString(context).myPageSettingSubmenuTeam,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.TeamList.route),
+                      );
+                    },
                   ),
                   _SettingContent(
                     content: getString(context).myPageSettingSubmenuRole,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.RoleList.route),
+                      );
+                    },
                   ),
                   DividerVertical(
                     marginVertical: 8,
@@ -89,7 +93,12 @@ class MyScreen extends HookConsumerWidget {
                   ),
                   _SettingContent(
                     content: getString(context).myPageSettingSubmenuBusiness,
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        nextSlideHorizontalScreen(RoutingScreen.MyBusiness.route),
+                      );
+                    },
                   ),
                   DividerVertical(
                     marginVertical: 8,
@@ -171,8 +180,8 @@ class _UserProfile extends HookWidget {
                           child: Text(
                             role.toString(),
                             style: getTextTheme(context).c2m.copyWith(
-                              color: getColorScheme(context).white,
-                            ),
+                                  color: getColorScheme(context).white,
+                                ),
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
@@ -181,8 +190,8 @@ class _UserProfile extends HookWidget {
                       Text(
                         name.toString(),
                         style: getTextTheme(context).b2m.copyWith(
-                          color: getColorScheme(context).colorGray900,
-                        ),
+                              color: getColorScheme(context).colorGray900,
+                            ),
                       ),
                   ],
                 ),
@@ -193,15 +202,15 @@ class _UserProfile extends HookWidget {
                       Text(
                         businessName.toString(),
                         style: getTextTheme(context).c1m.copyWith(
-                          color: getColorScheme(context).colorGray700,
-                        ),
+                              color: getColorScheme(context).colorGray700,
+                            ),
                       ),
                     if (!CollectionUtil.isNullEmptyFromString(email))
                       Text(
                         email.toString(),
                         style: getTextTheme(context).c1m.copyWith(
-                          color: getColorScheme(context).colorGray700,
-                        ),
+                              color: getColorScheme(context).colorGray700,
+                            ),
                       ),
                   ],
                 ),
@@ -253,8 +262,8 @@ class _SettingTitle extends StatelessWidget {
       child: Text(
         title,
         style: getTextTheme(context).c1sb.copyWith(
-          color: getColorScheme(context).colorGray700,
-        ),
+              color: getColorScheme(context).colorGray700,
+            ),
         textAlign: TextAlign.start,
       ),
     );
@@ -285,8 +294,8 @@ class _SettingContent extends StatelessWidget {
             Text(
               content,
               style: getTextTheme(context).b3m.copyWith(
-                color: getColorScheme(context).colorGray900,
-              ),
+                    color: getColorScheme(context).colorGray900,
+                  ),
               textAlign: TextAlign.start,
             ),
             if (onPressed != null)

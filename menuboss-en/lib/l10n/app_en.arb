@@ -102,6 +102,16 @@
     "myPageSettingSubmenuGuide": "Guide",
     "myPageSettingSubmenuMenual": "Get started",
 
+    "myBusinessAppbarTitle": "Business",
+
+    "roleListAppbarTitle": "Roles",
+
+    "roleCreateAppbarTitle": "Create Role",
+
+    "teamListAppbarTitle": "Team",
+
+    "teamCreateAppbarTitle": "Create team member",
+
     "mediaContentTitle": "Contents",
     "mediaContentTabMedia": "Media",
     "mediaContentTabCanvas": "Canvas",

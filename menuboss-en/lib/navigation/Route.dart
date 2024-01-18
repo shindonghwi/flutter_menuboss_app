@@ -17,8 +17,13 @@ import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/media/in_folder/MediaInFolderScreen.dart';
 import 'package:menuboss/presentation/features/main/my/account/MyAccountScreen.dart';
+import 'package:menuboss/presentation/features/main/my/business/MyBusinessScreen.dart';
 import 'package:menuboss/presentation/features/main/my/password/MyPasswordScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
+import 'package:menuboss/presentation/features/main/my/role/create/RoleCreateScreen.dart';
+import 'package:menuboss/presentation/features/main/my/role/list/RoleListScreen.dart';
+import 'package:menuboss/presentation/features/main/my/team/create/TeamCreateScreen.dart';
+import 'package:menuboss/presentation/features/main/my/team/list/TeamListScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
 import 'package:menuboss/presentation/features/preview/PreviewPlaylistScreen.dart';
@@ -59,6 +64,11 @@ enum RoutingScreen {
   MyProfile(route: "/my/profile"), // 프로필 정보
   MyPassword(route: "/my/password"), // 내 비밀번호
   MyAccount(route: "/my/account"), // 내 계정 정보
+  MyBusiness(route: "/my/business"), // 내 비즈니스 정보
+  TeamList(route: "/my/team/list"), // 팀 목록
+  TeamCreate(route: "/my/team/create"), // 팀 생성
+  RoleList(route: "/my/role/list"), // 역할 목록
+  RoleCreate(route: "/my/role/create"), // 역할 생성
   GuideList(route: "/my/guide/list"), // 사용방법 목록
   GuideDetail(route: "/my/guide/detail"), // 사용방법 상세
   DeleteAccount(route: "/delete/account"); // 계정 삭제
@@ -91,6 +101,11 @@ enum RoutingScreen {
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
       RoutingScreen.MyAccount.route: (context) => const MyAccountScreen(),
+      RoutingScreen.MyBusiness.route: (context) => const MyBusinessScreen(),
+      RoutingScreen.TeamList.route: (context) => const TeamListScreen(),
+      RoutingScreen.TeamCreate.route: (context) => const TeamCreateScreen(),
+      RoutingScreen.RoleList.route: (context) => const RoleListScreen(),
+      RoutingScreen.RoleCreate.route: (context) => const RoleCreateScreen(),
       RoutingScreen.MyPassword.route: (context) => const MyPasswordScreen(),
       RoutingScreen.GuideList.route: (context) => const GuideListScreen(),
       RoutingScreen.GuideDetail.route: (context) => const GuideDetailScreen(),
@@ -152,6 +167,16 @@ enum RoutingScreen {
       return const MyPasswordScreen();
     } else if (route == RoutingScreen.MyAccount.route) {
       return const MyAccountScreen();
+    } else if (route == RoutingScreen.MyBusiness.route) {
+      return const MyBusinessScreen();
+    } else if (route == RoutingScreen.TeamList.route) {
+      return const TeamListScreen();
+    } else if (route == RoutingScreen.TeamCreate.route) {
+      return const TeamCreateScreen();
+    } else if (route == RoutingScreen.RoleList.route) {
+      return const RoleListScreen();
+    } else if (route == RoutingScreen.RoleCreate.route) {
+      return const RoleCreateScreen();
     } else if (route == RoutingScreen.GuideList.route) {
       return const GuideListScreen();
     } else if (route == RoutingScreen.GuideDetail.route) {

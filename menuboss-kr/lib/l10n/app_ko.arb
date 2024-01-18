@@ -78,7 +78,7 @@
     "loginEmailInvalid": "올바른 이메일을 입력해주세요",
     "loginPwInvalid": "a-z, A-Z, 0-9, 4~20 자리",
 
-    "myPageAccountAppbarTitle": "내 정",
+    "myPageAccountAppbarTitle": "내 정보",
     "myPageAccountMenuProfile": "프로필",
     "myPageAccountMenuPassword": "비밀번호",
     "myPageAccountMenuLogout": "로그아웃",
@@ -98,10 +98,20 @@
     "myPageSettingItemTitleUser": "사용자 설정",
     "myPageSettingSubmenuTeam": "구성원",
     "myPageSettingSubmenuRole": "역할",
-    "myPageSettingSubmenuBusiness": "사업",
+    "myPageSettingSubmenuBusiness": "사업자",
     "myPageSettingSubmenuMy": "내 정보",
     "myPageSettingSubmenuGuide": "가이드",
     "myPageSettingSubmenuMenual": "사용방법",
+
+    "myBusinessAppbarTitle": "사업자",
+
+    "roleListAppbarTitle": "역할",
+
+    "roleCreateAppbarTitle": "역할 생성",
+
+    "teamListAppbarTitle": "구성원",
+
+    "teamCreateAppbarTitle": "구성원 생성",
 
     "mediaContentTitle": "콘텐츠",
     "mediaContentTabMedia": "미디어",
