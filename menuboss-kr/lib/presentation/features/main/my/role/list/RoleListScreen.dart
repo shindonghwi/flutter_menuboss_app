@@ -4,6 +4,7 @@ import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
+import 'package:menuboss_common/components/view_state/EmptyView.dart';
 
 class RoleListScreen extends HookWidget {
   const RoleListScreen
@@ -16,7 +17,10 @@ class RoleListScreen extends HookWidget {
         content: getString(context).roleListAppbarTitle,
         onBack: () => popPageWrapper(context: context),
       ),
-      body: Container(),
+      body: EmptyView(
+        type: BlankMessageType.ADD_ROLE,
+        onPressed: () => {},
+      ),
     );
   }
 }

@@ -7,7 +7,7 @@ import 'package:menuboss_common/ui/typography.dart';
 import '../../utils/Common.dart';
 import '../utils/ClickableScale.dart';
 
-enum ModifyType { ShowNameToScreen, Rename, Delete }
+enum ModifyType { ShowNameToScreen, Edit, Rename, Delete }
 
 class BottomSheetModifySelector extends HookWidget {
   final List<ModifyType> items;
@@ -25,6 +25,7 @@ class BottomSheetModifySelector extends HookWidget {
 
     final Map<ModifyType, String> modifyDescriptions = {
       ModifyType.ShowNameToScreen: isKr ? '화면 이름 표시' : 'Display screen name',
+      ModifyType.Edit: isKr ? '수정' : 'Edit',
       ModifyType.Rename: isKr ? '이름 변경' : 'Rename',
       ModifyType.Delete: isKr ? '삭제' : 'Delete',
     };
@@ -37,6 +38,8 @@ class BottomSheetModifySelector extends HookWidget {
       switch (type) {
         case ModifyType.ShowNameToScreen:
           return "assets/imgs/icon_display_screen.svg";
+        case ModifyType.Edit:
+          return "assets/imgs/icon_edit.svg";
         case ModifyType.Rename:
           return "assets/imgs/icon_rename.svg";
         case ModifyType.Delete:
@@ -49,6 +52,8 @@ class BottomSheetModifySelector extends HookWidget {
     Color? getIconColor(ModifyType type) {
       switch (type) {
         case ModifyType.ShowNameToScreen:
+          return getColorScheme(context).colorGray900;
+        case ModifyType.Edit:
           return getColorScheme(context).colorGray900;
         case ModifyType.Rename:
           return getColorScheme(context).colorGray900;
