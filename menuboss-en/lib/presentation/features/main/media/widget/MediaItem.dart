@@ -76,7 +76,7 @@ class MediaItem extends HookWidget {
           child: LoadImage(
             tag: item.mediaId.toString(),
             url: item.property?.imageUrl,
-            type: ImagePlaceholderType.Small,
+            type: ImagePlaceholderType.Size_60,
           ),
         );
         break;

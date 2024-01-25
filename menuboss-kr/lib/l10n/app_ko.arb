@@ -107,7 +107,7 @@
     "myBusinessBusinessNameTitle": "사업자 이름",
     "myBusinessBusinessNameHint": "사업자 이름을 입력해주세요",
     "myBusinessAddressDetailHint": "상세주소를 입력해주세요",
-    "myBusinessPhoneHint": "000-0000-0000",
+    "myBusinessPhoneHint": "010-0000-0000",
 
     "roleListAppbarTitle": "역할",
 
@@ -116,6 +116,11 @@
     "teamListAppbarTitle": "구성원",
 
     "teamCreateAppbarTitle": "구성원 생성",
+    "teamCreateEmailHint": "이메일을 입력해주세요",
+    "teamCreateNameHint": "이름을 입력해주세요",
+    "teamCreatePasswordHint": "비밀번호를 입력해주세요",
+    "teamCreatePhoneHint": "010-0000-0000",
+    "teamCreateRoleSelect": "역할 선택",
 
     "mediaContentTitle": "콘텐츠",
     "mediaContentTabMedia": "미디어",

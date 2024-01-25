@@ -42,7 +42,7 @@ class SelectMediaItem extends HookConsumerWidget {
         height: 60,
         child: LoadImage(
           url: item.property?.imageUrl,
-          type: ImagePlaceholderType.Small,
+          type: ImagePlaceholderType.Size_60,
         ),
       );
     }

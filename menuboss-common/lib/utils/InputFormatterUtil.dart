@@ -12,15 +12,18 @@ class InputFormatterUtil{
   /// @author: 2024/01/18 10:00 AM
   static TextInputFormatter usPhoneNumber() {
     return TextInputFormatter.withFunction((oldValue, newValue) {
-      String newText = newValue.text;
-      if (newValue.text.length > oldValue.text.length) {
-        if (newText.length == 4 || newText.length == 8) {
-          newText = '${newText.substring(0, newText.length - 1)}-${newText.substring(newText.length - 1)}';
-        }
-        if (newText.length > 12) {
-          newText = newText.substring(0, 12);
-        }
+      String newText = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+      if (newText.length > 3 && newText.length <= 6) {
+        newText = '${newText.substring(0, 3)}-${newText.substring(3)}';
+      } else if (newText.length > 6) {
+        newText = '${newText.substring(0, 3)}-${newText.substring(3, 6)}-${newText.substring(6)}';
       }
+
+      if (newText.length > 12) {
+        newText = newText.substring(0, 12);
+      }
+
       return TextEditingValue(
         text: newText,
         selection: TextSelection.collapsed(offset: newText.length),
@@ -32,15 +35,18 @@ class InputFormatterUtil{
   /// @author: 2024/01/18 10:00 AM
   static TextInputFormatter krPhoneNumber() {
     return TextInputFormatter.withFunction((oldValue, newValue) {
-      String newText = newValue.text;
-      if (newValue.text.length > oldValue.text.length) {
-        if (newText.length == 4 || newText.length == 9) {
-          newText = '${newText.substring(0, newText.length - 1)}-${newText.substring(newText.length - 1)}';
-        }
-        if (newText.length > 13) {
-          newText = newText.substring(0, 13);
-        }
+      String newText = newValue.text.replaceAll(RegExp(r'\D'), '');
+
+      if (newText.length > 3 && newText.length <= 7) {
+        newText = '${newText.substring(0, 3)}-${newText.substring(3)}';
+      } else if (newText.length > 7) {
+        newText = '${newText.substring(0, 3)}-${newText.substring(3, 7)}-${newText.substring(7)}';
       }
+
+      if (newText.length > 13) {
+        newText = newText.substring(0, 13);
+      }
+
       return TextEditingValue(
         text: newText,
         selection: TextSelection.collapsed(offset: newText.length),

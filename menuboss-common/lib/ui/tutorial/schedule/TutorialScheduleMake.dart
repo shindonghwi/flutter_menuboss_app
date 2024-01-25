@@ -301,7 +301,7 @@ class _ScheduleContentItem extends HookWidget {
               height: 140,
               child: LoadImage(
                 url: "",
-                type: ImagePlaceholderType.Large,
+                type: ImagePlaceholderType.Size_140,
               ),
             ),
           ),
