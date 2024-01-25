@@ -104,6 +104,10 @@
     "myPageSettingSubmenuMenual": "사용방법",
 
     "myBusinessAppbarTitle": "사업자",
+    "myBusinessBusinessNameTitle": "사업자 이름",
+    "myBusinessBusinessNameHint": "사업자 이름을 입력해주세요",
+    "myBusinessAddressDetailHint": "상세주소를 입력해주세요",
+    "myBusinessPhoneHint": "000-0000-0000",
 
     "roleListAppbarTitle": "역할",
 
@@ -194,6 +198,9 @@
     "commonMoveHere": "여기로 이동",
     "commonMove": "이동",
     "commonDelete": "삭제",
+    "commonAddress": "주소",
+    "commonSearch": "검색",
+    "commonPostalCode": "우편번호",
     "commonPhoneNumber": "휴대폰 번호",
 
     "blankMessageContentAddContent": "콘텐츠 추가",
