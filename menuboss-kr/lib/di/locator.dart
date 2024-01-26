@@ -45,6 +45,7 @@ import 'package:menuboss/domain/usecases/remote/auth/PostKakaoSignInUseCase.dart
 import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetBusinessMembersUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/GetRolesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/canvas/GetCanvasesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/DelDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
@@ -116,6 +117,7 @@ void initServiceLocator() {
 
   // business
   GetIt.instance.registerLazySingleton<GetBusinessMembersUseCase>(() => GetBusinessMembersUseCase());
+  GetIt.instance.registerLazySingleton<GetRolesUseCase>(() => GetRolesUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());

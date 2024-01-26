@@ -112,6 +112,8 @@
     "roleListAppbarTitle": "역할",
 
     "roleCreateAppbarTitle": "역할 생성",
+    "roleCreateName": "역할 이름",
+    "roleCreateNameHint": "역할 이름을 입력해주세요",
 
     "teamListAppbarTitle": "구성원",
 
@@ -207,6 +209,11 @@
     "commonSearch": "검색",
     "commonPostalCode": "우편번호",
     "commonPhoneNumber": "휴대폰 번호",
+    "commonPermission": "권한",
+    "commonPermissionRead": "보기",
+    "commonPermissionCreate": "등록",
+    "commonPermissionEdit": "수정",
+    "commonPermissionDelete": "삭제",
 
     "blankMessageContentAddContent": "콘텐츠 추가",
 
