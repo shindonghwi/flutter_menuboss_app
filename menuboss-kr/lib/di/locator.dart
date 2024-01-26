@@ -44,6 +44,8 @@ import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dar
 import 'package:menuboss/domain/usecases/remote/auth/PostKakaoSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/DelMemberUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/DelRoleUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetBusinessMembersUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetRolesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/PatchMemberUseCase.dart';
@@ -133,6 +135,8 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchMemberUseCase>(() => PatchMemberUseCase());
   GetIt.instance.registerLazySingleton<PostMemberUseCase>(() => PostMemberUseCase());
   GetIt.instance.registerLazySingleton<PostRoleUseCase>(() => PostRoleUseCase());
+  GetIt.instance.registerLazySingleton<DelRoleUseCase>(() => DelRoleUseCase());
+  GetIt.instance.registerLazySingleton<DelMemberUseCase>(() => DelMemberUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());

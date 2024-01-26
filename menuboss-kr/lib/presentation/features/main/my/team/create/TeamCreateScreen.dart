@@ -23,6 +23,12 @@ class TeamCreateScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    final emailState = useTextEditingController(text: item?.email ?? "");
+    final nameState = useTextEditingController(text: item?.name ?? "");
+    final passwordState = useTextEditingController(text: "");
+    final phoneState = useTextEditingController(text: item?.phone ?? "");
+
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
         content: item == null
@@ -36,23 +42,23 @@ class TeamCreateScreen extends HookWidget {
           children: [
             _Email(
               initValue: item?.email ?? "",
-              onChanged: (email) => {},
+              onChanged: (email) => emailState.text = email,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _Name(
               initValue: item?.name ?? "",
-              onChanged: (name) => {},
+              onChanged: (name) => nameState.text = name,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _Password(
-              onChanged: (password) => {},
+              onChanged: (password) => passwordState.text = password,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _Phone(
               initValue: item?.phone ?? "",
-              onChanged: (phone) => {},
+              onChanged: (phone) => phoneState.text = phone,
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             _Role(
               onChanged: (phone) => {},
             ),
@@ -66,7 +72,9 @@ class TeamCreateScreen extends HookWidget {
           child: PrimaryFilledButton.largeRound8(
             content: getString(context).commonSave,
             isActivated: true,
-            onPressed: () => {},
+            onPressed: () {
+
+            },
           ),
         ),
       ),

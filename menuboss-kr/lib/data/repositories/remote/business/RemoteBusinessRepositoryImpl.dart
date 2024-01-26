@@ -43,4 +43,14 @@ class RemoteBusinessRepositoryImpl implements RemoteBusinessRepository {
   Future<ApiResponse<void>> registerRole(RequestRoleModel model) {
     return remoteBusinessApi.registerRole(model);
   }
+
+  @override
+  Future<ApiResponse<void>> delMember(int memberId) {
+    return remoteBusinessApi.delMember(memberId);
+  }
+
+  @override
+  Future<ApiResponse<void>> delRole(int roleId) {
+    return remoteBusinessApi.delRole(roleId);
+  }
 }

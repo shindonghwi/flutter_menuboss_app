@@ -97,4 +97,12 @@ class StringUtil {
       return phoneNumber;
     }
   }
+
+  /// 문자열에서 숫자만 찾아서 반환하기.
+  static String extractNumbers(String str) {
+    final RegExp regExp = RegExp(r'\d');
+    Iterable<Match> matches = regExp.allMatches(str);
+    String numbers = matches.map((m) => m.group(0)).join('');
+    return numbers;
+  }
 }

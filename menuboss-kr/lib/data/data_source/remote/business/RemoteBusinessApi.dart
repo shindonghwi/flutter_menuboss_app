@@ -190,4 +190,60 @@ class RemoteBusinessApi {
       );
     }
   }
+
+  /// 구성원 삭제
+  Future<ApiResponse<void>> delMember(int memberId) async {
+    try {
+      final response = await Service.deleteApi(
+        type: ServiceType.Business,
+        endPoint: "members/$memberId",
+        jsonBody: null,
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
+
+  /// 역할 수정
+  Future<ApiResponse<void>> delRole(int roleId) async {
+    try {
+      final response = await Service.deleteApi(
+        type: ServiceType.Business,
+        endPoint: "roles/$roleId",
+        jsonBody: null,
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
 }

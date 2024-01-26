@@ -18,6 +18,9 @@ abstract class RemoteBusinessRepository {
   /// 구성원 수정
   Future<ApiResponse<void>> patchMember(RequestTeamMemberModel model, int memberId);
 
+  /// 구성원 삭제
+  Future<ApiResponse<void>> delMember(int memberId);
+
   /// 역할 목록 조회
   Future<ApiListResponse<List<ResponseRoleModel>>> getRoles();
 
@@ -26,4 +29,7 @@ abstract class RemoteBusinessRepository {
 
   /// 역할 수정
   Future<ApiResponse<void>> patchRole(RequestRoleModel model, int roleId);
+
+  /// 역할 삭제
+  Future<ApiResponse<void>> delRole(int roleId);
 }
