@@ -16,6 +16,8 @@ class TeamMemberListNotifier extends StateNotifier<UIState<List<ResponseBusiness
   final GetBusinessMembersUseCase _getBusinessMembersUseCase =
       GetIt.instance<GetBusinessMembersUseCase>();
 
+  final currentMemberList = <ResponseBusinessMemberModel>[];
+
   void requestGetTeamMember({int delay = 0}) async {
     state = Loading();
 
@@ -23,11 +25,18 @@ class TeamMemberListNotifier extends StateNotifier<UIState<List<ResponseBusiness
 
     _getBusinessMembersUseCase.call().then((response) {
       if (response.status == 200) {
-        state = Success(response.list?.map((e) => e).toList() ?? []);
+        currentMemberList.clear();
+        currentMemberList.addAll(response.list ?? []);
+        state = Success(currentMemberList);
       } else {
         state = Failure(response.message);
       }
     });
+  }
+
+  void removeMemberById(int memberId) async {
+    currentMemberList.removeWhere((element) => element.memberId == memberId);
+    state = Success([...currentMemberList]);
   }
 
   void init() {

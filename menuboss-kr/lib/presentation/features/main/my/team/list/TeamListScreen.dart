@@ -17,6 +17,7 @@ import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
+import 'provider/DelMemberProvider.dart';
 import 'provider/TeamMemeberListProvider.dart';
 import 'widget/TeamMemberItem.dart';
 
@@ -25,6 +26,7 @@ class TeamListScreen extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final delMemberState = ref.watch(delMemberProvider);
     final teamMemberState = ref.watch(teamMemberListProvider);
     final teamMemberManager = ref.read(teamMemberListProvider.notifier);
 
@@ -52,6 +54,23 @@ class TeamListScreen extends HookConsumerWidget {
       return null;
     }, [teamMemberState]);
 
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          delMemberState.when(
+            success: (event) {
+              Toast.showSuccess(context, getString(context).messageRemoveMemberSuccess);
+              teamMemberManager.removeMemberById(int.tryParse("${event.value}") ?? -1);
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [delMemberState]);
+
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
         content: getString(context).teamListAppbarTitle,
@@ -64,7 +83,7 @@ class TeamListScreen extends HookConsumerWidget {
               FailView(onPressed: () => teamMemberManager.requestGetTeamMember())
             else if (teamMemberState is Success<List<ResponseBusinessMemberModel>>)
               _TeamMemberContentList(items: teamMemberState.value),
-            if (teamMemberState is Loading) const LoadingView(),
+            if (teamMemberState is Loading || delMemberState is Loading) const LoadingView(),
           ],
         ),
       ),
@@ -83,6 +102,7 @@ class _TeamMemberContentList extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final teamMemberManager = ref.read(teamMemberListProvider.notifier);
+    final delMemberManager = ref.read(delMemberProvider.notifier);
 
     void goToCreateTeamMember({ResponseBusinessMemberModel? item}) async {
       Navigator.push(
@@ -109,7 +129,9 @@ class _TeamMemberContentList extends HookConsumerWidget {
                   itemBuilder: (context, index) {
                     final item = items[index];
                     return ClickableScale(
-                      child: TeamMemberItem(item: item),
+                      child: TeamMemberItem(
+                          item: item,
+                          onDeleted: () => delMemberManager.removeMember(item.memberId)),
                       onPressed: () => goToCreateTeamMember(item: item),
                     );
                   },

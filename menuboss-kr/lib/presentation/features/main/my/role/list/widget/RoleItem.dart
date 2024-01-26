@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:menuboss/data/models/business/ResponseBusinessMemberModel.dart';
 import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
+import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss_common/components/bottom_sheet/BottomSheetModifySelector.dart';
 import 'package:menuboss_common/components/commons/MoreButton.dart';
-import 'package:menuboss_common/components/loader/LoadImage.dart';
-import 'package:menuboss_common/components/placeholder/PlaceholderType.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
@@ -20,6 +19,16 @@ class RoleItem extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
+    void goToCreateRole({ResponseRoleModel? item}) async {
+      Navigator.push(
+        context,
+        nextSlideHorizontalScreen(
+          RoutingScreen.RoleCreate.route,
+          parameter: item,
+        ),
+      );
+    }
+
     return Container(
       width: double.infinity,
       height: 72,
@@ -55,8 +64,9 @@ class RoleItem extends HookWidget {
           MoreButton(
             items: const [ModifyType.Edit, ModifyType.Delete],
             onSelected: (type, text) {
-              if (type == ModifyType.Delete) {
-              } else if (type == ModifyType.Rename) {}
+              if (type == ModifyType.Edit) {
+                goToCreateRole(item: item);
+              } else if (type == ModifyType.Delete) {}
             },
           )
         ],
