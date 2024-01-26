@@ -23,13 +23,11 @@ class TeamCreateScreen extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final _emailState = useState(item?.email ?? "");
-    // final _nameController = useState(item?.name ?? "");
-    // final _phoneController = useState(item?.phone ?? "");
-
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: getString(context).teamCreateAppbarTitle,
+        content: item == null
+            ? getString(context).teamCreateAppbarCreateTitle
+            : getString(context).teamCreateAppbarEditTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: Container(

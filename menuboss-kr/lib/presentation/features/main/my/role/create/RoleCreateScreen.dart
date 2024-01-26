@@ -47,7 +47,9 @@ class RoleCreateScreen extends HookWidget {
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
-        content: getString(context).roleCreateAppbarTitle,
+        content: item == null
+            ? getString(context).roleCreateAppbarCreateTitle
+            : getString(context).roleCreateAppbarEditTitle,
         onBack: () => popPageWrapper(context: context),
       ),
       body: Container(

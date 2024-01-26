@@ -111,13 +111,15 @@
 
     "roleListAppbarTitle": "역할",
 
-    "roleCreateAppbarTitle": "역할 생성",
+    "roleCreateAppbarCreateTitle": "역할 생성",
+    "roleCreateAppbarEditTitle": "역할 수정",
     "roleCreateName": "역할 이름",
     "roleCreateNameHint": "역할 이름을 입력해주세요",
 
     "teamListAppbarTitle": "구성원",
 
-    "teamCreateAppbarTitle": "구성원 생성",
+    "teamCreateAppbarCreateTitle": "구성원 생성",
+    "teamCreateAppbarEditTitle": "구성원 수정",
     "teamCreateEmailHint": "이메일을 입력해주세요",
     "teamCreateNameHint": "이름을 입력해주세요",
     "teamCreatePasswordHint": "비밀번호를 입력해주세요",
