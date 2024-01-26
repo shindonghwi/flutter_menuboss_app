@@ -46,6 +46,10 @@ import 'package:menuboss/domain/usecases/remote/auth/PostLogoutUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetBusinessMembersUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetRolesUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/PatchMemberUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/PatchRoleUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/PostMemberUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/PostRoleUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/canvas/GetCanvasesUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/DelDeviceUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/device/GetDeivcesUseCase.dart';
@@ -90,12 +94,17 @@ void initServiceLocator() {
   /// -------
 
   // app
-  GetIt.instance.registerLazySingleton<GetLoginAccessTokenUseCase>(() => GetLoginAccessTokenUseCase());
-  GetIt.instance.registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
-  GetIt.instance.registerLazySingleton<GetMediaFilterTypeUseCase>(() => GetMediaFilterTypeUseCase());
-  GetIt.instance.registerLazySingleton<PostMediaFilterTypeUseCase>(() => PostMediaFilterTypeUseCase());
+  GetIt.instance
+      .registerLazySingleton<GetLoginAccessTokenUseCase>(() => GetLoginAccessTokenUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
+  GetIt.instance
+      .registerLazySingleton<GetMediaFilterTypeUseCase>(() => GetMediaFilterTypeUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostMediaFilterTypeUseCase>(() => PostMediaFilterTypeUseCase());
   GetIt.instance.registerLazySingleton<GetTutorialViewedUseCase>(() => GetTutorialViewedUseCase());
-  GetIt.instance.registerLazySingleton<PostTutorialViewedUseCase>(() => PostTutorialViewedUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostTutorialViewedUseCase>(() => PostTutorialViewedUseCase());
 
   // auth
   GetIt.instance.registerLazySingleton<PostAppleSignInUseCase>(() => PostAppleSignInUseCase());
@@ -112,19 +121,26 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchMePasswordUseCase>(() => PatchMePasswordUseCase());
   GetIt.instance.registerLazySingleton<PostMeJoinUseCase>(() => PostMeJoinUseCase());
   GetIt.instance.registerLazySingleton<PostMeLeaveUseCase>(() => PostMeLeaveUseCase());
-  GetIt.instance.registerLazySingleton<PatchMeProfileImageUseCase>(() => PatchMeProfileImageUseCase());
+  GetIt.instance
+      .registerLazySingleton<PatchMeProfileImageUseCase>(() => PatchMeProfileImageUseCase());
   GetIt.instance.registerLazySingleton<PostMeSocialJoinUseCase>(() => PostMeSocialJoinUseCase());
 
   // business
-  GetIt.instance.registerLazySingleton<GetBusinessMembersUseCase>(() => GetBusinessMembersUseCase());
+  GetIt.instance
+      .registerLazySingleton<GetBusinessMembersUseCase>(() => GetBusinessMembersUseCase());
   GetIt.instance.registerLazySingleton<GetRolesUseCase>(() => GetRolesUseCase());
+  GetIt.instance.registerLazySingleton<PatchRoleUseCase>(() => PatchRoleUseCase());
+  GetIt.instance.registerLazySingleton<PatchMemberUseCase>(() => PatchMemberUseCase());
+  GetIt.instance.registerLazySingleton<PostMemberUseCase>(() => PostMemberUseCase());
+  GetIt.instance.registerLazySingleton<PostRoleUseCase>(() => PostRoleUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());
   GetIt.instance.registerLazySingleton<PostDeviceUseCase>(() => PostDeviceUseCase());
   GetIt.instance.registerLazySingleton<DelDeviceUseCase>(() => DelDeviceUseCase());
   GetIt.instance.registerLazySingleton<PatchDeviceNameUseCase>(() => PatchDeviceNameUseCase());
-  GetIt.instance.registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
   GetIt.instance.registerLazySingleton<PostShowNameEventUseCase>(() => PostShowNameEventUseCase());
 
   // playlist
@@ -144,7 +160,8 @@ void initServiceLocator() {
   // media
   GetIt.instance.registerLazySingleton<GetMediasUseCase>(() => GetMediasUseCase());
   GetIt.instance.registerLazySingleton<GetMediaUseCase>(() => GetMediaUseCase());
-  GetIt.instance.registerLazySingleton<PostCreateMediaFolderUseCase>(() => PostCreateMediaFolderUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostCreateMediaFolderUseCase>(() => PostCreateMediaFolderUseCase());
   GetIt.instance.registerLazySingleton<PatchMediaNameUseCase>(() => PatchMediaNameUseCase());
   GetIt.instance.registerLazySingleton<PostMediaMoveUseCase>(() => PostMediaMoveUseCase());
   GetIt.instance.registerLazySingleton<DelMediaUseCase>(() => DelMediaUseCase());
@@ -153,12 +170,16 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<GetCanvasesUseCase>(() => GetCanvasesUseCase());
 
   // file
-  GetIt.instance.registerLazySingleton<PostUploadMediaImageUseCase>(() => PostUploadMediaImageUseCase());
-  GetIt.instance.registerLazySingleton<PostUploadMediaVideoUseCase>(() => PostUploadMediaVideoUseCase());
-  GetIt.instance.registerLazySingleton<PostUploadProfileImageUseCase>(() => PostUploadProfileImageUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostUploadMediaImageUseCase>(() => PostUploadMediaImageUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostUploadMediaVideoUseCase>(() => PostUploadMediaVideoUseCase());
+  GetIt.instance
+      .registerLazySingleton<PostUploadProfileImageUseCase>(() => PostUploadProfileImageUseCase());
 
   // validation
-  GetIt.instance.registerLazySingleton<PostValidationSocialLoginUseCase>(() => PostValidationSocialLoginUseCase());
+  GetIt.instance.registerLazySingleton<PostValidationSocialLoginUseCase>(
+      () => PostValidationSocialLoginUseCase());
 
   /// -------
   /// repository
@@ -167,13 +188,17 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<RemoteAuthRepository>(() => RemoteAuthRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteMeRepository>(() => RemoteMeRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteDeviceRepository>(() => RemoteDeviceRepositoryImpl());
-  GetIt.instance.registerLazySingleton<RemotePlaylistRepository>(() => RemotePlaylistRepositoryImpl());
+  GetIt.instance
+      .registerLazySingleton<RemotePlaylistRepository>(() => RemotePlaylistRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteMediaRepository>(() => RemoteMediaRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteCanvasRepository>(() => RemoteCanvasRepositoryImpl());
-  GetIt.instance.registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
+  GetIt.instance
+      .registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteFileRepository>(() => RemoteFileRepositoryImpl());
-  GetIt.instance.registerLazySingleton<RemoteValidationRepository>(() => RemoteValidationRepositoryImpl());
-  GetIt.instance.registerLazySingleton<RemoteBusinessRepository>(() => RemoteBusinessRepositoryImpl());
+  GetIt.instance
+      .registerLazySingleton<RemoteValidationRepository>(() => RemoteValidationRepositoryImpl());
+  GetIt.instance
+      .registerLazySingleton<RemoteBusinessRepository>(() => RemoteBusinessRepositoryImpl());
 
   /// -------
   /// api
