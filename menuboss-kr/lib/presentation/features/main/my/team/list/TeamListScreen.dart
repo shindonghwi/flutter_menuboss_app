@@ -27,6 +27,7 @@ class TeamListScreen extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final delMemberState = ref.watch(delMemberProvider);
+    final delMemberManager = ref.read(delMemberProvider.notifier);
     final teamMemberState = ref.watch(teamMemberListProvider);
     final teamMemberManager = ref.read(teamMemberListProvider.notifier);
 
@@ -37,6 +38,7 @@ class TeamListScreen extends HookConsumerWidget {
       return () {
         Future(() {
           teamMemberManager.init();
+          delMemberManager.init();
         });
       };
     }, []);
@@ -105,13 +107,17 @@ class _TeamMemberContentList extends HookConsumerWidget {
     final delMemberManager = ref.read(delMemberProvider.notifier);
 
     void goToCreateTeamMember({ResponseBusinessMemberModel? item}) async {
-      Navigator.push(
+      final isUpdated = await Navigator.push(
         context,
         nextSlideHorizontalScreen(
           RoutingScreen.TeamCreate.route,
           parameter: item,
         ),
       );
+
+      if (isUpdated) {
+        teamMemberManager.requestGetTeamMember();
+      }
     }
 
     return items.isNotEmpty

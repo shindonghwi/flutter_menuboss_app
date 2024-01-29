@@ -240,6 +240,8 @@
     "messageAddMediaInPlaylistSuccess": "재생목록에 추가되었습니다",
     "messageProfileUpdateSuccess": "프로필 정보가 수정되었습니다",
     "messagePasswordUpdateSuccess": "비밀번호가 수정되었습니다",
+    "messageRegisterMemberSuccess": "구성원 등록에 성공했습니다",
+    "messageUpdateMemberSuccess": "구성원 수정에 성공했습니다",
     "messageRemoveMemberSuccess": "구성원 삭제에 성공했습니다",
 
     "countPages": "콘텐츠 {count}개",
