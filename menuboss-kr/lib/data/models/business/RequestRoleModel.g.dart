@@ -8,7 +8,7 @@ part of 'RequestRoleModel.dart';
 
 RequestRoleModel _$RequestRoleModelFromJson(Map<String, dynamic> json) =>
     RequestRoleModel(
-      role: json['role'] as String,
+      name: json['name'] as String,
       permissions: (json['permissions'] as List<dynamic>)
           .map((e) =>
               ResponseRolePermissionModel.fromJson(e as Map<String, dynamic>))
@@ -17,6 +17,6 @@ RequestRoleModel _$RequestRoleModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$RequestRoleModelToJson(RequestRoleModel instance) =>
     <String, dynamic>{
-      'role': instance.role,
+      'name': instance.name,
       'permissions': instance.permissions,
     };

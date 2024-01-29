@@ -7,22 +7,22 @@ part 'RequestRoleModel.g.dart';
 
 @JsonSerializable()
 class RequestRoleModel {
-  final String role;
+  final String name;
   final List<ResponseRolePermissionModel> permissions;
 
   RequestRoleModel({
-    required this.role,
+    required this.name,
     required this.permissions,
   });
 
   factory RequestRoleModel.fromJson(Map<String, dynamic> json) => _$RequestRoleModelFromJson(json);
 
   RequestRoleModel copyWith({
-    String? role,
+    String? name,
     List<ResponseRolePermissionModel>? permissions,
   }) {
     return RequestRoleModel(
-      role: role ?? this.role,
+      name: name ?? this.name,
       permissions: permissions ?? this.permissions,
     );
   }

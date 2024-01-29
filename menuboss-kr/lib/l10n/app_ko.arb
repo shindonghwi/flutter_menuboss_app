@@ -243,6 +243,9 @@
     "messageRegisterMemberSuccess": "구성원 등록에 성공했습니다",
     "messageUpdateMemberSuccess": "구성원 수정에 성공했습니다",
     "messageRemoveMemberSuccess": "구성원 삭제에 성공했습니다",
+    "messageRegisterRoleSuccess": "역할 등록에 성공했습니다",
+    "messageUpdateRoleSuccess": "역할 수정에 성공했습니다",
+    "messageRemoveRoleSuccess": "역할 삭제에 성공했습니다",
 
     "countPages": "콘텐츠 {count}개",
     "@countPages":{

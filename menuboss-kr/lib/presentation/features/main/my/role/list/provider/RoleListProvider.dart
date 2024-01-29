@@ -15,6 +15,8 @@ class RoleListNotifier extends StateNotifier<UIState<List<ResponseRoleModel>>> {
 
   final GetRolesUseCase _getRolesUseCase = GetIt.instance<GetRolesUseCase>();
 
+  final currentRoleList = <ResponseRoleModel>[];
+
   void requestGetRoles({int delay = 0}) async {
     state = Loading();
 
@@ -22,11 +24,18 @@ class RoleListNotifier extends StateNotifier<UIState<List<ResponseRoleModel>>> {
 
     _getRolesUseCase.call().then((response) {
       if (response.status == 200) {
-        state = Success(response.list?.map((e) => e).toList() ?? []);
+        currentRoleList.clear();
+        currentRoleList.addAll(response.list ?? []);
+        state = Success(currentRoleList);
       } else {
         state = Failure(response.message);
       }
     });
+  }
+
+  void removeRoleById(int roleId) async {
+    currentRoleList.removeWhere((element) => element.roleId == roleId);
+    state = Success([...currentRoleList]);
   }
 
   void init() {

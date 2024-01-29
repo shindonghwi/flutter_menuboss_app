@@ -107,17 +107,19 @@ class _TeamMemberContentList extends HookConsumerWidget {
     final delMemberManager = ref.read(delMemberProvider.notifier);
 
     void goToCreateTeamMember({ResponseBusinessMemberModel? item}) async {
-      final isUpdated = await Navigator.push(
-        context,
-        nextSlideHorizontalScreen(
-          RoutingScreen.TeamCreate.route,
-          parameter: item,
-        ),
-      );
+      try {
+        final isUpdated = await Navigator.push(
+          context,
+          nextSlideHorizontalScreen(
+            RoutingScreen.TeamCreate.route,
+            parameter: item,
+          ),
+        );
 
-      if (isUpdated) {
-        teamMemberManager.requestGetTeamMember();
-      }
+        if (isUpdated) {
+          teamMemberManager.requestGetTeamMember();
+        }
+      } catch (e) {}
     }
 
     return items.isNotEmpty
@@ -136,8 +138,9 @@ class _TeamMemberContentList extends HookConsumerWidget {
                     final item = items[index];
                     return ClickableScale(
                       child: TeamMemberItem(
-                          item: item,
-                          onDeleted: () => delMemberManager.removeMember(item.memberId)),
+                        item: item,
+                        onDeleted: () => delMemberManager.removeMember(item.memberId),
+                      ),
                       onPressed: () => goToCreateTeamMember(item: item),
                     );
                   },

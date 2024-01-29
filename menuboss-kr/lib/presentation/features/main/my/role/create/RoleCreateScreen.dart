@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
+import 'package:menuboss/data/models/business/RequestRoleModel.dart';
 import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 import 'package:menuboss/data/models/business/ResponseRolePermissionModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -8,12 +10,17 @@ import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss_common/components/button/NeutralLineButton.dart';
 import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/components/textfield/OutlineTextField.dart';
+import 'package:menuboss_common/components/toast/Toast.dart';
 import 'package:menuboss_common/components/utils/BaseScaffold.dart';
+import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
+import 'package:menuboss_common/utils/UiState.dart';
 
-class RoleCreateScreen extends HookWidget {
+import 'provider/RegisterOrUpdateRoleProvider.dart';
+
+class RoleCreateScreen extends HookConsumerWidget {
   final ResponseRoleModel? item;
 
   const RoleCreateScreen({
@@ -22,7 +29,10 @@ class RoleCreateScreen extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final registerOrUpdateRoleState = ref.watch(registerOrUpdateRoleProvider);
+    final registerOrUpdateRoleManager = ref.read(registerOrUpdateRoleProvider.notifier);
+
     final permissions = useMemoized(() {
       return item?.permissions
               ?.map((p) => ResponseRolePermissionModel(group: p.group, types: List.from(p.types)))
@@ -41,9 +51,39 @@ class RoleCreateScreen extends HookWidget {
 
     final roleButtonState = useState<bool>(evaluateInitialPermissions(item?.permissions ?? []));
     final roleNameState = useState<String>(item?.name ?? "");
+    final changedPermissionState = useState<List<ResponseRolePermissionModel>>(permissions);
     final isButtonActivated = useState<bool>(
       evaluateInitialPermissions(item?.permissions ?? []) && roleNameState.value.isNotEmpty,
     );
+
+    useEffect(() {
+      return () {
+        Future(() {
+          registerOrUpdateRoleManager.init();
+        });
+      };
+    }, []);
+
+    useEffect(() {
+      void handleUiStateChange() async {
+        await Future(() {
+          registerOrUpdateRoleState.when(
+            success: (event) {
+              if (event.value) {
+                Toast.showSuccess(context, getString(context).messageRegisterRoleSuccess);
+              } else {
+                Toast.showSuccess(context, getString(context).messageUpdateRoleSuccess);
+              }
+              Navigator.of(context).pop(true);
+            },
+            failure: (event) => Toast.showError(context, event.errorMessage),
+          );
+        });
+      }
+
+      handleUiStateChange();
+      return null;
+    }, [registerOrUpdateRoleState]);
 
     return BaseScaffold(
       appBar: TopBarIconTitleNone(
@@ -54,33 +94,48 @@ class RoleCreateScreen extends HookWidget {
       ),
       body: Container(
         margin: const EdgeInsets.symmetric(horizontal: 24),
-        child: SingleChildScrollView(
-          physics: const AlwaysScrollableScrollPhysics(),
-          child: Column(
-            children: [
-              _RoleName(
-                initValue: item?.name ?? "",
-                onChanged: (name) {
-                  roleNameState.value = name;
-                  isButtonActivated.value = name.isNotEmpty && roleButtonState.value;
-                },
+        child: Stack(
+          children: [
+            SingleChildScrollView(
+              physics: const AlwaysScrollableScrollPhysics(),
+              child: Column(
+                children: [
+                  _RoleName(
+                    initValue: item?.name ?? "",
+                    onChanged: (name) {
+                      roleNameState.value = name;
+                      isButtonActivated.value = name.isNotEmpty && roleButtonState.value;
+                    },
+                  ),
+                  _PermissionContainer(
+                    permissionTypes: permissions,
+                    onStatusChanged:
+                        (bool isValid, List<ResponseRolePermissionModel> changedPermissions) {
+                      roleButtonState.value = isValid;
+                      isButtonActivated.value = isValid && roleNameState.value.isNotEmpty;
+                      changedPermissionState.value = changedPermissions;
+                    },
+                  ),
+                ],
               ),
-              _PermissionContainer(
-                permissionTypes: permissions,
-                onStatusChanged: (bool isValid) {
-                  roleButtonState.value = isValid;
-                  isButtonActivated.value = isValid && roleNameState.value.isNotEmpty;
-                },
-              ),
-            ],
-          ),
+            ),
+            if (registerOrUpdateRoleState is Loading) const LoadingView(),
+          ],
         ),
       ),
       bottomNavigationBar: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: PrimaryFilledButton.largeRound8(
-            onPressed: () {},
+            onPressed: () {
+              registerOrUpdateRoleManager.updateRole(
+                roleId: item?.roleId,
+                model: RequestRoleModel(
+                  name: roleNameState.value,
+                  permissions: changedPermissionState.value,
+                ),
+              );
+            },
             content: getString(context).commonSave,
             isActivated: isButtonActivated.value,
           ),
@@ -129,7 +184,8 @@ class _RoleName extends HookWidget {
 
 class _PermissionContainer extends HookWidget {
   final List<ResponseRolePermissionModel> permissionTypes;
-  final void Function(bool) onStatusChanged; // Callback parameter
+  final void Function(bool, List<ResponseRolePermissionModel>)
+      onStatusChanged; // Callback parameter
 
   const _PermissionContainer({
     super.key,
@@ -158,7 +214,15 @@ class _PermissionContainer extends HookWidget {
       }
       permissionsState.value[group] = currentPermissions;
       bool isValid = permissionsState.value.values.every((permissions) => permissions.isNotEmpty);
-      onStatusChanged(isValid);
+
+      List<ResponseRolePermissionModel> changedPermissionModel =
+          permissionsState.value.entries.map((e) {
+        String group = e.key;
+        List<String> types = e.value;
+        return ResponseRolePermissionModel(group: group, types: types);
+      }).toList();
+
+      onStatusChanged(isValid, changedPermissionModel);
     }
 
     String getTitle(String group) {

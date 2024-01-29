@@ -11,10 +11,12 @@ import 'package:menuboss_common/utils/Common.dart';
 
 class RoleItem extends HookWidget {
   final ResponseRoleModel item;
+  final VoidCallback onDeleted;
 
   const RoleItem({
     super.key,
     required this.item,
+    required this.onDeleted,
   });
 
   @override
@@ -66,7 +68,9 @@ class RoleItem extends HookWidget {
             onSelected: (type, text) {
               if (type == ModifyType.Edit) {
                 goToCreateRole(item: item);
-              } else if (type == ModifyType.Delete) {}
+              } else if (type == ModifyType.Delete) {
+                onDeleted.call();
+              }
             },
           )
         ],

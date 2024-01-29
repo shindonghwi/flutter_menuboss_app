@@ -46,6 +46,8 @@ class TeamCreateScreen extends HookConsumerWidget {
     final phoneState = useState(StringUtil.formatKrPhoneNumber(item?.phone ?? ""));
     final roleIdState = useState<int>(item?.role?.roleId ?? -1);
 
+    debugPrint("roleIdState.value: ${roleIdState.value}");
+
     final scrollController = useScrollController();
 
     useEffect(() {
@@ -112,6 +114,7 @@ class TeamCreateScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   _Role(
+                    initValue: item?.role?.name ?? "",
                     scrollController: scrollController,
                     onChanged: (roleId) => roleIdState.value = roleId,
                   ),
@@ -298,11 +301,13 @@ class _Phone extends HookWidget {
 }
 
 class _Role extends HookWidget {
+  final String initValue;
   final Function(int) onChanged;
   final ScrollController scrollController;
 
   const _Role({
     super.key,
+    required this.initValue,
     required this.onChanged,
     required this.scrollController,
   });
@@ -359,6 +364,7 @@ class _Role extends HookWidget {
               ),
               const SizedBox(height: 12),
               DropDownSelectButton.medium(
+                initialValue: initValue,
                 items: roles.value?.map((e) => e.name).toList() ?? [],
                 onOpened: (isOpened) {
                   if (isOpened) handleDropdownClick.call();
