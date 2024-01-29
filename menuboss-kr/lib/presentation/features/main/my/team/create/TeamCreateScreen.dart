@@ -6,6 +6,7 @@ import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/business/RequestTeamMemberModel.dart';
 import 'package:menuboss/data/models/business/ResponseBusinessMemberModel.dart';
+import 'package:menuboss/data/models/business/ResponseBusinessMemberRole.dart';
 import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetRolesUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
@@ -47,7 +48,6 @@ class TeamCreateScreen extends HookConsumerWidget {
     final passwordState = useState("");
     final phoneState = useState(StringUtil.formatKrPhoneNumber(item?.phone ?? ""));
     final roleIdState = useState<int>(item?.role?.roleId ?? -1);
-
     final scrollController = useScrollController();
 
     useEffect(() {
@@ -115,6 +115,7 @@ class TeamCreateScreen extends HookConsumerWidget {
                   const SizedBox(height: 16),
                   _Role(
                     initValue: item?.role?.name ?? "",
+                    roleModel: item?.role,
                     scrollController: scrollController,
                     onChanged: (roleId) => roleIdState.value = roleId,
                   ),
@@ -302,12 +303,14 @@ class _Phone extends HookWidget {
 
 class _Role extends HookWidget {
   final String initValue;
+  final ResponseBusinessMemberRole? roleModel;
   final Function(int) onChanged;
   final ScrollController scrollController;
 
   const _Role({
     super.key,
     required this.initValue,
+    required this.roleModel,
     required this.onChanged,
     required this.scrollController,
   });
@@ -347,7 +350,7 @@ class _Role extends HookWidget {
     }
 
     void goToCreateRole() async {
-      try{
+      try {
         final isCreated = await Navigator.push(
           context,
           nextSlideHorizontalScreen(
@@ -355,13 +358,10 @@ class _Role extends HookWidget {
           ),
         );
 
-        if (isCreated){
+        if (isCreated) {
           refreshRoles();
         }
-      }catch(e){
-
-      }
-
+      } catch (e) {}
     }
 
     return FutureBuilder(

@@ -1,9 +1,7 @@
-import 'package:flutter/cupertino.dart';
-
 class CollectionUtil{
 
   static bool isNullEmptyFromString(String? data){
-    if (data == null || data.isEmpty) {
+    if (data == null || data.isEmpty || data == "null") {
       return true;
     }
     return false;

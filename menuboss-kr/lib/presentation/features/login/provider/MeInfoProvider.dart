@@ -4,6 +4,7 @@ import 'package:kakao_flutter_sdk_user/kakao_flutter_sdk_user.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/data_source/remote/Service.dart';
 import 'package:menuboss/data/models/business/RequestAddressModel.dart';
+import 'package:menuboss/data/models/me/ResponseMeBusinessAddress.dart';
 import 'package:menuboss/data/models/me/ResponseMeInfoModel.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:riverpod/riverpod.dart';
@@ -58,13 +59,11 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     ResponseMeInfoModel meInfo = state!;
 
     if (!CollectionUtil.isNullEmptyFromString(title)) {
-      debugPrint("000updateMeBusinessInfo : $meInfo");
       meInfo = meInfo.copyWith(
         business: meInfo.business!.copyWith(
           title: title,
         ),
       );
-      debugPrint("111updateMeBusinessInfo : $meInfo");
     }
     if (!CollectionUtil.isNullEmptyFromString(phone)) {
       meInfo = meInfo.copyWith(
@@ -76,11 +75,17 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
 
     meInfo = meInfo.copyWith(
       business: meInfo.business!.copyWith(
-        address: meInfo.business!.address?.copyWith(
-          line1: model.line1,
-          line2: model.line2,
-          postalCode: model.postalCode,
-        ),
+        address: meInfo.business!.address == null
+            ? ResponseMeBusinessAddress(
+                line1: model.line1,
+                line2: model.line2,
+                postalCode: model.postalCode,
+              )
+            : meInfo.business!.address?.copyWith(
+                line1: model.line1,
+                line2: model.line2,
+                postalCode: model.postalCode,
+              ),
       ),
     );
 

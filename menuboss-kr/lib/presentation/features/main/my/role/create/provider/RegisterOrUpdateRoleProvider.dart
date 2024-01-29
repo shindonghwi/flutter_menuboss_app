@@ -26,14 +26,13 @@ class RegisterOrUpdateRoleNotifier extends StateNotifier<UIState<bool>> {
   void updateRole({
     required int? roleId,
     required RequestRoleModel model,
-    int delay = 0,
+    int delay = 600,
   }) async {
     state = Loading();
 
-    await Future.delayed(Duration(milliseconds: (delay)));
-
     if (roleId != null) {
-      _patchRoleUseCase.call(model, roleId).then((response) {
+      _patchRoleUseCase.call(model, roleId).then((response) async{
+        await Future.delayed(Duration(milliseconds: (delay)));
         if (response.status == 200) {
           state = Success(false); // update
         } else {
@@ -41,8 +40,8 @@ class RegisterOrUpdateRoleNotifier extends StateNotifier<UIState<bool>> {
         }
       });
     } else {
-      debugPrint('@#@#@##model: ${model.toJson()}');
-      _postRoleUseCase.call(model).then((response) {
+      _postRoleUseCase.call(model).then((response) async{
+        await Future.delayed(Duration(milliseconds: (delay)));
         if (response.status == 200) {
           state = Success(true); // register
         } else {

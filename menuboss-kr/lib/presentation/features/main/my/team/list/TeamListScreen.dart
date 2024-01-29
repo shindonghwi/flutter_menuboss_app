@@ -14,6 +14,7 @@ import 'package:menuboss_common/components/view_state/EmptyView.dart';
 import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
+import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/UiState.dart';
 
@@ -107,6 +108,10 @@ class _TeamMemberContentList extends HookConsumerWidget {
     final delMemberManager = ref.read(delMemberProvider.notifier);
 
     void goToCreateTeamMember({ResponseBusinessMemberModel? item}) async {
+      if (CollectionUtil.isNullEmptyFromString(item?.role?.roleId?.toString()) &&
+          item?.role?.name == getString(context).commonAdmin) {
+        return; // 관리자인경우에는 이동을 하지 않는다.
+      }
       try {
         final isUpdated = await Navigator.push(
           context,

@@ -216,6 +216,8 @@
     "commonPermissionCreate": "등록",
     "commonPermissionEdit": "수정",
     "commonPermissionDelete": "삭제",
+    "commonRole": "역할",
+    "commonAdmin": "관리자",
 
     "blankMessageContentAddContent": "콘텐츠 추가",
 
