@@ -6,6 +6,7 @@ import 'package:menuboss_common/components/loader/LoadSvg.dart';
 import 'package:menuboss_common/components/utils/Clickable.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
+import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
 class DropDownSelectButton extends HookWidget {
@@ -53,7 +54,18 @@ class DropDownSelectButton extends HookWidget {
 
   @override
   Widget build(BuildContext context) {
-    final currentValue = useState(initialValue ?? (items.isNotEmpty ? items[0] : null));
+    final isKr = Localizations.localeOf(context).languageCode == "ko";
+
+    final currentValue = useState(
+      !CollectionUtil.isNullEmptyFromString(initialValue)
+          ? initialValue
+          : items.isNotEmpty
+              ? items[0]
+              : isKr
+                  ? "클릭하여 역할을 만들어주세요"
+                  : "Click to create a role",
+    );
+
     final isDropdownOpened = useState(false);
     double dropdownMaxHeight = items.length <= 3 ? height.toDouble() * items.length : height * 3.5;
 

@@ -9,6 +9,7 @@ import 'package:menuboss/data/models/business/ResponseBusinessMemberModel.dart';
 import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetRolesUseCase.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
+import 'package:menuboss/navigation/Route.dart';
 import 'package:menuboss_common/components/appbar/TopBarIconTitleNone.dart';
 import 'package:menuboss_common/components/button/PrimaryFilledButton.dart';
 import 'package:menuboss_common/components/dropdown/DropDownSelectButton.dart';
@@ -19,6 +20,7 @@ import 'package:menuboss_common/components/view_state/FailView.dart';
 import 'package:menuboss_common/components/view_state/LoadingView.dart';
 import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
+import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/InputFormatterUtil.dart';
 import 'package:menuboss_common/utils/RegUtil.dart';
@@ -45,8 +47,6 @@ class TeamCreateScreen extends HookConsumerWidget {
     final passwordState = useState("");
     final phoneState = useState(StringUtil.formatKrPhoneNumber(item?.phone ?? ""));
     final roleIdState = useState<int>(item?.role?.roleId ?? -1);
-
-    debugPrint("roleIdState.value: ${roleIdState.value}");
 
     final scrollController = useScrollController();
 
@@ -319,7 +319,7 @@ class _Role extends HookWidget {
 
     Future<ApiListResponse<List<ResponseRoleModel>>> requestGetRoles() async {
       final res = await GetIt.instance<GetRolesUseCase>().call();
-      onChanged.call(res.list?.first.roleId ?? -1);
+      onChanged.call(CollectionUtil.isNullorEmpty(res.list) ? -1 : res.list![0].roleId);
       return res;
     }
 
@@ -346,40 +346,71 @@ class _Role extends HookWidget {
       });
     }
 
+    void goToCreateRole() async {
+      try{
+        final isCreated = await Navigator.push(
+          context,
+          nextSlideHorizontalScreen(
+            RoutingScreen.RoleCreate.route,
+          ),
+        );
+
+        if (isCreated){
+          refreshRoles();
+        }
+      }catch(e){
+
+      }
+
+    }
+
     return FutureBuilder(
       future: futureRoles.value,
-      builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-        if (snapshot.hasData) {
-          if ((snapshot.data as ApiListResponse<List<ResponseRoleModel>>).status == 200) {
-            roles.value = snapshot.data.list ?? [];
+      builder: (BuildContext context,
+          AsyncSnapshot<ApiListResponse<List<ResponseRoleModel>>?> snapshot) {
+        if (snapshot.connectionState == ConnectionState.done) {
+          if (snapshot.hasData) {
+            if (snapshot.data?.status == 200) {
+              WidgetsBinding.instance.addPostFrameCallback((_) {
+                roles.value = snapshot.data?.list;
+                if (CollectionUtil.isNullorEmpty(roles.value)) {
+                  onChanged.call(-1);
+                } else {
+                  onChanged.call(roles.value!.first.roleId);
+                }
+              });
+            }
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  getString(context).teamCreateRoleSelect,
+                  style: getTextTheme(context).b3m.copyWith(
+                        color: getColorScheme(context).colorGray900,
+                      ),
+                ),
+                const SizedBox(height: 12),
+                DropDownSelectButton.medium(
+                  initialValue: initValue,
+                  items: roles.value?.map((e) => e.name).toList() ?? [],
+                  onOpened: (isOpened) {
+                    if (CollectionUtil.isNullorEmpty(roles.value)) {
+                      goToCreateRole.call();
+                      return;
+                    }
+                    if (isOpened) handleDropdownClick.call();
+                  },
+                  onSelected: (int index, String text) {
+                    final roleId = roles.value?[index].roleId;
+                    onChanged.call(roleId ?? -1);
+                  },
+                )
+              ],
+            );
+          } else if (snapshot.hasError) {
+            return FailView(onPressed: () => refreshRoles());
           }
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                getString(context).teamCreateRoleSelect,
-                style: getTextTheme(context).b3m.copyWith(
-                      color: getColorScheme(context).colorGray900,
-                    ),
-              ),
-              const SizedBox(height: 12),
-              DropDownSelectButton.medium(
-                initialValue: initValue,
-                items: roles.value?.map((e) => e.name).toList() ?? [],
-                onOpened: (isOpened) {
-                  if (isOpened) handleDropdownClick.call();
-                },
-                onSelected: (int index, String text) {
-                  final roleId = roles.value?[index].roleId;
-                  onChanged.call(roleId ?? -1);
-                },
-              )
-            ],
-          );
-        } else if (snapshot.hasError) {
-          return FailView(onPressed: () => refreshRoles());
         }
-
         return const SizedBox(
           width: double.infinity,
           height: 48,
