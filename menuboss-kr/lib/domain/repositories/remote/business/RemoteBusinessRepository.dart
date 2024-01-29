@@ -6,6 +6,7 @@ import 'package:menuboss/data/models/business/RequestRoleModel.dart';
 import 'package:menuboss/data/models/business/RequestTeamMemberModel.dart';
 import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 
+import '../../../../data/models/business/RequestAddressModel.dart';
 import '../../../../data/models/business/ResponseBusinessMemberModel.dart';
 
 abstract class RemoteBusinessRepository {
@@ -32,4 +33,10 @@ abstract class RemoteBusinessRepository {
 
   /// 역할 삭제
   Future<ApiResponse<void>> delRole(int roleId);
+
+  /// 사업자 이름 변경
+  Future<ApiResponse<void>> patchName(String title);
+
+  /// 사업자 주소,휴대폰 변경
+  Future<ApiResponse<void>> patchAddress(RequestAddressModel model);
 }

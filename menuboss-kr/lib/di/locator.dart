@@ -48,7 +48,9 @@ import 'package:menuboss/domain/usecases/remote/business/DelMemberUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/DelRoleUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetBusinessMembersUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/GetRolesUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/PatchBusinessAddressUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/PatchMemberUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/business/PatchBusinessNameUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/PatchRoleUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/PostMemberUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/business/PostRoleUseCase.dart';
@@ -137,6 +139,8 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostRoleUseCase>(() => PostRoleUseCase());
   GetIt.instance.registerLazySingleton<DelRoleUseCase>(() => DelRoleUseCase());
   GetIt.instance.registerLazySingleton<DelMemberUseCase>(() => DelMemberUseCase());
+  GetIt.instance.registerLazySingleton<PatchBusinessAddressUseCase>(() => PatchBusinessAddressUseCase());
+  GetIt.instance.registerLazySingleton<PatchBusinessNameUseCase>(() => PatchBusinessNameUseCase());
 
   // device
   GetIt.instance.registerLazySingleton<GetDevicesUseCase>(() => GetDevicesUseCase());

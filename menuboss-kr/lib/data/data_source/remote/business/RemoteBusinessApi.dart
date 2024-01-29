@@ -4,6 +4,7 @@ import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/business/RequestTeamMemberModel.dart';
 
 import '../../../models/base/ApiResponse.dart';
+import '../../../models/business/RequestAddressModel.dart';
 import '../../../models/business/RequestRoleModel.dart';
 import '../../../models/business/ResponseBusinessMemberModel.dart';
 import '../../../models/business/ResponseRoleModel.dart';
@@ -226,6 +227,62 @@ class RemoteBusinessApi {
         type: ServiceType.Business,
         endPoint: "roles/$roleId",
         jsonBody: null,
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
+
+  /// 이름 수정
+  Future<ApiResponse<void>> patchName(String title) async {
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Business,
+        endPoint: "title",
+        jsonBody: {"title": title},
+      );
+
+      final errorResponse = BaseApiUtil.isErrorStatusCode(response);
+      if (errorResponse != null) {
+        return BaseApiUtil.errorResponse(
+          status: errorResponse.status,
+          message: errorResponse.message,
+        );
+      } else {
+        return ApiResponse.fromJson(
+          jsonDecode(response.body),
+          (json) {},
+        );
+      }
+    } catch (e) {
+      return BaseApiUtil.errorResponse(
+        message: e.toString(),
+      );
+    }
+  }
+
+  /// 주소, 휴대폰 번호 수정
+  Future<ApiResponse<void>> patchAddress(RequestAddressModel model) async {
+    try {
+      final response = await Service.patchApi(
+        type: ServiceType.Business,
+        endPoint: "address",
+        jsonBody: model.toJson(),
       );
 
       final errorResponse = BaseApiUtil.isErrorStatusCode(response);

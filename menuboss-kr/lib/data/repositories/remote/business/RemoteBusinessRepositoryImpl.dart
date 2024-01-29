@@ -1,6 +1,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
+import 'package:menuboss/data/models/business/RequestAddressModel.dart';
 import 'package:menuboss/data/models/business/RequestRoleModel.dart';
 import 'package:menuboss/data/models/business/RequestTeamMemberModel.dart';
 import 'package:menuboss/domain/repositories/remote/business/RemoteBusinessRepository.dart';
@@ -52,5 +53,15 @@ class RemoteBusinessRepositoryImpl implements RemoteBusinessRepository {
   @override
   Future<ApiResponse<void>> delRole(int roleId) {
     return remoteBusinessApi.delRole(roleId);
+  }
+
+  @override
+  Future<ApiResponse<void>> patchAddress(RequestAddressModel model) {
+    return remoteBusinessApi.patchAddress(model);
+  }
+
+  @override
+  Future<ApiResponse<void>> patchName(String title) {
+    return remoteBusinessApi.patchName(title);
   }
 }

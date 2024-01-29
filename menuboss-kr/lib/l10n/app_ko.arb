@@ -246,6 +246,7 @@
     "messageRegisterRoleSuccess": "역할 등록에 성공했습니다",
     "messageUpdateRoleSuccess": "역할 수정에 성공했습니다",
     "messageRemoveRoleSuccess": "역할 삭제에 성공했습니다",
+    "messageBusinessUpdateSuccess": "사업자 정보가 수정되었습니다",
 
     "countPages": "콘텐츠 {count}개",
     "@countPages":{
