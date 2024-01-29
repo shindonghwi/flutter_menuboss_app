@@ -157,7 +157,7 @@ class _ScheduleContent extends StatelessWidget {
                     height: 140,
                     child: LoadImage(
                       url: item.property?.imageUrl,
-                      type: ImagePlaceholderType.Large,
+                      type: ImagePlaceholderType.Size_140,
                     ),
                   ),
                   const SizedBox(

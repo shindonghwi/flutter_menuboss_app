@@ -90,7 +90,7 @@ class _Content extends HookWidget {
                   height: 80,
                   child: LoadImage(
                     url: "",
-                    type: ImagePlaceholderType.Normal,
+                    type: ImagePlaceholderType.Size_80,
                   ),
                 ),
                 const SizedBox(width: 16),

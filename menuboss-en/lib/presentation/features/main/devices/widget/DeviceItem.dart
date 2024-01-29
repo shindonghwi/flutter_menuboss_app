@@ -44,7 +44,7 @@ class DeviceItem extends HookConsumerWidget {
                   height: 80,
                   child: LoadImage(
                     url: item.content?.imageUrl ?? "",
-                    type: ImagePlaceholderType.Normal,
+                    type: ImagePlaceholderType.Size_80,
                   ),
                 ),
                 const SizedBox(width: 16),

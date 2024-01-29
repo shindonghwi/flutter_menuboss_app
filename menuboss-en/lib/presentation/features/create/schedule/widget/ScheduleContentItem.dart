@@ -158,7 +158,7 @@ class ScheduleContentItem extends HookConsumerWidget {
                         height: 140,
                         child: LoadImage(
                           url: data.imageUrl,
-                          type: ImagePlaceholderType.Large,
+                          type: ImagePlaceholderType.Size_140,
                         ),
                       ),
                     ),

@@ -20,6 +20,18 @@ class ResponseMeBusinessAddress {
 
   Map<String, dynamic> toJson() => _$ResponseMeBusinessAddressToJson(this);
 
+  ResponseMeBusinessAddress copyWith({
+    String? line1,
+    String? line2,
+    String? postalCode,
+  }) {
+    return ResponseMeBusinessAddress(
+      line1: line1 ?? this.line1,
+      line2: line2 ?? this.line2,
+      postalCode: postalCode ?? this.postalCode,
+    );
+  }
+  
   @override
   String toString() {
     return StringUtil.convertPrettyJson(toJson());

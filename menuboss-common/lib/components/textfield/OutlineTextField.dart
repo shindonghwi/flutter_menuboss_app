@@ -155,7 +155,7 @@ class OutlineTextField extends HookWidget {
           keyboardType: textInputType,
           textInputAction: textInputAction,
           style: textStyle.copyWith(
-            color: getColorScheme(context).colorGray900,
+            color: enable ? getColorScheme(context).colorGray900 : getColorScheme(context).colorGray400,
           ),
           enabled: enable,
           onSubmitted: (text) {
@@ -199,7 +199,7 @@ class OutlineTextField extends HookWidget {
               borderRadius: BorderRadius.circular(8),
               borderSide: BorderSide(
                 width: 1,
-                color: getColorScheme(context).colorGray300,
+                color: getColorScheme(context).colorGray200,
               ),
             ),
             focusedBorder: OutlineInputBorder(

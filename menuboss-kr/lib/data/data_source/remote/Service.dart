@@ -83,7 +83,6 @@ class Service {
     String? query,
   }) async {
     try {
-      debugPrint('baseUrl: $baseUrl');
       if (await isNetworkAvailable()) {
         final url = Uri.parse('$baseUrl/'
             '${_ServiceTypeHelper.fromString(type)}'

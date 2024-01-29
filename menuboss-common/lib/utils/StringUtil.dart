@@ -11,7 +11,6 @@ class StringUtil {
 
   /// bytes int 정보를 메가바이트로 변환하여 반환합니다.
   static String formatBytesToMegabytes(int bytes) {
-
     double kilobytes = bytes / 1024;
     double megabytes = kilobytes / 1024;
     double gigabytes = megabytes / 1024;
@@ -63,4 +62,47 @@ class StringUtil {
     return hours * 3600 + minutes * 60 + seconds;
   }
 
+  /// "XXX-XXX-XXXX"를 형태로 변환하여 반환합니다.
+  static String formatUsPhoneNumber(String phoneNumber) {
+    int spaceIndex = phoneNumber.indexOf(' ');
+    String cleanedNumber;
+
+    if (spaceIndex != -1) {
+      cleanedNumber = phoneNumber.substring(spaceIndex + 1);
+    } else {
+      cleanedNumber = phoneNumber;
+    }
+    cleanedNumber = cleanedNumber.replaceAll(RegExp(r'\D'), '');
+    if (cleanedNumber.length == 10) {
+      return cleanedNumber.replaceRange(3, 3, "-").replaceRange(7, 7, "-");
+    } else {
+      return phoneNumber;
+    }
+  }
+
+  /// "XXX-XXXX-XXXX"를 형태로 변환하여 반환합니다.
+  static String formatKrPhoneNumber(String phoneNumber) {
+    int spaceIndex = phoneNumber.indexOf(' ');
+    String cleanedNumber;
+
+    if (spaceIndex != -1) {
+      cleanedNumber = phoneNumber.substring(spaceIndex + 1);
+    } else {
+      cleanedNumber = phoneNumber;
+    }
+    cleanedNumber = cleanedNumber.replaceAll(RegExp(r'\D'), '');
+    if (cleanedNumber.length == 11) {
+      return cleanedNumber.replaceRange(3, 3, "-").replaceRange(8, 8, "-");
+    } else {
+      return phoneNumber;
+    }
+  }
+
+  /// 문자열에서 숫자만 찾아서 반환하기.
+  static String extractNumbers(String str) {
+    final RegExp regExp = RegExp(r'\d');
+    Iterable<Match> matches = regExp.allMatches(str);
+    String numbers = matches.map((m) => m.group(0)).join('');
+    return numbers;
+  }
 }

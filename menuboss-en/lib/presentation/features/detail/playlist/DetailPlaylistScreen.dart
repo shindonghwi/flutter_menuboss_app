@@ -206,7 +206,7 @@ class _PlaylistContent extends StatelessWidget {
                               height: 60,
                               child: LoadImage(
                                 url: data?.property.imageUrl ?? "",
-                                type: ImagePlaceholderType.Small,
+                                type: ImagePlaceholderType.Size_60,
                               ),
                             ),
                             Expanded(

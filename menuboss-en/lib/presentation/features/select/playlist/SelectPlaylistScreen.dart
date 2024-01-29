@@ -165,7 +165,7 @@ class _PlaylistContent extends HookWidget {
                                 height: 80,
                                 child: LoadImage(
                                   url: data.property?.imageUrl ?? "",
-                                  type: ImagePlaceholderType.Normal,
+                                  type: ImagePlaceholderType.Size_80,
                                 ),
                               ),
                               Expanded(

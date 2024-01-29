@@ -20,15 +20,27 @@ class ImagePlaceholder extends StatelessWidget {
     Pair<double, double> imageSize = Pair(0.0, 0.0);
 
     switch (type) {
-      case ImagePlaceholderType.Small:
+      case ImagePlaceholderType.Size_32:
+        containerSize = 32;
+        imageSize = Pair(19, 9.5);
+        break;
+      case ImagePlaceholderType.Size_48:
+        containerSize = 48;
+        imageSize = Pair(28, 14);
+        break;
+      case ImagePlaceholderType.Size_60:
         containerSize = 60;
         imageSize = Pair(36, 18);
         break;
-      case ImagePlaceholderType.Normal:
+      case ImagePlaceholderType.Size_80:
         containerSize = 80;
         imageSize = Pair(52, 26);
         break;
-      case ImagePlaceholderType.Large:
+      case ImagePlaceholderType.Size_120:
+        containerSize = 120;
+        imageSize = Pair(61, 30);
+        break;
+      case ImagePlaceholderType.Size_140:
         containerSize = 140;
         imageSize = Pair(72, 36);
         break;
