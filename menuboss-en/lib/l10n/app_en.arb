@@ -103,6 +103,18 @@
     "myPageSettingSubmenuMenual": "Get started",
 
     "myBusinessAppbarTitle": "Business",
+    "myBusinessBusinessNameTitle": "Business name",
+    "myBusinessBusinessNameHint": "Business name",
+    "myBusinessAddress1Hint": "Address",
+    "myBusinessAddress2StateHint": "Apartment, suite, etc",
+    "myBusinessCityTitle": "City",
+    "myBusinessCityHint": "City",
+    "myBusinessRegionStateTitle": "Regions / State",
+    "myBusinessRegionStateHint": "N/A",
+    "myBusinessPostalZipCodeTitle": "Postal / Zip code",
+    "myBusinessPostalZipCodeHint": "Zip / Postal code or Block number",
+    "myBusinessCountryTitle": "Country",
+    "myBusinessPhoneHint": "000-000-0000",
 
     "roleListAppbarTitle": "Roles",
 
@@ -195,6 +207,7 @@
     "commonMoveHere": "Move here",
     "commonMove": "Move",
     "commonDelete": "Delete",
+    "commonAddress": "Address",
     "commonPermission": "Permission",
     "commonPermissionRead": "Read",
     "commonPermissionCreate": "Create",
@@ -202,6 +215,7 @@
     "commonPermissionDelete": "Delete",
     "commonRole": "Role",
     "commonAdmin": "Owner",
+    "commonCountryUS": "United States",
 
     "blankMessageContentAddContent": "Add content",
 
