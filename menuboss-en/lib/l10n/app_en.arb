@@ -106,11 +106,20 @@
 
     "roleListAppbarTitle": "Roles",
 
-    "roleCreateAppbarTitle": "Create Role",
+    "roleCreateAppbarCreateTitle": "Create Role",
+    "roleCreateAppbarEditTitle": "Edit Role",
+    "roleCreateName": "Role name",
+    "roleCreateNameHint": "Role name",
 
     "teamListAppbarTitle": "Team",
 
-    "teamCreateAppbarTitle": "Create team member",
+    "teamCreateAppbarCreateTitle": "Create team member",
+    "teamCreateAppbarEditTitle": "Edit team member",
+    "teamCreateEmailHint": "Email",
+    "teamCreateNameHint": "Full name",
+    "teamCreatePasswordHint": "Password",
+    "teamCreatePhoneHint": "000-000-0000",
+    "teamCreateRoleSelect": "Select role",
 
     "mediaContentTitle": "Contents",
     "mediaContentTabMedia": "Media",
@@ -186,6 +195,13 @@
     "commonMoveHere": "Move here",
     "commonMove": "Move",
     "commonDelete": "Delete",
+    "commonPermission": "Permission",
+    "commonPermissionRead": "Read",
+    "commonPermissionCreate": "Create",
+    "commonPermissionEdit": "Edit",
+    "commonPermissionDelete": "Delete",
+    "commonRole": "Role",
+    "commonAdmin": "Owner",
 
     "blankMessageContentAddContent": "Add content",
 
@@ -210,6 +226,13 @@
     "messageAddMediaInPlaylistSuccess": "Successfully Add Media to Playlist",
     "messageProfileUpdateSuccess": "Profile has been modified",
     "messagePasswordUpdateSuccess": "Password has benn modified",
+    "messageRegisterMemberSuccess": "Member registered successfully",
+    "messageUpdateMemberSuccess": "Member information has been changed",
+    "messageRemoveMemberSuccess": "Member deleted successfully",
+    "messageRegisterRoleSuccess": "Role registered successfully",
+    "messageUpdateRoleSuccess": "Role information has been changed",
+    "messageRemoveRoleSuccess": "Role deleted successfully",
+    "messageBusinessUpdateSuccess": "Business information has been changed",
 
     "countPages": "{count} pages",
     "@countPages":{
