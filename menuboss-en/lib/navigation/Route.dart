@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/data/models/business/ResponseBusinessMemberModel.dart';
+import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
@@ -172,11 +174,13 @@ enum RoutingScreen {
     } else if (route == RoutingScreen.TeamList.route) {
       return const TeamListScreen();
     } else if (route == RoutingScreen.TeamCreate.route) {
-      return const TeamCreateScreen();
+      ResponseBusinessMemberModel? model = parameter;
+      return TeamCreateScreen(item: model);
     } else if (route == RoutingScreen.RoleList.route) {
       return const RoleListScreen();
     } else if (route == RoutingScreen.RoleCreate.route) {
-      return const RoleCreateScreen();
+      ResponseRoleModel? model = parameter;
+      return RoleCreateScreen(item: model);
     } else if (route == RoutingScreen.GuideList.route) {
       return const GuideListScreen();
     } else if (route == RoutingScreen.GuideDetail.route) {

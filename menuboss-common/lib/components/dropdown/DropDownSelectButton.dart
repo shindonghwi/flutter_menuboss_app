@@ -125,7 +125,7 @@ class DropDownSelectButton extends HookWidget {
               children: <Widget>[
                 Expanded(
                   child: Text(
-                    currentValue.value ?? 'Select an item',
+                    currentValue.value.toString(),
                     style: textStyle,
                   ),
                 ),
