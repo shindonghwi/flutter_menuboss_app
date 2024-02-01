@@ -2,7 +2,7 @@ name: menuboss
 description: MenuBoss Mobile App - TV Controller
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 1.3.1+28
+version: 1.3.1+29
 
 environment:
   sdk: '>=3.0.6 <4.0.0'
