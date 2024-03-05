@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
 import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
@@ -70,12 +71,20 @@ class RemoteMeApi {
   }
 
   /// Owner 번호 수정
-  Future<ApiResponse<void>> patchPhone(String phone) async {
+  Future<ApiResponse<void>> patchPhone(String country, String phone) async {
     try {
+      String convertToInternationalFormat(String phoneNumber) {
+        String cleanedNumber = phoneNumber.replaceAll('-', '');
+        if (cleanedNumber.startsWith('0')) {
+          cleanedNumber = '82${cleanedNumber.substring(1)}';
+        }
+        return '+$cleanedNumber';
+      }
+
       final response = await Service.patchApi(
         type: ServiceType.Me,
         endPoint: "phone",
-        jsonBody: {"phone": phone},
+        jsonBody: {"country": country, "phone": convertToInternationalFormat(phone)},
       );
 
       final errorResponse = BaseApiUtil.isErrorStatusCode(response);

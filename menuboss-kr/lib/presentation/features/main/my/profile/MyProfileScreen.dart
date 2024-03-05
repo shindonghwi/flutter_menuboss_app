@@ -27,6 +27,7 @@ import 'package:menuboss_common/utils/FilePickerUtil.dart';
 import 'package:menuboss_common/utils/InputFormatterUtil.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
+import 'package:menuboss_common/utils/dto/Pair.dart';
 
 class MyProfileScreen extends HookConsumerWidget {
   const MyProfileScreen({super.key});
@@ -344,7 +345,7 @@ class _InputPhoneNumber extends HookConsumerWidget {
             inputFormatters: [InputFormatterUtil.krPhoneNumber()],
             controller: useTextEditingController(
               text: StringUtil.formatKrPhoneNumber(
-                meInfoState?.profile?.phone ?? "",
+                meInfoState?.profile?.phone?.phone ?? "",
               ),
             ),
             hint: getString(context).myPageProfilePhoneHint,
@@ -354,12 +355,13 @@ class _InputPhoneNumber extends HookConsumerWidget {
                 phoneChangeManager.updatePhone("");
                 return;
               } else {
-                isPhoneChanged(phoneNumber !=
-                    StringUtil.formatKrPhoneNumber(
-                      meInfoState?.profile?.phone ?? "",
-                    ));
+                isPhoneChanged(
+                  phoneNumber !=
+                      StringUtil.formatKrPhoneNumber(
+                        meInfoState?.profile?.phone?.phone ?? "",
+                      ),
+                );
               }
-
               phoneChangeManager.updatePhone(phoneNumber);
             },
           ),

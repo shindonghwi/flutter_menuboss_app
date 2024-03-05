@@ -18,7 +18,10 @@ ResponseMeBusiness _$ResponseMeBusinessFromJson(Map<String, dynamic> json) =>
           ? null
           : ResponseMeBusinessAddress.fromJson(
               json['address'] as Map<String, dynamic>),
-      phone: json['phone'] as String?,
+      phone: json['phone'] == null
+          ? null
+          : ResponseMeBusinessPhone.fromJson(
+              json['phone'] as Map<String, dynamic>),
       permissions: (json['permissions'] as List<dynamic>?)
           ?.map((e) =>
               ResponseMeBusinessPermissions.fromJson(e as Map<String, dynamic>))

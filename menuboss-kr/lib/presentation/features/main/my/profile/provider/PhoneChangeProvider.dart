@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/domain/usecases/remote/me/PatchMeNameUseCase.dart';
@@ -14,13 +15,14 @@ class NameChangeUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   PatchMePhoneUseCase get _patchPhone => GetIt.instance<PatchMePhoneUseCase>();
 
+  final _country = "KR";
   var _phone = "";
   void updatePhone(String phone) => _phone = phone;
   String getPhone() => _phone;
 
   void requestChangePhone() async {
     state = Loading();
-    await _patchPhone.call(_phone).then((result) {
+    await _patchPhone.call(_country, _phone).then((result) {
       if (result.status == 200) {
         state = Success("");
       } else {

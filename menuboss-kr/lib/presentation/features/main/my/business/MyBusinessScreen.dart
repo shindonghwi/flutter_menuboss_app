@@ -37,7 +37,7 @@ class MyBusinessScreen extends HookConsumerWidget {
         line1: meInfoState?.business?.address?.line1 ?? "",
         line2: meInfoState?.business?.address?.line2 ?? "",
         postalCode: meInfoState?.business?.address?.postalCode ?? "",
-        phone: meInfoState?.business?.phone ?? "",
+        phone: meInfoState?.business?.phone?.phone ?? "",
       ),
     );
 
@@ -112,7 +112,7 @@ class MyBusinessScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 24),
                   _Phone(
-                    initValue: meInfoState?.business?.phone ?? "",
+                    initValue: meInfoState?.business?.phone?.phone ?? "",
                     onChanged: (phone) {
                       addressInfo.value = addressInfo.value.copyWith(
                         phone: phone,

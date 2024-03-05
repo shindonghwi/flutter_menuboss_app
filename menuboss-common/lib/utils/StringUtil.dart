@@ -91,6 +91,12 @@ class StringUtil {
       cleanedNumber = phoneNumber;
     }
     cleanedNumber = cleanedNumber.replaceAll(RegExp(r'\D'), '');
+
+    // "0"으로 시작하지 않는 번호에 "0" 추가
+    if (!cleanedNumber.startsWith('0')) {
+      cleanedNumber = '0$cleanedNumber';
+    }
+
     if (cleanedNumber.length == 11) {
       return cleanedNumber.replaceRange(3, 3, "-").replaceRange(8, 8, "-");
     } else {

@@ -9,7 +9,9 @@ part of 'ResponseMeProfile.dart';
 ResponseMeProfile _$ResponseMeProfileFromJson(Map<String, dynamic> json) =>
     ResponseMeProfile(
       name: json['name'] as String?,
-      phone: json['phone'] as String?,
+      phone: json['phone'] == null
+          ? null
+          : ResponseMePhone.fromJson(json['phone'] as Map<String, dynamic>),
       imageUrl: json['imageUrl'] as String?,
     );
 

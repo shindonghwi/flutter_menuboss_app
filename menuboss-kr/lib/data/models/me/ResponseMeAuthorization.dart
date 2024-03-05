@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss_common/utils/StringUtil.dart';
 
 part 'ResponseMeAuthorization.g.dart';
 
@@ -24,6 +25,6 @@ class ResponseMeAuthorization {
 
   @override
   String toString() {
-    return '{"accessToken": "$accessToken"}';
+    return StringUtil.convertPrettyJson(toJson());
   }
 }
