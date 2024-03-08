@@ -26,6 +26,7 @@ class Service {
     HeaderKey.Accept: '*/*',
     HeaderKey.Connection: 'keep-alive',
     HeaderKey.ApplicationTimeZone: '',
+    HeaderKey.XClientId: '', //  미국 AND - MBGA,  미국 IOS - MBGI, 한국 AND - MBKA, 한국 IOS - MBKI
   };
 
   static Future<void> initializeHeaders() async {
@@ -46,6 +47,7 @@ class Service {
           "Product ${androidInfo.product}; $isPhysicalDevice)";
       debugPrint('AndroidInfo: $xDeviceModel');
       addHeader(key: HeaderKey.XDeviceModel, value: xDeviceModel);
+      addHeader(key: HeaderKey.XClientId, value: "MBGA"); // 미국 AOS
     } else if (Platform.isIOS) {
       final iosInfo = await deviceInfoPlugin.iosInfo;
       final isPhysicalDevice = iosInfo.isPhysicalDevice ? 'Physical' : 'Simulator';
@@ -54,6 +56,7 @@ class Service {
           "${iosInfo.utsname.machine}; ${iosInfo.model}; $isPhysicalDevice)";
       debugPrint('iosInfo: $xDeviceModel');
       addHeader(key: HeaderKey.XDeviceModel, value: xDeviceModel);
+      addHeader(key: HeaderKey.XClientId, value: "MBGI"); // 미국 AOS
     }
   }
 
