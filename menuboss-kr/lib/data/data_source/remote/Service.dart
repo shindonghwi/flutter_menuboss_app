@@ -341,6 +341,7 @@ class Service {
 }
 
 enum ServiceType {
+  App,
   Auth,
   Business,
   Canvas,
@@ -356,6 +357,7 @@ enum ServiceType {
 
 class _ServiceTypeHelper {
   static const Map<ServiceType, String> _stringToEnum = {
+    ServiceType.App: "app",
     ServiceType.Auth: "auth",
     ServiceType.Business: "business",
     ServiceType.Canvas: "canvases",

@@ -1,5 +1,6 @@
 import 'package:get_it/get_it.dart';
 import 'package:menuboss/data/data_source/local/app/LocalAppApi.dart';
+import 'package:menuboss/data/data_source/remote/app/RemoteAppApi.dart';
 import 'package:menuboss/data/data_source/remote/auth/RemoteAuthApi.dart';
 import 'package:menuboss/data/data_source/remote/business/RemoteBusinessApi.dart';
 import 'package:menuboss/data/data_source/remote/canvas/RemoteCanvasApi.dart';
@@ -11,6 +12,7 @@ import 'package:menuboss/data/data_source/remote/playlist/RemotePlaylistApi.dart
 import 'package:menuboss/data/data_source/remote/schedule/RemoteScheduleApi.dart';
 import 'package:menuboss/data/data_source/remote/validation/RemoteValidationApi.dart';
 import 'package:menuboss/data/repositories/local/app/LocalAppRepositoryImpl.dart';
+import 'package:menuboss/data/repositories/remote/app/RemoteAppRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/auth/RemoteAuthRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/business/RemoteBusinessRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/canvas/RemoteCanvasRepositoryImpl.dart';
@@ -22,6 +24,7 @@ import 'package:menuboss/data/repositories/remote/playlist/RemotePlaylistReposit
 import 'package:menuboss/data/repositories/remote/schedule/RemoteScheduleRepositoryImpl.dart';
 import 'package:menuboss/data/repositories/remote/validation/RemoteValidationRepositoryImpl.dart';
 import 'package:menuboss/domain/repositories/local/app/LocalAppRepository.dart';
+import 'package:menuboss/domain/repositories/remote/app/RemoteAppRepository.dart';
 import 'package:menuboss/domain/repositories/remote/auth/RemoteAuthRepository.dart';
 import 'package:menuboss/domain/repositories/remote/business/RemoteBusinessRepository.dart';
 import 'package:menuboss/domain/repositories/remote/canvas/RemoteCanvasRepository.dart';
@@ -38,6 +41,7 @@ import 'package:menuboss/domain/usecases/local/app/GetTutorialViewedUseCase.dart
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostMediaFilterTypeUseCase.dart';
 import 'package:menuboss/domain/usecases/local/app/PostTutorialViewedUseCase.dart';
+import 'package:menuboss/domain/usecases/remote/app/GetCheckUpAppUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
@@ -97,18 +101,16 @@ void initServiceLocator() {
   /// usecase
   /// -------
 
-  // app
-  GetIt.instance
-      .registerLazySingleton<GetLoginAccessTokenUseCase>(() => GetLoginAccessTokenUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
-  GetIt.instance
-      .registerLazySingleton<GetMediaFilterTypeUseCase>(() => GetMediaFilterTypeUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostMediaFilterTypeUseCase>(() => PostMediaFilterTypeUseCase());
+  // local
+  GetIt.instance.registerLazySingleton<GetLoginAccessTokenUseCase>(() => GetLoginAccessTokenUseCase());
+  GetIt.instance.registerLazySingleton<PostLoginAccessTokenUseCase>(() => PostLoginAccessTokenUseCase());
+  GetIt.instance.registerLazySingleton<GetMediaFilterTypeUseCase>(() => GetMediaFilterTypeUseCase());
+  GetIt.instance.registerLazySingleton<PostMediaFilterTypeUseCase>(() => PostMediaFilterTypeUseCase());
   GetIt.instance.registerLazySingleton<GetTutorialViewedUseCase>(() => GetTutorialViewedUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostTutorialViewedUseCase>(() => PostTutorialViewedUseCase());
+  GetIt.instance.registerLazySingleton<PostTutorialViewedUseCase>(() => PostTutorialViewedUseCase());
+
+  // app
+  GetIt.instance.registerLazySingleton<GetCheckUpAppUseCase>(() => GetCheckUpAppUseCase());
 
   // auth
   GetIt.instance.registerLazySingleton<PostAppleSignInUseCase>(() => PostAppleSignInUseCase());
@@ -125,13 +127,11 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PatchMePasswordUseCase>(() => PatchMePasswordUseCase());
   GetIt.instance.registerLazySingleton<PostMeJoinUseCase>(() => PostMeJoinUseCase());
   GetIt.instance.registerLazySingleton<PostMeLeaveUseCase>(() => PostMeLeaveUseCase());
-  GetIt.instance
-      .registerLazySingleton<PatchMeProfileImageUseCase>(() => PatchMeProfileImageUseCase());
+  GetIt.instance.registerLazySingleton<PatchMeProfileImageUseCase>(() => PatchMeProfileImageUseCase());
   GetIt.instance.registerLazySingleton<PostMeSocialJoinUseCase>(() => PostMeSocialJoinUseCase());
 
   // business
-  GetIt.instance
-      .registerLazySingleton<GetBusinessMembersUseCase>(() => GetBusinessMembersUseCase());
+  GetIt.instance.registerLazySingleton<GetBusinessMembersUseCase>(() => GetBusinessMembersUseCase());
   GetIt.instance.registerLazySingleton<GetRolesUseCase>(() => GetRolesUseCase());
   GetIt.instance.registerLazySingleton<PatchRoleUseCase>(() => PatchRoleUseCase());
   GetIt.instance.registerLazySingleton<PatchMemberUseCase>(() => PatchMemberUseCase());
@@ -147,8 +147,7 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<PostDeviceUseCase>(() => PostDeviceUseCase());
   GetIt.instance.registerLazySingleton<DelDeviceUseCase>(() => DelDeviceUseCase());
   GetIt.instance.registerLazySingleton<PatchDeviceNameUseCase>(() => PatchDeviceNameUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
+  GetIt.instance.registerLazySingleton<PostDevicesContentsUseCase>(() => PostDevicesContentsUseCase());
   GetIt.instance.registerLazySingleton<PostShowNameEventUseCase>(() => PostShowNameEventUseCase());
 
   // playlist
@@ -168,8 +167,7 @@ void initServiceLocator() {
   // media
   GetIt.instance.registerLazySingleton<GetMediasUseCase>(() => GetMediasUseCase());
   GetIt.instance.registerLazySingleton<GetMediaUseCase>(() => GetMediaUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostCreateMediaFolderUseCase>(() => PostCreateMediaFolderUseCase());
+  GetIt.instance.registerLazySingleton<PostCreateMediaFolderUseCase>(() => PostCreateMediaFolderUseCase());
   GetIt.instance.registerLazySingleton<PatchMediaNameUseCase>(() => PatchMediaNameUseCase());
   GetIt.instance.registerLazySingleton<PostMediaMoveUseCase>(() => PostMediaMoveUseCase());
   GetIt.instance.registerLazySingleton<DelMediaUseCase>(() => DelMediaUseCase());
@@ -178,40 +176,34 @@ void initServiceLocator() {
   GetIt.instance.registerLazySingleton<GetCanvasesUseCase>(() => GetCanvasesUseCase());
 
   // file
-  GetIt.instance
-      .registerLazySingleton<PostUploadMediaImageUseCase>(() => PostUploadMediaImageUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostUploadMediaVideoUseCase>(() => PostUploadMediaVideoUseCase());
-  GetIt.instance
-      .registerLazySingleton<PostUploadProfileImageUseCase>(() => PostUploadProfileImageUseCase());
+  GetIt.instance.registerLazySingleton<PostUploadMediaImageUseCase>(() => PostUploadMediaImageUseCase());
+  GetIt.instance.registerLazySingleton<PostUploadMediaVideoUseCase>(() => PostUploadMediaVideoUseCase());
+  GetIt.instance.registerLazySingleton<PostUploadProfileImageUseCase>(() => PostUploadProfileImageUseCase());
 
   // validation
-  GetIt.instance.registerLazySingleton<PostValidationSocialLoginUseCase>(
-      () => PostValidationSocialLoginUseCase());
+  GetIt.instance.registerLazySingleton<PostValidationSocialLoginUseCase>(() => PostValidationSocialLoginUseCase());
 
   /// -------
   /// repository
   /// -------
   GetIt.instance.registerLazySingleton<LocalAppRepository>(() => LocalAppRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteAppRepository>(() => RemoteAppRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteAuthRepository>(() => RemoteAuthRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteMeRepository>(() => RemoteMeRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteDeviceRepository>(() => RemoteDeviceRepositoryImpl());
-  GetIt.instance
-      .registerLazySingleton<RemotePlaylistRepository>(() => RemotePlaylistRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemotePlaylistRepository>(() => RemotePlaylistRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteMediaRepository>(() => RemoteMediaRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteCanvasRepository>(() => RemoteCanvasRepositoryImpl());
-  GetIt.instance
-      .registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteScheduleRepository>(() => RemoteScheduleRepositoryImpl());
   GetIt.instance.registerLazySingleton<RemoteFileRepository>(() => RemoteFileRepositoryImpl());
-  GetIt.instance
-      .registerLazySingleton<RemoteValidationRepository>(() => RemoteValidationRepositoryImpl());
-  GetIt.instance
-      .registerLazySingleton<RemoteBusinessRepository>(() => RemoteBusinessRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteValidationRepository>(() => RemoteValidationRepositoryImpl());
+  GetIt.instance.registerLazySingleton<RemoteBusinessRepository>(() => RemoteBusinessRepositoryImpl());
 
   /// -------
   /// api
   /// -------
   GetIt.instance.registerLazySingleton<LocalAppApi>(() => LocalAppApi());
+  GetIt.instance.registerLazySingleton<RemoteAppApi>(() => RemoteAppApi());
   GetIt.instance.registerLazySingleton<RemoteAuthApi>(() => RemoteAuthApi());
   GetIt.instance.registerLazySingleton<RemoteMeApi>(() => RemoteMeApi());
   GetIt.instance.registerLazySingleton<RemoteDeviceApi>(() => RemoteDeviceApi());
