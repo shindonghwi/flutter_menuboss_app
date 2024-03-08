@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/data/models/business/ResponseBusinessMemberPhone.dart';
+import 'package:menuboss/data/models/me/ResponseMeBusinessPhone.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 
 import 'ResponseBusinessMemberRole.dart';
@@ -11,7 +12,7 @@ class ResponseBusinessMemberModel {
   final int memberId;
   final String email;
   final String name;
-  final String? phone;
+  final ResponseMeBusinessPhone? phone;
   final String createdDate;
   final String updatedDate;
   final ResponseBusinessMemberRole? role;
@@ -40,7 +41,7 @@ class ResponseBusinessMemberModel {
     int? memberId,
     String? email,
     String? name,
-    String? phone,
+    ResponseMeBusinessPhone? phone,
     String? createdDate,
     String? updatedDate,
     ResponseBusinessMemberRole? role,

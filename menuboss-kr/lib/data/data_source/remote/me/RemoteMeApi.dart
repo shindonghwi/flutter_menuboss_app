@@ -7,6 +7,7 @@ import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
 import 'package:menuboss/data/models/me/ResponseMeUpdateProfile.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
+import 'package:menuboss_common/utils/StringUtil.dart';
 
 import '../../../models/me/ResponseMeInfoModel.dart';
 import '../BaseApiUtil.dart';
@@ -73,18 +74,11 @@ class RemoteMeApi {
   /// Owner 번호 수정
   Future<ApiResponse<void>> patchPhone(String country, String phone) async {
     try {
-      String convertToInternationalFormat(String phoneNumber) {
-        String cleanedNumber = phoneNumber.replaceAll('-', '');
-        if (cleanedNumber.startsWith('0')) {
-          cleanedNumber = '82${cleanedNumber.substring(1)}';
-        }
-        return '+$cleanedNumber';
-      }
 
       final response = await Service.patchApi(
         type: ServiceType.Me,
         endPoint: "phone",
-        jsonBody: {"country": country, "phone": convertToInternationalFormat(phone)},
+        jsonBody: {"country": country, "phone": StringUtil.convertKrPhoneCountry(phone)},
       );
 
       final errorResponse = BaseApiUtil.isErrorStatusCode(response);

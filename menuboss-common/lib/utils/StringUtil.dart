@@ -104,6 +104,15 @@ class StringUtil {
     }
   }
 
+  /// "+821012345678"를 형태로 변환하여 반환합니다.
+  static String convertKrPhoneCountry(String phoneNumber) {
+    String cleanedNumber = phoneNumber.replaceAll('-', '');
+    if (cleanedNumber.startsWith('0')) {
+      cleanedNumber = '82${cleanedNumber.substring(1)}';
+    }
+    return '+$cleanedNumber';
+  }
+
   /// 문자열에서 숫자만 찾아서 반환하기.
   static String extractNumbers(String str) {
     final RegExp regExp = RegExp(r'\d');
