@@ -31,7 +31,10 @@ class PopupForceUpdate extends HookWidget {
           Container(
             width: 32,
             height: 32,
-            color: getColorScheme(context).colorPrimary500,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(100),
+              color: getColorScheme(context).colorPrimary500,
+            ),
             child: Align(
               alignment: Alignment.center,
               child: LoadSvg(
