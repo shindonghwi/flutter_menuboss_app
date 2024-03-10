@@ -4,20 +4,34 @@ import 'package:flutter/cupertino.dart';
 import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/navigation/Route.dart';
 
-PageRoute nextSlideHorizontalScreen(String route, {dynamic parameter, fullScreen = false}) {
+PageRoute nextSlideHorizontalScreen(
+  String route, {
+  dynamic parameter,
+  dynamic parameter1,
+  fullScreen = false,
+}) {
   if (Platform.isIOS) {
     return CupertinoPageRoute(
-      builder: (context) => RoutingScreen.getScreen(route, parameter: parameter),
+      builder: (context) => RoutingScreen.getScreen(
+        route,
+        parameter: parameter,
+        parameter1: parameter1,
+      ),
     );
   } else {
     return PageRouteBuilder(
       transitionDuration: const Duration(milliseconds: 300),
-      pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
+      pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(
+        route,
+        parameter: parameter,
+        parameter1: parameter1,
+      ),
       reverseTransitionDuration: const Duration(milliseconds: 300),
       fullscreenDialog: fullScreen,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         return SlideTransition(
-          position: Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0)).animate(animation),
+          position:
+              Tween(begin: const Offset(1.0, 0.0), end: const Offset(0.0, 0.0)).animate(animation),
           child: child,
         );
       },
@@ -25,10 +39,15 @@ PageRoute nextSlideHorizontalScreen(String route, {dynamic parameter, fullScreen
   }
 }
 
-PageRoute nextFadeInOutScreen(String route, {dynamic parameter, fullScreen = false}) {
+PageRoute nextFadeInOutScreen(String route,
+    {dynamic parameter, dynamic parameter1, fullScreen = false}) {
   return PageRouteBuilder(
     transitionDuration: const Duration(milliseconds: 300),
-    pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
+    pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(
+      route,
+      parameter: parameter,
+      parameter1: parameter1,
+    ),
     reverseTransitionDuration: const Duration(milliseconds: 300),
     fullscreenDialog: fullScreen,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
@@ -40,10 +59,15 @@ PageRoute nextFadeInOutScreen(String route, {dynamic parameter, fullScreen = fal
   );
 }
 
-PageRoute nextSlideVerticalScreen(String route, {dynamic parameter, fullScreen = false}) {
+PageRoute nextSlideVerticalScreen(String route,
+    {dynamic parameter, dynamic parameter1, fullScreen = false}) {
   return PageRouteBuilder(
     transitionDuration: const Duration(milliseconds: 300),
-    pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(route, parameter: parameter),
+    pageBuilder: (context, animation, secondaryAnimation) => RoutingScreen.getScreen(
+      route,
+      parameter: parameter,
+      parameter1: parameter1,
+    ),
     reverseTransitionDuration: const Duration(milliseconds: 300),
     fullscreenDialog: fullScreen,
     transitionsBuilder: (context, animation, secondaryAnimation, child) {

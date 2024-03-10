@@ -8,6 +8,7 @@ class RequestTeamMemberModel {
   final String email;
   final String name;
   final String password;
+  final String country;
   final String phone;
   final int roleId;
 
@@ -15,6 +16,7 @@ class RequestTeamMemberModel {
     required this.email,
     required this.name,
     required this.password,
+    required this.country,
     required this.phone,
     required this.roleId,
   });
@@ -26,6 +28,7 @@ class RequestTeamMemberModel {
     String? email,
     String? name,
     String? password,
+    String? country,
     String? phone,
     int? roleId,
   }) {
@@ -33,6 +36,7 @@ class RequestTeamMemberModel {
       email: email ?? this.email,
       name: name ?? this.name,
       password: password ?? this.password,
+      country: country ?? this.country,
       phone: phone ?? this.phone,
       roleId: roleId ?? this.roleId,
     );

@@ -1,11 +1,13 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:menuboss/data/models/base/ApiResponse.dart';
 import 'package:menuboss/data/models/me/RequestMeJoinModel.dart';
 import 'package:menuboss/data/models/me/RequestMeSocialJoinModel.dart';
 import 'package:menuboss/data/models/me/ResponseMeAuthorization.dart';
 import 'package:menuboss/data/models/me/ResponseMeUpdateProfile.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
+import 'package:menuboss_common/utils/StringUtil.dart';
 
 import '../../../models/me/ResponseMeInfoModel.dart';
 import '../BaseApiUtil.dart';
@@ -70,12 +72,13 @@ class RemoteMeApi {
   }
 
   /// Owner 번호 수정
-  Future<ApiResponse<void>> patchPhone(String phone) async {
+  Future<ApiResponse<void>> patchPhone(String country, String phone) async {
     try {
+
       final response = await Service.patchApi(
         type: ServiceType.Me,
         endPoint: "phone",
-        jsonBody: {"phone": phone},
+        jsonBody: {"country": country, "phone": StringUtil.convertKrPhoneCountry(phone)},
       );
 
       final errorResponse = BaseApiUtil.isErrorStatusCode(response);

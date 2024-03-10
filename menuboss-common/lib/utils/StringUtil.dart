@@ -91,11 +91,26 @@ class StringUtil {
       cleanedNumber = phoneNumber;
     }
     cleanedNumber = cleanedNumber.replaceAll(RegExp(r'\D'), '');
+
+    // "0"으로 시작하지 않는 번호에 "0" 추가
+    if (!cleanedNumber.startsWith('0')) {
+      cleanedNumber = '0$cleanedNumber';
+    }
+
     if (cleanedNumber.length == 11) {
       return cleanedNumber.replaceRange(3, 3, "-").replaceRange(8, 8, "-");
     } else {
       return phoneNumber;
     }
+  }
+
+  /// "+82 1012345678"를 형태로 변환하여 반환합니다.
+  static String convertKrPhoneCountry(String phoneNumber) {
+    String cleanedNumber = phoneNumber.replaceAll('-', '');
+    if (cleanedNumber.startsWith('0')) {
+      cleanedNumber = '82 ${cleanedNumber.substring(1)}';
+    }
+    return '+$cleanedNumber';
   }
 
   /// 문자열에서 숫자만 찾아서 반환하기.

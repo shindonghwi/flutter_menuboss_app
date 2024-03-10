@@ -23,8 +23,8 @@ class UpdateBusinessInfoNotifier extends StateNotifier<UIState<String?>> {
     state = Loading();
     try {
       final resultList = await Future.wait([
+        _patchBusinessNameUseCase.call(title),
         _patchAddressUseCase.call(addressModel),
-        _patchBusinessNameUseCase.call(title)
       ]);
 
       for (var result in resultList) {

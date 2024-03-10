@@ -10,12 +10,14 @@ SocialLoginModel _$SocialLoginModelFromJson(Map<String, dynamic> json) =>
     SocialLoginModel(
       $enumDecode(_$LoginPlatformEnumMap, json['loginPlatform']),
       json['accessToken'] as String?,
+      email: json['email'] as String? ?? "",
     );
 
 Map<String, dynamic> _$SocialLoginModelToJson(SocialLoginModel instance) =>
     <String, dynamic>{
       'loginPlatform': _$LoginPlatformEnumMap[instance.loginPlatform]!,
       'accessToken': instance.accessToken,
+      'email': instance.email,
     };
 
 const _$LoginPlatformEnumMap = {

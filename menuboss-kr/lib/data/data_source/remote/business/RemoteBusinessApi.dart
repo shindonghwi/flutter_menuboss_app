@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter/cupertino.dart';
 import 'package:menuboss/data/models/base/ApiListResponse.dart';
 import 'package:menuboss/data/models/business/RequestTeamMemberModel.dart';
 
@@ -110,6 +111,7 @@ class RemoteBusinessApi {
 
   /// 구성원 계정 수정
   Future<ApiResponse<void>> patchMember(RequestTeamMemberModel model, int memberId) async {
+    debugPrint("patchMember: $model");
     try {
       final response = await Service.patchApi(
         type: ServiceType.Business,

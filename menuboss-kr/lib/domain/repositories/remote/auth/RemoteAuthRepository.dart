@@ -11,9 +11,6 @@ abstract class RemoteAuthRepository {
   /// 애플 로그인
   Future<ApiResponse<SocialLoginModel>> doAppleLogin();
 
-  /// 구글 로그인
-  Future<ApiResponse<SocialLoginModel>> doGoogleLogin();
-
   /// 카카오 로그인
   Future<ApiResponse<SocialLoginModel>> doKakaoLogin();
 

@@ -38,9 +38,12 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
 
   void updateMePhone(String phone) {
     ResponseMeInfoModel meInfo = state!.copyWith(
-        profile: state!.profile?.copyWith(
-      phone: phone,
-    ));
+      profile: state!.profile?.copyWith(
+        phone: state!.profile?.phone?.copyWith(
+          phone: phone,
+        ),
+      ),
+    );
     debugPrint("updateMePhone : $meInfo");
     state = meInfo;
   }
@@ -68,7 +71,9 @@ class MeInfoNotifier extends StateNotifier<ResponseMeInfoModel?> {
     if (!CollectionUtil.isNullEmptyFromString(phone)) {
       meInfo = meInfo.copyWith(
         business: meInfo.business!.copyWith(
-          phone: phone,
+          phone: meInfo.business!.phone?.copyWith(
+            phone: phone,
+          ),
         ),
       );
     }

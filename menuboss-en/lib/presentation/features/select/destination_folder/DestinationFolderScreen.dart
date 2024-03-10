@@ -114,8 +114,6 @@ class DestinationFolderScreen extends HookConsumerWidget {
                         } else {
                           isSelectFolderId.value = item?.mediaId;
                         }
-                        debugPrint(
-                            "isSelectFolderId: ${isSelectFolderId.value}  ${isSelectFolderId.value == null}");
                       },
                       child: Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
@@ -187,7 +185,7 @@ class _FolderItem extends StatelessWidget {
                 ),
               Container(
                 margin: EdgeInsets.only(left: inRoot ? 12 : 56),
-                child: LoadSvg(
+                child: const LoadSvg(
                   path: "assets/imgs/icon_folder.svg",
                   width: 24,
                   height: 24,

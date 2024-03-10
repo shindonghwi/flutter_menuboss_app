@@ -12,7 +12,10 @@ ResponseBusinessMemberModel _$ResponseBusinessMemberModelFromJson(
       memberId: json['memberId'] as int,
       email: json['email'] as String,
       name: json['name'] as String,
-      phone: json['phone'] as String?,
+      phone: json['phone'] == null
+          ? null
+          : ResponseMeBusinessPhone.fromJson(
+              json['phone'] as Map<String, dynamic>),
       createdDate: json['createdDate'] as String,
       updatedDate: json['updatedDate'] as String,
       role: json['role'] == null

@@ -20,10 +20,12 @@ import '../../../navigation/Route.dart';
 
 class PolicyScreen extends HookWidget {
   final RequestMeSocialJoinModel? socialJoinModel;
+  final String? socialEmail;
 
   const PolicyScreen({
     super.key,
     this.socialJoinModel,
+    this.socialEmail,
   });
 
   @override
@@ -59,6 +61,7 @@ class PolicyScreen extends HookWidget {
               nextSlideHorizontalScreen(
                 RoutingScreen.SignUp.route,
                 parameter: socialJoinModel,
+                parameter1: socialEmail,
               ),
             );
           },
@@ -175,22 +178,21 @@ class _TermContents extends HookWidget {
             children: termAgreeList.asMap().entries.map((e) {
               int index = e.key;
               ValueNotifier<bool> value = e.value;
-              bool isDev = Environment.buildType == BuildType.dev;
               String content = "";
-              String policyBaseUrl = "https://${isDev ? "dev-www" : "www"}.menuboss.kr/policy";
+              String policyBaseUrl = Environment.prodWebUrl;
               String policyFullUrl = "";
 
               if (index == 0) {
                 content = getString(context).policyTerm1;
               } else if (index == 1) {
                 content = getString(context).policyTerm2;
-                policyFullUrl = "$policyBaseUrl/service";
+                policyFullUrl = "$policyBaseUrl/policy/service";
               } else if (index == 2) {
                 content = getString(context).policyTerm3;
-                policyFullUrl = "$policyBaseUrl/privacy";
+                policyFullUrl = "$policyBaseUrl/policy/privacy";
               } else if (index == 3) {
                 content = getString(context).policyTerm4;
-                policyFullUrl = "$policyBaseUrl/marketing";
+                policyFullUrl = "$policyBaseUrl/policy/marketing";
               }
 
               return SizedBox(

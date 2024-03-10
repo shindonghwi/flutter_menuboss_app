@@ -1,10 +1,8 @@
 import 'dart:convert';
 
 import 'package:crypto/crypto.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:menuboss/app/MenuBossApp.dart';
 import 'package:menuboss/app/env/Environment.dart';
 import 'package:menuboss/data/data_source/remote/HeaderKey.dart';
 import 'package:menuboss/data/models/auth/RequestEmailLoginModel.dart';
@@ -32,6 +30,17 @@ class RemoteAuthApi {
   /// @feature: 애플 로그인
   /// @author: 2023/09/11 6:31 PM donghwishin
   Future<ApiResponse<SocialLoginModel>> doAppleLogin() async {
+
+    String getEmailFromJWT(String? jwtToken){
+      List<String> jwt = jwtToken?.split('.') ?? [];
+      String payload = jwt[1];
+      payload = base64.normalize(payload);
+
+      final List<int> jsonData = base64.decode(payload);
+      final userInfo = jsonDecode(utf8.decode(jsonData));
+      return userInfo['email'];
+    }
+
     if (await Service.isNetworkAvailable()) {
       final rawNonce = generateNonce();
 
@@ -59,6 +68,8 @@ class RemoteAuthApi {
           nonce: nonce,
         );
 
+        String email = getEmailFromJWT(appleIdCredential.identityToken);
+
         if (!CollectionUtil.isNullEmptyFromString(appleIdCredential.identityToken)) {
           return ApiResponse<SocialLoginModel>(
             status: 200,
@@ -66,6 +77,7 @@ class RemoteAuthApi {
             data: SocialLoginModel(
               LoginPlatform.Apple,
               appleIdCredential.identityToken,
+              email: email,
             ),
           );
         } else {
@@ -115,21 +127,22 @@ class RemoteAuthApi {
           debugPrint("doGoogleLogin accessToken: ${googleAuth.accessToken}");
           debugPrint("doGoogleLogin idToken: ${googleAuth.idToken}");
 
-          if (CollectionUtil.isNullEmptyFromString(googleAuth.idToken)){
+          if (CollectionUtil.isNullEmptyFromString(googleAuth.idToken)) {
             return ApiResponse<SocialLoginModel>(
               status: 404,
               message: "User information not found",
               data: null,
             );
-          }else{
+          } else {
             return await googleUser.authentication.then(
-                  (value) {
+              (value) {
                 return ApiResponse<SocialLoginModel>(
                   status: 200,
                   message: "",
                   data: SocialLoginModel(
                     LoginPlatform.Google,
                     value.idToken,
+                    email: googleUser.email,
                   ),
                 );
               },

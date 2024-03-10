@@ -7,7 +7,7 @@ class PatchMePhoneUseCase {
 
   final RemoteMeRepository _remoteMeRepository = GetIt.instance<RemoteMeRepository>();
 
-  Future<ApiResponse<void>> call(String phone) async {
-    return await _remoteMeRepository.patchPhone(phone);
+  Future<ApiResponse<void>> call(String country, String phone) async {
+    return await _remoteMeRepository.patchPhone(country, phone);
   }
 }

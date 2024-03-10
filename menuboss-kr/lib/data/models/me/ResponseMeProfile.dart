@@ -1,4 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:menuboss/data/models/me/ResponseMePhone.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 
 part 'ResponseMeProfile.g.dart';
@@ -6,7 +7,7 @@ part 'ResponseMeProfile.g.dart';
 @JsonSerializable()
 class ResponseMeProfile {
   final String? name;
-  final String? phone;
+  final ResponseMePhone? phone;
   final String? imageUrl;
 
   ResponseMeProfile({
@@ -22,7 +23,7 @@ class ResponseMeProfile {
 
   ResponseMeProfile copyWith({
     String? name,
-    String? phone,
+    ResponseMePhone? phone,
     String? imageUrl,
   }) {
     return ResponseMeProfile(

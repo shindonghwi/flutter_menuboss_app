@@ -27,8 +27,13 @@ import 'provider/GetMeProvider.dart';
 
 class SignUpScreen extends HookConsumerWidget {
   final RequestMeSocialJoinModel? socialJoinModel;
+  final String? socialEmail;
 
-  const SignUpScreen({super.key, this.socialJoinModel});
+  const SignUpScreen({
+    super.key,
+    this.socialJoinModel,
+    this.socialEmail,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -92,107 +97,18 @@ class SignUpScreen extends HookConsumerWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   if (socialJoinModel == null)
-                    // Email
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          getString(context).commonEmail,
-                          style: getTextTheme(context).b3m.copyWith(
-                                color: getColorScheme(context).colorGray800,
-                              ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: OutlineTextField.medium(
-                            controller: useTextEditingController(),
-                            hint: getString(context).commonEmail,
-                            successMessage: getString(context).loginEmailCorrect,
-                            errorMessage: getString(context).loginEmailInvalid,
-                            checkRegList: const [
-                              RegCheckType.Email,
-                            ],
-                            onChanged: (text) => email.value = text,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                      ],
+                    _EmailSignUpForm(
+                      onChangedEmail: (text) => email.value = text,
+                      onChangedPw: (text) => password.value = text,
+                    )
+                  else
+                    _SocialSignUpForm(
+                      socialEmail: socialEmail,
                     ),
-
-                  if (socialJoinModel == null)
-                    // Password
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          getString(context).commonPassword,
-                          style: getTextTheme(context).b3m.copyWith(
-                                color: getColorScheme(context).colorGray800,
-                              ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 12),
-                          child: OutlineTextField.medium(
-                            controller: useTextEditingController(),
-                            hint: getString(context).commonPassword,
-                            errorMessage: getString(context).loginPwInvalid,
-                            checkRegList: const [
-                              RegCheckType.PW,
-                            ],
-                            textInputAction: TextInputAction.next,
-                            textInputType: TextInputType.visiblePassword,
-                            showPwVisibleButton: true,
-                            showSuffixStatusIcon: false,
-                            onChanged: (text) => password.value = text,
-                          ),
-                        ),
-                        const SizedBox(height: 16),
-                      ],
-                    ),
-                  // Full name
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        getString(context).commonFullName,
-                        style: getTextTheme(context).b3m.copyWith(
-                              color: getColorScheme(context).colorGray800,
-                            ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
-                        child: OutlineTextField.medium(
-                          controller: useTextEditingController(),
-                          hint: getString(context).signupFullNameHint,
-                          onChanged: (text) => fullName.value = text,
-                        ),
-                      ),
-                      const SizedBox(height: 16),
-                    ],
+                  _DefaultSignUpForm(
+                    onChangedFullName: (text) => fullName.value = text,
+                    onChangedBusinessName: (text) => businessName.value = text,
                   ),
-
-                  // Business name
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        getString(context).signupBusinessName,
-                        style: getTextTheme(context).b3m.copyWith(
-                              color: getColorScheme(context).colorGray800,
-                            ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(top: 12.0),
-                        child: OutlineTextField.medium(
-                          controller: useTextEditingController(),
-                          hint: getString(context).signupBusinessNameHint,
-                          onChanged: (text) => businessName.value = text,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                    ],
-                  ),
-
                   SizedBox(
                     width: double.infinity,
                     child: PrimaryFilledButton.mediumRound8(
@@ -240,6 +156,170 @@ class SignUpScreen extends HookConsumerWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class _EmailSignUpForm extends HookWidget {
+  final Function(String) onChangedEmail;
+  final Function(String) onChangedPw;
+
+  const _EmailSignUpForm({
+    super.key,
+    required this.onChangedEmail,
+    required this.onChangedPw,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getString(context).commonEmail,
+              style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).colorGray800,
+                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: OutlineTextField.medium(
+                controller: useTextEditingController(),
+                hint: getString(context).commonEmail,
+                successMessage: getString(context).loginEmailCorrect,
+                errorMessage: getString(context).loginEmailInvalid,
+                checkRegList: const [
+                  RegCheckType.Email,
+                ],
+                onChanged: (text) => onChangedEmail.call(text),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getString(context).commonPassword,
+              style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).colorGray800,
+                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12),
+              child: OutlineTextField.medium(
+                controller: useTextEditingController(),
+                hint: getString(context).commonPassword,
+                errorMessage: getString(context).loginPwInvalid,
+                checkRegList: const [
+                  RegCheckType.PW,
+                ],
+                textInputAction: TextInputAction.next,
+                textInputType: TextInputType.visiblePassword,
+                showPwVisibleButton: true,
+                showSuffixStatusIcon: false,
+                onChanged: (text) => onChangedPw.call(text),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+      ],
+    );
+  }
+}
+
+class _SocialSignUpForm extends HookWidget {
+  final String? socialEmail;
+
+  const _SocialSignUpForm({
+    super.key,
+    this.socialEmail,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          getString(context).commonEmail,
+          style: getTextTheme(context).b3m.copyWith(
+                color: getColorScheme(context).colorGray800,
+              ),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 12),
+          child: OutlineTextField.medium(
+            controller: useTextEditingController(text: socialEmail ?? ""),
+            hint: getString(context).commonEmail,
+            enable: false,
+          ),
+        ),
+        const SizedBox(height: 16),
+      ],
+    );
+  }
+}
+
+class _DefaultSignUpForm extends HookWidget {
+  final Function(String) onChangedFullName;
+  final Function(String) onChangedBusinessName;
+
+  const _DefaultSignUpForm({
+    super.key,
+    required this.onChangedFullName,
+    required this.onChangedBusinessName,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getString(context).commonFullName,
+              style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).colorGray800,
+                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: OutlineTextField.medium(
+                controller: useTextEditingController(),
+                hint: getString(context).signupFullNameHint,
+                onChanged: (text) => onChangedFullName.call(text),
+              ),
+            ),
+            const SizedBox(height: 16),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              getString(context).signupBusinessName,
+              style: getTextTheme(context).b3m.copyWith(
+                    color: getColorScheme(context).colorGray800,
+                  ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 12.0),
+              child: OutlineTextField.medium(
+                controller: useTextEditingController(),
+                hint: getString(context).signupBusinessNameHint,
+                onChanged: (text) => onChangedBusinessName.call(text),
+              ),
+            ),
+            const SizedBox(height: 24),
+          ],
+        ),
+      ],
     );
   }
 }

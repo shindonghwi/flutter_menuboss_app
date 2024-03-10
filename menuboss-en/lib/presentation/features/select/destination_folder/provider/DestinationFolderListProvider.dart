@@ -73,12 +73,7 @@ class DestinationFolderListNotifier extends StateNotifier<UIState<List<ResponseM
     if (response.status == 200) {
       final item = response.data;
       final newFolder = generateNewFolder(item);
-
-      if (_currentItems.isEmpty || (_currentItems.isNotEmpty && _currentItems[0].name != "Media")) {
-        _currentItems.insert(0, ResponseMediaModel(name: "Media"));
-      }
       _currentItems.insert(1, newFolder);
-
       state = Success([..._currentItems]);
       return newFolder;
     } else {
@@ -114,5 +109,7 @@ class DestinationFolderListNotifier extends StateNotifier<UIState<List<ResponseM
 
   void init() {
     state = Idle();
+    _currentPage = 1;
+    _currentItems = [];
   }
 }

@@ -16,7 +16,7 @@ abstract class RemoteMeRepository {
   Future<ApiResponse<void>> patchName(String name);
 
   /// Owner 번호 수정
-  Future<ApiResponse<void>> patchPhone(String name);
+  Future<ApiResponse<void>> patchPhone(String country, String name);
 
   /// Owner 패스워드 수정
   Future<ApiResponse<void>> patchPassword(String password);

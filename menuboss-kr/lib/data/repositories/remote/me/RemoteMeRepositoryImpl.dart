@@ -25,8 +25,8 @@ class RemoteMeRepositoryImpl implements RemoteMeRepository {
   }
 
   @override
-  Future<ApiResponse<void>> patchPhone(String name) {
-    return remoteMeApi.patchPhone(name);
+  Future<ApiResponse<void>> patchPhone(String country, String phone) {
+    return remoteMeApi.patchPhone(country, phone);
   }
 
   @override

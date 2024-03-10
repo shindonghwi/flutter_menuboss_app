@@ -46,7 +46,7 @@ class TeamCreateScreen extends HookConsumerWidget {
     final emailState = useState(item?.email ?? "");
     final nameState = useState(item?.name ?? "");
     final passwordState = useState("");
-    final phoneState = useState(StringUtil.formatKrPhoneNumber(item?.phone ?? ""));
+    final phoneState = useState(StringUtil.formatKrPhoneNumber(item?.phone?.phone ?? ""));
     final roleIdState = useState<int>(item?.role?.roleId ?? -1);
     final scrollController = useScrollController();
 
@@ -109,7 +109,7 @@ class TeamCreateScreen extends HookConsumerWidget {
                   ),
                   const SizedBox(height: 16),
                   _Phone(
-                    initValue: item?.phone ?? "",
+                    initValue: item?.phone?.phone ?? "",
                     onChanged: (phone) => phoneState.value = phone,
                   ),
                   const SizedBox(height: 16),
@@ -144,7 +144,10 @@ class TeamCreateScreen extends HookConsumerWidget {
                   email: emailState.value,
                   name: nameState.value,
                   password: passwordState.value,
-                  phone: StringUtil.extractNumbers(phoneState.value),
+                  country: "KR",
+                  phone: StringUtil.convertKrPhoneCountry(
+                    StringUtil.extractNumbers(phoneState.value),
+                  ),
                   roleId: roleIdState.value,
                 ),
               );

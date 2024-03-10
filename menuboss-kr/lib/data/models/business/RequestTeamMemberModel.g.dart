@@ -12,6 +12,7 @@ RequestTeamMemberModel _$RequestTeamMemberModelFromJson(
       email: json['email'] as String,
       name: json['name'] as String,
       password: json['password'] as String,
+      country: json['country'] as String,
       phone: json['phone'] as String,
       roleId: json['roleId'] as int,
     );
@@ -22,6 +23,7 @@ Map<String, dynamic> _$RequestTeamMemberModelToJson(
       'email': instance.email,
       'name': instance.name,
       'password': instance.password,
+      'country': instance.country,
       'phone': instance.phone,
       'roleId': instance.roleId,
     };

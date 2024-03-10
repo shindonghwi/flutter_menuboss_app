@@ -18,7 +18,7 @@
     "createScheduleDefaultPlaylistTitleLunch": "Lunch",
     "createScheduleDefaultPlaylistTitleDinner": "Dinner",
 
-    "deleteAccountTitle": "'Delete account",
+    "deleteAccountTitle": "Delete account",
     "deleteAccountDescription": "Are you sure you want to delete your account?",
     "deleteAccountDescription1": "When you delete your account, all of your information and data will be deleted.\nIf you want to delete it, please check the precautions and proceed",
     "deleteAccountReasonTitle": "Reason for deleting your account",

@@ -18,16 +18,22 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String kakaoNativeAppKey =
-      _instance._buildType == BuildType.dev ? '87e95076a7810aa93854080bab89a56f' : '782a9583e5428ca708d3feae7b536359';
+  static String kakaoNativeAppKey = _instance._buildType == BuildType.dev
+      ? '87e95076a7810aa93854080bab89a56f'
+      : '782a9583e5428ca708d3feae7b536359';
 
-  static String apiUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-app-api-kr.menuboss.live' : 'https://app-api.menuboss.kr';
+  static const String devApiUrl = 'https://dev-app-api-us.menuboss.live';
+  static const String prodApiUrl = 'https://app-api.menuboss.kr';
 
-  static String webUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-www-kr.menuboss.live' : 'https://www.menuboss.kr';
+  static String apiUrl = _instance._buildType == BuildType.dev ? devApiUrl : prodApiUrl;
 
-  static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
+  static const String devWebUrl = 'https://dev-www-kr.menuboss.live';
+  static const String prodWebUrl = 'https://www.menuboss.kr';
+
+  static String webUrl = _instance._buildType == BuildType.dev ? devWebUrl : prodWebUrl;
+
+  static String get apiVersion =>
+      _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
   factory Environment.newInstance(BuildType buildType) {
     _instance = Environment._internal(buildType);
@@ -37,7 +43,7 @@ class Environment {
   bool get isDebuggable => _buildType == BuildType.dev;
 
   void run() async {
-    print('Environment run: ${await KakaoSdk.origin}');
+    debugPrint('Environment run: ${await KakaoSdk.origin}');
     KakaoSdk.init(nativeAppKey: Environment.kakaoNativeAppKey);
     SystemChrome.setEnabledSystemUIMode(
       SystemUiMode.manual,

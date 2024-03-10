@@ -4,6 +4,7 @@ import 'package:menuboss/data/models/me/ResponseMeBusinessCount.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 
 import 'ResponseMeBusinessPermissions.dart';
+import 'ResponseMeBusinessPhone.dart';
 
 part 'ResponseMeBusiness.g.dart';
 
@@ -13,7 +14,7 @@ class ResponseMeBusiness {
   final String? role;
   final ResponseMeBusinessCount? count;
   final ResponseMeBusinessAddress? address;
-  final String? phone;
+  final ResponseMeBusinessPhone? phone;
   final List<ResponseMeBusinessPermissions>? permissions;
 
   ResponseMeBusiness({
@@ -35,7 +36,7 @@ class ResponseMeBusiness {
     String? role,
     ResponseMeBusinessCount? count,
     ResponseMeBusinessAddress? address,
-    String? phone,
+    ResponseMeBusinessPhone? phone,
     List<ResponseMeBusinessPermissions>? permissions,
   }) {
     return ResponseMeBusiness(

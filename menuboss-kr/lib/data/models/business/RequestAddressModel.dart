@@ -5,12 +5,14 @@ part 'RequestAddressModel.g.dart';
 
 @JsonSerializable()
 class RequestAddressModel {
+  final String country;
   final String line1;
   final String line2;
   final String phone;
   final String postalCode;
 
   RequestAddressModel({
+    required this.country,
     required this.line1,
     this.line2 = "",
     required this.phone,
@@ -21,12 +23,14 @@ class RequestAddressModel {
       _$RequestAddressModelFromJson(json);
 
   RequestAddressModel copyWith({
+    String? country,
     String? line1,
     String? line2,
     String? phone,
     String? postalCode,
   }) {
     return RequestAddressModel(
+      country: country ?? this.country,
       line1: line1 ?? this.line1,
       line2: line2 ?? this.line2,
       phone: phone ?? this.phone,
