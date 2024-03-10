@@ -20,10 +20,12 @@ import '../../../navigation/Route.dart';
 
 class PolicyScreen extends HookWidget {
   final RequestMeSocialJoinModel? socialJoinModel;
+  final String? socialEmail;
 
   const PolicyScreen({
     super.key,
     this.socialJoinModel,
+    this.socialEmail,
   });
 
   @override
@@ -59,6 +61,7 @@ class PolicyScreen extends HookWidget {
               nextSlideHorizontalScreen(
                 RoutingScreen.SignUp.route,
                 parameter: socialJoinModel,
+                parameter1: socialEmail,
               ),
             );
           },

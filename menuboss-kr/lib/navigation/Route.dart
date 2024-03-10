@@ -118,19 +118,21 @@ enum RoutingScreen {
     };
   }
 
-  static getScreen(String route, {dynamic parameter}) {
+  static getScreen(String route, {dynamic parameter, dynamic parameter1}) {
     if (route == RoutingScreen.Splash.route) {
       return const SplashScreen();
     } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
     } else if (route == RoutingScreen.SignUp.route) {
       RequestMeSocialJoinModel? socialJoinModel = parameter;
-      return SignUpScreen(socialJoinModel: socialJoinModel);
+      String? socialEmail = parameter1;
+      return SignUpScreen(socialJoinModel: socialJoinModel, socialEmail: socialEmail);
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
     } else if (route == RoutingScreen.Policy.route) {
       RequestMeSocialJoinModel? socialJoinModel = parameter;
-      return PolicyScreen(socialJoinModel: socialJoinModel);
+      String? socialEmail = parameter1;
+      return PolicyScreen(socialJoinModel: socialJoinModel, socialEmail: socialEmail);
     } else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.MediaInfo.route) {

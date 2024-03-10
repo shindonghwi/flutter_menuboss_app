@@ -7,8 +7,9 @@ part 'SocialLoginModel.g.dart';
 class SocialLoginModel {
   final LoginPlatform loginPlatform;
   final String? accessToken;
+  final String? email;
 
-  SocialLoginModel(this.loginPlatform, this.accessToken);
+  SocialLoginModel(this.loginPlatform, this.accessToken, {this.email = ""});
 
   factory SocialLoginModel.fromJson(Map<String, dynamic> json) => _$SocialLoginModelFromJson(json);
   Map<String, dynamic> toJson() => _$SocialLoginModelToJson(this);

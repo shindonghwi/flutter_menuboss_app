@@ -18,6 +18,7 @@ import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 import 'package:menuboss_common/utils/RegUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
+import 'package:menuboss_common/utils/dto/Pair.dart';
 
 import 'provider/MeInfoProvider.dart';
 
@@ -186,12 +187,16 @@ class _SocialLoginButtons extends HookConsumerWidget {
             Clickable(
               borderRadius: 8,
               onPressed: () async {
-                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doGoogleLogin();
-                if (socialJoinModel != null) {
+                Pair<String?, RequestMeSocialJoinModel>? data = await loginManager.doGoogleLogin();
+                if (data?.second != null) {
+                  // 이메일, 소셜로그인 정보
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
-                        parameter: socialJoinModel),
+                    nextSlideHorizontalScreen(
+                      RoutingScreen.SignUp.route,
+                      parameter: data?.second,
+                      parameter1: data?.first,
+                    ),
                   );
                 }
               },
@@ -205,12 +210,16 @@ class _SocialLoginButtons extends HookConsumerWidget {
             Clickable(
               borderRadius: 8,
               onPressed: () async {
-                RequestMeSocialJoinModel? socialJoinModel = await loginManager.doAppleLogin();
-                if (socialJoinModel != null) {
+                Pair<String?, RequestMeSocialJoinModel>? data = await loginManager.doAppleLogin();
+                if (data?.second != null) {
+                  // 이메일, 소셜로그인 정보
                   Navigator.push(
                     context,
-                    nextSlideHorizontalScreen(RoutingScreen.SignUp.route,
-                        parameter: socialJoinModel),
+                    nextSlideHorizontalScreen(
+                      RoutingScreen.SignUp.route,
+                      parameter: data?.second,
+                      parameter1: data?.first,
+                    ),
                   );
                 }
               },
