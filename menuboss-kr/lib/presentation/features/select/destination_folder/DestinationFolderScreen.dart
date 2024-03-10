@@ -187,7 +187,7 @@ class _FolderItem extends StatelessWidget {
                 ),
               Container(
                 margin: EdgeInsets.only(left: inRoot ? 12 : 56),
-                child: LoadSvg(
+                child: const LoadSvg(
                   path: "assets/imgs/icon_folder.svg",
                   width: 24,
                   height: 24,

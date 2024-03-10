@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
+import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 import 'package:menuboss/navigation/PageMoveUtil.dart';
 import 'package:menuboss/navigation/Route.dart';
@@ -9,7 +9,9 @@ import 'package:menuboss_common/ui/colors.dart';
 import 'package:menuboss_common/ui/typography.dart';
 import 'package:menuboss_common/utils/Common.dart';
 
-class RoleItem extends HookWidget {
+import '../provider/RoleListProvider.dart';
+
+class RoleItem extends HookConsumerWidget {
   final ResponseRoleModel item;
   final VoidCallback onDeleted;
 
@@ -20,15 +22,24 @@ class RoleItem extends HookWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final roleListManager = ref.read(roleListProvider.notifier);
+
     void goToCreateRole({ResponseRoleModel? item}) async {
-      Navigator.push(
-        context,
-        nextSlideHorizontalScreen(
-          RoutingScreen.RoleCreate.route,
-          parameter: item,
-        ),
-      );
+      try {
+        final isUpdated = await Navigator.push(
+          context,
+          nextSlideHorizontalScreen(
+            RoutingScreen.RoleCreate.route,
+            parameter: item,
+          ),
+        );
+        if (isUpdated) {
+          roleListManager.requestGetRoles();
+        }
+      } catch (e) {
+
+      }
     }
 
     return Container(
