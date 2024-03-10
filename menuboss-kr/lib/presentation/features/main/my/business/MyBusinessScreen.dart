@@ -34,6 +34,7 @@ class MyBusinessScreen extends HookConsumerWidget {
     final businessName = useState(meInfoState?.business?.title);
     final addressInfo = useState(
       RequestAddressModel(
+        country: "KR",
         line1: meInfoState?.business?.address?.line1 ?? "",
         line2: meInfoState?.business?.address?.line2 ?? "",
         postalCode: meInfoState?.business?.address?.postalCode ?? "",
@@ -115,7 +116,7 @@ class MyBusinessScreen extends HookConsumerWidget {
                     initValue: meInfoState?.business?.phone?.phone ?? "",
                     onChanged: (phone) {
                       addressInfo.value = addressInfo.value.copyWith(
-                        phone: phone,
+                        phone: StringUtil.convertKrPhoneCountry(phone),
                       );
                     },
                   ),

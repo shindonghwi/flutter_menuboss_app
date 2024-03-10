@@ -8,6 +8,7 @@ part of 'RequestAddressModel.dart';
 
 RequestAddressModel _$RequestAddressModelFromJson(Map<String, dynamic> json) =>
     RequestAddressModel(
+      country: json['country'] as String,
       line1: json['line1'] as String,
       line2: json['line2'] as String? ?? "",
       phone: json['phone'] as String,
@@ -17,6 +18,7 @@ RequestAddressModel _$RequestAddressModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$RequestAddressModelToJson(
         RequestAddressModel instance) =>
     <String, dynamic>{
+      'country': instance.country,
       'line1': instance.line1,
       'line2': instance.line2,
       'phone': instance.phone,

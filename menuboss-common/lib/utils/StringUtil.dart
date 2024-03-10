@@ -104,11 +104,11 @@ class StringUtil {
     }
   }
 
-  /// "+821012345678"를 형태로 변환하여 반환합니다.
+  /// "+82 1012345678"를 형태로 변환하여 반환합니다.
   static String convertKrPhoneCountry(String phoneNumber) {
     String cleanedNumber = phoneNumber.replaceAll('-', '');
     if (cleanedNumber.startsWith('0')) {
-      cleanedNumber = '82${cleanedNumber.substring(1)}';
+      cleanedNumber = '82 ${cleanedNumber.substring(1)}';
     }
     return '+$cleanedNumber';
   }
