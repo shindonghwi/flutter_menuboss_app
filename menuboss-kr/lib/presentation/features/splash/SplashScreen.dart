@@ -116,18 +116,18 @@ class SplashScreen extends HookConsumerWidget {
 
     useEffect(() {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
-        // final isForceUpdate = await isForceUpdateCheck();
-        // if (isForceUpdate) {
-        //   CommonPopup.showPopup(
-        //     context,
-        //     barrierDismissible: false,
-        //     child: PopupForceUpdate(
-        //       onClick: () => isUserActionGoToStore = true,
-        //     ),
-        //   );
-        // } else {
+        final isForceUpdate = await isForceUpdateCheck();
+        if (isForceUpdate) {
+          CommonPopup.showPopup(
+            context,
+            barrierDismissible: false,
+            child: PopupForceUpdate(
+              onClick: () => isUserActionGoToStore = true,
+            ),
+          );
+        } else {
           screenMoveProcess();
-        // }
+        }
       });
 
       StreamSubscription subscription;
