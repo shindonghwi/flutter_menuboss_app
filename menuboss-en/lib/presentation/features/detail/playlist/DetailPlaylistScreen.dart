@@ -103,7 +103,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
               previewListManager.changeItems(
                 PreviewModel(
-                  getPlaylistDirectionTypeFromString(item?.property?.direction),
+                  getPlaylistDirectionTypeFromString(item?.property?.direction?.code),
                   detailPreviewProcessManager.scaleType,
                   convertedItems,
                   convertedItems.map((e) => e.property?.duration?.ceil()).toList(),
