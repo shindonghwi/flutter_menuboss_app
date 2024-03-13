@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:menuboss_common/components/loader/LoadExtension.dart';
 import 'package:menuboss_common/ui/colors.dart';
 
 import '../../utils/CollectionUtil.dart';
@@ -51,6 +52,8 @@ class LoadProfile extends StatelessWidget {
           child: !CollectionUtil.isNullEmptyFromString(url)
               ? CachedNetworkImage(
                   imageUrl: url,
+                  memCacheWidth: containerSize.cacheSize(context),
+                  memCacheHeight: containerSize.cacheSize(context),
                   placeholder: (context, url) => ProfilePlaceholder(type: type),
                   errorWidget: (context, url, error) => ProfilePlaceholder(type: type),
                   fit: BoxFit.cover,

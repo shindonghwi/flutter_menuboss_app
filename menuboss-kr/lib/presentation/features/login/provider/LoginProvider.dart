@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -10,16 +9,16 @@ import 'package:menuboss/domain/models/auth/LoginPlatform.dart';
 import 'package:menuboss/domain/usecases/local/app/PostLoginAccessTokenUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostAppleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostEmailUseCase.dart';
-import 'package:menuboss/domain/usecases/remote/auth/PostGoogleSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostKakaoSignInUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/validation/PostValidationSocialLoginUseCase.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
+import 'package:menuboss_common/utils/dto/Pair.dart';
 
 final loginProvider = StateNotifierProvider<LoginUiStateNotifier, UIState<String?>>(
-      (_) => LoginUiStateNotifier(),
+  (_) => LoginUiStateNotifier(),
 );
 
 class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
@@ -27,7 +26,8 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   PostEmailLoginUseCase get _postEmailLoginInUseCase => GetIt.instance<PostEmailLoginUseCase>();
 
-  PostSocialLoginInUseCase get _postSocialLoginInUseCase => GetIt.instance<PostSocialLoginInUseCase>();
+  PostSocialLoginInUseCase get _postSocialLoginInUseCase =>
+      GetIt.instance<PostSocialLoginInUseCase>();
 
   PostValidationSocialLoginUseCase get _postValidationSocialLoginInUseCase =>
       GetIt.instance<PostValidationSocialLoginUseCase>();
@@ -68,31 +68,37 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     }
   }
 
-  Future<RequestMeSocialJoinModel?> doAppleLogin() async {
+  Future<Pair<String?, RequestMeSocialJoinModel>?> doAppleLogin() async {
     state = Loading();
     final result = await _postAppleSignInUseCase.call();
     if (result.status == 200) {
       final accessToken = result.data?.accessToken;
-      return await proceedSocialLogin(LoginPlatform.Apple, accessToken);
+      final email = result.data?.email;
+      return await proceedSocialLogin(LoginPlatform.Apple, accessToken, email);
     } else {
       state = Failure(result.message);
     }
     return Future(() => null);
   }
 
-  Future<RequestMeSocialJoinModel?> doKakaoLogin() async {
+  Future<Pair<String?, RequestMeSocialJoinModel>?> doKakaoLogin() async {
     state = Loading();
     final result = await _postKakaoSignInUseCase.call();
     if (result.status == 200) {
       final accessToken = result.data?.accessToken;
-      return await proceedSocialLogin(LoginPlatform.Kakao, accessToken);
+      final email = result.data?.email;
+      return await proceedSocialLogin(LoginPlatform.Kakao, accessToken, email);
     } else {
       state = Failure(result.message);
     }
     return Future(() => null);
   }
 
-  Future<RequestMeSocialJoinModel?> proceedSocialLogin(LoginPlatform platform, String? token) async {
+  Future<Pair<String?, RequestMeSocialJoinModel>?> proceedSocialLogin(
+    LoginPlatform platform,
+    String? token,
+    String? email,
+  ) async {
     final res = await _postValidationSocialLoginInUseCase.call(
       platform,
       token ?? "",
@@ -116,8 +122,10 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     } else if (res.status == 404) {
       // 회원가입 필요
       state = Idle();
-      return Future(() => RequestMeSocialJoinModel(type: platform.name, accessToken: "$token"));
-    }else{
+      return Future(
+        () => Pair(email, RequestMeSocialJoinModel(type: platform.name, accessToken: "$token")),
+      );
+    } else {
       state = Failure(res.message);
     }
 
@@ -127,7 +135,7 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
   // 로그인 성공시, 사용자 정보 호출
   void requestMeInfo() {
     _getMeInfoUseCase.call().then(
-          (value) {
+      (value) {
         if (value.status == 200 && value.data != null) {
           meInfo = value.data;
           final accessToken = value.data?.authorization?.accessToken;

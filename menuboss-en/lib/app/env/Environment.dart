@@ -17,13 +17,16 @@ class Environment {
 
   static BuildType get buildType => _instance._buildType;
 
-  static String apiUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-app-api-us.menuboss.live' : 'https://app-api.themenuboss.com';
+  static String apiUrl = _instance._buildType == BuildType.dev
+      ? 'https://dev-app-api-us.menuboss.live'
+      : 'https://app-api.themenuboss.com';
 
-  static String webUrl =
-      _instance._buildType == BuildType.dev ? 'https://dev-www-us.menuboss.live' : 'https://www.themenuboss.com/';
+  static String webUrl = _instance._buildType == BuildType.dev
+      ? 'https://dev-www-us.menuboss.live'
+      : 'https://www.themenuboss.com/';
 
-  static String get apiVersion => _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
+  static String get apiVersion =>
+      _instance._buildType == BuildType.dev ? 'v1' : 'v1'; // api Version
 
   factory Environment.newInstance(BuildType buildType) {
     _instance = Environment._internal(buildType);

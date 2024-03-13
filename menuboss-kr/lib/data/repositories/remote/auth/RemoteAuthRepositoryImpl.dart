@@ -19,11 +19,6 @@ class RemoteAuthRepositoryImpl implements RemoteAuthRepository {
   }
 
   @override
-  Future<ApiResponse<SocialLoginModel>> doGoogleLogin() {
-    return remoteAuthApi.doGoogleLogin();
-  }
-
-  @override
   Future<ApiResponse<SocialLoginModel>> doKakaoLogin() {
     return remoteAuthApi.doKakaoLogin();
   }

@@ -2,8 +2,6 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:menuboss/data/models/schedule/SimpleSchedulesModel.dart';
 import 'package:menuboss_common/utils/StringUtil.dart';
 
-import 'ResponsePlaylistContent.dart';
-import 'ResponsePlaylistProperty.dart';
 import 'ResponsePlaylistTime.dart';
 import 'ResponsePlaylistsProperty.dart';
 

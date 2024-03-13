@@ -39,7 +39,7 @@ class ApplyDeviceItem extends HookWidget {
               child: LoadImage(
                 key: ValueKey(item.screenId),
                 url: item.content?.imageUrl,
-                type: ImagePlaceholderType.Normal,
+                type: ImagePlaceholderType.Size_80,
               ),
             ),
             const SizedBox(width: 16),

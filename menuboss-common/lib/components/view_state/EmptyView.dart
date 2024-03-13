@@ -9,6 +9,8 @@ import '../button/PrimaryFilledButton.dart';
 
 enum BlankMessageType {
   ADD_SCREEN,
+  ADD_TEAM_MEMBER,
+  ADD_ROLE,
   ADD_CONTENT,
   ADD_CANVAS,
   NEW_SCHEDULE,
@@ -35,15 +37,19 @@ class EmptyView extends HookWidget {
     String? getContent() {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
-          return isKr ? "TV 추가" : "New screen";
+          return isKr ? "TV 추가" : "Add screen";
+        case BlankMessageType.ADD_TEAM_MEMBER:
+          return isKr ? "구성원 추가" : "Add team member";
+        case BlankMessageType.ADD_ROLE:
+          return isKr ? "역할 추가" : "Add role";
         case BlankMessageType.ADD_CONTENT:
           return isKr ? "콘텐츠 추가" : "Add content";
         case BlankMessageType.ADD_CANVAS:
           return isKr ? "캔버스 추가" : "Add canvas";
         case BlankMessageType.NEW_SCHEDULE:
-          return isKr ? "시간표 추가" : "New schedule";
+          return isKr ? "시간표 추가" : "Add schedule";
         case BlankMessageType.NEW_PLAYLIST:
-          return isKr ? "재생목록 추가" : "New playlist";
+          return isKr ? "재생목록 추가" : "Add playlist";
         case BlankMessageType.UPLOAD_FILE:
           return isKr ? "파일 업로드" : "Upload file";
         default:
@@ -58,6 +64,14 @@ class EmptyView extends HookWidget {
           return isKr
               ? "현재 저장된 TV목록이 없습니다\nQR코드 인식을 통해 TV를 만들어주세요"
               : "There are currently no saved screen list\nPlease register the screen through QR code";
+        case BlankMessageType.ADD_TEAM_MEMBER:
+          return isKr
+              ? "현재 저장된 구성원이 없습니다\n구성원을 추가하여 만들어주세요"
+              : "No team members are currently saved\nPlease register by adding a team member";
+        case BlankMessageType.ADD_ROLE:
+          return isKr
+              ? "현재 저장된 역할이 없습니다\n역할을 추가하여 만들어주세요"
+              : "There are currently no saved role settings\nPlease register by adding role settings";
         case BlankMessageType.ADD_CONTENT:
           return isKr
               ? "현재 저장된 파일 및 폴더가 없습니다\n파일 또는 폴더를 추가하여 만들어주세요"
@@ -88,6 +102,10 @@ class EmptyView extends HookWidget {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
           return "assets/imgs/image_blank_device.svg";
+        case BlankMessageType.ADD_TEAM_MEMBER:
+          return "assets/imgs/image_blank_add_team_member.svg";
+        case BlankMessageType.ADD_ROLE:
+          return "assets/imgs/image_blank_new_role.svg";
         case BlankMessageType.ADD_CONTENT:
           return "assets/imgs/image_blank_upload.svg";
         case BlankMessageType.ADD_CANVAS:
@@ -106,6 +124,10 @@ class EmptyView extends HookWidget {
     String? getButtonIconPath() {
       switch (type) {
         case BlankMessageType.ADD_SCREEN:
+          return "assets/imgs/icon_plus_1.svg";
+        case BlankMessageType.ADD_TEAM_MEMBER:
+          return "assets/imgs/icon_plus_1.svg";
+        case BlankMessageType.ADD_ROLE:
           return "assets/imgs/icon_plus_1.svg";
         case BlankMessageType.ADD_CONTENT:
           return "assets/imgs/icon_plus_1.svg";

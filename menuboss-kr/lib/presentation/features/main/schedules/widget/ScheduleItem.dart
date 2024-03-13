@@ -38,7 +38,7 @@ class ScheduleItem extends HookWidget {
                 SizedBox(
                   width: 80,
                   height: 80,
-                  child: LoadImage(url: item.property?.imageUrl, type: ImagePlaceholderType.Normal),
+                  child: LoadImage(url: item.property?.imageUrl, type: ImagePlaceholderType.Size_80),
                 ),
                 const SizedBox(width: 16),
                 Expanded(

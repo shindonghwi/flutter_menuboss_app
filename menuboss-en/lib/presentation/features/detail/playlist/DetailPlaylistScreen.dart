@@ -103,7 +103,7 @@ class DetailPlaylistScreen extends HookConsumerWidget {
 
               previewListManager.changeItems(
                 PreviewModel(
-                  getPlaylistDirectionTypeFromString(item?.property?.direction),
+                  getPlaylistDirectionTypeFromString(item?.property?.direction?.code),
                   detailPreviewProcessManager.scaleType,
                   convertedItems,
                   convertedItems.map((e) => e.property?.duration?.ceil()).toList(),
@@ -206,7 +206,7 @@ class _PlaylistContent extends StatelessWidget {
                               height: 60,
                               child: LoadImage(
                                 url: data?.property.imageUrl ?? "",
-                                type: ImagePlaceholderType.Small,
+                                type: ImagePlaceholderType.Size_60,
                               ),
                             ),
                             Expanded(

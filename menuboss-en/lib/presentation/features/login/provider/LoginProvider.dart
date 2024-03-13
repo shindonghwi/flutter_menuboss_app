@@ -15,6 +15,7 @@ import 'package:menuboss/domain/usecases/remote/me/GetMeInfoUseCase.dart';
 import 'package:menuboss/domain/usecases/remote/validation/PostValidationSocialLoginUseCase.dart';
 import 'package:menuboss_common/utils/CollectionUtil.dart';
 import 'package:menuboss_common/utils/UiState.dart';
+import 'package:menuboss_common/utils/dto/Pair.dart';
 
 import '../../../../domain/usecases/remote/auth/PostSocialLoginUseCase.dart';
 
@@ -27,7 +28,8 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
 
   PostEmailLoginUseCase get _postEmailLoginInUseCase => GetIt.instance<PostEmailLoginUseCase>();
 
-  PostSocialLoginInUseCase get _postSocialLoginInUseCase => GetIt.instance<PostSocialLoginInUseCase>();
+  PostSocialLoginInUseCase get _postSocialLoginInUseCase =>
+      GetIt.instance<PostSocialLoginInUseCase>();
 
   PostValidationSocialLoginUseCase get _postValidationSocialLoginInUseCase =>
       GetIt.instance<PostValidationSocialLoginUseCase>();
@@ -68,31 +70,37 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     }
   }
 
-  Future<RequestMeSocialJoinModel?> doAppleLogin() async {
+  Future<Pair<String?, RequestMeSocialJoinModel>?> doAppleLogin() async {
     state = Loading();
     final result = await _postAppleSignInUseCase.call();
     if (result.status == 200) {
       final accessToken = result.data?.accessToken;
-      return await proceedSocialLogin(LoginPlatform.Apple, accessToken);
+      final email = result.data?.email;
+      return await proceedSocialLogin(LoginPlatform.Apple, accessToken, email);
     } else {
       state = Failure(result.message);
     }
     return Future(() => null);
   }
 
-  Future<RequestMeSocialJoinModel?> doGoogleLogin() async {
+  Future<Pair<String?, RequestMeSocialJoinModel>?> doGoogleLogin() async {
     state = Loading();
     final result = await _postGoogleSignInUseCase.call();
     if (result.status == 200) {
       final accessToken = result.data?.accessToken;
-      return await proceedSocialLogin(LoginPlatform.Google, accessToken);
+      final email = result.data?.email;
+      return await proceedSocialLogin(LoginPlatform.Google, accessToken, email);
     } else {
       state = Failure(result.message);
     }
     return Future(() => null);
   }
 
-  Future<RequestMeSocialJoinModel?> proceedSocialLogin(LoginPlatform platform, String? token) async {
+  Future<Pair<String?, RequestMeSocialJoinModel>?> proceedSocialLogin(
+    LoginPlatform platform,
+    String? token,
+    String? email,
+  ) async {
     final res = await _postValidationSocialLoginInUseCase.call(
       platform,
       token ?? "",
@@ -116,8 +124,10 @@ class LoginUiStateNotifier extends StateNotifier<UIState<String?>> {
     } else if (res.status == 404) {
       // 회원가입 필요
       state = Idle();
-      return Future(() => RequestMeSocialJoinModel(type: platform.name, accessToken: "$token"));
-    }else{
+      return Future(
+        () => Pair(email, RequestMeSocialJoinModel(type: platform.name, accessToken: "$token")),
+      );
+    } else {
       state = Failure(res.message);
     }
 

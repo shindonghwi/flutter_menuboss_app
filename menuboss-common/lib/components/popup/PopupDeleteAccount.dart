@@ -36,7 +36,7 @@ class PopupDeleteAccount extends HookWidget {
             height: 32,
           ),
           Text(
-            isKr ? '계정 삭제 완료!' : 'Delete account completed!',
+            isKr ? '탈퇴 완료' : 'Delete account completed!',
             style: getTextTheme(context).b2sb.copyWith(
                   color: getColorScheme(context).colorGray900,
                 ),
@@ -46,8 +46,8 @@ class PopupDeleteAccount extends HookWidget {
           ),
           Text(
             isKr
-                ? '계정 삭제가 성공적으로 완료되었습니다. 다음에 다시 만나요'
-                : 'Account deletion completed successfully. See you next time',
+                ? '탈퇴가 완료되었습니다!\n아쉽지만 다음에 또 만나요'
+                : 'Account deletion completed successfully.\nSee you next time',
             style: getTextTheme(context).b3r.copyWith(
                   color: getColorScheme(context).colorGray500,
                   overflow: TextOverflow.visible,

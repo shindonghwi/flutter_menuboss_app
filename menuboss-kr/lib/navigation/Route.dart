@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:menuboss/data/models/business/ResponseBusinessMemberModel.dart';
+import 'package:menuboss/data/models/business/ResponseRoleModel.dart';
 import 'package:menuboss/data/models/device/RequestDeviceApplyContents.dart';
 import 'package:menuboss/data/models/media/ResponseMediaModel.dart';
 import 'package:menuboss/data/models/playlist/ResponsePlaylistModel.dart';
@@ -16,7 +18,14 @@ import 'package:menuboss/presentation/features/guide/list/GuideListScreen.dart';
 import 'package:menuboss/presentation/features/login/LoginScreen.dart';
 import 'package:menuboss/presentation/features/main/MainScreen.dart';
 import 'package:menuboss/presentation/features/main/media/in_folder/MediaInFolderScreen.dart';
+import 'package:menuboss/presentation/features/main/my/account/MyAccountScreen.dart';
+import 'package:menuboss/presentation/features/main/my/business/MyBusinessScreen.dart';
+import 'package:menuboss/presentation/features/main/my/password/MyPasswordScreen.dart';
 import 'package:menuboss/presentation/features/main/my/profile/MyProfileScreen.dart';
+import 'package:menuboss/presentation/features/main/my/role/create/RoleCreateScreen.dart';
+import 'package:menuboss/presentation/features/main/my/role/list/RoleListScreen.dart';
+import 'package:menuboss/presentation/features/main/my/team/create/TeamCreateScreen.dart';
+import 'package:menuboss/presentation/features/main/my/team/list/TeamListScreen.dart';
 import 'package:menuboss/presentation/features/media_content/MediaContentScreen.dart';
 import 'package:menuboss/presentation/features/media_info/MediaInformationScreen.dart';
 import 'package:menuboss/presentation/features/policy/PolicyScreen.dart';
@@ -57,6 +66,13 @@ enum RoutingScreen {
 
   ApplyDevice(route: "/apply/screen"), // 스크린에 적용
   MyProfile(route: "/my/profile"), // 프로필 정보
+  MyAccount(route: "/my/account"), // 내 계정 정보
+  MyBusiness(route: "/my/business"), // 내 비즈니스 정보
+  TeamList(route: "/my/team/list"), // 팀 목록
+  TeamCreate(route: "/my/team/create"), // 팀 생성
+  RoleList(route: "/my/role/list"), // 역할 목록
+  RoleCreate(route: "/my/role/create"), // 역할 생성
+  MyPassword(route: "/my/password"), // 패스워드 정보
   GuideList(route: "/my/guide/list"), // 사용방법 목록
   GuideDetail(route: "/my/guide/detail"), // 사용방법 상세
   DeleteAccount(route: "/delete/account"); // 계정 삭제
@@ -89,25 +105,34 @@ enum RoutingScreen {
       RoutingScreen.SelectDestinationFolder.route: (context) => const DestinationFolderScreen(),
       RoutingScreen.ApplyDevice.route: (context) => const ApplyToDeviceScreen(),
       RoutingScreen.MyProfile.route: (context) => const MyProfileScreen(),
+      RoutingScreen.MyAccount.route: (context) => const MyAccountScreen(),
+      RoutingScreen.MyBusiness.route: (context) => const MyBusinessScreen(),
+      RoutingScreen.TeamList.route: (context) => const TeamListScreen(),
+      RoutingScreen.TeamCreate.route: (context) => const TeamCreateScreen(),
+      RoutingScreen.RoleList.route: (context) => const RoleListScreen(),
+      RoutingScreen.RoleCreate.route: (context) => const RoleCreateScreen(),
+      RoutingScreen.MyPassword.route: (context) => const MyPasswordScreen(),
       RoutingScreen.GuideList.route: (context) => const GuideListScreen(),
       RoutingScreen.GuideDetail.route: (context) => const GuideDetailScreen(),
       RoutingScreen.DeleteAccount.route: (context) => const DeleteAccountScreen(),
     };
   }
 
-  static getScreen(String route, {dynamic parameter}) {
+  static getScreen(String route, {dynamic parameter, dynamic parameter1}) {
     if (route == RoutingScreen.Splash.route) {
       return const SplashScreen();
     } else if (route == RoutingScreen.Login.route) {
       return const LoginScreen();
     } else if (route == RoutingScreen.SignUp.route) {
       RequestMeSocialJoinModel? socialJoinModel = parameter;
-      return SignUpScreen(socialJoinModel: socialJoinModel);
+      String? socialEmail = parameter1;
+      return SignUpScreen(socialJoinModel: socialJoinModel, socialEmail: socialEmail);
     } else if (route == RoutingScreen.Main.route) {
       return const MainScreen();
     } else if (route == RoutingScreen.Policy.route) {
       RequestMeSocialJoinModel? socialJoinModel = parameter;
-      return PolicyScreen(socialJoinModel: socialJoinModel);
+      String? socialEmail = parameter1;
+      return PolicyScreen(socialJoinModel: socialJoinModel, socialEmail: socialEmail);
     } else if (route == RoutingScreen.ScanQR.route) {
       return const ScanQrScreen();
     } else if (route == RoutingScreen.MediaInfo.route) {
@@ -148,6 +173,22 @@ enum RoutingScreen {
       return ApplyToDeviceScreen(item: model);
     } else if (route == RoutingScreen.MyProfile.route) {
       return const MyProfileScreen();
+    } else if (route == RoutingScreen.MyAccount.route) {
+      return const MyAccountScreen();
+    } else if (route == RoutingScreen.MyPassword.route) {
+      return const MyPasswordScreen();
+    } else if (route == RoutingScreen.MyBusiness.route) {
+      return const MyBusinessScreen();
+    } else if (route == RoutingScreen.TeamList.route) {
+      return const TeamListScreen();
+    } else if (route == RoutingScreen.TeamCreate.route) {
+      ResponseBusinessMemberModel? model = parameter;
+      return TeamCreateScreen(item: model);
+    } else if (route == RoutingScreen.RoleList.route) {
+      return const RoleListScreen();
+    } else if (route == RoutingScreen.RoleCreate.route) {
+      ResponseRoleModel? model = parameter;
+      return RoleCreateScreen(item: model);
     } else if (route == RoutingScreen.DeleteAccount.route) {
       return const DeleteAccountScreen();
     } else if (route == RoutingScreen.GuideList.route) {

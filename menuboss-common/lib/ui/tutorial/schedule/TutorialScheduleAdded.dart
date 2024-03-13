@@ -86,7 +86,7 @@ class _EnableContents extends StatelessWidget {
                   height: 80,
                   child: LoadImage(
                     url: "",
-                    type: ImagePlaceholderType.Normal,
+                    type: ImagePlaceholderType.Size_80,
                   ),
                 ),
                 const SizedBox(width: 16),

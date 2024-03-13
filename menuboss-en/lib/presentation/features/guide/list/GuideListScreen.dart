@@ -61,7 +61,7 @@ class GuideListScreen extends StatelessWidget {
       ),
       _GuideItem(
         title: getString(context).guideListItemPlaylistTitle,
-        description: getString(context).guideListItemScheduleDescription,
+        description: getString(context).guideListItemPlaylistDescription,
         onPressed: () {
           Navigator.push(
             context,
